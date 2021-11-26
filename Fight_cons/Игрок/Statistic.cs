@@ -19,6 +19,9 @@ namespace Fight_cons
 
 
         //  Изучение пещеры
-        public int Cave_ad;        
+        public int Cave_ad;
+
+        //  Победы в мини-играх
+        public int Arm_game_wins;
     }
 }
