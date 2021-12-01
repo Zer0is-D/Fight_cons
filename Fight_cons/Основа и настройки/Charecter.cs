@@ -8,7 +8,7 @@ namespace Fight_cons
 {
     public delegate void Skills_dele(Hero hero, Enemy enemy);
 
-    public class Charecter
+    public abstract class Charecter
     {
         //  Свойства
         public string Name;
