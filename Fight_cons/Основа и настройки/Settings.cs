@@ -28,9 +28,9 @@ namespace Fight_cons
                             + "2) Нет");
             
             if (Input.ChoisInput(hero, 1, 2) == 2)
-                DelayEffects = false;
-            else
                 DelayEffects = true;
+            else
+                DelayEffects = false;
         }
 
         //  Настройка версии 

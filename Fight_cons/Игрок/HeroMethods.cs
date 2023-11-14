@@ -99,7 +99,7 @@ namespace Fight_cons
             }
 
             //  Выдать начальные навыки
-            AllSkillsEver.Skills(hero, 1);
+            AllHeroSkills.Skills(hero, 1);
 
 
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"

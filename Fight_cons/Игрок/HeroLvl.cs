@@ -13,15 +13,15 @@ namespace Fight_cons
     //  Класс допуск
     public class LvlTicket
     {
-        internal int NextMaxHp = 5;
-        internal int NextMaxMp = 5;
-        internal int NextAttack = 1;
-        internal int NextArcane = 1;
-        internal double NextSpeed = 0.02;
-        internal double NextCrit = 0.02;
-        internal double NextDefence = 0.02;
-        internal double NextMagicDefence = 0.02;
-        internal double NextBlock = 0.02;
+        internal protected int NextMaxHp = 5;
+        internal protected int NextMaxMp = 5;
+        internal protected int NextAttack = 1;
+        internal protected int NextArcane = 1;
+        internal protected double NextSpeed = 0.02;
+        internal protected double NextCrit = 0.02;
+        internal protected double NextDefence = 0.02;
+        internal protected double NextMagicDefence = 0.02;
+        internal protected double NextBlock = 0.02;
 
         public LvlTicket(Hero hero)
         {
@@ -82,7 +82,7 @@ namespace Fight_cons
                     ParamsLvlUp(0, LTicket.Points[0], "MAX Hp", hero.MaxHp, LTicket.NextMaxHp, hero.ClassBonuses.HP, false);
 
                     //  Макс мана
-                    ParamsLvlUp(1, LTicket.Points[1], "MAX Mp", hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MaxMp, false);
+                    ParamsLvlUp(1, LTicket.Points[1], "MAX Mp", hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MP, false);
 
                     //  Защита
                     ParamsLvlUp(2, LTicket.Points[2], "DEF", hero.Defence, LTicket.NextDefence, hero.ClassBonuses.Defence, true);

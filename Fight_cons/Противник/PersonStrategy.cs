@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fight_cons.Основа_и_настройки;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,6 @@ namespace Fight_cons
 {
     public class PersonStrategy 
     {
-        /// <summary>
-        /// Процент ХП
-        /// </summary>
-        private static double percent_hp(Charecter person) => ((double)person.HP / (double)person.MaxHp) * 100.0;
-
         private static Charecter WhoToBeat(Charecter person, Hero hero, List<Order> units)
         {
             Random rand = new Random();
@@ -54,11 +50,11 @@ namespace Fight_cons
 
                 //  Условья
                 //  Если здоровье меньше 30% (атака 60% / оборона 40%)
-                if (percent_hp(attacker) < 30)
+                if (Formulas.PercentHp(attacker) < 30)
                 {
                     if (Battles.Vero(0.6))
                     {
-                        UnitSkills.Enemy_Hit(attacker, WhoToBeat(attacker, hero, units));
+                        UnitSkills.EnemyHits(attacker, WhoToBeat(attacker, hero, units));
                         break;
                     }                              
                     else
@@ -70,7 +66,7 @@ namespace Fight_cons
 
                 if (!hero.Conditions.AttackParry)
                 {
-                    UnitSkills.Enemy_Hit(attacker, WhoToBeat(attacker, hero, units));
+                    UnitSkills.EnemyHits(attacker, WhoToBeat(attacker, hero, units));
                     break;
                 }
                 //  Отравляющая атака                
@@ -97,7 +93,7 @@ namespace Fight_cons
                 //  Если здоровье меньше 10-20% то сбегаем
                 if (Need_to_run(attacker, min1: 10, min2: 20))
                     break;
-                else if (percent_hp(attacker) < 60)
+                else if (Formulas.PercentHp(attacker) < 60)
                 {
                     if (Battles.Vero(0.5))
                     {
@@ -112,7 +108,7 @@ namespace Fight_cons
                     //  Заклинание заморозки
                     if (Battles.Vero(0.1))
                     {
-                        UnitSkills.Spell_frez(attacker, WhoToBeat(attacker, hero, units));
+                        UnitSkills.FrezSpell(attacker, WhoToBeat(attacker, hero, units));
                         break;
                     }
 
@@ -121,7 +117,7 @@ namespace Fight_cons
                     {
                         if (Battles.Vero(0.7))
                         {
-                            UnitSkills.Spell_slow(attacker, WhoToBeat(attacker, hero, units));
+                            UnitSkills.SlowerSpell(attacker, WhoToBeat(attacker, hero, units));
                             break;
                         }
                     }
@@ -135,7 +131,7 @@ namespace Fight_cons
                 }
                 else if (Battles.Vero(0.3))
                 {
-                    UnitSkills.Enemy_Hit(attacker, WhoToBeat(attacker, hero, units));
+                    UnitSkills.EnemyHits(attacker, WhoToBeat(attacker, hero, units));
                     break;
                 }
                 else
@@ -153,7 +149,7 @@ namespace Fight_cons
                 //  Если здоровье меньше 10-20% то сбегаем
                 if (Need_to_run(attacker, min1: 10, min2: 20))
                     break;
-                else if (percent_hp(attacker) < 60)
+                else if (Formulas.PercentHp(attacker) < 60)
                 {
                     if (Battles.Vero(0.5))
                     {
@@ -171,7 +167,7 @@ namespace Fight_cons
                         {
                             if (en.charecter.IsAlive == false)
                             {
-                                UnitSkills.Spell_Alive(attacker, en.charecter);
+                                UnitSkills.RevievSpell(attacker, en.charecter);
                                 break;
                             }
                         }                        
@@ -186,7 +182,7 @@ namespace Fight_cons
                 }
                 else if (Battles.Vero(0.3))
                 {
-                    UnitSkills.Enemy_Hit(WhoToBeat(attacker, hero, units), attacker);
+                    UnitSkills.EnemyHits(WhoToBeat(attacker, hero, units), attacker);
                     break;
                 }
                 else
@@ -204,7 +200,7 @@ namespace Fight_cons
         {            
             if (min2 == null)
             {
-                if (percent_hp(person) < min1)
+                if (Formulas.PercentHp(person) < min1)
                 {
                     if (Battles.Vero(0.8))
                     {
@@ -216,7 +212,7 @@ namespace Fight_cons
             }
             else
             {
-                if (percent_hp(person) < min1 || percent_hp(person) < min2)
+                if (Formulas.PercentHp(person) < min1 || Formulas.PercentHp(person) < min2)
                 {
                     if (Battles.Vero(0.8))
                     {

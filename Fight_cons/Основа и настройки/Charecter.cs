@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Fight_cons
 {
     public delegate void SkillsDele(Hero hero, Charecter enemy);
+    public delegate void SpellDele(Hero hero, Charecter enemy, int cost, int power);
 
     public abstract class Charecter : Characteristics
     {

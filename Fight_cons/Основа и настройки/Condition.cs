@@ -11,7 +11,7 @@ namespace Fight_cons
     {
         //  Состояния
         public bool AttackParry = false;
-        public bool Prot_up = false;        
+        public bool SheeldUp = false;        
 
         //  Debuffs
         internal protected int FrezRound;
@@ -47,7 +47,7 @@ namespace Fight_cons
         //  Обнуление любого объекта
         internal protected static void Clear(object x) => x = 0;
 
-        internal protected void Random_debuff(Charecter attacker, Charecter victim)
+        internal protected void RandomDebuff(Charecter attacker, Charecter victim)
         {
             if (Battles.Vero(0.7))
                 AttackDes.Act_Parry_atc(attacker, victim);

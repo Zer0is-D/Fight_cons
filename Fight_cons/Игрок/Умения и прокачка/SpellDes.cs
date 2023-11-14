@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Fight_cons.Основа_и_настройки;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fight_cons
 {
     public class SpellDes
     {
-        public SkillsDele Spell { get; set; }
+        public SpellDele Spell { get; set; }
 
         public int ID { get; set; }
         public string Name { get; set; }
@@ -32,141 +29,71 @@ namespace Fight_cons
                 this.ID = rep.ID;
                 hero.SpellList[index] = this;
             }
-        }       
+        }
 
-        //  Заклинания
+        #region Заклинания
         //  Действие: Очищающий луч
-        public static void Spell_cleansing_ray(Hero hero, Charecter victim)
+        public static void CleansingRaySpell(Hero hero, Charecter victim, int cost, int spellPower)
         {
-            if (hero.MP >= 5)
+            Random rand = new Random();
+
+            int damag = Formulas.MagicDamage(hero, victim, spellPower);
+
+            if (rand.NextDouble() <= 1 - victim.TotalSpeed)
             {
-                hero.MP -= 5;
-                Random rand = new Random();
-                double crit = Crit_chek(hero);
-                double att = 10 + hero.TotalArcane + crit;
+                Output.NameAndId(hero, true);
 
-                //  Урон по врагу с магической защитой
-                int damag = (int)Magic_defence_chek(victim, att);                
-
-                if (rand.NextDouble() <= 1 - victim.TotalSpeed)
-                {
-                    Output.WriteColorLine(ConsoleColor.Green, "\n", $"{hero.Name} ", $"наносит ");
-
-                    if (crit > 1)
-                        Output.WriteColorLine(ConsoleColor.DarkBlue, "заклинанием критические ", $"{damag} ", "урона! У");
-                    else
-                        Output.WriteColorLine(ConsoleColor.DarkBlue, "заклинанием ", $"{damag} ", "урона у ");
-
-                    Output.WriteColorLine(ConsoleColor.DarkMagenta, $"[{victim.Id}] ", $"{victim.Name} ");
-                    Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", "HP\n");
-                    hero.HeroStatistic.Spells++;
-                    victim.HP -= damag;
-                    Thread.Sleep(400);
-                }
+                if (damag > hero.TotalArcane + spellPower)
+                    Output.WriteColorLine(ConsoleColor.DarkBlue, "наносит заклинанием критические ", $"{damag} ", "урона! У");
                 else
-                    Output.WriteColorLine(ConsoleColor.DarkMagenta, $"\n[{victim.Id}] ", $"{victim.Name}\n");
+                    Output.WriteColorLine(ConsoleColor.DarkBlue, "наносит заклинанием ", $"{damag} ", "урона у ");
+
+                Output.NameAndId(victim);
+                Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", "HP\n");                
+                victim.HP -= damag;
+
+                hero.HeroStatistic.Spells++;
             }
             else
             {
-                Output.TwriteLine("\nНедостаточно маны!\n", 1);
-                CombatSolutions.Fight_choice(hero, victim);
+                Output.NameAndId(victim, true);
+                Console.Write(" уворачивается");
             }
         }
 
         //  Малое лечение
-        public static void Heal(Hero hero, Charecter enemy)
+        public static void HealSpell(Hero hero, Charecter enemy, int cost, int power)
         {
-            if (hero.MP >= 3)
-            {
-                hero.MP -= 3;
-                double crit = Crit_chek(hero);
-                double H = ((hero.MaxHp / 100.0) * 30.0) + crit;                            
+            double crit = Formulas.CheckCrit(hero, true);
+            double H = ((hero.MaxHp / 100.0) * 30.0) + crit;
 
-                if (crit > 1)
-                    Output.WriteColorLine(ConsoleColor.Green, "\nВы критически восстановили себе ", $"+{(int)H} ", "HP\n");
-                else
-                    Output.WriteColorLine(ConsoleColor.Green, "\nВы восстановили себе ", $"+{(int)H} ", "HP\n");
-
-                hero.HP += (int)H;
-
-                hero.HeroStatistic.Spells++;
-                Thread.Sleep(400);
-            }
+            if (crit > 1)
+                Output.WriteColorLine(ConsoleColor.Green, "\nВы критически восстановили себе ", $"+{(int)H} ", "HP\n");
             else
-            {
-                Output.TwriteLine("\nНедостаточно маны!\n", 1);
-                CombatSolutions.Fight_choice(hero, enemy);
-            }
+                Output.WriteColorLine(ConsoleColor.Green, "\nВы восстановили себе ", $"+{(int)H} ", "HP\n");
+
+            hero.HP += (int)H;
+
+            hero.HeroStatistic.Spells++;
         }
 
         //  Замедление
-        public static void Slow_down(Hero hero, Charecter enemy)
+        public static void SlowDownSpell(Hero hero, Charecter enemy, int cost, int power)
         {
-            if (hero.MP >= 3)
-            {
-                hero.MP -= 3;
+            enemy.Conditions.Speed = -0.2;
+            Console.WriteLine("Вы замедлили противника!");
 
-                enemy.Conditions.Speed = -0.2;
-                Console.WriteLine("Вы замедлили противника!");
-                hero.HeroStatistic.Spells++;
-
-                Thread.Sleep(400);
-            }
-            else
-            {
-                Output.TwriteLine("\nНедостаточно маны!\n", 1);
-                CombatSolutions.Fight_choice(hero, enemy);
-            }
+            hero.HeroStatistic.Spells++;
         }
 
-        //  Исцеление от всех дебаффов
-        public static void Excision(Hero hero, Charecter enemy)
+        //  Исцеление
+        public static void ExcisionSpell(Hero hero, Charecter enemy, int cost, int power)
         {
-            if (hero.MP >= 6)
-            {
-                hero.MP -= 6;
-                Console.WriteLine("\nВы избавились от всех негатив. эффектов\n");
-                hero.Conditions.Clear();
-                hero.HeroStatistic.Spells++;
+            Console.WriteLine("\nВы избавились от всех негатив. эффектов\n");
+            hero.Conditions.Clear();
 
-                Thread.Sleep(400);
-            }
-            else
-            {
-                Output.TwriteLine("\nНедостаточно маны!\n", 1);
-                CombatSolutions.Fight_choice(hero, enemy);
-            }
+            hero.HeroStatistic.Spells++;
         }
-
-
-        //  Проверки
-        //  Проверка на крит
-        protected static double Crit_chek(Hero hero)
-        {
-            Random rand = new Random();
-            double crit = 0;
-
-            if (rand.NextDouble() <= hero.TotalMagicDefence)
-                crit = hero.TotalArcane * (rand.Next(15, 20) * 0.1);
-            return crit;
-        }
-
-        //  Проверка на защиту и блок
-        protected static double Defence_chek(Charecter enemy, double att)
-        {
-            //  Если у противника блок то, иначе ...
-            if (enemy.Conditions.Prot_up)
-                att = att * (1 - enemy.Block) + (1 - enemy.Defence);
-            else
-                att = att * (1 - enemy.Defence);
-            return att;
-        }
-
-        //  Проверка на магическую защиту
-        protected static double Magic_defence_chek(Charecter enemy, double att)
-        {
-            att = att * (1 - enemy.TotalMagicDefence);
-            return att;
-        }
+        #endregion
     }
 }

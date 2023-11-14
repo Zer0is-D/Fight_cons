@@ -111,7 +111,7 @@ namespace Fight_cons
                     if (!cha.charecter.IsEnemy)
                     {
                         while (hero.Turn < hero.TotalMaxMoves & hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Run)
-                            CombatSolutions.CurEn(hero, units);
+                            CombatSolutions.CurrentEnemy(hero, units);
                     }
                     else
                         Unit.Unit_fight_choice(cha.charecter, hero, units);

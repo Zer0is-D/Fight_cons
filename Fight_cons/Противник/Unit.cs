@@ -73,7 +73,7 @@ namespace Fight_cons.Противник
             {
                 hero.Turn = 0;
 
-                unit.Conditions.Prot_up = false;
+                unit.Conditions.SheeldUp = false;
 
                 switch (unit.strategeis)
                 {
@@ -118,7 +118,7 @@ namespace Fight_cons.Противник
                 //  Кровотечение
                 if (unit.Conditions.BleedRound > 0)
                 {
-                    NameAndId(unit, false);
+                    Output.NameAndId(unit, false);
                     Output.WriteColorLine(ConsoleColor.DarkRed, $"получает -{unit.Conditions.BleedDmg} HP от ", "кровотечение\n");
                     unit.Conditions.BleedRound--;
                     unit.HP -= unit.Conditions.BleedDmg;
@@ -135,20 +135,6 @@ namespace Fight_cons.Противник
                     unit.HP -= unit.Conditions.PoisentDmg;
                 }
             }
-        }
-
-        public static void NameAndId(Charecter charecter, bool NextLine = false)
-        {
-            if (NextLine)
-                Console.WriteLine();
-
-            if (!charecter.isPlayer)
-                Console.Write($"[{charecter.Id}] ");
-            else if (!charecter.isPlayer & !NextLine)
-                Console.Write($"[{charecter.Id}] ");
-
-
-            Output.WriteColorName("", charecter, " ");
         }
     }
 }

@@ -160,10 +160,11 @@ namespace Fight_cons
 
                 SpellDes excision = new SpellDes(hero, "Исцеление")
                 {
-                    Spell = SpellDes.Excision,
-                    Spell_cost = 6
+                    Spell = SpellDes.ExcisionSpell,
+                    Description = $"Исцеление (3 MP)",
+                    Spell_cost = 0,
+                    Spell_power = 0,
                 };
-                excision.Description = $"Исцеление ({excision.Spell_cost} MP)";
             }
 
             if (hero.HeroStatistic.Cave_ad == 30)

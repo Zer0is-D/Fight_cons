@@ -10,12 +10,24 @@ namespace Fight_cons
 
     public class PotionDes
     {
-        public PotionUse Potion;
+        internal PotionUse Potion;
 
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public byte Count { get; set; }
+        internal int ID { get; set; }
+        internal string Name { get; set; }
+        internal string Description { get; set; }
+        internal byte Count { get; set; }
+
+        //  Проверка на кол 
+        internal string CountPotion
+        {
+            get
+            {
+                if (Count > 0)
+                    return $"(Осталось: {Count})";
+                else
+                    return $"(НЕДОСТУПНО)";
+            }
+        }
 
         public PotionDes(Hero hero)
         {
@@ -33,7 +45,7 @@ namespace Fight_cons
         }
 
         //  Выпить зелье лечения
-        public static void Act_Heal(Hero hero)
+        public static void HealPotion(Hero hero)
         {
             double n = (hero.MaxHp / 100.0) * 50.0;
             hero.HP += (int)n;
@@ -42,7 +54,7 @@ namespace Fight_cons
         }
 
         //  Выпить зелье маны
-        public static void Act_Mana(Hero hero)
+        public static void ManaPotion(Hero hero)
         {
             double n = (hero.MaxMp / 100.0) * 50.0;
             hero.MP += (int)n;
@@ -51,7 +63,7 @@ namespace Fight_cons
         }
 
         //  Выпить противоядие
-        public static void Act_Anti(Hero hero)
+        public static void AntiPotion(Hero hero)
         {
             Console.WriteLine("Вы выпили противоядие и избавились от всех негативных эффектов");
             hero.Conditions.PoisentRound = 0;
@@ -59,24 +71,13 @@ namespace Fight_cons
         }
 
         //  Выпить зелье силы
-        public static void Act_Power(Hero hero)
+        public static void PowerPotion(Hero hero)
         {
             hero.Conditions.Attack = 200;
             Console.WriteLine($"Ваша сила теперь {hero.Attack}");
     
             Sound.DRINK();
         }
-
-        //  Проверка на кол 
-        public string Have_potion
-        {
-            get
-            {
-                if (Count > 0)
-                    return $"(Осталось: {Count})";
-                else
-                    return $"(НЕДОСТУПНО)";
-            }
-        }
+        //  больше ходов, больше маны, временных блоков, 
     }
 }

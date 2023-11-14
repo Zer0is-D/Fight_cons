@@ -1,4 +1,5 @@
-﻿using Fight_cons.Противник;
+﻿using Fight_cons.Основа_и_настройки;
+using Fight_cons.Противник;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,19 +15,19 @@ namespace Fight_cons
 
         #region Магия
         //  Magic_slow!!!
-        public static void Spell_slow(Charecter attacker, Charecter victim)
+        public static void SlowerSpell(Charecter attacker, Charecter victim)
         {
-            double att = attacker.TotalAttack;
+            int spellPower = 5;
 
-            int damag = (int) (att / 2.0);
+            int damag = Formulas.MagicDamage(attacker, victim, spellPower);
             victim.Conditions.MaxMoves++;
             victim.Conditions.SlowRound = 3;
 
-            Unit.NameAndId(attacker, true);
+            Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.Blue, "", $"замедляет ");
-            Unit.NameAndId(victim);
+            Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Yellow, "и сносит ", $"{damag} ", "урона! У ");
-            Unit.NameAndId(victim);
+            Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
 
             victim.HP -= damag;
@@ -34,27 +35,27 @@ namespace Fight_cons
         }
 
         //  Ускорение
-        public static void Spell_Fast(Charecter person)
+        public static void FasterSpell(Charecter person)
         {
-            Unit.NameAndId(person, true);
+            Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkYellow, "", $"Ускоряет ", "себя!\n");
             Thread.Sleep(100);
             person.Turn += 2;
         }
 
         //  Заморозка
-        public static void Spell_frez(Charecter attacker, Charecter victim)
+        public static void FrezSpell(Charecter attacker, Charecter victim)
         {
-            double att = attacker.TotalAttack;
+            int spellPower = 5;
 
-            int damag = (int) (att / 2.0);
+            int damag = Formulas.MagicDamage(attacker, victim, spellPower);
             victim.Conditions.FrezRound = 2;
 
-            Unit.NameAndId(attacker, true);
+            Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", $"Замораживает ");
-            Unit.NameAndId(victim);
+            Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Yellow, $"на {victim.Conditions.FrezRound} хода и сносит ", $"{damag} ", "урона! У ");
-            Unit.NameAndId(victim);
+            Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
 
             victim.HP -= damag;
@@ -63,21 +64,21 @@ namespace Fight_cons
         }
 
         //  Магический щит
-        public static void Super_sheeld(Charecter person)
+        public static void MagicSheeldSpell(Charecter person)
         {
-            person.Conditions.Defence = 2.0;
+            person.Conditions.MagicDefence = 2.0;
 
-            Unit.NameAndId(person, true);
-            Output.WriteColorLine(ConsoleColor.DarkBlue, "", $"Щит \n");
+            Output.NameAndId(person, true);
+            Output.WriteColorLine(ConsoleColor.DarkBlue, "", "Щит \n");
             Thread.Sleep(100);
             person.Turn += 2;
         }
 
-        public static void Spell_Alive(Charecter reviever, Charecter riser)
+        public static void RevievSpell(Charecter reviever, Charecter riser)
         {
-            Unit.NameAndId(reviever, true);
+            Output.NameAndId(reviever, true);
             Output.WriteColorLine(ConsoleColor.DarkYellow, "воскрешает ", $"{riser.Name}", $"!\n");
-            riser.HP = 10;
+            riser.HP = Formulas.GetCurrentPercent(riser, 10);
             riser.IsAlive = true;
 
             Thread.Sleep(100);
@@ -86,42 +87,32 @@ namespace Fight_cons
 
         #endregion
 
+        #region Атаки
         //  Действие Атака 
-        public static void Enemy_Hit(Charecter attacker, Charecter victim)
+        public static void EnemyHits(Charecter attacker, Charecter victim)
         {
-            double crit = Crit_chek(attacker);
-            double att = attacker.TotalAttack + crit;
-
-            //  Урон по врагу с защитой
-            int damag = (int) Defence_chek(victim, att);
-
-            //  Проверка на парирование
-            if (Parry_chek(victim, attacker))
-                victim.Conditions.Random_debuff(attacker, victim);
-            else
-                BattleLog(attacker, victim, crit, damag);
-
             attacker.Turn += 1;
+
+            int damag = Formulas.Damage(attacker, victim, false, true);
+
+            BattleLog(attacker, victim, damag);
+
             Thread.Sleep(100);
         }
 
         //  Отравляющая атака
         public static void Poisent_att(Charecter attacker, Charecter victim)
         {
-            double crit = Crit_chek(attacker);
-            double att = attacker.TotalAttack + crit;
-
-            //  Урон по врагу с защитой
-            int damag = (int) (att / 2.0);
+            int damag = Formulas.Damage(attacker, victim) / 2;
 
             victim.Conditions.PoisentRound = 3;
 
-            Unit.NameAndId(attacker, true);
+            Output.NameAndId(attacker, true);
             Console.Write("накладывает на ");
-            Unit.NameAndId(victim);
+            Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.DarkGreen, " ", $"отравление ");
             Output.WriteColorLine(ConsoleColor.Yellow, "сносит ", $"{damag} ", "урона! У ");
-            Unit.NameAndId(victim);
+            Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
 
             victim.HP -= damag;
@@ -132,15 +123,12 @@ namespace Fight_cons
         //  Вамперизм
         public static void Vamperism(Charecter attacker, Charecter victim)
         {
-            double crit = Crit_chek(attacker);
-            double att = attacker.TotalAttack + crit;
+            int damag = Formulas.Damage(attacker, victim) / 2;
 
-            int damag = (int) (att / 2.0);
-
-            Unit.NameAndId(attacker, true);
+            Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkRed, "использует ", $"вампиризм ");
             Output.WriteColorLine(ConsoleColor.Red, "и поглощает ", $"{damag} ", "HP! ");
-            Unit.NameAndId(victim);
+            Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
 
             attacker.HP += damag;
@@ -152,78 +140,32 @@ namespace Fight_cons
         //  Defence!!!
         public static void HoldTheSheeld(Charecter person)
         {
-            person.Conditions.Prot_up = true;
-            Unit.NameAndId(person, true);
+            person.Conditions.SheeldUp = true;
+            Output.NameAndId(person, true);
             Console.Write("держит оборону\n");
             person.Turn += 5;
             Thread.Sleep(100);
         }
+        #endregion
 
-
-        #region Проверки и логи
         //  Log
-        internal static void BattleLog(Charecter attacker, Charecter victim, double crit, int damag)
+        internal static void BattleLog(Charecter attacker, Charecter victim, int damag)
         {
-            Unit.NameAndId(attacker, true);
+            Output.NameAndId(attacker, true);
             Console.Write("сносит ");
-            Unit.NameAndId(victim);
+            Output.NameAndId(victim);
 
-            if (crit >= 1)
+            if (damag > attacker.TotalAttack)
                 Output.WriteColorLine(ConsoleColor.Yellow, "критические ", $"{damag} ", "урона! У ");
             else
                 Output.WriteColorLine(ConsoleColor.Yellow, "", $"{damag} ", "урона у ");
 
-            Unit.NameAndId(victim);
+            Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
             Sound.HIT();
 
             victim.HP -= damag;
             Thread.Sleep(100);
         }
-
-        //  Проверка на парирование
-        protected static bool Parry_chek(Charecter attacker, Charecter victim)
-        {
-            Random rand = new Random();
-            if (victim.Conditions.AttackParry)
-            {
-                if (victim.TotalSpeed >= rand.NextDouble())
-                    return true;
-                else
-                {
-                    Console.WriteLine("Парирование не удалось!");
-                    return false;
-                }                    
-            }
-            else
-                return false;
-        }
-
-        //  Проверка на крит
-        protected static double Crit_chek(Charecter person)
-        {
-            Random rand = new Random();
-            Thread.Sleep(100);
-            double crit = 0;
-
-            if (rand.NextDouble() <= person.TotalCrit)
-                crit = person.TotalAttack * (rand.Next(15, 20) * 0.1);
-
-            return crit;
-        }
-
-        //  Проверка на защиту и блок
-        protected static double Defence_chek(Charecter victim, double att)
-        {
-            //  Если у противника блок то, иначе ...
-            if (victim.Conditions.Prot_up)
-                att = att * (1 - (victim.TotalBlock + victim.TotalDefence));
-            else
-                att = att * (1 - victim.TotalDefence);
-
-            Thread.Sleep(100);
-            return att;
-        }
-        #endregion
     }
 }

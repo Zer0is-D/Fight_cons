@@ -143,6 +143,20 @@ namespace Fight_cons
         {
             WriteColorLine(ConsoleColor.Green, "\t\t\t[Квест \"", $"{name}", "\"]\n");
         }
+
+        public static void NameAndId(Charecter charecter, bool NextLine = false)
+        {
+            if (NextLine)
+                Console.WriteLine();
+
+            if (!charecter.isPlayer)
+                Console.Write($"[{charecter.Id}] ");
+            else if (!charecter.isPlayer & !NextLine)
+                Console.Write($"[{charecter.Id}] ");
+
+
+            Output.WriteColorName("", charecter, " ");
+        }
         #endregion
 
         //  Метод сравнение параметров (double)
