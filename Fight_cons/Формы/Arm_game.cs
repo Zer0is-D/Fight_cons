@@ -31,8 +31,8 @@ namespace Fight_cons
 
         //  Характеристики стандартного опонента
         static string PersonName;
-        static int Interval = 150;
-        static byte Difficult = 20;
+        static private int Interval = 150;
+        static private byte Difficult = 20;
         public static byte Cost = 20;
 
 
@@ -136,10 +136,10 @@ namespace Fight_cons
         }
 
         //  Опоненты
-        public void Persons()
-        {
+        //public void Persons()
+        //{
 
-        }
+        //}
 
         //  Определние сложности
         public RestlingDifficult GetDifficult(Hero hero)

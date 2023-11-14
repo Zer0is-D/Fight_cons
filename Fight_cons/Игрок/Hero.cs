@@ -105,10 +105,10 @@ namespace Fight_cons
 
         #region Второстепенные свойства и поля
         //  Квесты
-        public Quests Hero_quest = new Quests();
+        public Quests HeroQuests = new Quests();
 
         //  Внимательность/шпионаж
-        public Spying Hero_spying = new Spying();
+        public Spying HeroSpying = new Spying();
 
         //  Статистика
         internal Statistic HeroStatistic = new Statistic();

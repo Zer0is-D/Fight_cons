@@ -103,9 +103,9 @@ namespace Fight_cons
             foreach (char s in str)
             {
                 Console.Write(s);
-                if (Settings.Delay_effect)
+                if (Settings.DelayEffects)
                     Thread.Sleep(x);
-                if (Settings.Sound_effects)
+                if (Settings.SoundEffects)
                     Console.Beep(800, 5);
 
             }

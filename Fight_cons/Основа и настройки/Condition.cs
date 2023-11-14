@@ -10,18 +10,18 @@ namespace Fight_cons
     internal class Condition : Characteristics
     {
         //  Состояния
-        public bool Parry = false;
+        public bool AttackParry = false;
         public bool Prot_up = false;        
 
         //  Debuffs
-        internal protected int Frez_round;
-        internal protected int Slow_round;
-        internal protected int Poisent_round;
-        internal protected int Bleed_round;
+        internal protected int FrezRound;
+        internal protected int SlowRound;
+        internal protected int PoisentRound;
+        internal protected int BleedRound;
 
         //  Базовый урон от эффектов
-        internal protected int Pisent_dmg = 3;
-        internal protected int Bleed_dmg = 3;
+        internal protected int PoisentDmg = 3;
+        internal protected int BleedDmg = 3;
 
         internal protected void Clear()
         {
@@ -36,13 +36,12 @@ namespace Fight_cons
             MagicDefence = 0;
             Block = 0;
             MaxMoves = 0;
-            Frez_round = 0;
 
             //  Обнуление ходов
-            Frez_round = 0;
-            Slow_round = 0;
-            Poisent_round = 0;
-            Bleed_round = 0;
+            FrezRound = 0;
+            SlowRound = 0;
+            PoisentRound = 0;
+            BleedRound = 0;
         }
 
         //  Обнуление любого объекта

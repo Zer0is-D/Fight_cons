@@ -54,7 +54,7 @@ namespace Fight_cons
         public static void Act_Anti(Hero hero)
         {
             Console.WriteLine("Вы выпили противоядие и избавились от всех негативных эффектов");
-            hero.Conditions.Poisent_round = 0;
+            hero.Conditions.PoisentRound = 0;
             Sound.DRINK();
         }
 

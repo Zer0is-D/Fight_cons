@@ -68,13 +68,13 @@ namespace Fight_cons
                     }
                 }
 
-                if (!hero.Conditions.Parry)
+                if (!hero.Conditions.AttackParry)
                 {
                     UnitSkills.Enemy_Hit(attacker, WhoToBeat(attacker, hero, units));
                     break;
                 }
                 //  Отравляющая атака                
-                if (hero.Conditions.Poisent_round == 0)
+                if (hero.Conditions.PoisentRound == 0)
                 {
                     if (Battles.Vero(0.5))
                     {

@@ -113,26 +113,26 @@ namespace Fight_cons.Противник
         //  Вычитание негативыне эффекты
         public static void Negative_effect_impact(Charecter unit)
         {
-            if (unit.Conditions.MaxMoves > 0 || unit.Conditions.Poisent_round > 0 || unit.Conditions.Bleed_round > 0)
+            if (unit.Conditions.MaxMoves > 0 || unit.Conditions.PoisentRound > 0 || unit.Conditions.BleedRound > 0)
             {
                 //  Кровотечение
-                if (unit.Conditions.Bleed_round > 0)
+                if (unit.Conditions.BleedRound > 0)
                 {
                     NameAndId(unit, false);
-                    Output.WriteColorLine(ConsoleColor.DarkRed, $"получает -{unit.Conditions.Bleed_dmg} HP от ", "кровотечение\n");
-                    unit.Conditions.Bleed_round--;
-                    unit.HP -= unit.Conditions.Bleed_dmg;
+                    Output.WriteColorLine(ConsoleColor.DarkRed, $"получает -{unit.Conditions.BleedDmg} HP от ", "кровотечение\n");
+                    unit.Conditions.BleedRound--;
+                    unit.HP -= unit.Conditions.BleedDmg;
                 }
 
                 //  Замедление
                 if (unit.Conditions.MaxMoves > 0)
-                    unit.Conditions.Slow_round--;
+                    unit.Conditions.SlowRound--;
 
                 //  Отравление
-                if (unit.Conditions.Poisent_round > 0)
+                if (unit.Conditions.PoisentRound > 0)
                 {
-                    unit.Conditions.Poisent_round--;
-                    unit.HP -= unit.Conditions.Pisent_dmg;
+                    unit.Conditions.PoisentRound--;
+                    unit.HP -= unit.Conditions.PoisentDmg;
                 }
             }
         }

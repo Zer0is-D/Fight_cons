@@ -12,17 +12,17 @@ namespace Fight_cons
 {
     class Input
     {
-        //  Проверка с героем 
-        public static int Chois_input(Hero hero, sbyte b1, sbyte b2)
+        //  Проверка на соответствие
+        public static int ChoisInput(Hero hero, sbyte minNum, sbyte maxNum)
         {
             int s = 0;
-            do { s = Sbyte_input(hero); }
-            while (!(s > b1 - 1 && s < b2 + 1));
+            do { s = SbyteInput(hero); }
+            while (!(s > minNum - 1 && s < maxNum + 1));
             return s;
         }
         
-        //  Проверка на sbyte c ключевыми словами
-        public static sbyte Sbyte_input(Hero hero)
+        //  Проверка c ключевыми словами
+        public static sbyte SbyteInput(Hero hero)
         {
             Dictionary<string, Action> KeyWords = new Dictionary<string, Action>();
             KeyWords["save"] = () => { Console.WriteLine($"{hero.Name} saved!"); };
@@ -44,7 +44,7 @@ namespace Fight_cons
             {
                 Console.WriteLine();
                 Settings.Option_sound(hero);
-                Settings.Option_wait_skip(hero);
+                Settings.OptionWaitSkip(hero);
             };
             //KeyWords["tp"] = () => { Teleport(hero); };
             //KeyWords["тп"] = () => { Teleport(hero); };
@@ -69,16 +69,16 @@ namespace Fight_cons
             return x;
         }
 
-        //  Выбор героя во время боя
-        public static int Chois_input(sbyte b1, sbyte b2)
+        //  Проверка выбора во время боя
+        public static int ChoisInput(sbyte b1, sbyte b2)
         {
             int s = 0;
-            do { s = Sbyte_input(); }
+            do { s = SbyteInput(); }
             while (!(s > b1 - 1 && s < b2 + 1));
             return s;
         }
 
-        public static int Sbyte_input()
+        public static int SbyteInput()
         {
             string str;
             sbyte x;

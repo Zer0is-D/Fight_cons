@@ -26,14 +26,14 @@ namespace Fight_cons.Мир
                                 + "2) Отдохнуть\n"
                                 + "3) Вернуться в долину");
 
-                switch (Input.Chois_input(hero, 0, 4))
+                switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
                         //  Босс
-                        if (Battles.Vero(0.2) & hero.Hero_quest.Que[0] == 0)
+                        if (Battles.Vero(0.2) & hero.HeroQuests.Que[0] == 0)
                         {
-                            hero.Hero_quest.Que[0] = 1;
-                            hero.Hero_quest.MainQ(hero);
+                            hero.HeroQuests.Que[0] = 1;
+                            hero.HeroQuests.MainQ(hero);
                             
                         }
                         //else if (Mechanics.Vero(0.9))

@@ -8,22 +8,22 @@ namespace Fight_cons
 {
     class AllSkillsEver
     {
-        public Skills_dele Skill { get; set; }
+        public SkillsDele Skill { get; set; }
 
         //  Фиксированные навыки
         public static void Skills(Hero hero, Charecter enemy)
         {
-            double finalDam = AttackDes.Defence_chek(enemy, hero.TotalAttack);
+            double finalDam = AttackDes.CheckDefence(enemy, hero.TotalAttack);
 
             AttackDes Attac = new AttackDes(hero, "Обычная атака")
             {
-                Attack = AttackDes.Act_Attac,
+                Attack = AttackDes.BaseAttack,
                 Description = $"Атаковать ({(int)finalDam} ATT | CRT: {hero.TotalCrit * 100}%)"
             };
 
             AttackDes Attac_breanch = new AttackDes(hero, "Пробитие")
             {
-                Attack = AttackDes.Act_breach_armor,
+                Attack = AttackDes.BreachArmorAttack,
                 Description = $"Пробитие брони и защиты ({(int)(hero.TotalAttack / 1.5)} ATT)"
             };
 
@@ -53,7 +53,7 @@ namespace Fight_cons
                 AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.Act_Bleed,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} ATT | {enemy.Conditions.Bleed_dmg} DMG/3 ХОДА)"
+                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} ATT | {enemy.Conditions.BleedDmg} DMG/3 ХОДА)"
                 };
             }
 
@@ -95,13 +95,13 @@ namespace Fight_cons
             {
                 AttackDes Attac = new AttackDes(hero, "Обычная атака")
                 {
-                    Attack = AttackDes.Act_Attac,
+                    Attack = AttackDes.BaseAttack,
                     Description = $"Атаковать ({hero.TotalAttack} ATT | CRT: {hero.TotalCrit * 100}%)"
                 };
 
                 AttackDes Attac_breanch = new AttackDes(hero, "Пробитие")
                 {
-                    Attack = AttackDes.Act_breach_armor,
+                    Attack = AttackDes.BreachArmorAttack,
                     Description = $"Пробитие брони и защиты ({hero.TotalAttack} ATT)"
                 };
 

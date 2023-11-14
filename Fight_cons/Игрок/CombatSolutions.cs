@@ -34,7 +34,7 @@ namespace Fight_cons
             int battle_choise;
 
             //  Если заморозки нет то ...
-            if (hero.Conditions.Frez_round == 0)
+            if (hero.Conditions.FrezRound == 0)
             {
                 // Выбор боевых действий
                 Console.Write("Ваши действия?\n");
@@ -53,9 +53,9 @@ namespace Fight_cons
                     Console.Write($"5) Убежать\n");
 
                 if (enemies != null)
-                    battle_choise = Input.Chois_input(0, 6);
+                    battle_choise = Input.ChoisInput(0, 6);
                 else
-                    battle_choise = Input.Chois_input(0, 5);
+                    battle_choise = Input.ChoisInput(0, 5);
 
                 switch (battle_choise)
                 {
@@ -81,7 +81,7 @@ namespace Fight_cons
                                   + $"X) Обороняться ({hero.TotalBlock * 100}% BLK)\n"
                                   + $"X) Убежать\n");
 
-                        battle_choise = Input.Chois_input(0, (sbyte)(hero.AttackList.Count));
+                        battle_choise = Input.ChoisInput(0, (sbyte)(hero.AttackList.Count));
                         if (battle_choise != 0)
                             hero.AttackList[battle_choise - 1].Attack(hero, enemy);
                         else
@@ -103,7 +103,7 @@ namespace Fight_cons
                                   + $"X) Обороняться ({hero.TotalBlock * 100}% BLK)\n"
                                   + $"X) Убежать\n");
 
-                        battle_choise = Input.Chois_input(0, (sbyte)(hero.SpellList.Count));
+                        battle_choise = Input.ChoisInput(0, (sbyte)(hero.SpellList.Count));
                         if (battle_choise != 0)
                             hero.SpellList[battle_choise - 1].Spell(hero, (Enemy)enemy);
                         else
@@ -130,7 +130,7 @@ namespace Fight_cons
                         Console.Write($"X) Обороняться ({hero.TotalBlock * 100}% BLK)\n"
                                   + $"X) Убежать\n");
 
-                        battle_choise = Input.Chois_input(hero, 0, (sbyte)(hero.PotionList.Count));
+                        battle_choise = Input.ChoisInput(hero, 0, (sbyte)(hero.PotionList.Count));
                         if (battle_choise != 0 && hero.PotionList[battle_choise - 1].Count > 0)
                             hero.PotionList[battle_choise - 1].Drink(hero);
                         else
@@ -164,7 +164,7 @@ namespace Fight_cons
                     + $"4) Обороняться ({hero.TotalBlock * 100}% BLK)\n"
                     + $"5) Убежать\n");
 
-                hero.Conditions.Frez_round--;
+                hero.Conditions.FrezRound--;
                 Thread.Sleep(400);
             }
 
@@ -204,7 +204,7 @@ namespace Fight_cons
                     Console.WriteLine();
                 }
 
-                var ch = Input.Chois_input(0, (sbyte)enemies.Count());
+                var ch = Input.ChoisInput(0, (sbyte)enemies.Count());
                 foreach (var enemy in enemies)
                 {
                     if (enemy.charecter.Id == ch & enemy.charecter.TotalHP > 0 & !enemy.charecter.Run)
@@ -262,7 +262,7 @@ namespace Fight_cons
             enemy.Turn = 0;
             hero.Turn++;
             hero.Conditions.Prot_up = false;
-            hero.Conditions.Parry = false;
+            hero.Conditions.AttackParry = false;
         }
         #endregion
 
@@ -270,38 +270,38 @@ namespace Fight_cons
         //  Отображение негативыне эффекты
         public static void Negative_effect(Charecter hero, Charecter enemy)
         {
-            if (hero.Conditions.Slow_round > 0 || hero.Conditions.Poisent_round > 0 || hero.Conditions.Frez_round > 0)
+            if (hero.Conditions.SlowRound > 0 || hero.Conditions.PoisentRound > 0 || hero.Conditions.FrezRound > 0)
             {
                 Console.Write("\nУ вас эффект:\n");
 
                 //  Замедление
-                if (hero.Conditions.Slow_round > 0)
-                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Conditions.MaxMoves} MOV] ({hero.Conditions.Slow_round})\n");
+                if (hero.Conditions.SlowRound > 0)
+                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Conditions.MaxMoves} MOV] ({hero.Conditions.SlowRound})\n");
 
                 //  Заморозка
-                if (hero.Conditions.Frez_round > 0)
-                    Output.WriteColorLine(ConsoleColor.DarkBlue, " ", "Заморозка ", $" ({hero.Conditions.Frez_round})\n");                
+                if (hero.Conditions.FrezRound > 0)
+                    Output.WriteColorLine(ConsoleColor.DarkBlue, " ", "Заморозка ", $" ({hero.Conditions.FrezRound})\n");                
 
                 //  Отравление
-                if (hero.Conditions.Poisent_round > 0)
-                    Output.WriteColorLine(ConsoleColor.DarkGreen, " ", "Отравление ", $" [-{enemy.Conditions.Pisent_dmg} HP] ({hero.Conditions.Poisent_round})\n");
+                if (hero.Conditions.PoisentRound > 0)
+                    Output.WriteColorLine(ConsoleColor.DarkGreen, " ", "Отравление ", $" [-{enemy.Conditions.PoisentDmg} HP] ({hero.Conditions.PoisentRound})\n");
             }           
         }
 
         //  Вычитание негативыне эффекты
         public static void Negative_effect_impact(Hero hero, Charecter enemy)
         {
-            if (hero.Conditions.Slow_round > 0 || hero.Conditions.Poisent_round > 0)
+            if (hero.Conditions.SlowRound > 0 || hero.Conditions.PoisentRound > 0)
             {
                 //  Замедление
-                if (hero.Conditions.Slow_round > 0)
-                    hero.Conditions.Slow_round--;                    
+                if (hero.Conditions.SlowRound > 0)
+                    hero.Conditions.SlowRound--;                    
 
                 //  Отравление
-                if (hero.Conditions.Poisent_round > 0)
+                if (hero.Conditions.PoisentRound > 0)
                 {
-                    hero.Conditions.Poisent_round--;
-                    hero.HP -= enemy.Conditions.Pisent_dmg;
+                    hero.Conditions.PoisentRound--;
+                    hero.HP -= enemy.Conditions.PoisentDmg;
                 }                    
             }
         }

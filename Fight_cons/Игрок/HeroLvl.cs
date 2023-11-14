@@ -69,7 +69,7 @@ namespace Fight_cons
                 Lvl++;
                 _nextLvlExp += Lvl * 20 + 5;                
 
-                if (Settings.Sound_effects)
+                if (Settings.SoundEffects)
                     Sound.LVL_MUSIC();
 
                 Console.WriteLine($"{hero.Name} достигает {Lvl}!\n", 1);
@@ -105,7 +105,7 @@ namespace Fight_cons
                     //  Крит
                     ParamsLvlUp(8, LTicket.Points[8], "CRT", hero.Crit, LTicket.NextCrit, hero.ClassBonuses.Crit, true);
 
-                    switch (Input.Chois_input(hero, 1, 9))
+                    switch (Input.ChoisInput(hero, 1, 9))
                     {
                         case 1:
                             MaxHp = (int) SelectedParam(0, MaxHp, LTicket.NextMaxHp, hero.ClassBonuses.MaxHp);
@@ -149,7 +149,7 @@ namespace Fight_cons
                 mainParam += val;
                 mainParam += classBonusVal;
                 LTicket.LvlPoints--;
-                if (!Settings.Bild_vers)
+                if (!Settings.OwnBildVersion)
                     LTicket.Points[pointIndex] = true;
             }
             else

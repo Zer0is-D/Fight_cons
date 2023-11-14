@@ -46,7 +46,7 @@ namespace Fight_cons
             }
             Output.TwriteLine("\n5) Выйти", 1);
 
-            int chois = Input.Chois_input(hero, 0, 6);
+            int chois = Input.ChoisInput(hero, 1, 5);
             switch (chois)
             {
                 case 1:
@@ -94,7 +94,7 @@ namespace Fight_cons
             }
             Output.TwriteLine("5) Выйти", 1);
 
-            int chois = Input.Chois_input(hero, 0, 6);
+            int chois = Input.ChoisInput(hero, 1, 5);
             switch (chois)
             {
                 case 1:

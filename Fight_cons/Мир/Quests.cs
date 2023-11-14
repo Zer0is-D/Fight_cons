@@ -25,35 +25,13 @@ namespace Fight_cons
 
         public void StartQ(Hero hero, byte i)
         {
-            if (hero.Hero_quest.Que[i] == 0) 
-                hero.Hero_quest.Que[i]++;
+            if (hero.HeroQuests.Que[i] == 0) 
+                hero.HeroQuests.Que[i]++;
         }
-
-        /*public async void QuestUpdater(Hero hero)
-        {
-            var q = hero.Hero_quest.Que.Count;
-
-            for (int i = 0; i < q;)
-            {
-                switch (i)
-                {
-                    case 0:
-                        MainQ(hero);
-                        break;
-                    case 1:
-                        Q_Leva_1(hero);
-                        break;
-                    case 2:
-                        Q_Your_name(hero);
-                        break;
-                }
-                i++;
-            }
-        }*/
 
         public void MainQ(Hero hero)
         {
-            switch (hero.Hero_quest.Que[0])
+            switch (hero.HeroQuests.Que[0])
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
@@ -69,8 +47,8 @@ namespace Fight_cons
                     {
                         if (!hero.Run)
                         {
-                            hero.Hero_quest.Que[0] = 2;
-                            hero.Hero_quest.MainQ(hero);
+                            hero.HeroQuests.Que[0] = 2;
+                            hero.HeroQuests.MainQ(hero);
 
                             Output.Victoy_log();
                             hero.HeroStatistic.Wins++;
@@ -82,9 +60,9 @@ namespace Fight_cons
 
                     case 2:
                     //  END GAME
-                    if (hero.Hero_quest.Que[0] == 2)
+                    if (hero.HeroQuests.Que[0] == 2)
                     {
-                        Settings.Bild_vers_active = true;
+                        Settings.BildVersActive = true;
                         Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
                         Console.ReadKey();
                         Output.Final();
@@ -98,7 +76,7 @@ namespace Fight_cons
         public void Q_Leva_1(Hero hero)
         {
             //  Введение
-            switch (hero.Hero_quest.Que[1])
+            switch (hero.HeroQuests.Que[1])
             {
                 case 1:
                     if (Battles.Vero(0.6))
@@ -115,12 +93,10 @@ namespace Fight_cons
                         Console.ReadKey(true);
                         Sound.Voice_Leva("- Но при условии если раздобудешь красивую деревянную статуэтку и 50 золотых\n", 10);
                         Console.ReadKey(true);
-                        hero.Hero_quest.Que[1] = 2;
+                        hero.HeroQuests.Que[1] = 2;
                     }
                     break; 
-                //case 2:
-                //    Output.TwriteLine("\nБегемот ждет статуэтку и 50 золотых монет\n", 1);
-                //    break;
+
                 case 3:
                     Output.TwriteLine("\nБегемот ждет статуэтку и 50 золотых монет\n", 1);
                     if (hero.Money >= 50)
@@ -151,7 +127,7 @@ namespace Fight_cons
                                       + "1) Взять меч\n"
                                       + "2) Я пришел за твоим секретом!", 1);
 
-                        switch (Input.Chois_input(hero, 0, 3))
+                        switch (Input.ChoisInput(hero, 1, 2))
                         {
                             case 1:
                                 hero.HeroWeapon = Q_Leva_swored;
@@ -164,7 +140,7 @@ namespace Fight_cons
                                 hero.PermanentBonuses.Attack += 1;
                                 break;
                         }
-                        hero.Hero_quest.Que[1] = 4;
+                        hero.HeroQuests.Que[1] = 4;
                     }
                     break;
             }                     
@@ -180,7 +156,7 @@ namespace Fight_cons
             Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", "30\u00A2", ")\n");
             Console.WriteLine("6) Выйти");
 
-            switch (Input.Chois_input(hero, 1, 6))
+            switch (Input.ChoisInput(hero, 1, 6))
             {
                 case 1:
                     if (hero.Money >= 30)
@@ -190,7 +166,7 @@ namespace Fight_cons
 
                         Inventory.ItemAdd(hero, "Статуэтка", true);
                         Output.TwriteLine("\nСпасибо за покупку!", 1);
-                        hero.Hero_quest.Que[1] = 3;
+                        hero.HeroQuests.Que[1] = 3;
                     }
                     else
                         Output.TwriteLine("\nВы нищеброд! Проваливайте!\n", 1);
@@ -232,10 +208,10 @@ namespace Fight_cons
             }
         }
 
-        //  Квест "Кiт, ты хозяина мав?"
+        //  Квест "Твое имя камень!"
         public void Q_Your_name(Hero hero)
         {
-            if (hero.Hero_quest.Que[2] == 1)
+            if (hero.HeroQuests.Que[2] == 1)
             {
                 Output.TwriteLine("Проходя вдоль переулка к вам обращается рыжеволосый мальчик.", 10);
                 Console.ReadKey(true);
@@ -257,7 +233,7 @@ namespace Fight_cons
                     + "1) Неодобрительно кивнуть\n"
                     + "2) Одобрительно кивнуть", 10);
 
-                switch (Input.Chois_input(hero, 0, 3))
+                switch (Input.ChoisInput(hero, 1, 2))
                 {
                     case 1:
                         hero.HeroStatistic.know_name = true;
@@ -272,24 +248,8 @@ namespace Fight_cons
                 Output.TwriteLine("- Надеюсь он вам не сильно помешал. Всего доброго. - они поспешно удалились.\n", 10);
                 Console.ReadKey(true);
 
-                hero.Hero_quest.Que[2]++;
+                hero.HeroQuests.Que[2]++;
             }            
-        }
-
-        //  Квест "ДА БУДЕТ СМЕРТЬ"
-        public void Q_def(Hero hero)
-        {
-            Console.WriteLine("Вы видите кошку");
-            Console.WriteLine("Идя вдоль рынка вы замечаете у прилавка человека, что часто кашляет. Старик, увидя вас приятно улыбается." +
-                "- Добрый день, не хотите ли чего приобрести ? -сказал указав на прилавок с не особо свежими фруктами.");
-        }
-
-        //  Квест "Яблочный убийца"
-        public void Q_apple(Hero hero)
-        {
-            Console.WriteLine("Вы видите кошку");
-            Console.WriteLine("Идя вдоль рынка вы замечаете у прилавка человека, что часто кашляет. Старик, увидя вас приятно улыбается." +
-                "- Добрый день, не хотите ли чего приобрести ? -сказал указав на прилавок с не особо свежими фруктами.");
         }
         #endregion
     }

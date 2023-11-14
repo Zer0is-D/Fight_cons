@@ -28,7 +28,7 @@ namespace Fight_cons.Мир
                 if (Hero.Exit_cave)
                     Console.Write("3) Выйти из пещеры\n");
 
-                switch (Input.Chois_input(hero, 0, 4))
+                switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
                         //  Проверка боя с несколькими противниками
@@ -89,7 +89,7 @@ namespace Fight_cons.Мир
                                 + "2) Отдохнуть\n"
                                 + "3) Выйти из пещеры");
 
-                switch (Input.Chois_input(hero, 0, 4))
+                switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
                         if (Battles.Vero(0.7))

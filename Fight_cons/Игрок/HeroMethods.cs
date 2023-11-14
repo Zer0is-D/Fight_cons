@@ -44,7 +44,7 @@ namespace Fight_cons
               + $"2) Волшебник (Упор на Arcane, Magic Defence, MP)\n"
               + $"3) Ловкач (Упор на Crit, Speed, Block)\n");
 
-            switch (Input.Chois_input(hero, 0, 4))
+            switch (Input.ChoisInput(hero, 0, 3))
             {
                 case 1:
                     hero.Class_name = "Воин";
@@ -79,7 +79,7 @@ namespace Fight_cons
                           + $"3) {ItemChar.ItemStats(Two_knifes)}\n"
                           + $"4) {ItemChar.ItemStats(Bow)}");
 
-            switch (Input.Chois_input(hero, 0, 5))
+            switch (Input.ChoisInput(hero, 0, 4))
             {
                 case 1:
                     hero.HeroWeapon = Sword_N_sheeld;
@@ -111,7 +111,7 @@ namespace Fight_cons
         // Смерть героя
         public void HeroDeath()
         {
-            if (Hero_quest.Que[0] == 1)
+            if (HeroQuests.Que[0] == 1)
                 Output.TwriteLine("\nВы погибли в попытки остановить Таотота", 30);
             else
                 Console.WriteLine("Вы погибли!");
@@ -130,7 +130,7 @@ namespace Fight_cons
                             + "1) Да\n"
                             + "2) Нет\n", 1);
 
-            switch (Input.Sbyte_input())
+            switch (Input.SbyteInput())
             {
                 case 1:
                     Hero hero = new Hero(25,10);

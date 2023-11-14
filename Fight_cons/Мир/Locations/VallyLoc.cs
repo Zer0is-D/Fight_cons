@@ -33,7 +33,7 @@ namespace Fight_cons.Мир
                                 + "3) Пойти в деревню\n"
                                 + "4) Пойти в лес");
 
-                switch (Input.Chois_input(hero, 0, 5))
+                switch (Input.ChoisInput(hero, 1, 4))
                 {
                     case 1:
                         CavesLoc.Caves(hero);

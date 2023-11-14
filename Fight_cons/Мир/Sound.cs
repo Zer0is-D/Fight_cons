@@ -14,7 +14,7 @@ namespace Fight_cons
         #region Звуковые эффекты
         public static async void HIT()
         {
-            if (Settings.Sound_effects)
+            if (Settings.SoundEffects)
             {
                 Console.Beep(130, 60);
                 Console.Beep(65, 60);
@@ -23,7 +23,7 @@ namespace Fight_cons
 
         public static void LVL_MUSIC()
         {
-            if (Settings.Sound_effects)
+            if (Settings.SoundEffects)
             {
                 //Console.Beep(300, 120);
                 //Console.Beep(400, 120);
@@ -41,7 +41,7 @@ namespace Fight_cons
 
         public static async void DRINK()
         {
-            if (Settings.Sound_effects)
+            if (Settings.SoundEffects)
             {
                 Console.Beep(138, 60);
                 Console.Beep(164, 60);
@@ -51,7 +51,7 @@ namespace Fight_cons
 
         public static async void DEAD()
         {
-            if (Settings.Sound_effects)
+            if (Settings.SoundEffects)
             {
                 Console.Beep(2093, 240);
                 Console.Beep(1568, 240);
@@ -63,7 +63,7 @@ namespace Fight_cons
 
         public static async void WOW()
         {
-            if (Settings.Sound_effects)
+            if (Settings.SoundEffects)
             {
                 Console.Beep(1046, 240);
                 Console.Beep(1975, 240);
@@ -103,7 +103,7 @@ namespace Fight_cons
 
         public static void BATTLE_MUSIC()
         {
-            if (Settings.Sound_effects)
+            if (Settings.SoundEffects)
             {
                 Console.Beep(200, 200);
                 Console.Beep(190, 100);
@@ -120,7 +120,7 @@ namespace Fight_cons
             {
                 Console.Write(s);
                 Thread.Sleep(x);
-                if (Settings.Sound_effects)
+                if (Settings.SoundEffects)
                     Console.Beep(220, 25);
             }
             Console.Write("\n");
@@ -134,7 +134,7 @@ namespace Fight_cons
             {
                 Console.Write(s);
                 Thread.Sleep(x);
-                if (Settings.Sound_effects)
+                if (Settings.SoundEffects)
                     Console.Beep(rand.Next(250, 300), /*rand.Next(25, 60)*/40);
             }
             Console.Write("\n");
@@ -148,7 +148,7 @@ namespace Fight_cons
             {
                 Console.Write(s);
                 Thread.Sleep(x);
-                if (Settings.Sound_effects)
+                if (Settings.SoundEffects)
                     Console.Beep(rand.Next(350, 480), /*rand.Next(35, 80)*/40);
             }
             Console.Write("\n");
@@ -162,7 +162,7 @@ namespace Fight_cons
             {
                 Console.Write(s);
                 Thread.Sleep(20);
-                if (Settings.Sound_effects)
+                if (Settings.SoundEffects)
                     Console.Beep(rand.Next(140, 200), /*rand.Next(60, 100)*/40);
             }
             Console.Write("\n");
@@ -176,7 +176,7 @@ namespace Fight_cons
             {
                 Console.Write(s);
                 Thread.Sleep(x);
-                if (Settings.Sound_effects)
+                if (Settings.SoundEffects)
                     Console.Beep(rand.Next(500, 600), /*rand.Next(25, 80)*/40);
             }
             Console.Write("\n");

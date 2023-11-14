@@ -17,14 +17,14 @@ namespace Fight_cons
         //  Подслушивание в таверне
         internal void Spying_tavern(Hero hero)
         {
-            hero.Hero_quest.StartQ(hero, 1);
-            hero.Hero_quest.Q_Leva_1(hero);
+            hero.HeroQuests.StartQ(hero, 1);
+            hero.HeroQuests.Q_Leva_1(hero);
 
             if (Sneak < 3)
             {
                 if (Battles.Vero(0.6))
                     Tavern_talks(hero);
-                if (hero.Hero_quest.Que[1] == 4)
+                if (hero.HeroQuests.Que[1] == 4)
                     Output.TwriteLine("'А вот и наш герой!' - восклицает Бегемот.\nПозади него вы видите коллекцию статуэток из дерева\n", 1);
 
                 Sneak++;
@@ -36,7 +36,7 @@ namespace Fight_cons
                 Output.WriteColorLine(ConsoleColor.Yellow, "1) Купить выпивку (", "5\u00A2", ")\n");
                 Console.Write("2) Отказаться и уйти\n");
 
-                switch (Input.Chois_input(1, 2))
+                switch (Input.ChoisInput(1, 2))
                 {
                     case 1:
                         if (hero.Money >= 5)

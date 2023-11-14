@@ -9,7 +9,7 @@ namespace Fight_cons
 {
     public class SpellDes
     {
-        public Skills_dele Spell { get; set; }
+        public SkillsDele Spell { get; set; }
 
         public int ID { get; set; }
         public string Name { get; set; }

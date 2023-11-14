@@ -16,8 +16,8 @@ namespace Fight_cons.Мир
 
             while (true)
             {
-                hero.Hero_quest.StartQ(hero, 2);
-                hero.Hero_quest.Q_Your_name(hero);
+                hero.HeroQuests.StartQ(hero, 2);
+                hero.HeroQuests.Q_Your_name(hero);
 
                 //  Возможные события в локации
                 if (Battles.Vero(0.3))
@@ -35,7 +35,7 @@ namespace Fight_cons.Мир
                                 + "2) Отдохнуть\n"
                                 + "3) Вернуться в долину");
 
-                switch (Input.Chois_input(hero, 0, 4))
+                switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
                         Village(hero);
@@ -78,7 +78,7 @@ namespace Fight_cons.Мир
                 Console.WriteLine("2) Пойти на рынок\n"
                             + "3) Выйти из деревни");
 
-                switch (Input.Chois_input(hero, 0, 4))
+                switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
                         if (hero.Lvl > hero.HeroStatistic.Hero_lvl_know)
@@ -120,10 +120,10 @@ namespace Fight_cons.Мир
                 Output.WriteColorLine(ConsoleColor.Yellow, "3) Армреслинг (", $"{Arm_game.Cost}\u00A2", ")\n");
                 Console.WriteLine("4) Выйти из трактира");
 
-                switch (Input.Chois_input(hero, 0, 5))
+                switch (Input.ChoisInput(hero, 1, 4))
                 {
                     case 1:
-                        hero.Hero_spying.Spying_tavern(hero);
+                        hero.HeroSpying.Spying_tavern(hero);
                         break;
                     case 2:
                         if (hero.Money >= 5)
@@ -166,8 +166,8 @@ namespace Fight_cons.Мир
                 hero.MPBar();
 
                 //  Квесты
-                if (hero.Hero_quest.Que[1] == 2)
-                    hero.Hero_quest.Q_leva_Market(hero);
+                if (hero.HeroQuests.Que[1] == 2)
+                    hero.HeroQuests.Q_leva_Market(hero);
 
                 Console.WriteLine("\nВаши действия?\n"
                               + "1) Наблюдать и подслушивать\n"
@@ -177,7 +177,7 @@ namespace Fight_cons.Мир
                 Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", "30\u00A2", ")\n");
                 Console.WriteLine("6) Выйти");
 
-                switch (Input.Chois_input(hero, 0, 7))
+                switch (Input.ChoisInput(hero, 1, 6))
                 {
                     case 1:
                         //  Событие прослушивание  
@@ -246,7 +246,7 @@ namespace Fight_cons.Мир
                                 + "2) Общаться\n"
                                 + "3) Выйти из поместье");
 
-                switch (Input.Chois_input(hero, 0, 4))
+                switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
                         //  Событие "Осмотреться"

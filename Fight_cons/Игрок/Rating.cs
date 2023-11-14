@@ -11,11 +11,12 @@ namespace Fight_cons
 {
     class Rating
     {
-        private static string path = System.Windows.Forms.Application.StartupPath + "\\Palyers.xml";
+        private static string Path = System.Windows.Forms.Application.StartupPath + "\\Palyers.xml";
         static string Name;
         static int Score;
 
-        public static List<TopPlayers> players_ = new List<TopPlayers>()
+        //  Список игроков
+        public static List<TopPlayers> players = new List<TopPlayers>()
         {
             new TopPlayers(){ Name = "Van", Score = 1000},
             new TopPlayers(){ Name = "Lev", Score = 993},
@@ -28,40 +29,42 @@ namespace Fight_cons
             Save_user_score(new_player);
 
             //  Сортировка согласно новым данным
-            players_.Add(new_player);            
-            var s = players_.OrderBy(x => x.Score).ToList();
+            players.Add(new_player);            
+            var s = players.OrderBy(x => x.Score).ToList();
 
-            Score_view();
+            ScoreView();
         }
 
         private static void Save_user_score(TopPlayers user)
         {
-            if (!File.Exists(path))
+            if (!File.Exists(Path))
             {
-                File.Create(path).Close();
-                File.WriteAllText(path, $"<?xml version=\"1.0\" encoding=\"utf-8\"?>{Environment.NewLine}<catalog></catalog>");
-                foreach(var pl in players_)
+                File.Create(Path).Close();
+                File.WriteAllText(Path, $"<?xml version=\"1.0\" encoding=\"utf-8\"?>{Environment.NewLine}<catalog></catalog>");
+                foreach(var pl in players)
                 {
                     Save_user_score(pl);
                 }
             }
 
-            XDocument document = XDocument.Load(path);
+            XDocument document = XDocument.Load(Path);
 
             XElement xelem = new XElement("record",
                 new XElement("user_name", user.Name),
                 new XElement("user_score", user.Score));
 
             document.Root.Add(xelem);
-            document.Save(path);
+            document.Save(Path);
         }
 
         //  Запись нового игрока
         private static TopPlayers Total_score(Hero hero)
         {
-            Console.WriteLine("Назовите себя (имя более 1 символа):");
             TopPlayers player = new TopPlayers();
+
+            Console.WriteLine("Назовите себя (имя более 1 символа):");
             Name = player.Name = Console.ReadLine();
+
             Score = player.Score = (int)(
                 (hero.Lvl * 10) +
                 (hero.Exp * 2) +
@@ -90,14 +93,14 @@ namespace Fight_cons
         }
 
         //  Вывод рейтинга
-        public static void Score_view()
+        public static void ScoreView()
         {
-            XDocument document = XDocument.Load(path);
+            XDocument document = XDocument.Load(Path);
             int num = 1;
-            var xes = document.Root.Elements().OrderByDescending(x => Convert.ToInt32(x.Element("user_score").Value));
+            var list = document.Root.Elements().OrderByDescending(x => Convert.ToInt32(x.Element("user_score").Value));
 
             Console.WriteLine("\nЛокальный рейтинг:");
-            foreach (XElement element in xes)
+            foreach (XElement element in list)
             {
                 if (num < 21)
                     Console.WriteLine($"{num++}) {element.Element("user_name").Value}: {element.Element("user_score").Value}");

@@ -10,7 +10,7 @@ namespace Fight_cons
 {
     public class UnitSkills
     {
-        public Skills_dele Unit_skill { get; set; }
+        public SkillsDele Unit_skill { get; set; }
 
         #region Магия
         //  Magic_slow!!!
@@ -20,7 +20,7 @@ namespace Fight_cons
 
             int damag = (int) (att / 2.0);
             victim.Conditions.MaxMoves++;
-            victim.Conditions.Slow_round = 3;
+            victim.Conditions.SlowRound = 3;
 
             Unit.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.Blue, "", $"замедляет ");
@@ -48,12 +48,12 @@ namespace Fight_cons
             double att = attacker.TotalAttack;
 
             int damag = (int) (att / 2.0);
-            victim.Conditions.Frez_round = 2;
+            victim.Conditions.FrezRound = 2;
 
             Unit.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", $"Замораживает ");
             Unit.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Yellow, $"на {victim.Conditions.Frez_round} хода и сносит ", $"{damag} ", "урона! У ");
+            Output.WriteColorLine(ConsoleColor.Yellow, $"на {victim.Conditions.FrezRound} хода и сносит ", $"{damag} ", "урона! У ");
             Unit.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
 
@@ -99,7 +99,7 @@ namespace Fight_cons
             if (Parry_chek(victim, attacker))
                 victim.Conditions.Random_debuff(attacker, victim);
             else
-                Battle_log(attacker, victim, crit, damag);
+                BattleLog(attacker, victim, crit, damag);
 
             attacker.Turn += 1;
             Thread.Sleep(100);
@@ -114,7 +114,7 @@ namespace Fight_cons
             //  Урон по врагу с защитой
             int damag = (int) (att / 2.0);
 
-            victim.Conditions.Poisent_round = 3;
+            victim.Conditions.PoisentRound = 3;
 
             Unit.NameAndId(attacker, true);
             Console.Write("накладывает на ");
@@ -162,7 +162,7 @@ namespace Fight_cons
 
         #region Проверки и логи
         //  Log
-        internal static void Battle_log(Charecter attacker, Charecter victim, double crit, int damag)
+        internal static void BattleLog(Charecter attacker, Charecter victim, double crit, int damag)
         {
             Unit.NameAndId(attacker, true);
             Console.Write("сносит ");
@@ -185,7 +185,7 @@ namespace Fight_cons
         protected static bool Parry_chek(Charecter attacker, Charecter victim)
         {
             Random rand = new Random();
-            if (victim.Conditions.Parry)
+            if (victim.Conditions.AttackParry)
             {
                 if (victim.TotalSpeed >= rand.NextDouble())
                     return true;

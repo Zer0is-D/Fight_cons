@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fight_cons
 {
-    public delegate void Skills_dele(Hero hero, Charecter enemy);
+    public delegate void SkillsDele(Hero hero, Charecter enemy);
 
     public abstract class Charecter : Characteristics
     {
@@ -71,7 +71,7 @@ namespace Fight_cons
         internal PermanentBonus PermanentBonuses = new PermanentBonus();
         internal ClassBonus ClassBonuses = new ClassBonus();
 
-        internal Weapon HeroWeapon = new Weapon(name: "Кулаки", attack: 1, speed: 0.2, cost: 0, crit: 0.2, block: 0.05, maxMoves: 3);
+        internal Weapon HeroWeapon = new Weapon(name: "Кулаки", attack: 1, speed: 0.2, cost: 0, crit: 0, block: 0, maxMoves: 2);
         internal Armor HeroArmor = new Armor("Без брони", 0, 0);
 
         internal protected bool isPlayer;

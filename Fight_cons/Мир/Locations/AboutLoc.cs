@@ -192,7 +192,7 @@ namespace Fight_cons
                 hero.Max_drunk += 1;
                 VillageLoc.Inn(hero);
             }
-            hero.Hero_spying.Sneak = 0;
+            hero.HeroSpying.Sneak = 0;
             hero.drunk++;
         }
 
@@ -214,7 +214,7 @@ namespace Fight_cons
                                          + "1) Взять его\n"
                                          + "2) Пройти мимо\n", 40);
 
-            switch (Input.Chois_input(hero, 0, 3))
+            switch (Input.ChoisInput(hero, 1, 2))
             {
                 case 1:
                     if (Battles.Vero(0.7))

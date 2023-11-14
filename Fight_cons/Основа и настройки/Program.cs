@@ -20,12 +20,12 @@ namespace Fight_cons
 
             Hero hero = new Hero(25, 10);
 
-            Output.Game_logo(vers: "2.5");
+            Output.Game_logo(vers: "2.6 (Альфа)");
 
-            if (Settings.Bild_vers_active)
-                Settings.Option_vers(hero);
+            if (Settings.BildVersActive)
+                Settings.OptionVersions(hero);
 
-            Settings.Option_wait_skip(hero);
+            Settings.OptionWaitSkip(hero);
 
             Hero.Creat_hero(hero);
             Console.ReadKey();
