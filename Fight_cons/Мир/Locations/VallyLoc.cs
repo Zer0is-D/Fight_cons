@@ -12,7 +12,7 @@ namespace Fight_cons.Мир
         public static void Vally(Hero hero)
         {
             //  Название локации
-            Loc_name = "Долина";
+            CurrentLocationName = "Долина";
 
             while (true)
             {
@@ -20,9 +20,9 @@ namespace Fight_cons.Мир
                 if (Battles.Vero(0.4))
                     Battles.MakeBattle(hero, 3);
                 if (Battles.Vero(0.01))
-                    Pouch(hero, 1, 7);
+                    FindingPouchEvent(hero, 1, 7);
 
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{Loc_name}\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{CurrentLocationName}\n");
                 Output.TwriteLine(Dicscriptions(LocationName.Vally), 1);
                 hero.HPBar();
                 hero.MPBar();
@@ -39,13 +39,13 @@ namespace Fight_cons.Мир
                         CavesLoc.Caves(hero);
                         break;
                     case 2:
-                        Rest(hero);
+                        RestEvent(hero);
                         break;
                     case 3:
                         VillageLoc.Neighborhood(hero);
                         break;
                     case 4:
-                        DeepWoodsLoc.Deep_woods(hero);
+                        DeepWoodsLoc.DeepWoods(hero);
                         break;
                 }
             }

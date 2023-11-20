@@ -8,9 +8,9 @@ namespace Fight_cons
 {
     internal class Inventory
     {
-        public static sbyte _inventoryMax = 10;
+        private static sbyte _inventoryMax = 10;
 
-        public static void Inventory_open(Hero hero)
+        public static void ShowInventory(Hero hero)
         {
             sbyte countItems = (sbyte)hero.HeroInventory.Count();
             Console.WriteLine($"Ваш инвентарь: [{countItems}/{_inventoryMax}]");

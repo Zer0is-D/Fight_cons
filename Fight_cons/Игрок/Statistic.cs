@@ -13,7 +13,7 @@ namespace Fight_cons
 
         //  События из бара
         //  На каком уровне выперли героя из бара
-        public int Hero_lvl_know;
+        public int HeroLvlKickOff;
 
 
         //  Боевая статистика
@@ -29,9 +29,9 @@ namespace Fight_cons
 
         //  Мини игры
         //  Изучение пещеры
-        public int Cave_ad;
+        public int CaveResearch;
 
         //  Победы в мини-играх
-        public int Arm_game_wins;
+        public int ArmGameWins;
     }
 }

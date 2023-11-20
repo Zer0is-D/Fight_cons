@@ -9,6 +9,29 @@ namespace Fight_cons
 {
     public class Output
     {
+        #region Обозначения и символы
+        public static char UpSymbol = '\u0024';       // \u2191
+        public static char DownSymbol = '\u0025';     // \u2193
+
+        public static string HPStr = "HP";
+        public static string MPStr = "MP";
+
+        public static string AttackStr = "ATT";
+        public static string ArcaneStr = "ARC";
+        public static string DefenceStr = "DEF";
+        public static string MagicDefenceStr = "MDEF";
+        public static string MaxHpStr = "vHP";
+        public static string MaxMp = "vMP";
+        public static string SpeedStr = "SPD";
+        public static string CritStr = "CRT";
+        public static string BlockStr = "BLK";
+        public static string MaxMovesStr = "vMOV";
+
+        public static string DmgStr = "DMG";
+        public static string EffMovStr = "MOV";
+        //  Добавить меткость на англ
+        #endregion
+
         #region Логи
         //  Экран нападения
         public static void Fight_log()
@@ -65,7 +88,7 @@ namespace Fight_cons
 
         }
         #endregion
-
+        
         #region Работа со строками
         //  String color changer
         public static void WriteColorLine(ConsoleColor color, string before, string str, string after = null)
@@ -157,25 +180,7 @@ namespace Fight_cons
 
             Output.WriteColorName("", charecter, " ");
         }
-        #endregion
-
-        //  Метод сравнение параметров (double)
-        public static void Comparison(double parametr_1, double parametr_2, string text_left, string tab_or_line, string text_mid = "", bool isDouble = false)
-        {
-            char Up = '\u2191';
-            char Down = '\u2193';
-            string curString = $"{parametr_2}";
-
-            if (isDouble)
-                curString = $"{parametr_2 * 100}%";
-
-            if (parametr_2 > parametr_1)
-                WriteColorLine(ConsoleColor.Green, $"{text_left}", $"{curString} {text_mid} {Up} ", $"{tab_or_line}");
-            else if (parametr_2 == parametr_1)
-                WriteColorLine(ConsoleColor.White, $"{text_left}", $"{curString} {text_mid} ", $"{tab_or_line}");
-            else
-                WriteColorLine(ConsoleColor.Red, $"{text_left}", $"{curString} {text_mid} {Down} ", $"{tab_or_line}");
-        }        
+        #endregion       
 
         //  Определение цвета юнита
         public static ConsoleColor unitHPColor(bool isEnemy)

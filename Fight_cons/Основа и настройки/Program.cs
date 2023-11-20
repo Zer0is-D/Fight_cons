@@ -27,7 +27,7 @@ namespace Fight_cons
 
             Settings.OptionWaitSkip(hero);
 
-            Hero.Creat_hero(hero);
+            Hero.CreateHero(hero);
             Console.ReadKey();
         }
     }

@@ -20,13 +20,13 @@ namespace Fight_cons
             AttackDes Attac = new AttackDes(hero, "Обычная атака")
             {
                 Attack = AttackDes.BaseAttack,
-                Description = $"Атаковать ({(int)finalDam} ATT | CRT: {hero.TotalCrit * 100}%)"
+                Description = $"Атаковать ({(int)finalDam} {Output.AttackStr} | {Output.CritStr}: {hero.TotalCrit * 100}%)"
             };
 
             AttackDes Attac_breanch = new AttackDes(hero, "Пробитие")
             {
                 Attack = AttackDes.BreachArmorAttack,
-                Description = $"Пробитие брони и защиты ({(int)(hero.TotalAttack / 1.5)} ATT)"
+                Description = $"Пробитие брони и защиты ({(int)(hero.TotalAttack / 1.5)} {Output.AttackStr})"
             };
 
             //  Способность: Кровотечение
@@ -35,7 +35,7 @@ namespace Fight_cons
                 AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} ATT | {enemy.Conditions.BleedDmg} DMG/3 ХОДА)"
+                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {enemy.Conditions.BleedDmg} {Output.DmgStr}/3 ХОДА)"
                 };
             }
 
@@ -45,7 +45,7 @@ namespace Fight_cons
                 AttackDes Attac_Parry = new AttackDes(hero, "Парировать")
                 {
                     Attack = AttackDes.ParryAttack,
-                    Description = $"Парировать атаку ({hero.TotalSpeed * 100}% МЕТ)"
+                    Description = $"Парировать атаку ({hero.TotalSpeed * 100}% МЕТ)"//////////////////////////////////////////////////////////////
                 };
             }
 
@@ -55,7 +55,7 @@ namespace Fight_cons
                 Spell_cost = 5,
                 Spell_power = 10
             };
-            Cleansing_ray.Description = $"Очищающий луч ({Cleansing_ray.Spell_power + hero.TotalArcane} ATT | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {Cleansing_ray.Spell_cost} MP)";
+            Cleansing_ray.Description = $"Очищающий луч ({Cleansing_ray.Spell_power + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {Cleansing_ray.Spell_cost} {Output.MPStr})";
 
             //  Способность: Малое лечение
             if (hero.HeroStatistic.Spells >= 5)
@@ -65,7 +65,7 @@ namespace Fight_cons
                     Spell = SpellDes.HealSpell,
                     Spell_cost = 3
                 };
-                Healing.Description = $"Малое лечение (+30% HP | {Healing.Spell_cost} MP)";
+                Healing.Description = $"Малое лечение (+30% {Output.HPStr} | {Healing.Spell_cost} {Output.MPStr})";
             }
 
             //  Способность: Кровотечение
@@ -74,47 +74,12 @@ namespace Fight_cons
                 AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} ATT | {enemy.Conditions.BleedDmg} DMG/3 ХОДА)"
+                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {enemy.Conditions.BleedDmg} {Output.DmgStr}/3 ХОДА)"
                 };
             }
 
             Clear_dub(hero, enemy);
         }
-
-        //public static void Spells(Hero hero, Charecter enemy, int cost, int power)
-        //{
-        //    //  Можно загружать набор навыков во время боя
-        //    SpellDes Cleansing_ray = new SpellDes(hero, "Очищающий луч")
-        //    {
-        //        Spell = SpellDes.Spell_cleansing_ray,
-        //        Spell_cost = 5,
-        //        Spell_power = 10
-        //    };
-        //    Cleansing_ray.Description = $"Очищающий луч ({Cleansing_ray.Spell_power + hero.TotalArcane} ATT | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {Cleansing_ray.Spell_cost} MP)";
-
-        //    //  Способность: Малое лечение
-        //    if (hero.HeroStatistic.Spells >= 5)
-        //    {
-        //        SpellDes Healing = new SpellDes(hero, "Малое лечение")
-        //        {
-        //            Spell = SpellDes.Heal,
-        //            Spell_cost = 3
-        //        };
-        //        Healing.Description = $"Малое лечение (+30% HP | {Healing.Spell_cost} MP)";
-        //    }
-
-        //    //  Способность: Кровотечение
-        //    if (hero.HeroStatistic.Attacks >= 10)
-        //    {
-        //        AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
-        //        {
-        //            Attack = AttackDes.MakeBleedAttack,
-        //            Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} ATT | {enemy.Conditions.BleedDmg} DMG/3 ХОДА)"
-        //        };
-        //    }
-
-        //    Clear_dub(hero, enemy);
-        //}
 
         //  Чистка от дубликатов
         public static void Clear_dub(Hero hero, Charecter enemy)
@@ -140,13 +105,13 @@ namespace Fight_cons
                 AttackDes Attac = new AttackDes(hero, "Обычная атака")
                 {
                     Attack = AttackDes.BaseAttack,
-                    Description = $"Атаковать ({hero.TotalAttack} ATT | CRT: {hero.TotalCrit * 100}%)"
+                    Description = $"Атаковать ({hero.TotalAttack} {Output.AttackStr} | {Output.CritStr}: {hero.TotalCrit * 100}%)"
                 };
 
                 AttackDes Attac_breanch = new AttackDes(hero, "Пробитие")
                 {
                     Attack = AttackDes.BreachArmorAttack,
-                    Description = $"Пробитие брони и защиты ({hero.TotalAttack} ATT)"
+                    Description = $"Пробитие брони и защиты ({hero.TotalAttack} {Output.AttackStr})"
                 };
 
                 PotionDes Heal_potion = new PotionDes(hero)

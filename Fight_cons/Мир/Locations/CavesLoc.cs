@@ -9,15 +9,15 @@ namespace Fight_cons.Мир
     internal class CavesLoc : AboutLoc
     {
         //  Пещеры начало
-        public static void Caves_begin(Hero hero)
+        public static void CavesStart(Hero hero)
         {
             //  Название локации
-            Loc_name = "???";
+            CurrentLocationName = "???";
 
             while (true)
             {
                 //  Возможные события в локации
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{Loc_name}\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{CurrentLocationName}\n");
                 Output.TwriteLine(Dicscriptions(LocationName.Caves), 1);
                 hero.HPBar();
                 hero.MPBar();
@@ -31,6 +31,7 @@ namespace Fight_cons.Мир
                 switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
+                        Market.ShowWeaponGoods(hero);
                         //  Проверка боя с несколькими противниками
                         //if (Battles.Vero(0.9))
                         //    Battles.MakeBattle(hero, 1, 2, 0, 101, 102);
@@ -51,15 +52,15 @@ namespace Fight_cons.Мир
                             else
                                 Battles.MakeBattle(hero, 2);
                         }
-                        hero.HeroStatistic.Cave_ad++;
+                        hero.HeroStatistic.CaveResearch++;
                         Research(hero);
                         break;
                     case 2:
                         if (Battles.Vero(0.8))
-                            Rest(hero);
+                            RestEvent(hero);
                         else
                         {
-                            Rest(hero);
+                            RestEvent(hero);
                             Battles.MakeBattle(hero, 1);
                         }
                         break;
@@ -75,11 +76,11 @@ namespace Fight_cons.Мир
         public static void Caves(Hero hero)
         {
             //  Название локации
-            Loc_name = "Пещеры";
+            CurrentLocationName = "Пещеры";
 
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{Loc_name}\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{CurrentLocationName}\n");
                 Output.TwriteLine(Dicscriptions(LocationName.Caves), 1);
                 hero.HPBar();
                 hero.MPBar();
@@ -101,11 +102,11 @@ namespace Fight_cons.Мир
                             else
                                 Battles.MakeBattle(hero, 2);
                         }
-                        hero.HeroStatistic.Cave_ad++;
+                        hero.HeroStatistic.CaveResearch++;
                         Research(hero);
                         break;
                     case 2:
-                        Rest(hero);
+                        RestEvent(hero);
                         break;
                     case 3:
                         VallyLoc.Vally(hero);

@@ -53,7 +53,7 @@ namespace Fight_cons
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.Yellow, "наносит ", $"{damag} ", "урона у ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", "HP\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", $"{Output.HPStr}\n");
 
             victim.HP -= damag;
 
@@ -72,7 +72,7 @@ namespace Fight_cons
             Output.WriteColorLine(ConsoleColor.DarkRed, "накладывает ", $"Кровотечение ");
             Output.WriteColorLine(ConsoleColor.Yellow, "и наносит ", $"{damag} ", "урона у ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim.HP - damag} ", "HP\n");
+            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim.HP - damag} ", $"{Output.HPStr}\n");
 
             victim.HP -= damag;
 
@@ -102,7 +102,7 @@ namespace Fight_cons
                 Output.WriteColorLine(ConsoleColor.Yellow, "и наносит ", $"{damag} ", "урона у ");
 
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim.HP - damag} ", "HP\n");
+            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim.HP - damag} ", $"{Output.HPStr}\n");
             victim.HP -= damag;
 
             if (attacker is Hero hero)

@@ -61,7 +61,7 @@ namespace Fight_cons
                    + "1) Нападение\n"
                    + "2) Заклинания\n"
                    + "3) Выпить зелье\n"
-                   + $"4) Обороняться ({hero.TotalBlock * 100}% BLK)\n"
+                   + $"4) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
                    + $"5) Убежать\n");
 
                     hero.Conditions.FrezRound--;
@@ -89,7 +89,7 @@ namespace Fight_cons
             Console.Write("1) Нападение\n"
                         + "2) Заклинания\n"
                         + "3) Выпить зелье\n"
-                        + $"4) Обороняться ({hero.TotalBlock * 100}% BLK)\n");
+                        + $"4) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n");
             if (enemies != null)
             {
                 Console.Write($"5) Назад\n"
@@ -182,7 +182,7 @@ namespace Fight_cons
 
             Console.Write($"X) Заклинания\n"
                       + $"X) Выпить зелье\n"
-                      + $"X) Обороняться ({hero.TotalBlock * 100}% BLK)\n"
+                      + $"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
                       + $"X) Убежать\n");
 
             battle_choise = Input.ChoisInput(0, (sbyte)(hero.AttackList.Count));
@@ -206,7 +206,7 @@ namespace Fight_cons
             }
 
             Console.Write($"X) Выпить зелье\n"
-                      + $"X) Обороняться ({hero.TotalBlock * 100}% BLK)\n"
+                      + $"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
                       + $"X) Убежать\n");
 
             battle_choise = Input.ChoisInput(0, (sbyte)(hero.SpellList.Count));
@@ -245,7 +245,7 @@ namespace Fight_cons
                     Output.WriteColorLine(ConsoleColor.DarkGray, "  ", $"{p.ID}) {p.Description} {p.CountPotion}\n");
             }
 
-            Console.Write($"X) Обороняться ({hero.TotalBlock * 100}% BLK)\n"
+            Console.Write($"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
                       + $"X) Убежать\n");
 
             battle_choise = Input.ChoisInput(hero, 0, (sbyte)(hero.PotionList.Count));
@@ -263,16 +263,16 @@ namespace Fight_cons
             Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "################################################################################", "");
             Output.WriteColorLine(ConsoleColor.DarkMagenta, "Имя: ", $"{enemy.Name}", "\n");
 
-            Output.Comparison(enemy.TotalDefence, hero.TotalDefence, "DEF: ", "\t", "", true);
-            Output.Comparison(enemy.TotalAttack, hero.TotalBlock, "BLK: ", "\n", "", true);
+            //Output.Comparison(enemy.TotalDefence, hero.TotalDefence, "DEF: ", "\t", "", true);
+            //Output.Comparison(enemy.TotalAttack, hero.TotalBlock, "BLK: ", "\n", "", true);
 
-            Console.Write($"MDEF: {enemy.TotalMagicDefence * 100}%\n");
+            //Console.Write($"MDEF: {enemy.TotalMagicDefence * 100}%\n");
 
-            Output.Comparison(enemy.TotalAttack, hero.TotalAttack, "ATT: ", "\t");
-            Output.Comparison(enemy.TotalArcane, hero.TotalArcane, "ARC: ", "\n");
+            //Output.Comparison(enemy.TotalAttack, hero.TotalAttack, "ATT: ", "\t");
+            //Output.Comparison(enemy.TotalArcane, hero.TotalArcane, "ARC: ", "\n");
 
-            Output.Comparison(enemy.TotalMaxMoves, hero.TotalSpeed, "SPD: ", "\t", "", true);
-            Output.Comparison(enemy.TotalMaxMoves, hero.TotalCrit, "CRT: ", "\n", "", true);
+            //Output.Comparison(enemy.TotalMaxMoves, hero.TotalSpeed, "SPD: ", "\t", "", true);
+            //Output.Comparison(enemy.TotalMaxMoves, hero.TotalCrit, "CRT: ", "\n", "", true);
             Output.WriteColorLine(ConsoleColor.DarkGray, "", "################################################################################", "");
         }
 
@@ -299,7 +299,7 @@ namespace Fight_cons
 
                 //  Замедление
                 if (hero.Conditions.SlowRound > 0)
-                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Conditions.MaxMoves} MOV] ({hero.Conditions.SlowRound})\n");
+                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Conditions.MaxMoves} {Output.EffMovStr}] ({hero.Conditions.SlowRound})\n");
 
                 //  Заморозка
                 if (hero.Conditions.FrezRound > 0)
@@ -307,7 +307,7 @@ namespace Fight_cons
 
                 //  Отравление
                 if (hero.Conditions.PoisentRound > 0)
-                    Output.WriteColorLine(ConsoleColor.DarkGreen, " ", "Отравление ", $" [-{enemy.Conditions.PoisentDmg} HP] ({hero.Conditions.PoisentRound})\n");
+                    Output.WriteColorLine(ConsoleColor.DarkGreen, " ", "Отравление ", $" [-{enemy.Conditions.PoisentDmg} {Output.HPStr}] ({hero.Conditions.PoisentRound})\n");
             }           
         }
 

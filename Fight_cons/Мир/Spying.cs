@@ -49,7 +49,7 @@ namespace Fight_cons
                         else
                         {
                             Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
-                            hero.HeroStatistic.Hero_lvl_know = hero.Lvl;
+                            hero.HeroStatistic.HeroLvlKickOff = hero.Lvl;
                             VillageLoc.Village(hero);                                                        
                         }
                         break;

@@ -27,11 +27,11 @@ namespace Fight_cons
             Dictionary<string, Action> KeyWords = new Dictionary<string, Action>();
             KeyWords["save"] = () => { Console.WriteLine($"{hero.Name} saved!"); };
             KeyWords["сохранить"] = () => { Console.WriteLine($"{hero.Name} saved!"); };
-            KeyWords["инвентарь"] = () => { Inventory.Inventory_open(hero); };
-            KeyWords["inv"] = () => { Inventory.Inventory_open(hero); };
-            KeyWords["инв"] = () => { Inventory.Inventory_open(hero); };
-            KeyWords["статы"] = () => { hero.Stats(); };
-            KeyWords["stats"] = () => { hero.Stats(); };
+            KeyWords["инвентарь"] = () => { Inventory.ShowInventory(hero); };
+            KeyWords["inv"] = () => { Inventory.ShowInventory(hero); };
+            KeyWords["инв"] = () => { Inventory.ShowInventory(hero); };
+            KeyWords["статы"] = () => { hero.ShowHeroStats(); };
+            KeyWords["stats"] = () => { hero.ShowHeroStats(); };
             KeyWords["help"] = () => 
             {
                 Console.WriteLine("\nКлючевые слова:\n");

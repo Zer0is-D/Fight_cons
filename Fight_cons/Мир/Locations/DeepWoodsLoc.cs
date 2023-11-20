@@ -9,14 +9,14 @@ namespace Fight_cons.Мир
     internal class DeepWoodsLoc : AboutLoc
     {
         //  Темные леса
-        public static void Deep_woods(Hero hero)
+        public static void DeepWoods(Hero hero)
         {
             //  Название локации
-            Loc_name = "Леса";
+            CurrentLocationName = "Леса";
 
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{Loc_name}\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{CurrentLocationName}\n");
                 Output.TwriteLine(Dicscriptions(LocationName.DeepWoods), 1);
                 hero.HPBar();
                 hero.MPBar();
@@ -55,7 +55,7 @@ namespace Fight_cons.Мир
                             Output.TwriteLine("Вы ничего не находите\n", 1);
                         break;
                     case 2:
-                        Rest(hero);
+                        RestEvent(hero);
                         break;
                     case 3:
                         VallyLoc.Vally(hero);

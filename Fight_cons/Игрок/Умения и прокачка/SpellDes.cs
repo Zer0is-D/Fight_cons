@@ -49,7 +49,7 @@ namespace Fight_cons
                     Output.WriteColorLine(ConsoleColor.DarkBlue, "наносит заклинанием ", $"{damag} ", "урона у ");
 
                 Output.NameAndId(victim);
-                Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", "HP\n");                
+                Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", $"{Output.HPStr}\n");                
                 victim.HP -= damag;
 
                 hero.HeroStatistic.Spells++;
@@ -68,9 +68,9 @@ namespace Fight_cons
             double H = ((hero.MaxHp / 100.0) * 30.0) + crit;
 
             if (crit > 1)
-                Output.WriteColorLine(ConsoleColor.Green, "\nВы критически восстановили себе ", $"+{(int)H} ", "HP\n");
+                Output.WriteColorLine(ConsoleColor.Green, "\nВы критически восстановили себе ", $"+{(int)H} ", $"{Output.HPStr}\n");
             else
-                Output.WriteColorLine(ConsoleColor.Green, "\nВы восстановили себе ", $"+{(int)H} ", "HP\n");
+                Output.WriteColorLine(ConsoleColor.Green, "\nВы восстановили себе ", $"+{(int)H} ", $"{Output.HPStr}\n");
 
             hero.HP += (int)H;
 

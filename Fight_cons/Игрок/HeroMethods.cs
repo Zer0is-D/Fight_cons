@@ -12,23 +12,23 @@ namespace Fight_cons
     partial class Hero
     {
         //  Характеристики героя
-        public void Stats()
+        public void ShowHeroStats()
         {
             Output.WriteColorLine(ConsoleColor.DarkGreen, "\nHero name: ", $"{Name}\n");
             Console.WriteLine($"Class: {Class_name}\n"
                             + $"Lvl: {Lvl}\t\tExp: {Exp}/{_nextLvlExp} \n"
-                            + $"HP: {TotalHP}/{TotalMaxHP} \tMP: {MP}/{TotalMaxMP}\n"
-                            + $"ATT: {TotalAttack}\t\tARC: {TotalArcane}\n"
-                            + $"DEF: {TotalDefence * 100}%\t\tMAG DEF: {TotalMagicDefence * 100}%\n"
-                            + $"SPD: {TotalSpeed * 100}%\tCrit: {TotalCrit * 100}%\n"
-                            + $"BLK: {TotalBlock * 100}%\n");
+                            + $"{Output.HPStr}: {TotalHP}/{TotalMaxHP} \t{Output.MPStr}: {MP}/{TotalMaxMP}\n"
+                            + $"{Output.AttackStr}: {TotalAttack}\t\t{Output.ArcaneStr}: {TotalArcane}\n"
+                            + $"{Output.DefenceStr}: {TotalDefence * 100}%\t\t{Output.MagicDefenceStr}: {TotalMagicDefence * 100}%\n"
+                            + $"{Output.SpeedStr}: {TotalSpeed * 100}%\t{Output.CritStr}: {TotalCrit * 100}%\n"
+                            + $"{Output.BlockStr}: {TotalBlock * 100}%\n");
             Output.WriteColorLine(ConsoleColor.Yellow, $"Money: {Money}", "\u00A2\n");
             Output.WriteColorLine(ConsoleColor.Cyan, "Экиперовано оружие:\n", $"{HeroWeapon.Name} ", $"| {ItemChar.ItemStats(HeroWeapon, false)}");
             Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкиперована броня:\n", $"{HeroArmor.Name} ", $"| {ItemChar.ItemStats(HeroArmor, false)}\n");
         }
 
         //  Начало начал
-        public static void Creat_hero(Hero hero)
+        public static void CreateHero(Hero hero)
         {
             Output.TwriteLine("Громкий и непонятной природы звук постепенно пробуждает ваше тело.\n"
                       + "После чего вы слышите голос словно он у вас в голове.\n"
@@ -39,10 +39,28 @@ namespace Fight_cons
             Output.TwriteLine("Ощущая внутри некую ответственность со странным желанием выполнить поручение\n"
                       + "вы решаетесь открыть глаза, но тьма не дает вам что-либо увидеть...\n", 10);
 
+            GiveHeroClass(hero);
+            GiveHeroWeapon(hero);
+
+            //  Выдать начальные навыки
+            AllHeroSkills.Skills(hero, 1);
+
+
+            Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
+                          + "Догадка была верна, это оказался факел, что освятил пространство. Но ответить на вопрос где вы, пока не удается.\n", 1);
+
+            CavesLoc.CavesStart(hero);
+        }
+
+        /// <summary>
+        /// Присвоение класса игроку
+        /// </summary>
+        public static void GiveHeroClass(Hero hero)
+        {
             Console.WriteLine("Выберите класс:\n"
-              + $"1) Воин (Упор на HP, Attack, Defence)\n"
-              + $"2) Волшебник (Упор на Arcane, Magic Defence, MP)\n"
-              + $"3) Ловкач (Упор на Crit, Speed, Block)\n");
+              + $"1) Воин (Упор на {Output.HPStr}, {Output.AttackStr}, {Output.DefenceStr})\n"
+              + $"2) Волшебник (Упор на {Output.ArcaneStr}, {Output.MagicDefenceStr}, {Output.MPStr})\n"
+              + $"3) Ловкач (Упор на {Output.CritStr}, {Output.SpeedStr}, {Output.BlockStr})\n");
 
             switch (Input.ChoisInput(hero, 0, 3))
             {
@@ -67,7 +85,10 @@ namespace Fight_cons
                     hero.ClassBonuses.Block += 0.01;
                     break;
             }
+        }
 
+        public static void GiveHeroWeapon(Hero hero)
+        {
             Weapon Sword_N_sheeld = new Weapon("Меч и щит", attack: 4, speed: 0, cost: 10, crit: 0, block: 0.25, maxMoves: -1);
             Weapon Twohand_sword = new Weapon("Двуручник", attack: 8, speed: -0.2, cost: 10, crit: 0.1, block: 0, maxMoves: -1);
             Weapon Two_knifes = new Weapon("Два клинка", attack: 3, speed: 0.2, cost: 10, crit: 0.3, block: 0, maxMoves: 0);
@@ -97,15 +118,6 @@ namespace Fight_cons
                     hero.HeroWeapon = Bow;
                     break;
             }
-
-            //  Выдать начальные навыки
-            AllHeroSkills.Skills(hero, 1);
-
-
-            Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
-                          + "Догадка была верна, это оказался факел, что освятил пространство. Но ответить на вопрос где вы, пока не удается.\n", 1);
-
-            CavesLoc.Caves_begin(hero);
         }
 
         // Смерть героя
@@ -124,7 +136,7 @@ namespace Fight_cons
             Console.ReadKey();
 
             //  Подсчет победных очков и запись в локальный рейтинг
-            Rating.Rating_system(this);
+            Rating.RatingSystem(this);
 
             Output.TwriteLine("\nНачать с начала?\n"
                             + "1) Да\n"
@@ -134,7 +146,7 @@ namespace Fight_cons
             {
                 case 1:
                     Hero hero = new Hero(25,10);
-                    Hero.Creat_hero(hero);
+                    Hero.CreateHero(hero);
                     break;
 
                 default:

@@ -89,10 +89,7 @@ namespace Fight_cons
             }
         };
 
-        /// <summary>
-        ///  Название локации
-        /// </summary>
-        public static string Loc_name;
+        public static string CurrentLocationName;
 
         /// <summary>
         /// Список противников
@@ -143,7 +140,7 @@ namespace Fight_cons
         }
 
         /// <summary>
-        /// Вызов рандомномного описания
+        /// Вызов рандомномного описания из массива описаний
         /// </summary>
         public static string Dicscriptions(LocationName en)
         {
@@ -151,10 +148,12 @@ namespace Fight_cons
             return Discript[(int)en][rand.Next(Discript[(int)en].Length)];
         }
 
-        //  Находки при исследовании
+        /// <summary>
+        ///  Находки при исследовании локаций
+        /// </summary>
         public static void Research(Hero hero)
         {
-            if (hero.HeroStatistic.Cave_ad == 20)
+            if (hero.HeroStatistic.CaveResearch == 20)
             {
                 Output.Spent(0, "Древний свиток исцеления", true);
 
@@ -167,7 +166,7 @@ namespace Fight_cons
                 };
             }
 
-            if (hero.HeroStatistic.Cave_ad == 30)
+            if (hero.HeroStatistic.CaveResearch == 30)
             {
                 Console.WriteLine("Вы слышите в темноте как что-то огромное надвигается на вас!");
                 Battles.MakeBattle(hero, 6);
@@ -198,7 +197,7 @@ namespace Fight_cons
         }
 
         //  Отдых  
-        public static void Rest(Hero hero)
+        public static void RestEvent(Hero hero)
         {
             double H = (hero.MaxHp / 100.0) * 30.0, M = (hero.MaxMp / 100.0) * 20.0;
             hero.HP += (int)H;
@@ -209,7 +208,7 @@ namespace Fight_cons
         }
 
         //  Кошелек
-        public static void Pouch(Hero hero, int n_min, int n_max)
+        public static void FindingPouchEvent(Hero hero, int n_min, int n_max)
         {
             Output.TwriteLine("Вы находите кошелек!\n"
                                          + "1) Взять его\n"
@@ -234,7 +233,7 @@ namespace Fight_cons
         }
 
         //  Bar-game
-        public static void Bar_game(Hero hero)
+        public static void ArmGameEvent(Hero hero)
         {
             hero.Money -= Arm_game.Cost;
 

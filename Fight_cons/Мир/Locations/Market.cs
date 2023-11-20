@@ -4,45 +4,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using NPOI.SS.Formula.Functions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Fight_cons
 {
     class Market
     {
-        private static List<Weapon> Current_weapons = new List<Weapon>();
-        private static List<Armor> Current_armor = new List<Armor>();
-        public static int LVL = 1;
+        private static List<Weapon> WeaponList = new List<Weapon>();
+        private static List<Armor> ArmorList = new List<Armor>();
+        private static int LVL = 1;
 
         //  Генератор рандомного оружия
-        public static void Weapon_goods(Hero hero)
+        public static void ShowWeaponGoods(Hero hero)
         {
-            if (hero.Lvl - LVL > 1 || Current_weapons.Count == 0)
+            if (hero.Lvl - LVL > 1 || WeaponList.Count == 0)
             {
-                Current_weapons.Clear();
-                byte n = (byte)hero.Lvl;
+                WeaponList.Clear();
+
+                var weapon = new ParamScaleTicket(hero.Lvl);
+
                 LVL = hero.Lvl;
                 for (byte i = 0; i < 4; i++)
                 {
-                    Current_weapons.Add(new Weapon(2 + n, 10 + n, -20 - n, 20 + n, 0, 50 + n, 0, 20 + n, -2, 4, n) { Id = i + 1});
+                    WeaponList.Add(new Weapon(weapon.ATTMin, weapon.ATTMax, 
+                    weapon.ARCMin, weapon.ARCMax, weapon.DEFMin, weapon.DEFMax,
+                    weapon.MDEFMin, weapon.MDEFMax, weapon.MAXHpMin, weapon.MAXHpMax,
+                    weapon.MAXMp_min, weapon.MAXMpMax, weapon.SPDMin, weapon.SPDMax,
+                    weapon.CRITMin, weapon.CRITMax, weapon.BLKMin, weapon.BLKMax,
+                    weapon.MaxTurnMin, weapon.MaxTurnMax, hero.Lvl) { Id = i + 1});
                     Thread.Sleep(50);
                 }
             }
 
             hero.HPBar();
             Console.WriteLine();
-            foreach (var new_weapon in Current_weapons)
+            foreach (var new_weapon in WeaponList)
             {
                 Output.WriteColorLine(ConsoleColor.White, $"\n{new_weapon.Id}) ", $"{new_weapon.Name} ", "| ");
-                Output.Comparison(hero.HeroWeapon.Attack, new_weapon.Attack, text_left: "", tab_or_line: "| ", text_mid: "ATT");
-                Output.Comparison(hero.HeroWeapon.Speed, new_weapon.Speed, text_left: "", tab_or_line: "| ", text_mid: "SPD", true);
-                Output.Comparison(hero.HeroWeapon.Crit, new_weapon.Crit, text_left: "", tab_or_line: "| ", text_mid: "CRT", true);
-                Output.Comparison(hero.HeroWeapon.Block, new_weapon.Block, text_left: "", tab_or_line: "| ", text_mid: "BLK", true);
-                if (new_weapon.MaxMoves >= 1)
-                    Output.Comparison(hero.HeroWeapon.MaxMoves, new_weapon.MaxMoves, text_left: "", tab_or_line: "| \n", text_mid: "MOV");
-                else
-                    Console.WriteLine();
+                ItemChar.ItemStats(hero.HeroWeapon, new_weapon, true);
+                //ItemChar.Comparison(hero.HeroWeapon.Attack, new_weapon.Attack, text_mid: "ATT");
+                //ItemChar.Comparison(hero.HeroWeapon.Speed, new_weapon.Speed, text_mid: "SPD", true);
+                //ItemChar.Comparison(hero.HeroWeapon.Crit, new_weapon.Crit, text_mid: "CRT", true);
+                //ItemChar.Comparison(hero.HeroWeapon.Block, new_weapon.Block, text_mid: "BLK", true);
+                //if (new_weapon.MaxMoves >= 1)
+                //    ItemChar.Comparison(hero.HeroWeapon.MaxMoves, new_weapon.MaxMoves, text_mid: "MOV");
+                //else
+                //    Console.WriteLine();
 
-                Output.WriteColorLine(ConsoleColor.Yellow, $"   Цена: ", $"{new_weapon.Cost}\u00A2\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, $"\n   Цена: ", $"{new_weapon.Cost}\u00A2\n");
             }
             Output.TwriteLine("\n5) Выйти", 1);
 
@@ -53,12 +63,12 @@ namespace Fight_cons
                 case 2:
                 case 3:
                 case 4:
-                    if (hero.Money >= Current_weapons[chois - 1].Cost)
+                    if (hero.Money >= WeaponList[chois - 1].Cost)
                     {
                         Console.WriteLine("Хорошая покупка человек!");
-                        hero.Money -= Current_weapons[chois - 1].Cost;
-                        hero.HeroWeapon = Current_weapons[chois - 1];
-                        Output.Spent(Current_weapons[chois - 1].Cost, Current_weapons[chois - 1].Name);
+                        hero.Money -= WeaponList[chois - 1].Cost;
+                        hero.HeroWeapon = WeaponList[chois - 1];
+                        Output.Spent(WeaponList[chois - 1].Cost, WeaponList[chois - 1].Name);
                     }
                     else
                         Output.TwriteLine("Чтобы что-то получить, нужно что-то отдать!", 1);
@@ -72,21 +82,21 @@ namespace Fight_cons
         //  Генератор рандомной брони
         public static void Armor_goods(Hero hero)
         {
-            if (hero.Lvl - LVL > 1 || Current_armor.Count == 0)
+            if (hero.Lvl - LVL > 1 || ArmorList.Count == 0)
             {
-                Current_armor.Clear();
+                ArmorList.Clear();
                 byte n = (byte)hero.Lvl;
                 LVL = hero.Lvl;
                 for (byte i = 0; i < 4; i++)
                 {
-                    Current_armor.Add(new Armor(hero, 1 + n, 20 + n, LVL) { Id = i + 1 });
+                    ArmorList.Add(new Armor(hero, 1 + n, 20 + n, LVL) { Id = i + 1 });
                     Thread.Sleep(50);
                 }
             }
 
             hero.HPBar();
             Console.WriteLine();
-            foreach (var armor in Current_armor)
+            foreach (var armor in ArmorList)
             {
                 Output.WriteColorLine(ConsoleColor.White, $"\n{armor.Id}) ", $"{armor.Name} ");
                 Output.TwriteLine($"{armor.Armor_stats_market(hero.HeroArmor, armor, true, false)}", 1);
@@ -101,12 +111,12 @@ namespace Fight_cons
                 case 2:
                 case 3:
                 case 4:
-                    if (hero.Money >= Current_armor[chois - 1].Cost)
+                    if (hero.Money >= ArmorList[chois - 1].Cost)
                     {
                         Console.WriteLine("Хорошая покупка!");
-                        hero.Money -= Current_armor[chois - 1].Cost;
-                        hero.HeroArmor = Current_armor[chois - 1];
-                        Output.Spent(Current_armor[chois - 1].Cost, Current_armor[chois - 1].Name);
+                        hero.Money -= ArmorList[chois - 1].Cost;
+                        hero.HeroArmor = ArmorList[chois - 1];
+                        Output.Spent(ArmorList[chois - 1].Cost, ArmorList[chois - 1].Name);
                     }
                     else
                         Output.TwriteLine("Чтобы что-то получить, нужно что-то отдать!", 1);

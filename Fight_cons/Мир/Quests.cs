@@ -112,12 +112,13 @@ namespace Fight_cons
                         Weapon Q_Leva_swored = new Weapon(name: "Меч 'Бегемота Левы'", cost: 300, attack: 11, speed: 0.2, crit: 0.2, block: 0.2, maxMoves: 1);
 
                         Output.WriteColorLine(ConsoleColor.White, $"\n", $"{Q_Leva_swored.Name} ", "| ");
-                        Output.Comparison(hero.HeroWeapon.Attack, Q_Leva_swored.Attack, text_left: "", tab_or_line: "| ", text_mid: "ATT");
-                        Output.Comparison(hero.HeroWeapon.Speed, Q_Leva_swored.Speed, text_left: "", tab_or_line: "| ", text_mid: "SPD", true);
-                        Output.Comparison(hero.HeroWeapon.Crit, Q_Leva_swored.Crit, text_left: "", tab_or_line: "| ", text_mid: "CRT", true);
-                        Output.Comparison(hero.HeroWeapon.Block, Q_Leva_swored.Block, text_left: "", tab_or_line: "| ", text_mid: "BLK", true);
+                        ItemChar.ItemStats(hero.HeroWeapon, Q_Leva_swored);
+                        ItemChar.Comparison(hero.HeroWeapon.Attack, Q_Leva_swored.Attack, text_mid: "ATT");
+                        ItemChar.Comparison(hero.HeroWeapon.Speed, Q_Leva_swored.Speed, text_mid: "SPD", true);
+                        ItemChar.Comparison(hero.HeroWeapon.Crit, Q_Leva_swored.Crit, text_mid: "CRT", true);
+                        ItemChar.Comparison(hero.HeroWeapon.Block, Q_Leva_swored.Block, text_mid: "BLK", true);
                         if (Q_Leva_swored.MaxMoves >= 1)
-                            Output.Comparison(hero.HeroWeapon.MaxMoves, Q_Leva_swored.MaxMoves, text_left: "", tab_or_line: "| \n", text_mid: "MOV");
+                            ItemChar.Comparison(hero.HeroWeapon.MaxMoves, Q_Leva_swored.MaxMoves, text_mid: "MOV");
                         else
                             Console.WriteLine();
 
@@ -173,7 +174,7 @@ namespace Fight_cons
                     break;
 
                 case 2:
-                    Market.Weapon_goods(hero);
+                    Market.ShowWeaponGoods(hero);
                     break;
 
                 case 3:

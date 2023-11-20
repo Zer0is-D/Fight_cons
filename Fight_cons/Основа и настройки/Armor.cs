@@ -25,6 +25,13 @@ namespace Fight_cons
             MaxMoves = maxMoves;
         }
 
+        //int ATT_min, int ATT_max, int ARC_min, int ARC_max,
+        //    int DEF_min, int DEF_max, int MDEF_min, int MDEF_max,
+        //    int MAXHp_min, int MAXHp_max, int MAXMp_min, int MAXMp_max,
+        //    int SPD_min, int SPD_max, int CRIT_min, int CRIT_max,
+        //    int BLK_min, int BLK_max, sbyte max_turn_min, sbyte max_turn_max,
+        //    int lvl
+
         //  Конструтор 2
         public Armor(Hero hero, int defenc_min, int defenc_max, int lvl)
         {

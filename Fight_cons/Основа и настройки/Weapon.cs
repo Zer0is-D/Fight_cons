@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Fight_cons
@@ -32,17 +33,34 @@ namespace Fight_cons
         }
 
         //  Конструктор 2
-        public Weapon(int ATT_min, int ATT_max, int SPD_min, int SPD_max, 
-            int CRIT_min, int CRIT_max, int BLK_min, int BLK_max, 
-            sbyte max_turn_min, sbyte max_turn_max, int lvl)
+        public Weapon(int ATT_min, int ATT_max, int ARC_min, int ARC_max,
+            int DEF_min, int DEF_max, int MDEF_min, int MDEF_max,
+            int MAXHp_min, int MAXHp_max, int MAXMp_min, int MAXMp_max,
+            int SPD_min, int SPD_max, int CRIT_min, int CRIT_max,
+            int BLK_min, int BLK_max, sbyte max_turn_min, sbyte max_turn_max, 
+            int lvl)
         {
             Random rand = new Random();
 
             Name = Weapon_names();
             Attack = rand.Next(ATT_min, ATT_max);
+            Thread.Sleep(50);
+            Arcane = rand.Next(ARC_min, ARC_max);
+            Thread.Sleep(50);
+            Defence = rand.Next(DEF_min, DEF_max) * 0.01;
+            Thread.Sleep(50);
+            MagicDefence = rand.Next(MDEF_min, MDEF_max) * 0.01;
+            Thread.Sleep(50);
+            MaxHp = rand.Next(MAXHp_min, MAXHp_max);
+            Thread.Sleep(50);
+            MaxMp = rand.Next(MAXMp_min, MAXMp_max);
+            Thread.Sleep(50);
             Speed = rand.Next(SPD_min, SPD_max) * 0.01;
+            Thread.Sleep(50);
             Crit = rand.Next(CRIT_min, CRIT_max) * 0.01;
+            Thread.Sleep(50);
             Block = rand.Next(BLK_min, BLK_max) * 0.01;
+            Thread.Sleep(50);
             MaxMoves = (sbyte) rand.Next(max_turn_min, max_turn_max);
 
             int Spd_part = (int)((Speed > 0 ) ? Speed * 100 : 0);

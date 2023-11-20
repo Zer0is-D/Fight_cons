@@ -150,7 +150,6 @@
     <Compile Include="Игрок\HeroMethods.cs" />
     <Compile Include="Игрок\Rating.cs" />
     <Compile Include="Мир\Spying.cs" />
-    <Compile Include="Игрок\TopPlayers.cs" />
     <Compile Include="Игрок\Умения и прокачка\PermanentBonus.cs" />
     <Compile Include="Игрок\Умения и прокачка\AllHeroSkills.cs" />
     <Compile Include="Основа и настройки\Armor.cs" />

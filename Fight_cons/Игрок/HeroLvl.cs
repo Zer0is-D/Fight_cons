@@ -56,7 +56,7 @@ namespace Fight_cons
         //  Система lvl up
         LvlTicket LTicket;
 
-        public void Level_up(Hero hero, int x)
+        public void LevelUp(Hero hero, int x)
         {
             LTicket = new LvlTicket(hero);
 
@@ -79,31 +79,31 @@ namespace Fight_cons
                     Console.Write($"Повышение характеристик, у вас осталось {LTicket.LvlPoints} ячеек\n", 1);
 
                     //  Макс здоровье
-                    ParamsLvlUp(0, LTicket.Points[0], "MAX Hp", hero.MaxHp, LTicket.NextMaxHp, hero.ClassBonuses.HP, false);
+                    ParamsLvlUp(0, LTicket.Points[0], Output.MaxHpStr, hero.MaxHp, LTicket.NextMaxHp, hero.ClassBonuses.HP, false);
 
                     //  Макс мана
-                    ParamsLvlUp(1, LTicket.Points[1], "MAX Mp", hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MP, false);
+                    ParamsLvlUp(1, LTicket.Points[1], Output.MaxMp, hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MP, false);
 
                     //  Защита
-                    ParamsLvlUp(2, LTicket.Points[2], "DEF", hero.Defence, LTicket.NextDefence, hero.ClassBonuses.Defence, true);
+                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenceStr, hero.Defence, LTicket.NextDefence, hero.ClassBonuses.Defence, true);
 
                     //  Маг защита
-                    ParamsLvlUp(3, LTicket.Points[3], "MAG DEF", hero.MagicDefence, LTicket.NextMagicDefence, hero.ClassBonuses.MagicDefence, true);
+                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenceStr, hero.MagicDefence, LTicket.NextMagicDefence, hero.ClassBonuses.MagicDefence, true);
 
                     //  Блок
-                    ParamsLvlUp(4, LTicket.Points[4], "BLK", hero.Block, LTicket.NextBlock, hero.ClassBonuses.Block, true);
+                    ParamsLvlUp(4, LTicket.Points[4], Output.BlockStr, hero.Block, LTicket.NextBlock, hero.ClassBonuses.Block, true);
 
                     //  Скорость
-                    ParamsLvlUp(5, LTicket.Points[5], "SPD", hero.Speed, LTicket.NextSpeed, hero.ClassBonuses.Speed, true);
+                    ParamsLvlUp(5, LTicket.Points[5], Output.SpeedStr, hero.Speed, LTicket.NextSpeed, hero.ClassBonuses.Speed, true);
 
                     //  Атака
-                    ParamsLvlUp(6, LTicket.Points[6], "ATC", hero.Attack, LTicket.NextAttack, hero.ClassBonuses.Attack, false);
+                    ParamsLvlUp(6, LTicket.Points[6], Output.AttackStr, hero.Attack, LTicket.NextAttack, hero.ClassBonuses.Attack, false);
 
                     //  Arcane
-                    ParamsLvlUp(7, LTicket.Points[7], "ARC", hero.Arcane, LTicket.NextArcane, hero.ClassBonuses.Arcane, false);
+                    ParamsLvlUp(7, LTicket.Points[7], Output.ArcaneStr, hero.Arcane, LTicket.NextArcane, hero.ClassBonuses.Arcane, false);
 
                     //  Крит
-                    ParamsLvlUp(8, LTicket.Points[8], "CRT", hero.Crit, LTicket.NextCrit, hero.ClassBonuses.Crit, true);
+                    ParamsLvlUp(8, LTicket.Points[8], Output.CritStr, hero.Crit, LTicket.NextCrit, hero.ClassBonuses.Crit, true);
 
                     switch (Input.ChoisInput(hero, 1, 9))
                     {

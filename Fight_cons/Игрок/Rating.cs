@@ -9,6 +9,12 @@ using System.Xml.Linq;
 
 namespace Fight_cons
 {
+    class TopPlayers
+    {
+        public string Name;
+        public int Score;
+    }
+
     class Rating
     {
         private static string Path = System.Windows.Forms.Application.StartupPath + "\\Palyers.xml";
@@ -23,19 +29,19 @@ namespace Fight_cons
             new TopPlayers(){ Name = "Lox", Score = 100},
         };
 
-        public static void Rating_system(Hero hero)
+        public static void RatingSystem(Hero hero)
         {
-            TopPlayers new_player = Total_score(hero);
-            Save_user_score(new_player);
+            TopPlayers new_player = CountHeroScore(hero);
+            SaveUserScore(new_player);
 
             //  Сортировка согласно новым данным
             players.Add(new_player);            
             var s = players.OrderBy(x => x.Score).ToList();
 
-            ScoreView();
+            ShowRaiting();
         }
 
-        private static void Save_user_score(TopPlayers user)
+        private static void SaveUserScore(TopPlayers user)
         {
             if (!File.Exists(Path))
             {
@@ -43,7 +49,7 @@ namespace Fight_cons
                 File.WriteAllText(Path, $"<?xml version=\"1.0\" encoding=\"utf-8\"?>{Environment.NewLine}<catalog></catalog>");
                 foreach(var pl in players)
                 {
-                    Save_user_score(pl);
+                    SaveUserScore(pl);
                 }
             }
 
@@ -58,7 +64,7 @@ namespace Fight_cons
         }
 
         //  Запись нового игрока
-        private static TopPlayers Total_score(Hero hero)
+        private static TopPlayers CountHeroScore(Hero hero)
         {
             TopPlayers player = new TopPlayers();
 
@@ -93,7 +99,7 @@ namespace Fight_cons
         }
 
         //  Вывод рейтинга
-        public static void ScoreView()
+        public static void ShowRaiting()
         {
             XDocument document = XDocument.Load(Path);
             int num = 1;

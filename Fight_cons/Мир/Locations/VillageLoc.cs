@@ -12,7 +12,7 @@ namespace Fight_cons.Мир
         public static void Neighborhood(Hero hero)
         {
             //  Название локации
-            Loc_name = "Окрестности деревни";
+            CurrentLocationName = "Окрестности деревни";
 
             while (true)
             {
@@ -21,11 +21,11 @@ namespace Fight_cons.Мир
 
                 //  Возможные события в локации
                 if (Battles.Vero(0.3))
-                    Pouch(hero, 0, 5);
+                    FindingPouchEvent(hero, 0, 5);
                 if (Battles.Vero(0.1))
                     Battles.MakeBattle(hero, 4);
 
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{Loc_name}\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{CurrentLocationName}\n");
                 Output.TwriteLine(Dicscriptions(LocationName.Neighborhood), 1);
                 hero.HPBar();
                 hero.MPBar();
@@ -41,7 +41,7 @@ namespace Fight_cons.Мир
                         Village(hero);
                         break;
                     case 2:
-                        Rest(hero);
+                        RestEvent(hero);
                         break;
                     case 3:
                         VallyLoc.Vally(hero);
@@ -54,23 +54,23 @@ namespace Fight_cons.Мир
         public static void Village(Hero hero)
         {
             //  Название локации
-            Loc_name = "Деревня";
+            CurrentLocationName = "Деревня";
 
             while (true)
             {
                 //  Возможные события в локации
                 if (Battles.Vero(0.15))
-                    Pouch(hero, 3, 10);
+                    FindingPouchEvent(hero, 3, 10);
                 if (Battles.Vero(0.05))
                     Battles.MakeBattle(hero, 5);
 
-                Output.WriteColorLine(ConsoleColor.Cyan, "Локация: ", $"{Loc_name}\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "Локация: ", $"{CurrentLocationName}\n");
                 Output.TwriteLine(Dicscriptions(LocationName.Village), 1);
                 hero.HPBar();
                 hero.MPBar();
 
                 Console.Write("\nВаши действия?\n");
-                if (hero.Lvl > hero.HeroStatistic.Hero_lvl_know)
+                if (hero.Lvl > hero.HeroStatistic.HeroLvlKickOff)
                     Console.Write("1) Пойти в трактир\n");
                 else
                     Output.WriteColorLine(ConsoleColor.Gray, "", "1) Пойти в трактир (Вас прогнали, приходите позже)\n");
@@ -81,7 +81,7 @@ namespace Fight_cons.Мир
                 switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
-                        if (hero.Lvl > hero.HeroStatistic.Hero_lvl_know)
+                        if (hero.Lvl > hero.HeroStatistic.HeroLvlKickOff)
                             Inn(hero);
                         else
                             Village(hero);
@@ -100,12 +100,12 @@ namespace Fight_cons.Мир
         public static void Inn(Hero hero)
         {
             //  Название локации
-            Loc_name = "Трактир";
+            CurrentLocationName = "Трактир";
 
             while (true)
             {
                 string s = Dicscriptions(LocationName.Inn);
-                Output.WriteColorLine(ConsoleColor.Cyan, "Локация: ", $"{Loc_name}\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "Локация: ", $"{CurrentLocationName}\n");
                 Output.TwriteLine(s, 1);
 
                 if (s.Contains("Атронахов"))
@@ -137,7 +137,7 @@ namespace Fight_cons.Мир
                         break;
                     case 3:
                         if (hero.Money >= Arm_game.Cost)
-                            Bar_game(hero);
+                            ArmGameEvent(hero);
                         else
                             Output.TwriteLine("Бесплатно не интересует\n", 1);
                         break;
@@ -152,15 +152,15 @@ namespace Fight_cons.Мир
         public static void Market_loc(Hero hero)
         {
             //  Название локации
-            Loc_name = "Рынок";
+            CurrentLocationName = "Рынок";
 
             while (true)
             {
                 //  Возможные события в локации
                 if (Battles.Vero(0.01))
-                    Pouch(hero, 10, 100);
+                    FindingPouchEvent(hero, 10, 100);
 
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{Loc_name}\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{CurrentLocationName}\n");
                 Output.TwriteLine(Dicscriptions(LocationName.Market), 1);
                 hero.HPBar();
                 hero.MPBar();
@@ -184,7 +184,7 @@ namespace Fight_cons.Мир
                         break;
 
                     case 2:
-                        Market.Weapon_goods(hero);
+                        Market.ShowWeaponGoods(hero);
                         break;
 
                     case 3:
@@ -225,7 +225,7 @@ namespace Fight_cons.Мир
         public static void Templ(Hero hero)
         {
             //  Название локации
-            Loc_name = "Храм";
+            CurrentLocationName = "Храм";
 
             //  Описания локации
             string[] Discript = new string[4];
@@ -236,7 +236,7 @@ namespace Fight_cons.Мир
 
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{Loc_name}\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"{CurrentLocationName}\n");
                 //Outer.TwriteLine(Rand_discrip(Discript), 0);
                 hero.HPBar();
                 hero.MPBar();

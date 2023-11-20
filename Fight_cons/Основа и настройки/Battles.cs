@@ -187,7 +187,7 @@ namespace Fight_cons
             else
                 Console.WriteLine();
 
-            hero.Level_up(hero, exp);
+            hero.LevelUp(hero, exp);
         }
 
         //  Проверка на побег
