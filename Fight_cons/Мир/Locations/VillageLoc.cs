@@ -116,14 +116,14 @@ namespace Fight_cons.Мир
 
                 Console.WriteLine("\nВаши действия?\n"
                                 + "1) Наблюдать и подслушивать");
-                Output.WriteColorLine(ConsoleColor.Yellow, "2) Выпить (", "5\u00A2", ")\n");
-                Output.WriteColorLine(ConsoleColor.Yellow, "3) Армреслинг (", $"{Arm_game.Cost}\u00A2", ")\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, "2) Выпить (", $"5{Output.MoneySymbol}", ")\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, "3) Армреслинг (", $"{Arm_game.Cost}{Output.MoneySymbol}", ")\n");
                 Console.WriteLine("4) Выйти из трактира");
 
                 switch (Input.ChoisInput(hero, 1, 4))
                 {
                     case 1:
-                        hero.HeroSpying.Spying_tavern(hero);
+                        hero.HeroSpying.SpyingInTavern(hero);
                         break;
                     case 2:
                         if (hero.Money >= 5)
@@ -173,8 +173,8 @@ namespace Fight_cons.Мир
                               + "1) Наблюдать и подслушивать\n"
                               + "2) Купить оружие\n"
                               + "3) Купить броню");
-                Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", "20\u00A2", ")\n");
-                Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", "30\u00A2", ")\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", $"20{Output.MoneySymbol}", ")\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", $"30{Output.MoneySymbol}", ")\n");
                 Console.WriteLine("6) Выйти");
 
                 switch (Input.ChoisInput(hero, 1, 6))

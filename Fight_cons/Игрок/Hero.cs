@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+
 
 namespace Fight_cons
 {
@@ -30,7 +27,7 @@ namespace Fight_cons
         }
 
         #region Левл и опыт
-        private protected int _nextLvlExp = 10;
+        internal protected int NextLvlExp = 10;
 
         private protected int _lvl = 1;
         internal protected int Lvl

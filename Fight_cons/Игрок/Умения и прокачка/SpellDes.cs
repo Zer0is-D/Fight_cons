@@ -65,14 +65,14 @@ namespace Fight_cons
         public static void HealSpell(Hero hero, Charecter enemy, int cost, int power)
         {
             double crit = Formulas.CheckCrit(hero, true);
-            double H = ((hero.MaxHp / 100.0) * 30.0) + crit;
+            double Heal = ((hero.MaxHp / 100.0) * 30.0) + crit;
 
             if (crit > 1)
-                Output.WriteColorLine(ConsoleColor.Green, "\nВы критически восстановили себе ", $"+{(int)H} ", $"{Output.HPStr}\n");
+                Output.WriteColorLine(ConsoleColor.Green, "\nВы критически восстановили себе ", $"+{(int)Heal} ", $"{Output.HPStr}\n");
             else
-                Output.WriteColorLine(ConsoleColor.Green, "\nВы восстановили себе ", $"+{(int)H} ", $"{Output.HPStr}\n");
+                Output.WriteColorLine(ConsoleColor.Green, "\nВы восстановили себе ", $"+{(int)Heal} ", $"{Output.HPStr}\n");
 
-            hero.HP += (int)H;
+            hero.HP += (int)Heal;
 
             hero.HeroStatistic.Spells++;
         }

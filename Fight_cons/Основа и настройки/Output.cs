@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -13,6 +9,9 @@ namespace Fight_cons
         public static char UpSymbol = '\u0024';       // \u2191
         public static char DownSymbol = '\u0025';     // \u2193
 
+        public static char MoneySymbol = '\u00A2';
+        public static char ExpSymbol = '\u0407';
+
         public static string HPStr = "HP";
         public static string MPStr = "MP";
 
@@ -21,7 +20,7 @@ namespace Fight_cons
         public static string DefenceStr = "DEF";
         public static string MagicDefenceStr = "MDEF";
         public static string MaxHpStr = "vHP";
-        public static string MaxMp = "vMP";
+        public static string MaxMpStr = "vMP";
         public static string SpeedStr = "SPD";
         public static string CritStr = "CRT";
         public static string BlockStr = "BLK";
@@ -67,7 +66,7 @@ namespace Fight_cons
         }
 
         //  Лого
-        public static void Game_logo(string vers)
+        public static void GameLogo(string vers)
         {
             //Game.ChangeColor("", " __                __               ", "\n", ConsoleColor.Yellow);
             //Game.ChangeColor("", "/__ __ _          (_ _|_    _| o  _ ", "\n", ConsoleColor.Yellow);
@@ -155,7 +154,7 @@ namespace Fight_cons
             if (Find)
                 WriteColorLine(ConsoleColor.Green, "[Вы нашли ", $"{itemName}", "!]\n\n");
             if (cost > 0)
-                WriteColorLine(ConsoleColor.Yellow, "\n[Вы потратили -", $"{cost}\u00A2", "!]\n");
+                WriteColorLine(ConsoleColor.Yellow, "\n[Вы потратили -", $"{cost}{MoneySymbol}", "!]\n");
             if (itemName.Length > 1 && !Find)
                 WriteColorLine(ConsoleColor.Green, "[Вы получили ", $"{itemName}", "!]\n");
 
@@ -178,7 +177,7 @@ namespace Fight_cons
                 Console.Write($"[{charecter.Id}] ");
 
 
-            Output.WriteColorName("", charecter, " ");
+            WriteColorName("", charecter, " ");
         }
         #endregion       
 

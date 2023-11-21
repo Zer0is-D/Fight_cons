@@ -1,7 +1,5 @@
 ﻿using Fight_cons.Основа_и_настройки;
-using Fight_cons.Противник;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Fight_cons

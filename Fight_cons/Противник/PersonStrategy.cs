@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -40,12 +38,12 @@ namespace Fight_cons
             return MyList[rand.Next(0, MyList.Count)];
         }
 
-        public static void Strg_ATC(Charecter attacker, Hero hero, List<Order> units)
+        public static void StrgATC(Charecter attacker, Hero hero, List<Order> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (Need_to_run(attacker, min1: 10, min2: 20))
+                if (NeedToRun(attacker, min1: 10, min2: 20))
                     break;
 
                 //  Условья
@@ -86,12 +84,12 @@ namespace Fight_cons
             }
         }
 
-        public static void Strg_MAG(Charecter attacker, Hero hero, List<Order> units)
+        public static void StrgMAG(Charecter attacker, Hero hero, List<Order> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (Need_to_run(attacker, min1: 10, min2: 20))
+                if (NeedToRun(attacker, min1: 10, min2: 20))
                     break;
                 else if (Formulas.PercentHp(attacker) < 60)
                 {
@@ -142,12 +140,12 @@ namespace Fight_cons
             }
         }
 
-        public static void Strg_NECRO(Charecter attacker, Hero hero, List<Order> units)
+        public static void StrgNECRO(Charecter attacker, Hero hero, List<Order> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (Need_to_run(attacker, min1: 10, min2: 20))
+                if (NeedToRun(attacker, min1: 10, min2: 20))
                     break;
                 else if (Formulas.PercentHp(attacker) < 60)
                 {
@@ -196,7 +194,7 @@ namespace Fight_cons
         /// <summary>
         /// Проверка побега
         /// </summary>
-        public static bool Need_to_run(Charecter person, byte min1, byte? min2 = null)
+        public static bool NeedToRun(Charecter person, byte min1, byte? min2 = null)
         {            
             if (min2 == null)
             {

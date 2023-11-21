@@ -1,11 +1,5 @@
 ﻿using Fight_cons.Основа_и_настройки;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -115,7 +109,7 @@ namespace Fight_cons
             if (!next)
                 Console.Write("\n");
 
-            Console.Write("Hp: [");
+            Console.Write($"{Output.HPStr}: [");
             while (c <= TotalMaxHP)
             {
                 if (c <= TotalHP)
@@ -126,7 +120,7 @@ namespace Fight_cons
             }
 
             Console.Write("]    ");
-            Console.Write($"HP: {TotalHP}/{TotalMaxHP}");
+            Console.Write($"{Output.HPStr}: {TotalHP}/{TotalMaxHP}");
         }
 
         //  Шкала маны
@@ -136,7 +130,7 @@ namespace Fight_cons
             {
                 double part = TotalMaxMP / 10.0, c = 0;
 
-                Console.Write("\nMp: [");
+                Console.Write($"\n{Output.MPStr}: [");
                 while (c <= TotalMaxMP)
                 {
                     if (TotalMP == 0)
@@ -149,13 +143,13 @@ namespace Fight_cons
                 }
 
                 Console.Write("]    ");
-                Console.Write($"MP: {MP}/{TotalMaxMP}\n");
+                Console.Write($"{Output.MPStr}: {MP}/{TotalMaxMP}\n");
             }
             else
-                Output.WriteColorLine(ConsoleColor.Blue, "\nMP: [", " нет маны ", "]\n");
+                Output.WriteColorLine(ConsoleColor.Blue, $"\n{Output.MPStr}: [", " нет маны ", "]\n");
         }
 
-        public void HP_bar_Phase()
+        public void PhaseHPBar()
         {
             double part = TotalMaxHP / 20.0;
             double c = 0;
@@ -164,7 +158,7 @@ namespace Fight_cons
             sbyte phase4 = 0;
             int charsToNextBar = 0;
 
-            Console.Write("Hp: [");
+            Console.Write($"{Output.HPStr}: [");
             while (c <= TotalMaxHP)
             {
                 if (c <= TotalHP)
@@ -204,7 +198,7 @@ namespace Fight_cons
             }
 
             Console.Write("]    ");
-            Console.Write($"HP: {TotalHP}/{TotalMaxHP}");
+            Console.Write($"{Output.HPStr}: {TotalHP}/{TotalMaxHP}");
         }
     }
 }

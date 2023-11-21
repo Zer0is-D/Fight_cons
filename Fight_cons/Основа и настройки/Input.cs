@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Fight_cons.form;
-using Fight_cons.Основа_и_настройки;
 
 namespace Fight_cons
 {
@@ -51,6 +47,7 @@ namespace Fight_cons
             KeyWords["gold_"] = () => 
             {
                 int m;
+
                 int.TryParse(Console.ReadLine(), out m);
                 hero.Money += m;
             };

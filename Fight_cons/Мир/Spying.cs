@@ -1,9 +1,5 @@
 ﻿using Fight_cons.Мир;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -15,7 +11,7 @@ namespace Fight_cons
         internal byte Sneak = 0;
 
         //  Подслушивание в таверне
-        internal void Spying_tavern(Hero hero)
+        internal void SpyingInTavern(Hero hero)
         {
             hero.HeroQuests.StartQ(hero, 1);
             hero.HeroQuests.Q_Leva_1(hero);
@@ -33,7 +29,7 @@ namespace Fight_cons
             {
                 Output.TwriteLine("- Пришел уши греть?! Хочешь сидеть в трактире покупай выпивку!\n", 1);
                 Console.Write("Ваши действия?\n");
-                Output.WriteColorLine(ConsoleColor.Yellow, "1) Купить выпивку (", "5\u00A2", ")\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, "1) Купить выпивку (", $"5{Output.MoneySymbol}", ")\n");
                 Console.Write("2) Отказаться и уйти\n");
 
                 switch (Input.ChoisInput(1, 2))

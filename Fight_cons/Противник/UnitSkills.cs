@@ -1,11 +1,5 @@
 ﻿using Fight_cons.Основа_и_настройки;
-using Fight_cons.Противник;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -28,7 +22,7 @@ namespace Fight_cons
             Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Yellow, "и сносит ", $"{damag} ", "урона! У ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
 
             victim.HP -= damag;
             attacker.Turn += 2;
@@ -39,7 +33,6 @@ namespace Fight_cons
         {
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkYellow, "", $"Ускоряет ", "себя!\n");
-            Thread.Sleep(100);
             person.Turn += 2;
         }
 
@@ -56,10 +49,9 @@ namespace Fight_cons
             Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Yellow, $"на {victim.Conditions.FrezRound} хода и сносит ", $"{damag} ", "урона! У ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
 
             victim.HP -= damag;
-            Thread.Sleep(100);
             attacker.Turn += 2;
         }
 
@@ -70,7 +62,6 @@ namespace Fight_cons
 
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", "Щит \n");
-            Thread.Sleep(100);
             person.Turn += 2;
         }
 
@@ -81,7 +72,6 @@ namespace Fight_cons
             riser.HP = Formulas.GetCurrentPercent(riser, 10);
             riser.IsAlive = true;
 
-            Thread.Sleep(100);
             reviever.Turn += 4;
         }
 
@@ -96,8 +86,6 @@ namespace Fight_cons
             int damag = Formulas.Damage(attacker, victim, false, true);
 
             BattleLog(attacker, victim, damag);
-
-            Thread.Sleep(100);
         }
 
         //  Отравляющая атака
@@ -113,10 +101,9 @@ namespace Fight_cons
             Output.WriteColorLine(ConsoleColor.DarkGreen, " ", $"отравление ");
             Output.WriteColorLine(ConsoleColor.Yellow, "сносит ", $"{damag} ", "урона! У ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
 
             victim.HP -= damag;
-            Thread.Sleep(100);
             attacker.Turn += 1;
         }
 
@@ -127,13 +114,12 @@ namespace Fight_cons
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkRed, "использует ", $"вампиризм ");
-            Output.WriteColorLine(ConsoleColor.Red, "и поглощает ", $"{damag} ", "HP! ");
+            Output.WriteColorLine(ConsoleColor.Red, "и поглощает ", $"{damag} ", $"{Output.HPStr}! ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
 
             attacker.HP += damag;
             victim.HP -= damag;
-            Thread.Sleep(100);
             attacker.Turn += 1;
         }
 
@@ -144,7 +130,6 @@ namespace Fight_cons
             Output.NameAndId(person, true);
             Console.Write("держит оборону\n");
             person.Turn += 5;
-            Thread.Sleep(100);
         }
         #endregion
 
@@ -161,11 +146,10 @@ namespace Fight_cons
                 Output.WriteColorLine(ConsoleColor.Yellow, "", $"{damag} ", "урона у ");
 
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", "HP\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
             Sound.HIT();
 
             victim.HP -= damag;
-            Thread.Sleep(100);
         }
     }
 }

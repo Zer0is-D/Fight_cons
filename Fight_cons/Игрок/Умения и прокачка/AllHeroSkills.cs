@@ -1,9 +1,6 @@
 ﻿using Fight_cons.Основа_и_настройки;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Fight_cons
 {

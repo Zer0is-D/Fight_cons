@@ -1,12 +1,6 @@
 ﻿using Spectre.Console;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Fight_cons
 {
@@ -20,7 +14,7 @@ namespace Fight_cons
 
             Hero hero = new Hero(25, 10);
 
-            Output.Game_logo(vers: "2.6 (Альфа)");
+            Output.GameLogo(vers: "2.6 (Альфа)");
 
             if (Settings.BildVersActive)
                 Settings.OptionVersions(hero);

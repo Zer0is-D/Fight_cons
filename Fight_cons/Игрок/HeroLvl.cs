@@ -1,11 +1,4 @@
-﻿using Fight_cons.form;
-using Fight_cons.Основа_и_настройки;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 
 namespace Fight_cons
@@ -22,6 +15,20 @@ namespace Fight_cons
         internal protected double NextDefence = 0.02;
         internal protected double NextMagicDefence = 0.02;
         internal protected double NextBlock = 0.02;
+
+        public static bool Access(Hero hero)
+        {
+            bool ans = (hero.Exp >= hero.NextLvlExp);
+
+            if (ans)
+            {
+                hero.Exp -= hero.NextLvlExp;
+                hero.Lvl++;
+                hero.NextLvlExp += Hero.NextLvlMargin(hero.Lvl);
+            }
+
+            return ans;
+        }
 
         public LvlTicket(Hero hero)
         {
@@ -54,21 +61,18 @@ namespace Fight_cons
     partial class Hero
     {
         //  Система lvl up
-        LvlTicket LTicket;
+        LvlTicket LTicket;       
 
-        public void LevelUp(Hero hero, int x)
+        public static int NextLvlMargin(int Lvl) => Lvl * 20 + 5;
+
+        public void LevelUp(Hero hero, int exp)
         {
             LTicket = new LvlTicket(hero);
 
-            Exp += x;      
+            Exp += exp;      
 
-            while (Exp >= _nextLvlExp)
+            while (LvlTicket.Access(this))
             {
-                // Обязательные операции
-                Exp -= _nextLvlExp;
-                Lvl++;
-                _nextLvlExp += Lvl * 20 + 5;                
-
                 if (Settings.SoundEffects)
                     Sound.LVL_MUSIC();
 
@@ -82,7 +86,7 @@ namespace Fight_cons
                     ParamsLvlUp(0, LTicket.Points[0], Output.MaxHpStr, hero.MaxHp, LTicket.NextMaxHp, hero.ClassBonuses.HP, false);
 
                     //  Макс мана
-                    ParamsLvlUp(1, LTicket.Points[1], Output.MaxMp, hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MP, false);
+                    ParamsLvlUp(1, LTicket.Points[1], Output.MaxMpStr, hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MP, false);
 
                     //  Защита
                     ParamsLvlUp(2, LTicket.Points[2], Output.DefenceStr, hero.Defence, LTicket.NextDefence, hero.ClassBonuses.Defence, true);

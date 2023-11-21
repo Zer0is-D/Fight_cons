@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fight_cons.Противник
 {
@@ -27,7 +23,7 @@ namespace Fight_cons.Противник
             MaxMoves = max_moves;
             No_run = no_run;
 
-            KillExp = (HP / 2) + (Attack / 2);
+            KillExp = Unit.ExpForKill(HP, Attack);
         }
 
         //  Конструктор 2       
@@ -62,7 +58,7 @@ namespace Fight_cons.Противник
             MaxMoves = rand.Next(max_turn_min, max_turn_max);
             strategeis = (Strategeis)strategy;
 
-            KillExp = (HP / 2) + (Attack / 2);
+            KillExp = Unit.ExpForKill(HP, Attack);
         }
     }
 }

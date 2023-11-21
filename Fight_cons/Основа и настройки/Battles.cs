@@ -1,13 +1,8 @@
 ﻿using Fight_cons.Противник;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Security.Policy;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -22,12 +17,12 @@ namespace Fight_cons
                 if (enemy > 99)
                 {
                     AboutLoc.EnemyList.Add(new Order(AboutLoc.Allies(enemy - 100)));
-                    Thread.Sleep(100);
+                    Thread.Sleep(50);
                 }
                 else
                 {
                     AboutLoc.EnemyList.Add(new Order(AboutLoc.Enemies(enemy)));
-                    Thread.Sleep(100);
+                    Thread.Sleep(50);
                 }
             }
 
@@ -56,7 +51,7 @@ namespace Fight_cons
                 if (units.Count() == 1)
                 {
                     Output.WriteColorLine(ConsoleColor.DarkMagenta, "На вас нападает ", $"{enemy.charecter.Name} ");
-                    Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", " HP]\n");
+                    Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPStr}]\n");
                     break;
                 }
                 else
@@ -65,13 +60,13 @@ namespace Fight_cons
                     if (FirstEnemy)
                     {
                         Output.WriteColorLine(ConsoleColor.DarkMagenta, "На вас нападают ", $"{enemy.charecter.Name} ");
-                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", " HP],\n");
+                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPStr}],\n");
                         FirstEnemy = false;
                     }
                     else
                     {
                         Output.WriteColorLine(ConsoleColor.DarkMagenta, "", $"{enemy.charecter.Name} ");
-                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", " HP],\n");
+                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPStr}],\n");
                     }
                 }               
             }           
@@ -145,6 +140,7 @@ namespace Fight_cons
             sbyte count = 0;
             sbyte dead = 0;
             sbyte runers = 0;
+
             foreach (var ch in list)
             {
                 if (ch.charecter.TotalHP <= 0)
@@ -178,10 +174,10 @@ namespace Fight_cons
                 exp += enemy.charecter.KillExp;
             }
 
-            Output.WriteColorLine(ConsoleColor.DarkCyan, $"Вы получили ", $"{exp}\u0407 ");
+            Output.WriteColorLine(ConsoleColor.DarkCyan, $"Вы получили ", $"{exp}{Output.ExpSymbol} ");
             if (money > 0)
             {
-                Output.WriteColorLine(ConsoleColor.Yellow, "и ", $"{money}\u00A2\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, "и ", $"{money}{Output.MoneySymbol}\n");
                 hero.Money += money;
             }
             else
@@ -204,7 +200,7 @@ namespace Fight_cons
                         double n = (hero.MaxHp / 100.0) * 10.0;
                         hero.HP -= (int)n;
                         Output.Run_log();
-                        Console.WriteLine($"Вы сбежали с потерей {(int) n} HP\n");
+                        Console.WriteLine($"Вы сбежали с потерей {(int) n} {Output.HPStr}\n");
                     }                    
                     hero.Run = true;
                 }

@@ -2,11 +2,6 @@
 using Fight_cons.Противник;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
 
 namespace Fight_cons
@@ -160,7 +155,7 @@ namespace Fight_cons
                 SpellDes excision = new SpellDes(hero, "Исцеление")
                 {
                     Spell = SpellDes.ExcisionSpell,
-                    Description = $"Исцеление (3 MP)",
+                    Description = $"Исцеление (3 {Output.MPStr})",
                     Spell_cost = 0,
                     Spell_power = 0,
                 };
@@ -202,8 +197,8 @@ namespace Fight_cons
             double H = (hero.MaxHp / 100.0) * 30.0, M = (hero.MaxMp / 100.0) * 20.0;
             hero.HP += (int)H;
             hero.MP += (int)M;
-            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{(int)H} ", "HP ");
-            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{(int)M} ", "MP\n");
+            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{(int)H} ", $"{Output.HPStr} ");
+            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{(int)M} ", $"{Output.MPStr}\n");
             Output.Wait_next(3, ".");
         }
 

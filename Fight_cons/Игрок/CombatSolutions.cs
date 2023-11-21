@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -33,7 +31,7 @@ namespace Fight_cons
                             Output.WriteColorLine(ConsoleColor.DarkMagenta, $"{enemy.charecter.Id}. ", $"{enemy.charecter.Name}", "\t");
 
                             if (enemy.charecter.Phase >= 2)
-                                enemy.charecter.HP_bar_Phase();
+                                enemy.charecter.PhaseHPBar();
                             else
                                 enemy.charecter.HPBar(true);
 
@@ -153,7 +151,7 @@ namespace Fight_cons
             //  Отрисовка hp противника
             Output.WriteColorName("\n", enemy, ":");
             if (enemy.Phase >= 2)
-                enemy.HP_bar_Phase();
+                enemy.PhaseHPBar();
             else
                 enemy.HPBar();
 

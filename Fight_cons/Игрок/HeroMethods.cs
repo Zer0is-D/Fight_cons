@@ -1,11 +1,6 @@
 ﻿using Fight_cons.Мир;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -16,13 +11,13 @@ namespace Fight_cons
         {
             Output.WriteColorLine(ConsoleColor.DarkGreen, "\nHero name: ", $"{Name}\n");
             Console.WriteLine($"Class: {Class_name}\n"
-                            + $"Lvl: {Lvl}\t\tExp: {Exp}/{_nextLvlExp} \n"
+                            + $"Lvl: {Lvl}\t\tExp: {Exp}/{NextLvlExp} \n"
                             + $"{Output.HPStr}: {TotalHP}/{TotalMaxHP} \t{Output.MPStr}: {MP}/{TotalMaxMP}\n"
                             + $"{Output.AttackStr}: {TotalAttack}\t\t{Output.ArcaneStr}: {TotalArcane}\n"
                             + $"{Output.DefenceStr}: {TotalDefence * 100}%\t\t{Output.MagicDefenceStr}: {TotalMagicDefence * 100}%\n"
                             + $"{Output.SpeedStr}: {TotalSpeed * 100}%\t{Output.CritStr}: {TotalCrit * 100}%\n"
                             + $"{Output.BlockStr}: {TotalBlock * 100}%\n");
-            Output.WriteColorLine(ConsoleColor.Yellow, $"Money: {Money}", "\u00A2\n");
+            Output.WriteColorLine(ConsoleColor.Yellow, $"Money: {Money}", $"{Output.MoneySymbol}\n");
             Output.WriteColorLine(ConsoleColor.Cyan, "Экиперовано оружие:\n", $"{HeroWeapon.Name} ", $"| {ItemChar.ItemStats(HeroWeapon, false)}");
             Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкиперована броня:\n", $"{HeroArmor.Name} ", $"| {ItemChar.ItemStats(HeroArmor, false)}\n");
         }
@@ -44,7 +39,6 @@ namespace Fight_cons
 
             //  Выдать начальные навыки
             AllHeroSkills.Skills(hero, 1);
-
 
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
                           + "Догадка была верна, это оказался факел, что освятил пространство. Но ответить на вопрос где вы, пока не удается.\n", 1);
@@ -131,7 +125,7 @@ namespace Fight_cons
             Thread.Sleep(2000);
             Console.WriteLine("\nВаш счет:");
             Console.WriteLine($"Ур: {Lvl}\n"
-                           + $"Опыт: {Exp}/{_nextLvlExp}\n"
+                           + $"Опыт: {Exp}/{NextLvlExp}\n"
                            + $"Золото: {Money}\n");
             Console.ReadKey();
 

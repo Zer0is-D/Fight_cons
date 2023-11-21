@@ -150,11 +150,11 @@ namespace Fight_cons
         public void Q_leva_Market(Hero hero)
         {
             Console.WriteLine("\nВаши действия?");
-            Output.WriteColorLine(ConsoleColor.Yellow, "1) Купить статуэтку (", "30\u00A2", ")\n");
+            Output.WriteColorLine(ConsoleColor.Yellow, "1) Купить статуэтку (", $"30{Output.MoneySymbol}", ")\n");
             Console.WriteLine("2) Купить оружие\n"
                             + "3) Купить броню");
-            Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", "20\u00A2", ")\n");
-            Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", "30\u00A2", ")\n");
+            Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", $"20{Output.MoneySymbol}", ")\n");
+            Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", $"30{Output.MoneySymbol}", ")\n");
             Console.WriteLine("6) Выйти");
 
             switch (Input.ChoisInput(hero, 1, 6))

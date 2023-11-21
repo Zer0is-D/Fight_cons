@@ -1,17 +1,13 @@
-﻿using Fight_cons.form;
-using Fight_cons.Основа_и_настройки;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Xml.Linq;
 
 namespace Fight_cons.Противник
 {
     internal class Unit : Charecter
     {
+        public static int ExpForKill(int HP, int Attack) => (HP / 2) + (Attack / 2);
+
+
         internal Unit(string name, sbyte phase, int hp,
                  int attack, int speed, int crit_chance,
                  int defence, int magic_defence, int block,
@@ -80,24 +76,24 @@ namespace Fight_cons.Противник
                     //  Любая базовая стратегия поведения
                     case Strategeis.Any:
                         if (Battles.Vero(0.5))
-                            PersonStrategy.Strg_ATC(unit, hero, units);
+                            PersonStrategy.StrgATC(unit, hero, units);
                         else
-                            PersonStrategy.Strg_MAG(unit, hero, units);
+                            PersonStrategy.StrgMAG(unit, hero, units);
                         break;
 
                     //  Атакующй стратегия
                     case Strategeis.Agresive:
-                        PersonStrategy.Strg_ATC(unit, hero, units);
+                        PersonStrategy.StrgATC(unit, hero, units);
                         break;
 
                     //  Стратегия волшебника
                     case Strategeis.Mage:
-                        PersonStrategy.Strg_MAG(unit, hero, units);
+                        PersonStrategy.StrgMAG(unit, hero, units);
                         break;
 
                     //  Стратегия некроманта
                     case Strategeis.Necromancer:
-                        PersonStrategy.Strg_NECRO(unit, hero, units);
+                        PersonStrategy.StrgNECRO(unit, hero, units);
                         break;
 
                     //  Стратегия хилера

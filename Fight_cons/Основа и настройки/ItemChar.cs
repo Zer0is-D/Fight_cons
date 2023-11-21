@@ -1,12 +1,5 @@
-﻿using Fight_cons.form;
-using Fight_cons.Основа_и_настройки;
+﻿using Fight_cons.Основа_и_настройки;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Xml.Linq;
 
 namespace Fight_cons
 {
@@ -51,16 +44,16 @@ namespace Fight_cons
             if (ShowName)
                 str = $"{item.Name} | ";
 
-            str += Stat(item.Attack, "ATT");
-            str += Stat(item.Arcane, "ARC");
-            str += Stat(item.Defence, "DEF");
-            str += Stat(item.MagicDefence, "MAG DEF");
-            str += Stat(item.MaxHp, "MAX Hp");
-            str += Stat(item.MaxMp, "MAX Mp");
-            str += Stat(item.Speed, "SPD");
-            str += Stat(item.Crit, "CRT");
-            str += Stat(item.Block, "BLK");
-            str += Stat(item.MaxMoves, "MAX MOV");
+            str += Stat(item.Attack, Output.AttackStr);
+            str += Stat(item.Arcane, Output.ArcaneStr);
+            str += Stat(item.Defence, Output.DefenceStr);
+            str += Stat(item.MagicDefence, Output.MagicDefenceStr);
+            str += Stat(item.MaxHp, Output.MaxHpStr);
+            str += Stat(item.MaxMp, Output.MaxMpStr);
+            str += Stat(item.Speed, Output.SpeedStr);
+            str += Stat(item.Crit, Output.CritStr);
+            str += Stat(item.Block, Output.BlockStr);
+            str += Stat(item.MaxMoves, Output.MaxMovesStr);
 
             return str;
         }
@@ -68,17 +61,17 @@ namespace Fight_cons
         public static void ItemStats(ItemChar item1, ItemChar item2, bool next = false)
         {
             if (next) Console.WriteLine();
-            Comparison(item1.Attack, item2.Attack, "ATT");
-            Comparison(item1.Arcane, item2.Arcane, "ARC");
-            Comparison(item1.Defence, item2.Defence, "DEF", true);
-            Comparison(item1.MagicDefence, item2.MagicDefence, "VDEF", true);            
-            Comparison(item1.MaxHp, item2.MaxHp, "VHp");
+            Comparison(item1.Attack, item2.Attack, Output.AttackStr);
+            Comparison(item1.Arcane, item2.Arcane, Output.ArcaneStr);
+            Comparison(item1.Defence, item2.Defence, Output.DefenceStr, true);
+            Comparison(item1.MagicDefence, item2.MagicDefence, Output.MagicDefenceStr, true);            
+            Comparison(item1.MaxHp, item2.MaxHp, Output.MaxHpStr);
             if (next) Console.WriteLine();
-            Comparison(item1.MaxMp, item2.MaxMp, "VMp");
-            Comparison(item1.Speed, item2.Speed, "SPD", true);
-            Comparison(item1.Crit, item2.Crit, "CRT", true);
-            Comparison(item1.Block, item2.Block, "BLK", true);
-            Comparison(item1.MaxMoves, item2.MaxMoves, "VMOV");
+            Comparison(item1.MaxMp, item2.MaxMp, Output.MaxMpStr);
+            Comparison(item1.Speed, item2.Speed, Output.SpeedStr, true);
+            Comparison(item1.Crit, item2.Crit, Output.CritStr, true);
+            Comparison(item1.Block, item2.Block, Output.BlockStr, true);
+            Comparison(item1.MaxMoves, item2.MaxMoves, Output.MaxMovesStr);
         }
 
 

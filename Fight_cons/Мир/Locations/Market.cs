@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using NPOI.SS.Formula.Functions;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Fight_cons
 {
@@ -13,6 +8,9 @@ namespace Fight_cons
     {
         private static List<Weapon> WeaponList = new List<Weapon>();
         private static List<Armor> ArmorList = new List<Armor>();
+
+        private static sbyte NamOfGoods = 4;
+
         private static int LVL = 1;
 
         //  Генератор рандомного оружия
@@ -25,15 +23,15 @@ namespace Fight_cons
                 var weapon = new ParamScaleTicket(hero.Lvl);
 
                 LVL = hero.Lvl;
-                for (byte i = 0; i < 4; i++)
+                for (byte i = 0; i < NamOfGoods; i++)
                 {
                     WeaponList.Add(new Weapon(weapon.ATTMin, weapon.ATTMax, 
                     weapon.ARCMin, weapon.ARCMax, weapon.DEFMin, weapon.DEFMax,
                     weapon.MDEFMin, weapon.MDEFMax, weapon.MAXHpMin, weapon.MAXHpMax,
                     weapon.MAXMp_min, weapon.MAXMpMax, weapon.SPDMin, weapon.SPDMax,
                     weapon.CRITMin, weapon.CRITMax, weapon.BLKMin, weapon.BLKMax,
-                    weapon.MaxTurnMin, weapon.MaxTurnMax, hero.Lvl) { Id = i + 1});
-                    Thread.Sleep(50);
+                    weapon.MaxTurnMin, weapon.MaxTurnMax, hero.Lvl) 
+                    { Id = i + 1});
                 }
             }
 
@@ -43,16 +41,8 @@ namespace Fight_cons
             {
                 Output.WriteColorLine(ConsoleColor.White, $"\n{new_weapon.Id}) ", $"{new_weapon.Name} ", "| ");
                 ItemChar.ItemStats(hero.HeroWeapon, new_weapon, true);
-                //ItemChar.Comparison(hero.HeroWeapon.Attack, new_weapon.Attack, text_mid: "ATT");
-                //ItemChar.Comparison(hero.HeroWeapon.Speed, new_weapon.Speed, text_mid: "SPD", true);
-                //ItemChar.Comparison(hero.HeroWeapon.Crit, new_weapon.Crit, text_mid: "CRT", true);
-                //ItemChar.Comparison(hero.HeroWeapon.Block, new_weapon.Block, text_mid: "BLK", true);
-                //if (new_weapon.MaxMoves >= 1)
-                //    ItemChar.Comparison(hero.HeroWeapon.MaxMoves, new_weapon.MaxMoves, text_mid: "MOV");
-                //else
-                //    Console.WriteLine();
 
-                Output.WriteColorLine(ConsoleColor.Yellow, $"\n   Цена: ", $"{new_weapon.Cost}\u00A2\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, $"\n   Цена: ", $"{new_weapon.Cost}{Output.MoneySymbol}\n");
             }
             Output.TwriteLine("\n5) Выйти", 1);
 
@@ -85,11 +75,18 @@ namespace Fight_cons
             if (hero.Lvl - LVL > 1 || ArmorList.Count == 0)
             {
                 ArmorList.Clear();
-                byte n = (byte)hero.Lvl;
-                LVL = hero.Lvl;
-                for (byte i = 0; i < 4; i++)
+
+                var armor = new ParamScaleTicket(hero.Lvl);
+
+                for (byte i = 0; i < NamOfGoods; i++)
                 {
-                    ArmorList.Add(new Armor(hero, 1 + n, 20 + n, LVL) { Id = i + 1 });
+                    ArmorList.Add(new Armor(armor.ATTMin, armor.ATTMax,
+                    armor.ARCMin, armor.ARCMax, armor.DEFMin, armor.DEFMax,
+                    armor.MDEFMin, armor.MDEFMax, armor.MAXHpMin, armor.MAXHpMax,
+                    armor.MAXMp_min, armor.MAXMpMax, armor.SPDMin, armor.SPDMax,
+                    armor.CRITMin, armor.CRITMax, armor.BLKMin, armor.BLKMax,
+                    armor.MaxTurnMin, armor.MaxTurnMax, hero.Lvl) 
+                    { Id = i + 1 });
                     Thread.Sleep(50);
                 }
             }
@@ -100,7 +97,7 @@ namespace Fight_cons
             {
                 Output.WriteColorLine(ConsoleColor.White, $"\n{armor.Id}) ", $"{armor.Name} ");
                 Output.TwriteLine($"{armor.Armor_stats_market(hero.HeroArmor, armor, true, false)}", 1);
-                Output.WriteColorLine(ConsoleColor.Yellow, $"   Цена: ", $"{armor.Cost}\u00A2\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, $"   Цена: ", $"{armor.Cost}{Output.MoneySymbol}\n");
             }
             Output.TwriteLine("5) Выйти", 1);
 
