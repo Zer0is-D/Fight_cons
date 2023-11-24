@@ -6,9 +6,6 @@ namespace Fight_cons
 {
     class AllHeroSkills
     {
-        //public SkillsDele Skill { get; set; }
-        //public SpellDele Spell { get; set; }
-
         //  Фиксированные навыки
         public static void Skills(Hero hero, Charecter enemy)
         {
@@ -32,7 +29,7 @@ namespace Fight_cons
                 AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {enemy.Conditions.BleedDmg} {Output.DmgStr}/3 ХОДА)"
+                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {enemy.Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
                 };
             }
 
@@ -52,7 +49,7 @@ namespace Fight_cons
                 Spell_cost = 5,
                 Spell_power = 10
             };
-            Cleansing_ray.Description = $"Очищающий луч ({Cleansing_ray.Spell_power + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {Cleansing_ray.Spell_cost} {Output.MPStr})";
+            Cleansing_ray.Description = $"Очищающий луч ({Cleansing_ray.Spell_power + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {Cleansing_ray.Spell_cost} {Output.MPSymbol})";
 
             //  Способность: Малое лечение
             if (hero.HeroStatistic.Spells >= 5)
@@ -62,7 +59,7 @@ namespace Fight_cons
                     Spell = SpellDes.HealSpell,
                     Spell_cost = 3
                 };
-                Healing.Description = $"Малое лечение (+30% {Output.HPStr} | {Healing.Spell_cost} {Output.MPStr})";
+                Healing.Description = $"Малое лечение (+30% {Output.HPSymbol} | {Healing.Spell_cost} {Output.MPSymbol})";
             }
 
             //  Способность: Кровотечение
@@ -71,7 +68,7 @@ namespace Fight_cons
                 AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {enemy.Conditions.BleedDmg} {Output.DmgStr}/3 ХОДА)"
+                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {enemy.Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
                 };
             }
 

@@ -45,7 +45,7 @@ namespace Fight_cons
         {
             double n = (hero.MaxHp / 100.0) * 50.0;
             hero.HP += (int)n;
-            Output.WriteColorLine(ConsoleColor.Green, "Зелье лечения восстановливает ", $"+{(int)n} ", $"{Output.HPStr}\n"); 
+            Output.WriteColorLine(ConsoleColor.Green, "Зелье лечения восстановливает ", $"+{(int)n} ", $"{Output.HPSymbol}\n"); 
             Sound.DRINK();
         }
 
@@ -54,7 +54,7 @@ namespace Fight_cons
         {
             double n = (hero.MaxMp / 100.0) * 50.0;
             hero.MP += (int)n;
-            Output.WriteColorLine(ConsoleColor.Blue, "Зелье маны восстановливает ", $"+{(int)n} ", $"{Output.MPStr}\n");
+            Output.WriteColorLine(ConsoleColor.Blue, "Зелье маны восстановливает ", $"+{(int)n} ", $"{Output.MPSymbol}\n");
             Sound.DRINK();
         }
 

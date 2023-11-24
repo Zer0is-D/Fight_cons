@@ -12,7 +12,7 @@ namespace Fight_cons
             Output.WriteColorLine(ConsoleColor.DarkGreen, "\nHero name: ", $"{Name}\n");
             Console.WriteLine($"Class: {Class_name}\n"
                             + $"Lvl: {Lvl}\t\tExp: {Exp}/{NextLvlExp} \n"
-                            + $"{Output.HPStr}: {TotalHP}/{TotalMaxHP} \t{Output.MPStr}: {MP}/{TotalMaxMP}\n"
+                            + $"{Output.HPSymbol}: {TotalHP}/{TotalMaxHP} \t{Output.MPSymbol}: {MP}/{TotalMaxMP}\n"
                             + $"{Output.AttackStr}: {TotalAttack}\t\t{Output.ArcaneStr}: {TotalArcane}\n"
                             + $"{Output.DefenceStr}: {TotalDefence * 100}%\t\t{Output.MagicDefenceStr}: {TotalMagicDefence * 100}%\n"
                             + $"{Output.SpeedStr}: {TotalSpeed * 100}%\t{Output.CritStr}: {TotalCrit * 100}%\n"
@@ -52,8 +52,8 @@ namespace Fight_cons
         public static void GiveHeroClass(Hero hero)
         {
             Console.WriteLine("Выберите класс:\n"
-              + $"1) Воин (Упор на {Output.HPStr}, {Output.AttackStr}, {Output.DefenceStr})\n"
-              + $"2) Волшебник (Упор на {Output.ArcaneStr}, {Output.MagicDefenceStr}, {Output.MPStr})\n"
+              + $"1) Воин (Упор на {Output.HPSymbol}, {Output.AttackStr}, {Output.DefenceStr})\n"
+              + $"2) Волшебник (Упор на {Output.ArcaneStr}, {Output.MagicDefenceStr}, {Output.MPSymbol})\n"
               + $"3) Ловкач (Упор на {Output.CritStr}, {Output.SpeedStr}, {Output.BlockStr})\n");
 
             switch (Input.ChoisInput(hero, 0, 3))

@@ -155,7 +155,7 @@ namespace Fight_cons
                 SpellDes excision = new SpellDes(hero, "Исцеление")
                 {
                     Spell = SpellDes.ExcisionSpell,
-                    Description = $"Исцеление (3 {Output.MPStr})",
+                    Description = $"Исцеление (3 {Output.MPSymbol})",
                     Spell_cost = 0,
                     Spell_power = 0,
                 };
@@ -197,8 +197,8 @@ namespace Fight_cons
             double H = (hero.MaxHp / 100.0) * 30.0, M = (hero.MaxMp / 100.0) * 20.0;
             hero.HP += (int)H;
             hero.MP += (int)M;
-            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{(int)H} ", $"{Output.HPStr} ");
-            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{(int)M} ", $"{Output.MPStr}\n");
+            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{(int)H} ", $"{Output.HPSymbol} ");
+            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{(int)M} ", $"{Output.MPSymbol}\n");
             Output.Wait_next(3, ".");
         }
 

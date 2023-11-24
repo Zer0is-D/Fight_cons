@@ -7,29 +7,32 @@ namespace Fight_cons.Противник
     {
         public static int ExpForKill(int HP, int Attack) => (HP / 2) + (Attack / 2);
 
-
-        internal Unit(string name, sbyte phase, int hp,
-                 int attack, int speed, int crit_chance,
-                 int defence, int magic_defence, int block,
-                 sbyte max_moves, bool no_run, int strategy = 0)
+        internal static void Consrtucter(Unit unit, string name, sbyte phase, int hp,
+                  int attack, int speed, int crit_chance,
+                  int defence, int magic_defence, int block,
+                  sbyte max_moves, bool no_run, int strategy = 0)
         {
-            Phase = phase;
+            if (unit is Enemy)
+                unit.IsEnemy = true;
 
-            Name = name;
-            HP = MaxHp = hp;
+            unit.Phase = phase;
 
-            Attack = attack;
-            Speed = speed;
-            Crit = crit_chance * 0.01;
-            Defence = defence * 0.01;
-            MagicDefence = magic_defence * 0.01;
-            Block = block * 0.01;
-            MaxMoves = max_moves;
-            No_run = no_run;
+            unit.Name = name;
+            unit.HP = unit.MaxHp = hp;
+
+            unit.Attack = attack;
+            unit.Speed = speed;
+            unit.Crit = crit_chance * 0.01;
+            unit.Defence = defence * 0.01;
+            unit.MagicDefence = magic_defence * 0.01;
+            unit.Block = block * 0.01;
+            unit.MaxMoves = max_moves;
+            unit.No_run = no_run;
+
+            unit.KillExp = ExpForKill(unit.HP, unit.Attack);
         }
 
-        //  Конструктор мин-макс
-        public Unit(string name, sbyte phase,
+        public void Consrtucter(Unit unit, string name, sbyte phase,
             int HP_min, int HP_max,
             int ATT_min, int ATT_max,
             int SPD_min, int SPD_max,
@@ -41,29 +44,36 @@ namespace Fight_cons.Противник
             int strategy, bool wild = false)
         {
             Random rand = new Random();
-            Wild = wild;
-            Phase = phase;
-            Name = name;
 
-            if (Wild)
-                MaxHp = rand.Next(HP_min, HP_max) * rand.Next(2, 5);
+            if (unit is Enemy)
+                unit.IsEnemy = true;
+
+            unit.Wild = wild;
+            unit.Phase = phase;
+            unit.Name = name;
+
+            if (unit.Wild)
+                unit.MaxHp = rand.Next(HP_min, HP_max) * rand.Next(2, 5);
             else
-                MaxHp = rand.Next(HP_min, HP_max);
-            HP = rand.Next(HP_min, MaxHp);
-            Attack = rand.Next(ATT_min, ATT_max);
-            Speed = rand.Next(SPD_min, SPD_max) * 0.01;
-            Crit = rand.Next(CRIT_min, CRIT_max) * 0.01;
-            Defence = rand.Next(DEF_min, DEF_max) * 0.01;
-            MagicDefence = rand.Next(M_DEF_min, M_DEF_max) * 0.01;
-            Block = rand.Next(BLK_min, BLK_max) * 0.01;
-            MaxMoves = rand.Next(max_turn_min, max_turn_max);
-            strategeis = (Strategeis)strategy;
+                unit.MaxHp = rand.Next(HP_min, HP_max);
+            unit.HP = rand.Next(HP_min, unit.MaxHp);
+            unit.Attack = rand.Next(ATT_min, ATT_max);
+            unit.Speed = rand.Next(SPD_min, SPD_max) * 0.01;
+            unit.Crit = rand.Next(CRIT_min, CRIT_max) * 0.01;
+            unit.Defence = rand.Next(DEF_min, DEF_max) * 0.01;
+            unit.MagicDefence = rand.Next(M_DEF_min, M_DEF_max) * 0.01;
+            unit.Block = rand.Next(BLK_min, BLK_max) * 0.01;
+            unit.MaxMoves = rand.Next(max_turn_min, max_turn_max);
+            unit.strategeis = (Strategeis)strategy;
+
+            KillExp = ExpForKill(HP, Attack);
         }
+
         //  Решения противника
-        public static void Unit_fight_choice(Charecter unit, Hero hero, List<Order> units)
+        public static void UnitFightChoice(Charecter unit, Hero hero, List<Order> units)
         {
             //  Минус от эффектов
-            Negative_effect_impact(unit);
+            NegativeEffectImpact(unit);
 
             if (unit.TotalHP > 0 & !unit.Run & !hero.Run)
             {
@@ -107,7 +117,7 @@ namespace Fight_cons.Противник
         }
 
         //  Вычитание негативыне эффекты
-        public static void Negative_effect_impact(Charecter unit)
+        public static void NegativeEffectImpact(Charecter unit)
         {
             if (unit.Conditions.MaxMoves > 0 || unit.Conditions.PoisentRound > 0 || unit.Conditions.BleedRound > 0)
             {

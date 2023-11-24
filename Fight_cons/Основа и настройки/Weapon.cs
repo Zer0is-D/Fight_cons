@@ -11,19 +11,11 @@ namespace Fight_cons
             int maxHp = 0, int maxMp = 0, double speed = 0, 
             double crit = 0, double block = 0, sbyte maxMoves = 0)
         {
-            Name = name;
-            Cost = cost;
-            Attack = attack;
+            ItemConsrtucter(this, name, cost, attack, 
+                defence, arcane, magDefence, maxHp, 
+                maxMp, speed, crit, block, maxMoves);
 
-            Defence = defence;
-            Arcane = arcane;
-            MagicDefence = magDefence;
-            MaxHp = maxHp;
-            MaxMp = maxMp;
-            Speed = speed;
-            Crit = crit;
-            Block = block;
-            MaxMoves = maxMoves;
+            GetItemParamFields(this);
         }
 
         //  Конструктор 2
@@ -34,34 +26,17 @@ namespace Fight_cons
             int BLK_min, int BLK_max, sbyte max_turn_min, sbyte max_turn_max, 
             int lvl)
         {
-            Random rand = new Random();
+            ItemConsrtucter(this, ATT_min, ATT_max, ARC_min, ARC_max,
+            DEF_min, DEF_max, MDEF_min, MDEF_max,
+            MAXHp_min, MAXHp_max, MAXMp_min, MAXMp_max,
+            SPD_min, SPD_max, CRIT_min, CRIT_max,
+            BLK_min, BLK_max, max_turn_min, max_turn_max,
+            lvl);
 
-            Name = Weapon_names();
-            Attack = rand.Next(ATT_min, ATT_max);
-            Thread.Sleep(50);
-            Arcane = rand.Next(ARC_min, ARC_max);
-            Thread.Sleep(50);
-            Defence = rand.Next(DEF_min, DEF_max) * 0.01;
-            Thread.Sleep(50);
-            MagicDefence = rand.Next(MDEF_min, MDEF_max) * 0.01;
-            Thread.Sleep(50);
-            MaxHp = rand.Next(MAXHp_min, MAXHp_max);
-            Thread.Sleep(50);
-            MaxMp = rand.Next(MAXMp_min, MAXMp_max);
-            Thread.Sleep(50);
-            Speed = rand.Next(SPD_min, SPD_max) * 0.01;
-            Thread.Sleep(50);
-            Crit = rand.Next(CRIT_min, CRIT_max) * 0.01;
-            Thread.Sleep(50);
-            Block = rand.Next(BLK_min, BLK_max) * 0.01;
-            Thread.Sleep(50);
-            MaxMoves = (sbyte) rand.Next(max_turn_min, max_turn_max);
-
-            int Spd_part = (int)((Speed > 0 ) ? Speed * 100 : 0);
-            Cost = (int) Attack + Spd_part + (int) (Crit * 100) + (int) (Block * 100) + (lvl * 10);
+            GetItemParamFields(this);
         }
 
-        public string Weapon_names()
+        public string WeaponNames()
         {
             Random rand = new Random();
 

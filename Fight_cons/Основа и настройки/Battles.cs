@@ -51,7 +51,7 @@ namespace Fight_cons
                 if (units.Count() == 1)
                 {
                     Output.WriteColorLine(ConsoleColor.DarkMagenta, "На вас нападает ", $"{enemy.charecter.Name} ");
-                    Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPStr}]\n");
+                    Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPSymbol}]\n");
                     break;
                 }
                 else
@@ -60,13 +60,13 @@ namespace Fight_cons
                     if (FirstEnemy)
                     {
                         Output.WriteColorLine(ConsoleColor.DarkMagenta, "На вас нападают ", $"{enemy.charecter.Name} ");
-                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPStr}],\n");
+                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPSymbol}],\n");
                         FirstEnemy = false;
                     }
                     else
                     {
                         Output.WriteColorLine(ConsoleColor.DarkMagenta, "", $"{enemy.charecter.Name} ");
-                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPStr}],\n");
+                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPSymbol}],\n");
                     }
                 }               
             }           
@@ -109,7 +109,7 @@ namespace Fight_cons
                             CombatSolutions.CurrentEnemy(hero, units);
                     }
                     else
-                        Unit.Unit_fight_choice(cha.charecter, hero, units);
+                        Unit.UnitFightChoice(cha.charecter, hero, units);
                 }
             }
 
@@ -200,7 +200,7 @@ namespace Fight_cons
                         double n = (hero.MaxHp / 100.0) * 10.0;
                         hero.HP -= (int)n;
                         Output.Run_log();
-                        Console.WriteLine($"Вы сбежали с потерей {(int) n} {Output.HPStr}\n");
+                        Console.WriteLine($"Вы сбежали с потерей {(int) n} {Output.HPSymbol}\n");
                     }                    
                     hero.Run = true;
                 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Fight_cons.Основа_и_настройки;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Fight_cons
@@ -6,28 +8,67 @@ namespace Fight_cons
     public class Output
     {
         #region Обозначения и символы
-        public static char UpSymbol = '\u0024';       // \u2191
-        public static char DownSymbol = '\u0025';     // \u2193
+        //⌂,↔,∟,↨,▬,§,¶,‼,↕,☼,♫,♥,♣,♦,♠,☺,☻,\u0072
+
+        public enum MyEnum
+        {
+            HP = 's' + 'a',
+        }
+
+        public static char UpSymbol = '\u001e';       // \u2191
+        public static char DownSymbol = '\u001f';     // \u2193  
 
         public static char MoneySymbol = '\u00A2';
         public static char ExpSymbol = '\u0407';
 
-        public static string HPStr = "HP";
-        public static string MPStr = "MP";
+        public static string HPSymbol = "HP";
+        public static string MPSymbol = "MP";
 
-        public static string AttackStr = "ATT";
-        public static string ArcaneStr = "ARC";
-        public static string DefenceStr = "DEF";
-        public static string MagicDefenceStr = "MDEF";
-        public static string MaxHpStr = "vHP";
-        public static string MaxMpStr = "vMP";
-        public static string SpeedStr = "SPD";
-        public static string CritStr = "CRT";
-        public static string BlockStr = "BLK";
-        public static string MaxMovesStr = "vMOV";
+        public static string MaxHpStr
+        {
+            get => "vHP";
+        }
+        public static string MaxMpStr
+        {
+            get => "vMP";
+        }
 
-        public static string DmgStr = "DMG";
-        public static string EffMovStr = "MOV";
+        public static string AttackStr
+        {
+            get => "ATT";
+        }
+        public static string ArcaneStr
+        {
+            get => "ARC";
+        }
+        public static string DefenceStr
+        {
+            get => "DEF";
+        }
+        public static string MagicDefenceStr
+        {
+            get => "MDEF";
+        }       
+       
+        public static string SpeedStr
+        {
+            get => "SPD";
+        }
+        public static string CritStr
+        {
+            get => "CRT";
+        }
+        public static string BlockStr
+        {
+            get => "BLK";
+        }
+        public static string MaxMovesStr
+        {
+            get => "vMOV";
+        }
+
+        public static string DmgSymbol = "DMG";
+        public static string EffMovSymbol = "MOV";
         //  Добавить меткость на англ
         #endregion
 

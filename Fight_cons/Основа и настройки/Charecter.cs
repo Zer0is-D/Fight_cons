@@ -109,7 +109,7 @@ namespace Fight_cons
             if (!next)
                 Console.Write("\n");
 
-            Console.Write($"{Output.HPStr}: [");
+            Console.Write($"{Output.HPSymbol}: [");
             while (c <= TotalMaxHP)
             {
                 if (c <= TotalHP)
@@ -120,7 +120,7 @@ namespace Fight_cons
             }
 
             Console.Write("]    ");
-            Console.Write($"{Output.HPStr}: {TotalHP}/{TotalMaxHP}");
+            Console.Write($"{Output.HPSymbol}: {TotalHP}/{TotalMaxHP}");
         }
 
         //  Шкала маны
@@ -130,7 +130,7 @@ namespace Fight_cons
             {
                 double part = TotalMaxMP / 10.0, c = 0;
 
-                Console.Write($"\n{Output.MPStr}: [");
+                Console.Write($"\n{Output.MPSymbol}: [");
                 while (c <= TotalMaxMP)
                 {
                     if (TotalMP == 0)
@@ -143,10 +143,10 @@ namespace Fight_cons
                 }
 
                 Console.Write("]    ");
-                Console.Write($"{Output.MPStr}: {MP}/{TotalMaxMP}\n");
+                Console.Write($"{Output.MPSymbol}: {MP}/{TotalMaxMP}\n");
             }
             else
-                Output.WriteColorLine(ConsoleColor.Blue, $"\n{Output.MPStr}: [", " нет маны ", "]\n");
+                Output.WriteColorLine(ConsoleColor.Blue, $"\n{Output.MPSymbol}: [", " нет маны ", "]\n");
         }
 
         public void PhaseHPBar()
@@ -158,7 +158,7 @@ namespace Fight_cons
             sbyte phase4 = 0;
             int charsToNextBar = 0;
 
-            Console.Write($"{Output.HPStr}: [");
+            Console.Write($"{Output.HPSymbol}: [");
             while (c <= TotalMaxHP)
             {
                 if (c <= TotalHP)
@@ -198,7 +198,7 @@ namespace Fight_cons
             }
 
             Console.Write("]    ");
-            Console.Write($"{Output.HPStr}: {TotalHP}/{TotalMaxHP}");
+            Console.Write($"{Output.HPSymbol}: {TotalHP}/{TotalMaxHP}");
         }
     }
 }

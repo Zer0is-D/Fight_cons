@@ -142,6 +142,7 @@
     <Compile Include="Мир\Locations\VallyLoc.cs" />
     <Compile Include="Мир\Locations\VillageLoc.cs" />
     <Compile Include="Основа и настройки\Formulas.cs" />
+    <Compile Include="Основа и настройки\Info.cs" />
     <Compile Include="Основа и настройки\ItemChar.cs" />
     <Compile Include="Основа и настройки\Condition.cs" />
     <Compile Include="Основа и настройки\Characteristics.cs" />

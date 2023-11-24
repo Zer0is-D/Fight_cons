@@ -297,7 +297,7 @@ namespace Fight_cons
 
                 //  Замедление
                 if (hero.Conditions.SlowRound > 0)
-                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Conditions.MaxMoves} {Output.EffMovStr}] ({hero.Conditions.SlowRound})\n");
+                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Conditions.MaxMoves} {Output.EffMovSymbol}] ({hero.Conditions.SlowRound})\n");
 
                 //  Заморозка
                 if (hero.Conditions.FrezRound > 0)
@@ -305,7 +305,7 @@ namespace Fight_cons
 
                 //  Отравление
                 if (hero.Conditions.PoisentRound > 0)
-                    Output.WriteColorLine(ConsoleColor.DarkGreen, " ", "Отравление ", $" [-{enemy.Conditions.PoisentDmg} {Output.HPStr}] ({hero.Conditions.PoisentRound})\n");
+                    Output.WriteColorLine(ConsoleColor.DarkGreen, " ", "Отравление ", $" [-{enemy.Conditions.PoisentDmg} {Output.HPSymbol}] ({hero.Conditions.PoisentRound})\n");
             }           
         }
 

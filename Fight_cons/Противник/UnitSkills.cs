@@ -22,7 +22,7 @@ namespace Fight_cons
             Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Yellow, "и сносит ", $"{damag} ", "урона! У ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPSymbol}\n");
 
             victim.HP -= damag;
             attacker.Turn += 2;
@@ -49,7 +49,7 @@ namespace Fight_cons
             Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Yellow, $"на {victim.Conditions.FrezRound} хода и сносит ", $"{damag} ", "урона! У ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPSymbol}\n");
 
             victim.HP -= damag;
             attacker.Turn += 2;
@@ -101,7 +101,7 @@ namespace Fight_cons
             Output.WriteColorLine(ConsoleColor.DarkGreen, " ", $"отравление ");
             Output.WriteColorLine(ConsoleColor.Yellow, "сносит ", $"{damag} ", "урона! У ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPSymbol}\n");
 
             victim.HP -= damag;
             attacker.Turn += 1;
@@ -114,9 +114,9 @@ namespace Fight_cons
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkRed, "использует ", $"вампиризм ");
-            Output.WriteColorLine(ConsoleColor.Red, "и поглощает ", $"{damag} ", $"{Output.HPStr}! ");
+            Output.WriteColorLine(ConsoleColor.Red, "и поглощает ", $"{damag} ", $"{Output.HPSymbol}! ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPSymbol}\n");
 
             attacker.HP += damag;
             victim.HP -= damag;
@@ -146,7 +146,7 @@ namespace Fight_cons
                 Output.WriteColorLine(ConsoleColor.Yellow, "", $"{damag} ", "урона у ");
 
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPStr}\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPSymbol}\n");
             Sound.HIT();
 
             victim.HP -= damag;

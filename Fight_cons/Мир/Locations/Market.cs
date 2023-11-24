@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 
 namespace Fight_cons
 {
@@ -20,7 +20,7 @@ namespace Fight_cons
             {
                 WeaponList.Clear();
 
-                var weapon = new ParamScaleTicket(hero.Lvl);
+                var weapon = new WeaponScaleTicket(hero.Lvl);
 
                 LVL = hero.Lvl;
                 for (byte i = 0; i < NamOfGoods; i++)
@@ -39,46 +39,41 @@ namespace Fight_cons
             Console.WriteLine();
             foreach (var new_weapon in WeaponList)
             {
-                Output.WriteColorLine(ConsoleColor.White, $"\n{new_weapon.Id}) ", $"{new_weapon.Name} ", "| ");
+                Output.WriteColorLine(ConsoleColor.White, $"\n{new_weapon.Id}) ", $"{new_weapon.Name} ");
                 ItemChar.ItemStats(hero.HeroWeapon, new_weapon, true);
 
-                Output.WriteColorLine(ConsoleColor.Yellow, $"\n   Цена: ", $"{new_weapon.Cost}{Output.MoneySymbol}\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, $"\nЦена: ", $"{new_weapon.Cost}{Output.MoneySymbol}\n");
             }
-            Output.TwriteLine("\n5) Выйти", 1);
+            Output.TwriteLine("\n0) Выйти", 1);
 
-            int chois = Input.ChoisInput(hero, 1, 5);
-            switch (chois)
+            int chois = Input.ChoisInput(hero, 0, (sbyte) WeaponList.Count());
+
+            if (chois == 0)
+                Output.TwriteLine("Возвращяйся скорее! Желательно с деньгами!\n", 1);
+            else
             {
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                    if (hero.Money >= WeaponList[chois - 1].Cost)
-                    {
-                        Console.WriteLine("Хорошая покупка человек!");
-                        hero.Money -= WeaponList[chois - 1].Cost;
-                        hero.HeroWeapon = WeaponList[chois - 1];
-                        Output.Spent(WeaponList[chois - 1].Cost, WeaponList[chois - 1].Name);
-                    }
-                    else
-                        Output.TwriteLine("Чтобы что-то получить, нужно что-то отдать!", 1);
-                    break;
-                case 5:
-                    Output.TwriteLine("Возвращяйся скорее! Желательно с дарами!\n", 1);
-                    break;
-            }                
+                if (hero.Money >= WeaponList[chois - 1].Cost)
+                {
+                    Console.WriteLine("Хорошая покупка человек!");
+                    hero.Money -= WeaponList[chois - 1].Cost;
+                    hero.HeroWeapon = WeaponList[chois - 1];
+                    Output.Spent(WeaponList[chois - 1].Cost, WeaponList[chois - 1].Name);
+                }
+                else
+                    Output.TwriteLine("Чтобы что-то получить, нужно что-то отдать!", 1);
+            }              
         }
 
         //  Генератор рандомной брони
-        public static void Armor_goods(Hero hero)
+        public static void ShowArmorGoods(Hero hero)
         {
             if (hero.Lvl - LVL > 1 || ArmorList.Count == 0)
             {
                 ArmorList.Clear();
 
-                var armor = new ParamScaleTicket(hero.Lvl);
+                var armor = new ArmorScaleTicket(hero.Lvl);
 
-                for (byte i = 0; i < NamOfGoods; i++)
+                for (sbyte i = 0; i < NamOfGoods; i++)
                 {
                     ArmorList.Add(new Armor(armor.ATTMin, armor.ATTMax,
                     armor.ARCMin, armor.ARCMax, armor.DEFMin, armor.DEFMax,
@@ -87,7 +82,6 @@ namespace Fight_cons
                     armor.CRITMin, armor.CRITMax, armor.BLKMin, armor.BLKMax,
                     armor.MaxTurnMin, armor.MaxTurnMax, hero.Lvl) 
                     { Id = i + 1 });
-                    Thread.Sleep(50);
                 }
             }
 
@@ -97,31 +91,26 @@ namespace Fight_cons
             {
                 Output.WriteColorLine(ConsoleColor.White, $"\n{armor.Id}) ", $"{armor.Name} ");
                 Output.TwriteLine($"{armor.Armor_stats_market(hero.HeroArmor, armor, true, false)}", 1);
-                Output.WriteColorLine(ConsoleColor.Yellow, $"   Цена: ", $"{armor.Cost}{Output.MoneySymbol}\n");
+                Output.WriteColorLine(ConsoleColor.Yellow, $"\nЦена: ", $"{armor.Cost}{Output.MoneySymbol}\n");
             }
-            Output.TwriteLine("5) Выйти", 1);
+            Output.TwriteLine("0) Выйти", 1);
 
-            int chois = Input.ChoisInput(hero, 1, 5);
-            switch (chois)
+            int chois = Input.ChoisInput(hero, 0, (sbyte)ArmorList.Count());
+
+            if (chois == 0)
+                Output.TwriteLine("Возвращяйся скорее! Желательно с дарами!\n", 1);
+            else
             {
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                    if (hero.Money >= ArmorList[chois - 1].Cost)
-                    {
-                        Console.WriteLine("Хорошая покупка!");
-                        hero.Money -= ArmorList[chois - 1].Cost;
-                        hero.HeroArmor = ArmorList[chois - 1];
-                        Output.Spent(ArmorList[chois - 1].Cost, ArmorList[chois - 1].Name);
-                    }
-                    else
-                        Output.TwriteLine("Чтобы что-то получить, нужно что-то отдать!", 1);
-                    break;
-                case 5:
-                    Output.TwriteLine("Возвращяйся скорее! Желательно с дарами!\n", 1);
-                    break;
-            }               
+                if (hero.Money >= ArmorList[chois - 1].Cost)
+                {
+                    Console.WriteLine("Хорошая покупка!");
+                    hero.Money -= ArmorList[chois - 1].Cost;
+                    hero.HeroArmor = ArmorList[chois - 1];
+                    Output.Spent(ArmorList[chois - 1].Cost, ArmorList[chois - 1].Name);
+                }
+                else
+                    Output.TwriteLine("Чтобы что-то получить, нужно что-то отдать!", 1);
+            }              
         }
     }    
 }

@@ -178,7 +178,7 @@ namespace Fight_cons
                     break;
 
                 case 3:
-                    Market.Armor_goods(hero);
+                    Market.ShowArmorGoods(hero);
                     break;
 
                 case 4:
