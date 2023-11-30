@@ -78,7 +78,6 @@ namespace Fight_cons
             item.Name = name;
             item.Cost = cost;
             item.Attack = attack;
-
             item.Defence = defence;
             item.Arcane = arcane;
             item.MagicDefence = magDefence;
