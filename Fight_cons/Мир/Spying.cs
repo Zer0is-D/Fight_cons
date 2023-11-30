@@ -1,5 +1,6 @@
-﻿using Fight_cons.Мир;
+﻿using Fight_cons.Основа_и_настройки;
 using System;
+using static Fight_cons.AboutLoc;
 
 namespace Fight_cons
 {
@@ -18,7 +19,7 @@ namespace Fight_cons
 
             if (Sneak < 3)
             {
-                if (Battles.Vero(0.6))
+                if (GameFormulas.Vero(0.6))
                     Tavern_talks(hero);
                 if (hero.HeroQuests.Que[1] == 4)
                     Output.TwriteLine("'А вот и наш герой!' - восклицает Бегемот.\nПозади него вы видите коллекцию статуэток из дерева\n", 1);
@@ -40,18 +41,19 @@ namespace Fight_cons
                             hero.Money -= 5;
                             Output.TwriteLine("\n- Так-то лучше\n", 1);
                             Output.TwriteLine("*Трактирщик наливает вам выпивки*\n", 1);
-                            AboutLoc.Drinking(hero);
+                            Drinking(hero);
                         }
                         else
                         {
                             Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
                             hero.HeroStatistic.HeroLvlKickOff = hero.Lvl;
-                            VillageLoc.Village(hero);                                                        
+                            DefualtLoad(hero, Locations[(int)LocationName.Village]);
+
                         }
                         break;
                     case 2:
                         Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
-                        VillageLoc.Village(hero);
+                        DefualtLoad(hero, Locations[(int)LocationName.Village]);
                         break;
                 }
             }

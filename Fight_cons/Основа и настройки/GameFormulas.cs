@@ -2,20 +2,31 @@
 
 namespace Fight_cons.Основа_и_настройки
 {
-    internal class Formulas
+    internal class GameFormulas
     {
         //  Для формул
         private const double ArmorFine = 1.5;
         private const int MinCritChance = 15;
         private const int MaxCritChance = 20;
 
-        #region Проверки
         /// <summary>
-        /// Процент ХП
+        /// Получить 1% от MAX HP
         /// </summary>
         public static double PercentHp(Charecter person) => ((double)person.HP / (double)person.MaxHp) * 100.0;
-        public static int GetCurrentPercent(Charecter person, int percent) => (int) ((double)(person.MaxHp / 100) * percent);
 
+        /// <summary>
+        /// Получить n% от MAX HP
+        /// </summary>
+        public static int GetCurrentPercent(Charecter person, int percent) => (int)((double)(person.MaxHp / 100) * percent);
+
+        /// <summary>
+        /// Итоговый урон после всех проверок 
+        /// </summary>
+        /// <param name="attacker">Атакующий</param>
+        /// <param name="victim">Жертва</param>
+        /// <param name="throwBranch">Пробитие брони</param>
+        /// <param name="parry">Парирование</param>
+        /// <returns></returns>
         public static int Damage(Charecter attacker, Charecter victim, bool throwBranch = false, bool parry = false)
         {
             double crit = CheckCrit(attacker);
@@ -35,6 +46,7 @@ namespace Fight_cons.Основа_и_настройки
             return damag;
         }
 
+        #region Проверки для урона
         //  Проверка на парирование
         protected static bool CheckParry(Charecter attacker, Charecter victim)
         {
@@ -111,6 +123,45 @@ namespace Fight_cons.Основа_и_настройки
             }
             else
                 return false;
+        }
+        #endregion
+
+        //  Веротятность события
+        //  шанс N% на успех
+        public static bool Vero(double x)
+        {
+            Random rand = new Random();
+            bool ans = false;
+
+            if (x >= rand.NextDouble())
+                ans = true;
+
+            return ans;
+        }
+
+        #region Формулы для юнитов
+        public static void DoScale(int lvlScale, Charecter enemy)
+        {
+            Random rand = new Random();
+
+            enemy.HP = ScaleMAXHP(lvlScale, enemy.HP);
+            if (enemy.Wild)
+                enemy.MaxHp = ScaleMAXHP(lvlScale, enemy.HP) * rand.Next(2, 3);
+            else
+                enemy.MaxHp = ScaleMAXHP(lvlScale, enemy.HP);
+            enemy.Attack = ScaleATT(lvlScale, enemy.Attack);
+        }
+
+        //  Скейл параметров противника от уровня героя
+        public static int ScaleMAXHP(int lvlScale, int x)
+        {
+            return (int)(lvlScale * 1.5) + x;
+        }
+
+        //  Скейл параметров противника от уровня героя
+        public static int ScaleATT(int lvlScale, int x)
+        {
+            return (int)(lvlScale * 0.5) + x;
         }
         #endregion
     }

@@ -83,6 +83,14 @@ namespace Fight_cons
         internal protected sbyte? Phase;
         public bool IsAlive = true;
         public bool IsEnemy = false;
+        public enum ChaRole
+        {
+            Hero = 0,
+            Ally = 1,
+            Enemy = 2,
+            Wild = 3
+        }
+        public ChaRole Role;
 
         internal protected bool No_run;
 

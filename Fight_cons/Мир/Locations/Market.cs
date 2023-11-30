@@ -10,6 +10,7 @@ namespace Fight_cons
         private static List<Armor> ArmorList = new List<Armor>();
 
         private static sbyte NamOfGoods = 4;
+        private static sbyte NamOfBonusies = 2;
 
         private static int LVL = 1;
 
@@ -25,7 +26,7 @@ namespace Fight_cons
                 LVL = hero.Lvl;
                 for (byte i = 0; i < NamOfGoods; i++)
                 {
-                    WeaponList.Add(new Weapon(weapon.ATTMin, weapon.ATTMax, 
+                    WeaponList.Add(new Weapon(NamOfBonusies, weapon.ATTMin, weapon.ATTMax, 
                     weapon.ARCMin, weapon.ARCMax, weapon.DEFMin, weapon.DEFMax,
                     weapon.MDEFMin, weapon.MDEFMax, weapon.MAXHpMin, weapon.MAXHpMax,
                     weapon.MAXMp_min, weapon.MAXMpMax, weapon.SPDMin, weapon.SPDMax,
@@ -35,33 +36,7 @@ namespace Fight_cons
                 }
             }
 
-            hero.HPBar();
-            Console.WriteLine();
-            foreach (var new_weapon in WeaponList)
-            {
-                Output.WriteColorLine(ConsoleColor.White, $"\n{new_weapon.Id}) ", $"{new_weapon.Name} ");
-                ItemChar.ItemStats(hero.HeroWeapon, new_weapon, true);
-
-                Output.WriteColorLine(ConsoleColor.Yellow, $"\nЦена: ", $"{new_weapon.Cost}{Output.MoneySymbol}\n");
-            }
-            Output.TwriteLine("\n0) Выйти", 1);
-
-            int chois = Input.ChoisInput(hero, 0, (sbyte) WeaponList.Count());
-
-            if (chois == 0)
-                Output.TwriteLine("Возвращяйся скорее! Желательно с деньгами!\n", 1);
-            else
-            {
-                if (hero.Money >= WeaponList[chois - 1].Cost)
-                {
-                    Console.WriteLine("Хорошая покупка человек!");
-                    hero.Money -= WeaponList[chois - 1].Cost;
-                    hero.HeroWeapon = WeaponList[chois - 1];
-                    Output.Spent(WeaponList[chois - 1].Cost, WeaponList[chois - 1].Name);
-                }
-                else
-                    Output.TwriteLine("Чтобы что-то получить, нужно что-то отдать!", 1);
-            }              
+            GoodsOut(hero, WeaponList);
         }
 
         //  Генератор рандомной брони
@@ -75,7 +50,7 @@ namespace Fight_cons
 
                 for (sbyte i = 0; i < NamOfGoods; i++)
                 {
-                    ArmorList.Add(new Armor(armor.ATTMin, armor.ATTMax,
+                    ArmorList.Add(new Armor(NamOfBonusies, armor.ATTMin, armor.ATTMax,
                     armor.ARCMin, armor.ARCMax, armor.DEFMin, armor.DEFMax,
                     armor.MDEFMin, armor.MDEFMax, armor.MAXHpMin, armor.MAXHpMax,
                     armor.MAXMp_min, armor.MAXMpMax, armor.SPDMin, armor.SPDMax,
@@ -85,32 +60,59 @@ namespace Fight_cons
                 }
             }
 
-            hero.HPBar();
-            Console.WriteLine();
-            foreach (var armor in ArmorList)
+            GoodsOut(hero, null, ArmorList);
+        }
+
+        public static void GoodsOut(Hero hero, List<Weapon> weapons = null, List<Armor> armors = null)
+        {
+            List<ItemChar> itemChars = new List<ItemChar>();
+
+            if (weapons != null)
             {
-                Output.WriteColorLine(ConsoleColor.White, $"\n{armor.Id}) ", $"{armor.Name} ");
-                Output.TwriteLine($"{armor.Armor_stats_market(hero.HeroArmor, armor, true, false)}", 1);
-                Output.WriteColorLine(ConsoleColor.Yellow, $"\nЦена: ", $"{armor.Cost}{Output.MoneySymbol}\n");
+                foreach (var w in weapons)
+                    itemChars.Add(w);
+            }
+            else
+                foreach (var a in armors)
+                    itemChars.Add(a);
+
+            foreach (var item in itemChars)
+            {
+                Output.WriteColorLine(ConsoleColor.White, $"\n{item.Id}) ", $"{item.Name}\n");
+
+                if (weapons != null)
+                    ItemChar.ItemStats(hero.HeroWeapon, item, true);
+                else
+                    ItemChar.ItemStats(hero.HeroArmor, item, true);
+
+                Output.WriteColorLine(ConsoleColor.Yellow, $"\nЦена: ", $"{item.Cost}{Output.MoneySymbol}\n");
             }
             Output.TwriteLine("0) Выйти", 1);
 
-            int chois = Input.ChoisInput(hero, 0, (sbyte)ArmorList.Count());
+            int chois = Input.ChoisInput(hero, 0, (sbyte)itemChars.Count());
 
             if (chois == 0)
-                Output.TwriteLine("Возвращяйся скорее! Желательно с дарами!\n", 1);
+            {
+                Output.TwriteLine("Возвращяйся скорее! Желательно с деньгами!\n", 1);
+                AboutLoc.Market(hero);
+            }
             else
             {
-                if (hero.Money >= ArmorList[chois - 1].Cost)
+                if (hero.Money >= itemChars[chois - 1].Cost)
                 {
                     Console.WriteLine("Хорошая покупка!");
-                    hero.Money -= ArmorList[chois - 1].Cost;
-                    hero.HeroArmor = ArmorList[chois - 1];
-                    Output.Spent(ArmorList[chois - 1].Cost, ArmorList[chois - 1].Name);
+                    hero.Money -= itemChars[chois - 1].Cost;
+
+                    if (weapons != null)
+                        hero.HeroWeapon = WeaponList[chois - 1];                    
+                    else
+                        hero.HeroArmor = ArmorList[chois - 1];
+
+                    Output.Spent(itemChars[chois - 1].Cost, itemChars[chois - 1].Name);
                 }
                 else
                     Output.TwriteLine("Чтобы что-то получить, нужно что-то отдать!", 1);
-            }              
+            }
         }
     }    
 }

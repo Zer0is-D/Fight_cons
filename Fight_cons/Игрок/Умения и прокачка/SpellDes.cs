@@ -11,8 +11,8 @@ namespace Fight_cons
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte Spell_cost { get; set; }
-        public int Spell_power { get; set; }
+        public byte SpellСost { get; set; }
+        public int SpellPower { get; set; }
 
         public SpellDes(Hero hero, string name)
         {
@@ -37,7 +37,7 @@ namespace Fight_cons
         {
             Random rand = new Random();
 
-            int damag = Formulas.MagicDamage(hero, victim, spellPower);
+            int damag = GameFormulas.MagicDamage(hero, victim, spellPower);
 
             if (rand.NextDouble() <= 1 - victim.TotalSpeed)
             {
@@ -57,14 +57,14 @@ namespace Fight_cons
             else
             {
                 Output.NameAndId(victim, true);
-                Console.Write(" уворачивается");
+                Console.Write(" уворачивается\n");
             }
         }
 
         //  Малое лечение
         public static void HealSpell(Hero hero, Charecter enemy, int cost, int power)
         {
-            double crit = Formulas.CheckCrit(hero, true);
+            double crit = GameFormulas.CheckCrit(hero, true);
             double Heal = ((hero.MaxHp / 100.0) * 30.0) + crit;
 
             if (crit > 1)

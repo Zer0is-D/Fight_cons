@@ -38,7 +38,7 @@ namespace Fight_cons.form
 
         private void Market_loc_bt_Click(object sender, EventArgs e)
         {
-            VillageLoc.Market_loc(hero_tp);
+            AboutLoc.Market(hero_tp);
             this.Close();
         }
 
@@ -57,13 +57,13 @@ namespace Fight_cons.form
 
         private void Neighborhood_bt_Click(object sender, EventArgs e)
         {
-            VillageLoc.Neighborhood(hero_tp);
+            AboutLoc.Neighborhood(hero_tp);
             this.Close();
         }
 
         private void Inn_bt_Click(object sender, EventArgs e)
         {
-            VillageLoc.Inn(hero_tp);
+            AboutLoc.Inn(hero_tp);
             this.Close();
         }
     }

@@ -1,11 +1,8 @@
-﻿using Fight_cons.Мир;
-using Fight_cons.Противник;
+﻿using Fight_cons.Основа_и_настройки;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
+using static Fight_cons.AboutLoc;
 
 namespace Fight_cons
 {
@@ -50,12 +47,12 @@ namespace Fight_cons
                             hero.HeroQuests.Que[0] = 2;
                             hero.HeroQuests.MainQ(hero);
 
-                            Output.Victoy_log();
+                            Output.VictoyLog();
                             hero.HeroStatistic.Wins++;
                         }
                     }
                     hero.Run = false;
-                    AboutLoc.EnemyList.Clear();
+                    AboutLoc.ListOfUnits.Clear();
                     break;
 
                     case 2:
@@ -79,7 +76,7 @@ namespace Fight_cons
             switch (hero.HeroQuests.Que[1])
             {
                 case 1:
-                    if (Battles.Vero(0.6))
+                    if (GameFormulas.Vero(0.6))
                     {
                         Output.StartQuest("Секреты Бегемота");
                         
@@ -204,13 +201,13 @@ namespace Fight_cons
                     break;
 
                 case 6:
-                    VillageLoc.Village(hero);
+                    DefualtLoad(hero, Locations[(int)LocationName.Village]);
                     break;
             }
         }
 
         //  Квест "Твое имя камень!"
-        public void Q_Your_name(Hero hero)
+        public void QYourName(Hero hero)
         {
             if (hero.HeroQuests.Que[2] == 1)
             {

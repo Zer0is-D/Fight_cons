@@ -13,7 +13,7 @@ namespace Fight_cons
         {
             int spellPower = 5;
 
-            int damag = Formulas.MagicDamage(attacker, victim, spellPower);
+            int damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
             victim.Conditions.MaxMoves++;
             victim.Conditions.SlowRound = 3;
 
@@ -41,7 +41,7 @@ namespace Fight_cons
         {
             int spellPower = 5;
 
-            int damag = Formulas.MagicDamage(attacker, victim, spellPower);
+            int damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
             victim.Conditions.FrezRound = 2;
 
             Output.NameAndId(attacker, true);
@@ -69,7 +69,7 @@ namespace Fight_cons
         {
             Output.NameAndId(reviever, true);
             Output.WriteColorLine(ConsoleColor.DarkYellow, "воскрешает ", $"{riser.Name}", $"!\n");
-            riser.HP = Formulas.GetCurrentPercent(riser, 10);
+            riser.HP = GameFormulas.GetCurrentPercent(riser, 10);
             riser.IsAlive = true;
 
             reviever.Turn += 4;
@@ -83,7 +83,7 @@ namespace Fight_cons
         {
             attacker.Turn += 1;
 
-            int damag = Formulas.Damage(attacker, victim, false, true);
+            int damag = GameFormulas.Damage(attacker, victim, false, true);
 
             BattleLog(attacker, victim, damag);
         }
@@ -91,7 +91,7 @@ namespace Fight_cons
         //  Отравляющая атака
         public static void Poisent_att(Charecter attacker, Charecter victim)
         {
-            int damag = Formulas.Damage(attacker, victim) / 2;
+            int damag = GameFormulas.Damage(attacker, victim) / 2;
 
             victim.Conditions.PoisentRound = 3;
 
@@ -110,7 +110,7 @@ namespace Fight_cons
         //  Вамперизм
         public static void Vamperism(Charecter attacker, Charecter victim)
         {
-            int damag = Formulas.Damage(attacker, victim) / 2;
+            int damag = GameFormulas.Damage(attacker, victim) / 2;
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkRed, "использует ", $"вампиризм ");

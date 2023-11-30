@@ -43,7 +43,7 @@ namespace Fight_cons
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
                           + "Догадка была верна, это оказался факел, что освятил пространство. Но ответить на вопрос где вы, пока не удается.\n", 1);
 
-            CavesLoc.CavesStart(hero);
+            AboutLoc.DefualtLoad(hero, AboutLoc.Locations[(int)AboutLoc.LocationName.CaveStart]);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Fight_cons
             {
                 case 1:
                     Hero hero = new Hero(25,10);
-                    Hero.CreateHero(hero);
+                    CreateHero(hero);
                     break;
 
                 default:

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using static Fight_cons.Charecter;
 
 namespace Fight_cons
 {
@@ -9,11 +10,6 @@ namespace Fight_cons
     {
         #region Обозначения и символы
         //⌂,↔,∟,↨,▬,§,¶,‼,↕,☼,♫,♥,♣,♦,♠,☺,☻,\u0072
-
-        public enum MyEnum
-        {
-            HP = 's' + 'a',
-        }
 
         public static char UpSymbol = '\u001e';       // \u2191
         public static char DownSymbol = '\u001f';     // \u2193  
@@ -74,7 +70,7 @@ namespace Fight_cons
 
         #region Логи
         //  Экран нападения
-        public static void Fight_log()
+        public static void FightLog()
         {
             WriteColorLine(ConsoleColor.DarkGray, "", "##############################################################################################################");
             WriteColorLine(ConsoleColor.Red, "", "    На вас напали!    ");
@@ -91,7 +87,7 @@ namespace Fight_cons
         }
 
         //  Экран победы над противником
-        public static void Victoy_log()
+        public static void VictoyLog()
         {
             WriteColorLine(ConsoleColor.DarkGray, "\n", "##############################################################################################################");
             WriteColorLine(ConsoleColor.Green, "", "    Вы победили!    ");
@@ -99,7 +95,7 @@ namespace Fight_cons
         }
 
         //  Экран побега
-        public static void Run_log()
+        public static void RunLog()
         {
             WriteColorLine(ConsoleColor.DarkGray, "", "##############################################################################################################");
             WriteColorLine(ConsoleColor.White, "", "    Вы сбежали!    ");
@@ -142,7 +138,7 @@ namespace Fight_cons
         }
         public static void WriteColorName(string NextL, Charecter charecter, string str = null)
         {
-            Console.ForegroundColor = unitNameColor(charecter.IsEnemy);
+            Console.ForegroundColor = unitNameColor(charecter.Role);
             Console.Write(NextL+charecter.Name);
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(str);
@@ -176,7 +172,7 @@ namespace Fight_cons
         }
 
         //  Ожидание между событиями
-        public static void Wait_next(int x, string str)
+        public static void WaitNext(int x, string str)
         {
             for (int i = 1; x >= i; i++)
             {
@@ -235,14 +231,25 @@ namespace Fight_cons
             return UnitHPColor;
         }
 
-        public static ConsoleColor unitNameColor(bool isEnemy)
+        public static ConsoleColor unitNameColor(ChaRole num)
         {
             ConsoleColor UnitNameColor;
 
-            if (isEnemy)
-                UnitNameColor = ConsoleColor.DarkMagenta;
-            else
-                UnitNameColor = ConsoleColor.Green;
+            switch (num)
+            {
+                case ChaRole.Ally:
+                    UnitNameColor = ConsoleColor.Green;
+                    break;
+                case ChaRole.Enemy:
+                    UnitNameColor = ConsoleColor.DarkMagenta;
+                    break;
+                case ChaRole.Wild:
+                    UnitNameColor = ConsoleColor.DarkYellow;
+                    break;
+                default:
+                    UnitNameColor = ConsoleColor.Green;
+                    break;
+            }
 
             return UnitNameColor;
         }

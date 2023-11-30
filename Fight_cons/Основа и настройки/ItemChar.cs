@@ -79,6 +79,7 @@ namespace Fight_cons
             item.Cost = cost;
             item.Attack = attack;
             item.Defence = defence;
+
             item.Arcane = arcane;
             item.MagicDefence = magDefence;
             item.MaxHp = maxHp;
@@ -89,7 +90,7 @@ namespace Fight_cons
             item.MaxMoves = maxMoves;
         }
 
-        public static void ItemConsrtucter(ItemChar item,
+        public static void ItemConsrtucter(ItemChar item, int bonusies,
             int ATT_min, int ATT_max, int ARC_min, int ARC_max,
             int DEF_min, int DEF_max, int MDEF_min, int MDEF_max,
             int MAXHp_min, int MAXHp_max, int MAXMp_min, int MAXMp_max,
@@ -99,30 +100,62 @@ namespace Fight_cons
         {
             Random rand = new Random();
 
-            if (item is Weapon weapon)
-                weapon.Name = weapon.WeaponNames();
-            else
-                (item as Armor).Name = (item as Armor).ArmorNames();
+            //  Количество бонусных параметров
+            bonusies = rand.Next(0, bonusies);            
+            int[] mas = new int[bonusies];
 
-            item.Attack = rand.Next(ATT_min, ATT_max);
+            foreach (var m in mas)
+                mas[m] = rand.Next(1, 11);
+
+            if (item is Weapon weapon)
+            {
+                weapon.Name = weapon.WeaponNames();
+                weapon.Attack = rand.Next(ATT_min, ATT_max);
+            }
+            else
+            {
+                (item as Armor).Name = (item as Armor).ArmorNames();
+                item.Defence = rand.Next(DEF_min, DEF_max) * 0.01;
+            }
             Thread.Sleep(50);
-            item.Arcane = rand.Next(ARC_min, ARC_max);
-            Thread.Sleep(50);
-            item.Defence = rand.Next(DEF_min, DEF_max) * 0.01;
-            Thread.Sleep(50);
-            item.MagicDefence = rand.Next(MDEF_min, MDEF_max) * 0.01;
-            Thread.Sleep(50);
-            item.MaxHp = rand.Next(MAXHp_min, MAXHp_max);
-            Thread.Sleep(50);
-            item.MaxMp = rand.Next(MAXMp_min, MAXMp_max);
-            Thread.Sleep(50);
-            item.Speed = rand.Next(SPD_min, SPD_max) * 0.01;
-            Thread.Sleep(50);
-            item.Crit = rand.Next(CRIT_min, CRIT_max) * 0.01;
-            Thread.Sleep(50);
-            item.Block = rand.Next(BLK_min, BLK_max) * 0.01;
-            Thread.Sleep(50);
-            item.MaxMoves = (sbyte)rand.Next(max_turn_min, max_turn_max);
+
+            foreach (var m in mas)
+            {
+                switch (m)
+                {
+                    case 1:
+                        item.Arcane = rand.Next(ARC_min, ARC_max);
+                        break;
+                    case 2:
+                        item.MagicDefence = rand.Next(MDEF_min, MDEF_max) * 0.01;
+                        break;
+                    case 3:
+                        item.MaxHp = rand.Next(MAXHp_min, MAXHp_max);
+                        break;
+                    case 4:
+                        item.MaxMp = rand.Next(MAXMp_min, MAXMp_max);
+                        break;
+                    case 5:
+                        item.Speed = rand.Next(SPD_min, SPD_max) * 0.01;
+                        break;
+                    case 6:
+                        item.Crit = rand.Next(CRIT_min, CRIT_max) * 0.01;
+                        break;
+                    case 7:
+                        item.Block = rand.Next(BLK_min, BLK_max) * 0.01;
+                        break;
+                    case 8:
+                        item.MaxMoves = (sbyte)rand.Next(max_turn_min, max_turn_max);
+                        break;
+                    case 9:
+                        item.Attack += rand.Next(ATT_min, ATT_max);
+                        break;
+                    case 10:
+                        item.Defence += rand.Next(DEF_min, DEF_max) * 0.01;
+                        break;
+                }
+                Thread.Sleep(50);
+            }
 
             int Spd_part = (int)((item.Speed > 0) ? item.Speed * 100 : 0);
 
@@ -155,17 +188,13 @@ namespace Fight_cons
 
         public static void ItemStats(ItemChar item1, ItemChar item2, bool next = false)
         {
-            string str = "";
-            if (next)
-                str = $"{item2.Name} | ";
-
-            if (next) Console.WriteLine();
+            //if (next) Console.WriteLine();
             Comparison(item1.Attack, item2.Attack, Output.AttackStr);
             Comparison(item1.Arcane, item2.Arcane, Output.ArcaneStr);
             Comparison(item1.Defence, item2.Defence, Output.DefenceStr, true);
             Comparison(item1.MagicDefence, item2.MagicDefence, Output.MagicDefenceStr, true);
             Comparison(item1.MaxHp, item2.MaxHp, Output.MaxHpStr);
-            if (next) Console.WriteLine();
+            //if (next) Console.WriteLine();
             Comparison(item1.MaxMp, item2.MaxMp, Output.MaxMpStr);
             Comparison(item1.Speed, item2.Speed, Output.SpeedStr, true);
             Comparison(item1.Crit, item2.Crit, Output.CritStr, true);
@@ -185,8 +214,8 @@ namespace Fight_cons
 
             if (parametr_2 > parametr_1)
                 Output.WriteColorLine(ConsoleColor.Green, "", $"{curString} {text_mid} {Output.UpSymbol} {space}", $"\t|");
-            else if (parametr_2 == parametr_1)
-                Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{curString} {text_mid} {space}", $"\t|");
+            else if (parametr_2 == parametr_1) Console.Write("");
+                //Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{curString} {text_mid} {space}", $"\t|");
             else
                 Output.WriteColorLine(ConsoleColor.Red, "", $"{curString} {text_mid} {Output.DownSymbol} {space}", $"\t|");
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 
 namespace Fight_cons
 {
@@ -19,14 +18,14 @@ namespace Fight_cons
         }
 
         //  Конструтор 2
-        public Armor(int ATT_min, int ATT_max, int ARC_min, int ARC_max,
+        public Armor(int bonusies, int ATT_min, int ATT_max, int ARC_min, int ARC_max,
             int DEF_min, int DEF_max, int MDEF_min, int MDEF_max,
             int MAXHp_min, int MAXHp_max, int MAXMp_min, int MAXMp_max,
             int SPD_min, int SPD_max, int CRIT_min, int CRIT_max,
             int BLK_min, int BLK_max, sbyte max_turn_min, sbyte max_turn_max,
             int lvl)
         {
-            ItemConsrtucter(this, ATT_min, ATT_max, ARC_min, ARC_max,
+            ItemConsrtucter(this, bonusies, ATT_min, ATT_max, ARC_min, ARC_max,
                         DEF_min, DEF_max, MDEF_min, MDEF_max,
                         MAXHp_min, MAXHp_max, MAXMp_min, MAXMp_max,
                         SPD_min, SPD_max, CRIT_min, CRIT_max,

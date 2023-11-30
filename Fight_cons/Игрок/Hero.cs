@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace Fight_cons
 {
     public partial class Hero : Charecter
@@ -131,6 +130,7 @@ namespace Fight_cons
             Block = 0.10;
             MaxMoves = 3;
             isPlayer = true;
+            Role = ChaRole.Hero;
         }
     }
 }

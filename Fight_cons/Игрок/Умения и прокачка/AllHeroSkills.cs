@@ -1,7 +1,6 @@
 ﻿using Fight_cons.Основа_и_настройки;
 using System.Linq;
 
-
 namespace Fight_cons
 {
     class AllHeroSkills
@@ -9,7 +8,7 @@ namespace Fight_cons
         //  Фиксированные навыки
         public static void Skills(Hero hero, Charecter enemy)
         {
-            double finalDam = Formulas.CheckDefence(enemy, hero.TotalAttack);
+            double finalDam = GameFormulas.CheckDefence(enemy, hero.TotalAttack);
 
             AttackDes Attac = new AttackDes(hero, "Обычная атака")
             {
@@ -46,10 +45,10 @@ namespace Fight_cons
             SpellDes Cleansing_ray = new SpellDes(hero, "Очищающий луч")
             {
                 Spell = SpellDes.CleansingRaySpell,
-                Spell_cost = 5,
-                Spell_power = 10
+                SpellСost = 5,
+                SpellPower = 10
             };
-            Cleansing_ray.Description = $"Очищающий луч ({Cleansing_ray.Spell_power + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {Cleansing_ray.Spell_cost} {Output.MPSymbol})";
+            Cleansing_ray.Description = $"Очищающий луч ({Cleansing_ray.SpellPower + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {Cleansing_ray.SpellСost} {Output.MPSymbol})";
 
             //  Способность: Малое лечение
             if (hero.HeroStatistic.Spells >= 5)
@@ -57,9 +56,9 @@ namespace Fight_cons
                 SpellDes Healing = new SpellDes(hero, "Малое лечение")
                 {
                     Spell = SpellDes.HealSpell,
-                    Spell_cost = 3
+                    SpellСost = 3
                 };
-                Healing.Description = $"Малое лечение (+30% {Output.HPSymbol} | {Healing.Spell_cost} {Output.MPSymbol})";
+                Healing.Description = $"Малое лечение (+30% {Output.HPSymbol} | {Healing.SpellСost} {Output.MPSymbol})";
             }
 
             //  Способность: Кровотечение

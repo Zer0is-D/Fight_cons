@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fight_cons.Основа_и_настройки;
+using System;
 using System.Collections.Generic;
 
 namespace Fight_cons.Противник
@@ -10,10 +11,20 @@ namespace Fight_cons.Противник
         internal static void Consrtucter(Unit unit, string name, sbyte phase, int hp,
                   int attack, int speed, int crit_chance,
                   int defence, int magic_defence, int block,
-                  sbyte max_moves, bool no_run, int strategy = 0)
+                  sbyte max_moves, bool no_run)
         {
             if (unit is Enemy)
+            {
                 unit.IsEnemy = true;
+                unit.Role = ChaRole.Enemy;
+            }
+            else if (unit is Ally)
+            {
+                unit.IsEnemy = false;
+                unit.Role = ChaRole.Ally;
+            }
+            else
+                unit.Role = ChaRole.Wild;
 
             unit.Phase = phase;
 
@@ -41,18 +52,20 @@ namespace Fight_cons.Противник
             int M_DEF_min, int M_DEF_max,
             int BLK_min, int BLK_max,
             sbyte max_turn_min, sbyte max_turn_max,
-            int strategy, bool wild = false)
+            int strategy, ChaRole role)
         {
             Random rand = new Random();
 
             if (unit is Enemy)
                 unit.IsEnemy = true;
+            else
+                unit.IsEnemy = false;
 
-            unit.Wild = wild;
+            unit.Role = role;
             unit.Phase = phase;
             unit.Name = name;
 
-            if (unit.Wild)
+            if (unit.Role == ChaRole.Wild)
                 unit.MaxHp = rand.Next(HP_min, HP_max) * rand.Next(2, 5);
             else
                 unit.MaxHp = rand.Next(HP_min, HP_max);
@@ -85,7 +98,7 @@ namespace Fight_cons.Противник
                 {
                     //  Любая базовая стратегия поведения
                     case Strategeis.Any:
-                        if (Battles.Vero(0.5))
+                        if (GameFormulas.Vero(0.5))
                             PersonStrategy.StrgATC(unit, hero, units);
                         else
                             PersonStrategy.StrgMAG(unit, hero, units);

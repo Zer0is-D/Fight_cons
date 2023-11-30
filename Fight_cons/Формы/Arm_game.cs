@@ -24,7 +24,7 @@ namespace Fight_cons
         static Hero arm_hero;
 
         //  Характеристики стандартного опонента
-        static string PersonName;
+        //static string PersonName;
         static private int Interval = 150;
         static private byte Difficult = 20;
         public static byte Cost = 20;

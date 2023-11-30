@@ -34,7 +34,7 @@ namespace Fight_cons
         //  Действие: базовая Атака
         public static void BaseAttack(Charecter attacker, Charecter victim)
         {
-            int damag = Formulas.Damage(attacker, victim);
+            int damag = GameFormulas.Damage(attacker, victim);
 
             if (attacker is Hero hero)
                 hero.HeroStatistic.Attacks++;
@@ -46,7 +46,7 @@ namespace Fight_cons
         public static void BreachArmorAttack(Charecter attacker, Charecter victim)
         {           
             //  Пробитие брони
-            int damag = Formulas.Damage(attacker, victim, true);
+            int damag = GameFormulas.Damage(attacker, victim, true);
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.Yellow, "наносит ", $"{damag} ", "урона у ");
@@ -62,7 +62,7 @@ namespace Fight_cons
         //  Действие: Кровотечение
         public static void MakeBleedAttack(Charecter attacker, Charecter victim)
         {
-            int damag = Formulas.Damage(attacker, victim);
+            int damag = GameFormulas.Damage(attacker, victim);
 
             victim.Conditions.BleedRound = 3;
 
@@ -88,7 +88,7 @@ namespace Fight_cons
         //  Действие: Атака из-за парирования
         public static void Act_Parry_atc(Charecter attacker, Charecter victim)
         {
-            int damag = Formulas.Damage(attacker, victim);
+            int damag = GameFormulas.Damage(attacker, victim);
 
             Output.NameAndId(attacker, true);
             Console.Write("парирует атаку ");

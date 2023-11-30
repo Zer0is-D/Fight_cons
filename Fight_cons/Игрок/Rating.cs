@@ -15,8 +15,8 @@ namespace Fight_cons
     class Rating
     {
         private static string Path = System.Windows.Forms.Application.StartupPath + "\\Palyers.xml";
-        static string Name;
-        static int Score;
+        private static string Name;
+        private static int Score;
 
         //  Список игроков
         public static List<TopPlayers> players = new List<TopPlayers>()
@@ -96,7 +96,7 @@ namespace Fight_cons
         }
 
         //  Вывод рейтинга
-        public static void ShowRaiting()
+        private static void ShowRaiting()
         {
             XDocument document = XDocument.Load(Path);
             int num = 1;

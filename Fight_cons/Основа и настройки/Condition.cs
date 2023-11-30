@@ -45,7 +45,7 @@ namespace Fight_cons
 
         internal protected void RandomDebuff(Charecter attacker, Charecter victim)
         {
-            if (Battles.Vero(0.7))
+            if (GameFormulas.Vero(0.7))
                 AttackDes.Act_Parry_atc(attacker, victim);
             else
             {

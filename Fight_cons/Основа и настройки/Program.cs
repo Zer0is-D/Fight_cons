@@ -1,5 +1,4 @@
-﻿using Spectre.Console;
-using System;
+﻿using System;
 using System.Text;
 
 namespace Fight_cons
@@ -15,6 +14,7 @@ namespace Fight_cons
             Hero hero = new Hero(25, 10);
 
             Output.GameLogo(vers: "2.6 (Альфа)");
+            //AboutLoc.AnatherConsole();
 
             if (Settings.BildVersActive)
                 Settings.OptionVersions(hero);

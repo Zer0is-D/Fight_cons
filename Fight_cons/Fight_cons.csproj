@@ -137,11 +137,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Мир\Locations\CavesLoc.cs" />
-    <Compile Include="Мир\Locations\DeepWoodsLoc.cs" />
-    <Compile Include="Мир\Locations\VallyLoc.cs" />
-    <Compile Include="Мир\Locations\VillageLoc.cs" />
-    <Compile Include="Основа и настройки\Formulas.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Мир\Locations\Location.cs" />
+    <Compile Include="Основа и настройки\GameFormulas.cs" />
     <Compile Include="Основа и настройки\Info.cs" />
     <Compile Include="Основа и настройки\ItemChar.cs" />
     <Compile Include="Основа и настройки\Condition.cs" />
@@ -220,6 +222,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Формы\Books.resx">
       <DependentUpon>Books.cs</DependentUpon>
     </EmbeddedResource>

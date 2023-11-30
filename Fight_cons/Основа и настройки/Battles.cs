@@ -1,4 +1,6 @@
-﻿using Fight_cons.Противник;
+﻿using Fight_cons.Основа_и_настройки;
+using Fight_cons.Противник;
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,66 +18,41 @@ namespace Fight_cons
                 //  ПИЗДЕЦ КОСТЫЛЬ
                 if (enemy > 99)
                 {
-                    AboutLoc.EnemyList.Add(new Order(AboutLoc.Allies(enemy - 100)));
+                    AboutLoc.ListOfUnits.Add(new Order(AboutLoc.Allies(enemy - 100)));
                     Thread.Sleep(50);
                 }
                 else
                 {
-                    AboutLoc.EnemyList.Add(new Order(AboutLoc.Enemies(enemy)));
+                    AboutLoc.ListOfUnits.Add(new Order(AboutLoc.Enemies(enemy)));
                     Thread.Sleep(50);
                 }
             }
 
-            Battle(hero, AboutLoc.EnemyList);
+            Battle(hero, AboutLoc.ListOfUnits);
         }
 
         //  Битва
-        public static void Battle(Hero hero, List<Order> units, int questId = 0)
+        public static void Battle(Hero hero, List<Order> units)
         {
-            List<Order> UnitTurnList = new List<Order>();
-            bool FirstEnemy = true;
+            List<Order> UnitTurnList;
 
             //  Скейл параметров противника
             foreach (var unit in units)
             {
                 if (unit.charecter.IsEnemy)
-                    DoScale(hero.Lvl, unit.charecter);
+                    GameFormulas.DoScale(hero.Lvl, unit.charecter);
             }
 
             //  Уведомление о начале боя
-            Output.Fight_log();
+            Output.FightLog();
 
             //  Перечисление противников
-            foreach (var enemy in units)
-            {
-                if (units.Count() == 1)
-                {
-                    Output.WriteColorLine(ConsoleColor.DarkMagenta, "На вас нападает ", $"{enemy.charecter.Name} ");
-                    Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPSymbol}]\n");
-                    break;
-                }
-                else
-                {
-                    //  Для красивого отображения
-                    if (FirstEnemy)
-                    {
-                        Output.WriteColorLine(ConsoleColor.DarkMagenta, "На вас нападают ", $"{enemy.charecter.Name} ");
-                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPSymbol}],\n");
-                        FirstEnemy = false;
-                    }
-                    else
-                    {
-                        Output.WriteColorLine(ConsoleColor.DarkMagenta, "", $"{enemy.charecter.Name} ");
-                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{enemy.charecter.HP}", $" {Output.HPSymbol}],\n");
-                    }
-                }               
-            }           
-            Sound.BATTLE_MUSIC();            
+            ListOfNames(units);
 
-            foreach (var enemy in units)
-                UnitTurnList.Add(new Order(enemy.charecter, 0));
+            //  Запись всех участников битвы
+            UnitTurnList = BattleMemberList(hero, units);
 
-            UnitTurnList.Add(new Order(hero, 0));
+            Sound.BATTLE_MUSIC();
 
             while (hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Run)
             {                
@@ -103,7 +80,7 @@ namespace Fight_cons
                 //  Бой
                 foreach (var cha in UnitTurnList)
                 {
-                    if (!cha.charecter.IsEnemy)
+                    if (cha.charecter.isPlayer)
                     {
                         while (hero.Turn < hero.TotalMaxMoves & hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Run)
                             CombatSolutions.CurrentEnemy(hero, units);
@@ -123,21 +100,63 @@ namespace Fight_cons
             {
                 if (!hero.Run)
                 {
-                    Output.Victoy_log();
+                    Output.VictoyLog();
                     hero.HeroStatistic.Wins++;
                     Reward(hero, units);
                 }                
             }
             hero.Run = false;
-            AboutLoc.EnemyList.Clear();
+            AboutLoc.ListOfUnits.Clear();
+        }
+
+        private static List<Order> BattleMemberList(Hero hero, List<Order> units)
+        {
+            List<Order> UnitTurnList = new List<Order>();
+
+            foreach (var unit in units)
+                UnitTurnList.Add(new Order(unit.charecter, 0));
+
+            UnitTurnList.Add(new Order(hero, 0));
+
+            return UnitTurnList;
+        }
+
+        private static void ListOfNames(List<Order> units)
+        {
+            bool FirstUnit = true;
+
+            foreach (var unit in units)
+            {
+                if (units.Count() == 1)
+                {
+                    Output.WriteColorLine(Output.unitNameColor(unit.charecter.Role), "На вас нападает ", $"{unit.charecter.Name} ");
+                    Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.charecter.HP}", $" {Output.HPSymbol}]\n");
+                    break;
+                }
+                else
+                {
+                    //  Для красивого отображения
+                    if (FirstUnit)
+                    {
+                        Output.WriteColorLine(ConsoleColor.DarkMagenta, "На вас нападают ", $"{unit.charecter.Name} ");
+                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.charecter.HP}", $" {Output.HPSymbol}],\n");
+                        FirstUnit = false;
+                    }
+                    else
+                    {
+                        Output.WriteColorName("", unit.charecter, " ");
+                        //Output.WriteColorLine(ConsoleColor.DarkMagenta, "", $"{enemy.charecter.Name} ");
+                        Output.WriteColorLine(ConsoleColor.DarkRed, "\t[", $"{unit.charecter.HP}", $" {Output.HPSymbol}],\n");
+                    }
+                }
+            }
         }
 
         /// <summary>
         /// Проверка мертвы ли противники 
         /// </summary>
-        public static bool StillStanding(List<Order> list)
+        private static bool StillStanding(List<Order> list)
         {
-            sbyte count = 0;
             sbyte dead = 0;
             sbyte runers = 0;
 
@@ -148,30 +167,26 @@ namespace Fight_cons
                 if (ch.charecter.Run)
                     runers++;
             }
-            foreach (var u in list)
-                if (u.charecter.IsEnemy == true)
-                    count++;
 
-            if (dead + runers == count)
+            if (dead + runers == list.Count())
                 return false;
             else
                 return true;
         }
 
-
         /// <summary>
         /// Награда за победу
         /// </summary>
-        public static void Reward(Hero hero, List<Order> enemies)
+        private static void Reward(Hero hero, List<Order> units)
         {
             Random random = new Random();
             int money = 0;
             int exp = 0;
 
-            foreach (var enemy in enemies)
+            foreach (var unit in units)
             {
-                money += random.Next(0, 5) + (int)(enemy.charecter.TotalCrit * 10) + (int)(enemy.charecter.TotalBlock * 10) + (int)(enemy.charecter.TotalSpeed * 10);
-                exp += enemy.charecter.KillExp;
+                money += random.Next(0, 5) + (int)(unit.charecter.TotalCrit * 10) + (int)(unit.charecter.TotalBlock * 10) + (int)(unit.charecter.TotalSpeed * 10);
+                exp += unit.charecter.KillExp;
             }
 
             Output.WriteColorLine(ConsoleColor.DarkCyan, $"Вы получили ", $"{exp}{Output.ExpSymbol} ");
@@ -187,19 +202,19 @@ namespace Fight_cons
         }
 
         //  Проверка на побег
-        public static void Cant_run(Hero hero, Charecter enemy)
+        public static void CantRun(Hero hero, Charecter unit)
         {
-            if (!enemy.No_run)
+            if (!unit.No_run)
             {
-                if (Vero(0.5))
+                if (GameFormulas.Vero(0.5))
                 {
-                    if (Vero(0.3))
+                    if (GameFormulas.Vero(0.3))
                         Console.WriteLine("Вы удачно сбежали\n");
                     else
                     {
                         double n = (hero.MaxHp / 100.0) * 10.0;
                         hero.HP -= (int)n;
-                        Output.Run_log();
+                        Output.RunLog();
                         Console.WriteLine($"Вы сбежали с потерей {(int) n} {Output.HPSymbol}\n");
                     }                    
                     hero.Run = true;
@@ -209,41 +224,6 @@ namespace Fight_cons
             }
             else
                 Output.TwriteLine("Вы не можете убежать\n", 1);
-        }
-
-        public static void DoScale(int lvlScale, Charecter enemy)
-        {
-            Random rand = new Random();
-            enemy.HP = Lvl_Scale_MAX_HP(lvlScale, enemy.HP);
-            if (enemy.Wild)
-                enemy.MaxHp = Lvl_Scale_MAX_HP(lvlScale, enemy.HP) * rand.Next(2, 3);
-            else
-                enemy.MaxHp = Lvl_Scale_MAX_HP(lvlScale, enemy.HP);
-            enemy.Attack = Lvl_Scale_Attack(lvlScale, enemy.Attack);
-        }
-
-        //  Скейл параметров противника от уровня героя
-        public static int Lvl_Scale_MAX_HP(int lvlScale, int x)
-        {
-            return (int)(lvlScale * 1.5) + x;
-        }
-
-        //  Скейл параметров противника от уровня героя
-        public static int Lvl_Scale_Attack(int lvlScale, int x)
-        {
-            return (int)(lvlScale * 0.5) + x;
-        }
-
-        //  Веротятность события
-        public static bool Vero(double x)
-        {
-            Random rand = new Random();
-            bool ans = false;
-
-            if (x >= rand.NextDouble())
-                ans = true;
-
-            return ans;
         }
     }
 

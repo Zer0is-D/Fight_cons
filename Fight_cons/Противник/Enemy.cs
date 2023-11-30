@@ -11,7 +11,7 @@ namespace Fight_cons
                   sbyte max_moves, bool no_run, int strategy = 0)
         {
             Consrtucter(this, name, phase, hp, attack, speed, crit_chance,
-                defence, magic_defence, block, max_moves, no_run, strategy);
+                defence, magic_defence, block, max_moves, no_run);
         }
 
         //  Конструктор 2       
@@ -19,12 +19,11 @@ namespace Fight_cons
             int ATT_min, int ATT_max, int SPD_min, int SPD_max,
             int CRIT_min, int CRIT_max, int DEF_min, int DEF_max,
             int M_DEF_min, int M_DEF_max, int BLK_min, int BLK_max,
-            sbyte max_turn_min, sbyte max_turn_max, int strategy, bool wild = false)
+            sbyte max_turn_min, sbyte max_turn_max, int strategy, ChaRole role)
         {
             Consrtucter(this, name, phase, HP_min, HP_max, ATT_min, ATT_max,
                 SPD_min, SPD_max, CRIT_min, CRIT_max, DEF_min, DEF_max,
-                M_DEF_min, M_DEF_max, BLK_min, BLK_max, max_turn_min, max_turn_max,
-                strategy, wild);
+                M_DEF_min, M_DEF_max, BLK_min, BLK_max, max_turn_min, max_turn_max, strategy, role);
         }
     }
 }

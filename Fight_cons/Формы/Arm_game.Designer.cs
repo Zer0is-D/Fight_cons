@@ -38,6 +38,7 @@
             // 
             // slider_
             // 
+            this.slider_.Enabled = false;
             this.slider_.Location = new System.Drawing.Point(53, 105);
             this.slider_.Maximum = 300;
             this.slider_.Minimum = 1;
