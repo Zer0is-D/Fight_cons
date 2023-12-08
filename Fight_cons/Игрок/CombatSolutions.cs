@@ -43,7 +43,8 @@ namespace Fight_cons
             BattleChoise = 0;
 
             //  Информация о противнике 
-            ShowBattleInfo(hero, unit);
+            if (units != null)
+                ShowBattleInfo(hero, unit);
 
             // Выбор боевых действий
             Console.Write("Ваши действия?\n");
@@ -126,6 +127,8 @@ namespace Fight_cons
             if (hero.EnemyAbout)
                 unit.MPBar();
             Console.WriteLine();
+
+            Turns();
 
             //  Отрисовка негативных эффектов, hp и mp игрока 
             NegativeEffectView(hero, unit);
@@ -239,6 +242,24 @@ namespace Fight_cons
             ItemChar.Comparison(unit.TotalMaxMoves, hero.TotalSpeed, $"{Output.SpeedStr}: ", true);
             ItemChar.Comparison(unit.TotalMaxMoves, hero.TotalCrit, $"{Output.CritStr}: ", true);
             Output.WriteColorLine(ConsoleColor.DarkGray, "", "################################################################################", "");
+        }
+
+        private static void Turns()
+        {
+            Console.Write("\n\t\t\t[");
+            foreach (var t in Battles.UnitTurnList)
+            {
+                if (t.charecter.IsPlayer)
+                    Output.WriteColorLine(Output.unitNameColor(t.charecter.Role), "", "Вы ", $"{string.Format("{0:0.00}", t.Speed)}");
+                if (t.charecter.IsAlive & !t.charecter.IsPlayer)
+                {
+                    Output.WriteColorLine(Output.unitNameColor(t.charecter.Role), "", "# ", $"{string.Format("{0:0.00}", t.Speed)}");                    
+                }
+                if (Battles.UnitTurnList.Min(x => x.Speed) != t.Speed & t.charecter.IsAlive)
+                    Console.Write(" | ");
+            }
+
+            Console.Write("]\n");
         }
 
         //  Отображение ходов

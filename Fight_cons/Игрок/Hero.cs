@@ -129,7 +129,8 @@ namespace Fight_cons
             Crit = 0.05;
             Block = 0.10;
             MaxMoves = 3;
-            isPlayer = true;
+            IsPlayer = true;
+            IsAlive = true;
             Role = ChaRole.Hero;
         }
     }

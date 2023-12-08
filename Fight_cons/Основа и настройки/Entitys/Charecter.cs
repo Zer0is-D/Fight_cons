@@ -69,7 +69,7 @@ namespace Fight_cons
         internal Weapon HeroWeapon = new Weapon(name: "Кулаки", attack: 1, speed: 0.2, cost: 0, crit: 0, block: 0, maxMoves: 2);
         internal Armor HeroArmor = new Armor("Без брони", 0, 0);
 
-        internal protected bool isPlayer;
+        
 
         //  Сбежать с боя
         internal protected bool Run = false;
@@ -81,6 +81,8 @@ namespace Fight_cons
         //  Временные Костыли!!!
         //  Общие
         internal protected sbyte? Phase;
+
+        internal bool IsPlayer;
         public bool IsAlive = true;
         public bool IsEnemy = false;
         public enum ChaRole

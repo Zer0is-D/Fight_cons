@@ -157,26 +157,27 @@ namespace Fight_cons
             switch (Input.ChoisInput(hero, 1, 3))
             {
                 case 1:
+                    SER.Main2Async(hero);
                     //  Проверка боя с несколькими противниками
-                    if (GameFormulas.Vero(0.9))
-                        Battles.MakeBattle(hero, 1, 2, 3, 3, 101, 102);
+                    //if (GameFormulas.Vero(0.9))
+                    //    Battles.MakeBattle(hero, 1, 101, 102);
                     if (GameFormulas.Vero(0.25))
                         if (!Hero.Exit_cave)
                         {
                             Output.TwriteLine("\nВы находите выход\n", 1);
                             Hero.Exit_cave = true;
                         }
-                    //if (GameFormulas.Vero(0.7))
-                    //{
-                    //    if (GameFormulas.Vero(0.4))
-                    //        Battles.MakeBattle(hero, 1);
-                    //    else if (GameFormulas.Vero(0.4))
-                    //        Battles.MakeBattle(hero, 4);
-                    //    else if (GameFormulas.Vero(0.4))
-                    //        Battles.MakeBattle(hero, 3);
-                    //    else
-                    //        Battles.MakeBattle(hero, 2);
-                    //}
+                    if (GameFormulas.Vero(0.7))
+                    {
+                        if (GameFormulas.Vero(0.4))
+                            Battles.MakeBattle(hero, 1);
+                        else if (GameFormulas.Vero(0.4))
+                            Battles.MakeBattle(hero, 4);
+                        else if (GameFormulas.Vero(0.4))
+                            Battles.MakeBattle(hero, 3);
+                        else
+                            Battles.MakeBattle(hero, 2);
+                    }
                     hero.HeroStatistic.CaveResearch++;
                     Research(hero);
                     break;
@@ -386,8 +387,8 @@ namespace Fight_cons
                           + "1) Наблюдать и подслушивать\n"
                           + "2) Купить оружие\n"
                           + "3) Купить броню");
-            Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", $"20{Output.MoneySymbol}", ")\n");
-            Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", $"30{Output.MoneySymbol}", ")\n");
+            Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", $"{Output.PotionHPCost}{Output.MoneySymbol}", ")\n");
+            Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", $"{Output.PotionMPCost}{Output.MoneySymbol}", ")\n");
             Console.WriteLine("6) Выйти");
 
             switch (Input.ChoisInput(hero, 1, 6))

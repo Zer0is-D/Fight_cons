@@ -1,13 +1,40 @@
 ﻿using Fight_cons.Основа_и_настройки;
 using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Net;
+using System.Text;
 using System.Threading;
 using static Fight_cons.Charecter;
+using System.Threading.Tasks;
 
 namespace Fight_cons
 {
     public class Output
     {
+        //  TEST
+        public static async Task TestSENAsync(Hero hero)
+        {
+            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+            int port = 12345;
+
+            using (Socket senderSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                await senderSocket.ConnectAsync(new IPEndPoint(ipAddress, port));
+
+                Console.WriteLine("Enter some information:");
+                string input = Console.ReadLine();
+                byte[] data = Encoding.UTF8.GetBytes(input);
+                await senderSocket.SendAsync(new ArraySegment<byte>(data), SocketFlags.None);
+
+                Console.WriteLine("Main application continues execution.");
+            }
+
+            Console.WriteLine("Press ENTER to exit");
+            Console.ReadLine();
+        }
+
+
         #region Обозначения и символы
         //⌂,↔,∟,↨,▬,§,¶,‼,↕,☼,♫,♥,♣,♦,♠,☺,☻,\u0072
 
@@ -66,6 +93,11 @@ namespace Fight_cons
         public static string DmgSymbol = "DMG";
         public static string EffMovSymbol = "MOV";
         //  Добавить меткость на англ
+        #endregion
+
+        #region Цены (общие)
+        public static sbyte PotionHPCost = 20;
+        public static sbyte PotionMPCost = 30;
         #endregion
 
         #region Логи
@@ -208,9 +240,9 @@ namespace Fight_cons
             if (NextLine)
                 Console.WriteLine();
 
-            if (!charecter.isPlayer)
+            if (!charecter.IsPlayer)
                 Console.Write($"[{charecter.Id}] ");
-            else if (!charecter.isPlayer & !NextLine)
+            else if (!charecter.IsPlayer & !NextLine)
                 Console.Write($"[{charecter.Id}] ");
 
 

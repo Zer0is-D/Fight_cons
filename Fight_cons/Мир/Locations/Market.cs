@@ -10,7 +10,7 @@ namespace Fight_cons
         private static List<Armor> ArmorList = new List<Armor>();
 
         private static sbyte NamOfGoods = 4;
-        private static sbyte NamOfBonusies = 2;
+        private static sbyte NamOfBonusies = 2; //  1-8
 
         private static int LVL = 1;
 

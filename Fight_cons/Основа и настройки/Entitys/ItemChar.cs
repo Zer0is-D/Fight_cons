@@ -102,10 +102,10 @@ namespace Fight_cons
 
             //  Количество бонусных параметров
             bonusies = rand.Next(0, bonusies);            
-            int[] mas = new int[bonusies];
+            int[] masOfParamNum = new int[bonusies];
 
-            foreach (var m in mas)
-                mas[m] = rand.Next(1, 11);
+            foreach (var m in masOfParamNum)
+                masOfParamNum[m] = rand.Next(1, 11);
 
             if (item is Weapon weapon)
             {
@@ -119,9 +119,9 @@ namespace Fight_cons
             }
             Thread.Sleep(50);
 
-            foreach (var m in mas)
+            foreach (var num in masOfParamNum)
             {
-                switch (m)
+                switch (num)
                 {
                     case 1:
                         item.Arcane = rand.Next(ARC_min, ARC_max);

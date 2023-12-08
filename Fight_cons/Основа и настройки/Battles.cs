@@ -1,6 +1,5 @@
 ﻿using Fight_cons.Основа_и_настройки;
 using Fight_cons.Противник;
-using NPOI.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,8 @@ namespace Fight_cons
 {
     public class Battles
     {
+        public static List<Order> UnitTurnList;
+
         //  Создание списка противников/союзников и вызов боя
         public static void MakeBattle(Hero hero, params int[] unitId)
         {
@@ -34,7 +35,7 @@ namespace Fight_cons
         //  Битва
         public static void Battle(Hero hero, List<Order> units)
         {
-            List<Order> UnitTurnList;
+            UnitTurnList = null;
 
             //  Скейл параметров противника
             foreach (var unit in units)
@@ -70,7 +71,7 @@ namespace Fight_cons
                 sbyte i = 1;
                 foreach (var unit in units)
                 {
-                    if (!unit.charecter.isPlayer)
+                    if (!unit.charecter.IsPlayer)
                     {
                         unit.charecter.Id = i;
                         i++;
@@ -80,13 +81,19 @@ namespace Fight_cons
                 //  Бой
                 foreach (var cha in UnitTurnList)
                 {
-                    if (cha.charecter.isPlayer)
+                    if (cha.charecter.IsPlayer)
                     {
                         while (hero.Turn < hero.TotalMaxMoves & hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Run)
+                        {
+                            CheckForCrops();
                             CombatSolutions.CurrentEnemy(hero, units);
+                        }
                     }
                     else
+                    {
+                        CheckForCrops();
                         Unit.UnitFightChoice(cha.charecter, hero, units);
+                    }
                 }
             }
 
@@ -107,6 +114,15 @@ namespace Fight_cons
             }
             hero.Run = false;
             AboutLoc.ListOfUnits.Clear();
+        }
+
+        public static void CheckForCrops()
+        {
+            foreach (var ch in UnitTurnList)
+            {
+                if (ch.charecter.TotalHP < 0)
+                    ch.charecter.IsAlive = false;
+            }
         }
 
         private static List<Order> BattleMemberList(Hero hero, List<Order> units)
@@ -158,17 +174,14 @@ namespace Fight_cons
         private static bool StillStanding(List<Order> list)
         {
             sbyte dead = 0;
-            sbyte runers = 0;
 
             foreach (var ch in list)
             {
-                if (ch.charecter.TotalHP <= 0)
+                if (ch.charecter.IsEnemy & ch.charecter.Run | !ch.charecter.IsAlive)
                     dead++;
-                if (ch.charecter.Run)
-                    runers++;
             }
-
-            if (dead + runers == list.Count())
+            var ally = list.Count(x => x.charecter.Role == Charecter.ChaRole.Ally) + 1;
+            if (dead == list.Count() - ally)
                 return false;
             else
                 return true;
