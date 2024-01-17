@@ -17,7 +17,7 @@ namespace Fight_cons.Основа_и_настройки
         /// <summary>
         /// Получить n% от MAX HP
         /// </summary>
-        public static int GetCurrentPercent(Charecter person, int percent) => (int)((double)(person.MaxHp / 100) * percent);
+        public static int GetCurrentPercent(double num, int percent) => (int)((double)(num / 100) * percent);
 
         /// <summary>
         /// Итоговый урон после всех проверок 

@@ -9,9 +9,9 @@ namespace Fight_cons
     class Input
     {
         //  Проверка на соответствие
-        public static int ChoisInput(Hero hero, sbyte minNum, sbyte maxNum)
+        public static sbyte ChoisInput(Hero hero, sbyte minNum, sbyte maxNum)
         {
-            int s = 0;
+            sbyte s = 0;
             do { s = SbyteInput(hero); }
             while (!(s > minNum - 1 && s < maxNum + 1));
             return s;
@@ -52,6 +52,7 @@ namespace Fight_cons
                 hero.Money += m;
             };
             KeyWords["uphp"] = () => { hero.MaxHp = 300; hero.HP = hero.MaxHp;  };
+            KeyWords["tavern1"] = () => { SerAsync.TavernLocal(hero); };
 
             string str;
             sbyte x;

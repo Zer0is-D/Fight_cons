@@ -45,6 +45,7 @@ namespace Fight_cons
             }
 
             //  Уведомление о начале боя
+            //SER.SecondWindowByProcces("FightLog");
             Output.FightLog();
 
             //  Перечисление противников

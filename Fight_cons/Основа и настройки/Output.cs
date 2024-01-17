@@ -12,29 +12,6 @@ namespace Fight_cons
 {
     public class Output
     {
-        //  TEST
-        public static async Task TestSENAsync(Hero hero)
-        {
-            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
-            int port = 12345;
-
-            using (Socket senderSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
-            {
-                await senderSocket.ConnectAsync(new IPEndPoint(ipAddress, port));
-
-                Console.WriteLine("Enter some information:");
-                string input = Console.ReadLine();
-                byte[] data = Encoding.UTF8.GetBytes(input);
-                await senderSocket.SendAsync(new ArraySegment<byte>(data), SocketFlags.None);
-
-                Console.WriteLine("Main application continues execution.");
-            }
-
-            Console.WriteLine("Press ENTER to exit");
-            Console.ReadLine();
-        }
-
-
         #region Обозначения и символы
         //⌂,↔,∟,↨,▬,§,¶,‼,↕,☼,♫,♥,♣,♦,♠,☺,☻,\u0072
 
@@ -98,6 +75,7 @@ namespace Fight_cons
         #region Цены (общие)
         public static sbyte PotionHPCost = 20;
         public static sbyte PotionMPCost = 30;
+        public static sbyte QStatueCost = 30;
         #endregion
 
         #region Логи
@@ -218,12 +196,15 @@ namespace Fight_cons
         #endregion
 
         #region Уведомления
-        public static void Spent(int cost = 0, string itemName = "", bool Find = false)
+        public static void Spent(Hero hero, int cost = 0, string itemName = "", bool Find = false)
         {
             if (Find)
                 WriteColorLine(ConsoleColor.Green, "[Вы нашли ", $"{itemName}", "!]\n\n");
             if (cost > 0)
+            {
                 WriteColorLine(ConsoleColor.Yellow, "\n[Вы потратили -", $"{cost}{MoneySymbol}", "!]\n");
+                hero.Money -= cost;
+            }
             if (itemName.Length > 1 && !Find)
                 WriteColorLine(ConsoleColor.Green, "[Вы получили ", $"{itemName}", "!]\n");
 

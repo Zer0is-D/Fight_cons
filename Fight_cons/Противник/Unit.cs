@@ -13,18 +13,20 @@ namespace Fight_cons.Противник
                   int defence, int magic_defence, int block,
                   sbyte max_moves, bool no_run)
         {
-            if (unit is Enemy)
+            switch (unit)
             {
-                unit.IsEnemy = true;
-                unit.Role = ChaRole.Enemy;
-            }
-            else if (unit is Ally)
-            {
-                unit.IsEnemy = false;
-                unit.Role = ChaRole.Ally;
-            }
-            else
-                unit.Role = ChaRole.Wild;
+                case Enemy:
+                    unit.IsEnemy = true;
+                    unit.Role = ChaRole.Enemy;
+                    break;
+                case Ally:
+                    unit.IsEnemy = false;
+                    unit.Role = ChaRole.Ally;
+                    break;
+                default:
+                    unit.Role = ChaRole.Wild;
+                    break;
+            }               
 
             unit.Phase = phase;
 
@@ -56,10 +58,18 @@ namespace Fight_cons.Противник
         {
             Random rand = new Random();
 
-            if (unit is Enemy)
-                unit.IsEnemy = true;
-            else
-                unit.IsEnemy = false;
+            switch (unit)
+            {
+                case Enemy:
+                    unit.IsEnemy = true;
+                    break;
+                case Ally:
+                    unit.IsEnemy = false;
+                    break;
+                default:
+                    unit.Role = ChaRole.Wild;
+                    break;
+            }
 
             unit.Role = role;
             unit.Phase = phase;

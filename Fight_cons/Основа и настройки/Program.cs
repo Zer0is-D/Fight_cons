@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -13,14 +14,13 @@ namespace Fight_cons
 
             Hero hero = new Hero(25, 10);
 
-            Output.GameLogo(vers: "2.6 (Альфа)");
-            //AboutLoc.AnatherConsole();
+            Output.GameLogo(vers: "2.6 (Альфа)");            
 
             if (Settings.BildVersActive)
                 Settings.OptionVersions(hero);
 
             Settings.OptionWaitSkip(hero);
-
+            
             Hero.CreateHero(hero);
             Console.ReadKey();
         }

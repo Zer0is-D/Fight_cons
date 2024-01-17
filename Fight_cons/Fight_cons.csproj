@@ -12,6 +12,10 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,12 +28,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,6 +55,9 @@
   <PropertyGroup>
     <ApplicationIcon>
     </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Fight_cons.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -87,8 +90,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SER.cs" />
-    <Compile Include="SER2.cs" />
+    <Compile Include="SerAsync.cs" />
     <Compile Include="Мир\Locations\Location.cs" />
     <Compile Include="Основа и настройки\GameFormulas.cs" />
     <Compile Include="Основа и настройки\Info.cs" />
@@ -128,7 +130,7 @@
     <Compile Include="Игрок\Inventory.cs" />
     <Compile Include="Мир\Locations\AboutLoc.cs" />
     <Compile Include="Мир\Locations\Market.cs" />
-    <Compile Include="Игрок\Умения и прокачка\ClassBonus.cs" />
+    <Compile Include="Игрок\Умения и прокачка\HeroClass.cs" />
     <Compile Include="Игрок\Умения и прокачка\PotionDes.cs" />
     <Compile Include="Основа и настройки\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

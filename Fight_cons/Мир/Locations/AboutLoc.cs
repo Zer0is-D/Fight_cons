@@ -157,7 +157,6 @@ namespace Fight_cons
             switch (Input.ChoisInput(hero, 1, 3))
             {
                 case 1:
-                    SER.Main2Async(hero);
                     //  Проверка боя с несколькими противниками
                     //if (GameFormulas.Vero(0.9))
                     //    Battles.MakeBattle(hero, 1, 101, 102);
@@ -245,7 +244,6 @@ namespace Fight_cons
                     {
                         hero.HeroQuests.Que[0] = 1;
                         hero.HeroQuests.MainQ(hero);
-
                     }
                     else if (GameFormulas.Vero(0.6))
                         Battles.MakeBattle(hero, 4);
@@ -357,8 +355,7 @@ namespace Fight_cons
                 case 2:
                     if (hero.Money >= 5)
                     {
-                        hero.Money -= 5;
-                        Output.Spent(5);
+                        Output.Spent(hero, 5);
                         Drinking(hero);
                     }
                     else
@@ -406,11 +403,9 @@ namespace Fight_cons
                     break;
 
                 case 4:
-                    if (hero.Money >= 20)
+                    if (hero.Money >= Output.PotionHPCost)
                     {
-                        Output.Spent(20, "Зелье здоровья");
-
-                        hero.Money -= 20;
+                        Output.Spent(hero, Output.PotionHPCost, "Зелье здоровья");
                         hero.PotionList[0].Count += 1;
                     }
                     else
@@ -418,10 +413,9 @@ namespace Fight_cons
                     break;
 
                 case 5:
-                    if (hero.Money >= 30)
+                    if (hero.Money >= Output.PotionMPCost)
                     {
-                        Output.Spent(30, "Зелье маны");
-                        hero.Money -= 30;
+                        Output.Spent(hero, Output.PotionMPCost, "Зелье маны");
                         hero.PotionList[1].Count += 1;
                     }
                     else
@@ -442,7 +436,7 @@ namespace Fight_cons
         {
             if (hero.HeroStatistic.CaveResearch == 20)
             {
-                Output.Spent(0, "Древний свиток исцеления", true);
+                Output.Spent(hero, 0, "Древний свиток исцеления", true);
 
                 SpellDes excision = new SpellDes(hero, "Исцеление")
                 {
@@ -486,12 +480,35 @@ namespace Fight_cons
         //  Отдых  
         private static void RestEvent(Hero hero)
         {
-            double H = (hero.MaxHp / 100.0) * 30.0, M = (hero.MaxMp / 100.0) * 20.0;
-            hero.HP += (int)H;
-            hero.MP += (int)M;
-            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{(int)H} ", $"{Output.HPSymbol} ");
-            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{(int)M} ", $"{Output.MPSymbol}\n");
-            Output.WaitNext(3, ".");
+            sbyte usualResoredHP = 30;            
+            sbyte usualResoredMP = 20;
+
+            //  Mage restore
+            sbyte mageResoredHP = 20;
+            sbyte mageResoredMP = 50;
+
+            if (hero.Class_name == "Волшебник")
+            Console.WriteLine("Выберите вид отдыха:\n" +
+                            "1) Обычный\n" +
+                            "2) Медитация");
+
+            switch (Input.ChoisInput(hero, 1, 2))
+            {
+                case 1:
+                    hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP);
+                    hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP);
+                    Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP)} ", $"{Output.HPSymbol} ");
+                    Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP)} ", $"{Output.MPSymbol}\n");
+                    Output.WaitNext(3, ".");
+                    break;
+                case 2:
+                    hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP);
+                    hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP);
+                    Output.WriteColorLine(ConsoleColor.Green, "Медитация восстановила вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP)} ", $"{Output.HPSymbol} ");
+                    Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP)} ", $"{Output.MPSymbol}\n");
+                    Output.WaitNext(3, ".");
+                    break;
+            }           
         }
 
         //  Кошелек

@@ -6,15 +6,15 @@ namespace Fight_cons
     //  Класс допуск
     public class LvlTicket
     {
-        internal protected int NextMaxHp = 5;
-        internal protected int NextMaxMp = 5;
-        internal protected int NextAttack = 1;
-        internal protected int NextArcane = 1;
-        internal protected double NextSpeed = 0.02;
-        internal protected double NextCrit = 0.02;
-        internal protected double NextDefence = 0.02;
-        internal protected double NextMagicDefence = 0.02;
-        internal protected double NextBlock = 0.02;
+        public int NextMaxHp = 5,
+            NextMaxMp = 5,
+            NextAttack = 1,
+            NextArcane = 1;
+        public double NextSpeed = 0.02,
+            NextCrit = 0.02,
+            NextDefence = 0.02,
+            NextMagicDefence = 0.02,
+            NextBlock = 0.02;
 
         public static bool Access(Hero hero)
         {
@@ -73,8 +73,7 @@ namespace Fight_cons
 
             while (LvlTicket.Access(this))
             {
-                if (Settings.SoundEffects)
-                    Sound.LVL_MUSIC();
+                Sound.LVL_MUSIC();
 
                 Console.WriteLine($"{hero.Name} достигает {Lvl}!\n", 1);
                 while (LTicket.LvlPoints > 0)

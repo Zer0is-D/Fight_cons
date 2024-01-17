@@ -8,7 +8,7 @@ namespace Fight_cons
     public class Spying
     {
         //  Разговорные штуки в таверне:
-        private sbyte TavernTalksProgress;
+        public sbyte TavernTalksProgress;
         internal byte Sneak = 0;
 
         //  Подслушивание в таверне
@@ -20,7 +20,7 @@ namespace Fight_cons
             if (Sneak < 3)
             {
                 if (GameFormulas.Vero(0.6))
-                    Tavern_talks(hero);
+                    TavernTalks();
                 if (hero.HeroQuests.Que[1] == 4)
                     Output.TwriteLine("'А вот и наш герой!' - восклицает Бегемот.\nПозади него вы видите коллекцию статуэток из дерева\n", 1);
 
@@ -60,7 +60,7 @@ namespace Fight_cons
         }
 
         //  Подслушка
-        private void Tavern_talks(Hero hero)
+        private void TavernTalks()
         {
             switch (TavernTalksProgress)
             {
@@ -100,7 +100,7 @@ namespace Fight_cons
                     Console.ReadKey(true);
                     Output.TwriteLine("- А-а-а, так может это храмовники нас..*Стук* ", 30);
                     Console.ReadKey(true);
-                    Output.TwriteLine("Высокий мужчина сильно удалил балабола по затылку. ", 30);
+                    Output.TwriteLine("Высокий мужчина сильно удалирил балабола по затылку. ", 30);
                     Console.ReadKey(true);
                     Output.TwriteLine("- Даже не вздумай сквернословить на храм. \n", 30);
                     Console.ReadKey(true);

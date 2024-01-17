@@ -157,10 +157,9 @@ namespace Fight_cons
             switch (Input.ChoisInput(hero, 1, 6))
             {
                 case 1:
-                    if (hero.Money >= 30)
+                    if (hero.Money >= Output.QStatueCost)
                     {
-                        hero.Money -= 30;
-                        Output.Spent(30);
+                        Output.Spent(hero, Output.QStatueCost);
 
                         Inventory.ItemAdd(hero, "Статуэтка", true);
                         Output.TwriteLine("\nСпасибо за покупку!", 1);
@@ -179,10 +178,9 @@ namespace Fight_cons
                     break;
 
                 case 4:
-                    if (hero.Money >= 20)
+                    if (hero.Money >= Output.PotionHPCost)
                     {
-                        hero.Money -= 20;
-                        Output.Spent(20, "Зелье здоровья");
+                        Output.Spent(hero, Output.PotionHPCost, "Зелье здоровья");
                         hero.PotionList[0].Count += 1;
                     }
                     else
@@ -190,10 +188,9 @@ namespace Fight_cons
                     break;
 
                 case 5:
-                    if (hero.Money >= 30)
+                    if (hero.Money >= Output.PotionMPCost)
                     {
-                        hero.Money -= 30;
-                        Output.Spent(30, "Зелье маны");
+                        Output.Spent(hero, Output.PotionMPCost, "Зелье маны");
                         hero.PotionList[1].Count += 1;
                     }
                     else

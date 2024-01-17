@@ -3,8 +3,10 @@
 namespace Fight_cons
 {
     //  Бонусы от класса
-    internal class ClassBonus : Characteristics
+    internal class HeroClass : Characteristics
     {
+        string Name;
+
         internal protected new int HP
         {
             get => this.MaxHp;
@@ -14,6 +16,12 @@ namespace Fight_cons
         {
             get => this.MaxMp;
             set => this.MaxMp = value;
+        }
+
+        public HeroClass(string name, params double[] Cha)
+        {
+            Name = name;
+
         }
     }
 }

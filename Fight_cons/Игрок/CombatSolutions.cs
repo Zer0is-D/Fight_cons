@@ -42,9 +42,8 @@ namespace Fight_cons
             AllHeroSkills.Skills(hero, unit);
             BattleChoise = 0;
 
-            //  Информация о противнике 
-            if (units != null)
-                ShowBattleInfo(hero, unit);
+            //  Информация
+            ShowBattleInfo(hero, unit, units);
 
             // Выбор боевых действий
             Console.Write("Ваши действия?\n");
@@ -114,7 +113,7 @@ namespace Fight_cons
         }
 
         #region Отображение боевоей информации
-        private static void ShowBattleInfo(Hero hero, Charecter unit)
+        private static void ShowBattleInfo(Hero hero, Charecter unit, List<Order> units = null)
         {
             //  Отрисовка hp противника
             Output.WriteColorName("\n", unit, ":");
@@ -128,7 +127,8 @@ namespace Fight_cons
                 unit.MPBar();
             Console.WriteLine();
 
-            Turns();
+            if (units != null)
+                Turns();
 
             //  Отрисовка негативных эффектов, hp и mp игрока 
             NegativeEffectView(hero, unit);
@@ -261,9 +261,6 @@ namespace Fight_cons
 
             Console.Write("]\n");
         }
-
-        //  Отображение ходов
-        private static void ShowMoves(Charecter hero) => Console.WriteLine($"\nВаши ходы:\n{hero.Turn}/{hero.TotalMaxMoves}");
 
         //  Учет ходов////////////////////////////////
         private static void MovesTracker(Charecter hero, Charecter unit)

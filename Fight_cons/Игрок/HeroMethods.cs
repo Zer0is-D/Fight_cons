@@ -1,6 +1,7 @@
 ﻿using Fight_cons.Мир;
 using System;
 using System.Threading;
+using static Fight_cons.AboutLoc;
 
 namespace Fight_cons
 {
@@ -24,11 +25,10 @@ namespace Fight_cons
 
         //  Начало начал
         public static void CreateHero(Hero hero)
-        {
+        {            
             Output.TwriteLine("Громкий и непонятной природы звук постепенно пробуждает ваше тело.\n"
                       + "После чего вы слышите голос словно он у вас в голове.\n"
                       + "'ВСТАВАЙ ДУША, ВЕЛЮ ТЕБЕ РОЗЫСКАТЬ ТОАТОТА И ИЗНЕЧТОЖИТЬ!'\n", 10);
-
             hero.Name = "No_name";
             Console.ReadKey(true);
             Output.TwriteLine("Ощущая внутри некую ответственность со странным желанием выполнить поручение\n"
@@ -43,7 +43,8 @@ namespace Fight_cons
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
                           + "Догадка была верна, это оказался факел, что освятил пространство. Но ответить на вопрос где вы, пока не удается.\n", 1);
 
-            AboutLoc.DefualtLoad(hero, AboutLoc.Locations[(int)AboutLoc.LocationName.CaveStart]);
+            DefualtLoad(hero, Locations[(int)LocationName.Village]);
+            DefualtLoad(hero, Locations[(int)LocationName.CaveStart]);
         }
 
         /// <summary>
@@ -51,6 +52,8 @@ namespace Fight_cons
         /// </summary>
         public static void GiveHeroClass(Hero hero)
         {
+            //HeroClass heroClass = new HeroClass("Воин", hero.ClassBonuses.MaxHp += 1, );
+
             Console.WriteLine("Выберите класс:\n"
               + $"1) Воин (Упор на {Output.HPSymbol}, {Output.AttackStr}, {Output.DefenceStr})\n"
               + $"2) Волшебник (Упор на {Output.ArcaneStr}, {Output.MagicDefenceStr}, {Output.MPSymbol})\n"
@@ -60,7 +63,7 @@ namespace Fight_cons
             {
                 case 1:
                     hero.Class_name = "Воин";
-                    hero.ClassBonuses.MaxHp += 1;
+                    hero.ClassBonuses.MaxHp += 5;
                     hero.ClassBonuses.Attack += 1;
                     hero.ClassBonuses.Defence += 0.01;
                     break;
@@ -69,7 +72,7 @@ namespace Fight_cons
                     hero.Class_name = "Волшебник";
                     hero.ClassBonuses.Arcane += 1;
                     hero.ClassBonuses.MagicDefence += 0.01;
-                    hero.ClassBonuses.MaxMp += 1;
+                    hero.ClassBonuses.MaxMp += 5;
                     break;
 
                 case 3:

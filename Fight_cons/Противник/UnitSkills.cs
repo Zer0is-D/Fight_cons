@@ -69,7 +69,7 @@ namespace Fight_cons
         {
             Output.NameAndId(reviever, true);
             Output.WriteColorLine(ConsoleColor.DarkYellow, "воскрешает ", $"{riser.Name}", $"!\n");
-            riser.HP = GameFormulas.GetCurrentPercent(riser, 10);
+            riser.HP = GameFormulas.GetCurrentPercent(riser.MaxHp, 10);
             riser.IsAlive = true;
 
             reviever.Turn += 4;
