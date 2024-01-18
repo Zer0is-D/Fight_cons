@@ -9,8 +9,8 @@ namespace Fight_cons
         private static List<Weapon> WeaponList = new List<Weapon>();
         private static List<Armor> ArmorList = new List<Armor>();
 
-        private static sbyte NamOfGoods = 4;
-        private static sbyte NamOfBonusies = 2; //  1-8
+        public static sbyte NamOfGoods = 4;
+        public static sbyte NamOfBonusies = 2; //  1-8
 
         private static int LVL = 1;
 
@@ -152,7 +152,7 @@ namespace Fight_cons
 
                 Output.WriteColorLine(ConsoleColor.Yellow, $"\nЦена: ", $"{item.Cost}{Output.MoneySymbol}\n");
             }
-            Output.WriteColorLine(ConsoleColor.Yellow, "0) Обновить товары за (", $"10{Output.MoneySymbol})",")\n");
+            Output.WriteColorLine(ConsoleColor.Yellow, "0) Обновить товары за (", $"10{Output.MoneySymbol}",")\n");
 
             int chois = Input.ChoisInput(hero, 0, (sbyte)(itemChars.Count() + 1));
 

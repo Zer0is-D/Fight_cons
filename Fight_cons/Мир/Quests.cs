@@ -32,7 +32,7 @@ namespace Fight_cons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeBattle(hero, 7);
+                    Battles.MakeCurrentBattle(hero, 7);
 
                     //  Чистка параметров
                     hero.Conditions.Clear();

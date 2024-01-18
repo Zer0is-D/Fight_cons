@@ -17,7 +17,7 @@ namespace Fight_cons
 
         //  Базовый урон от эффектов
         internal protected int PoisentDmg = 3;
-        internal protected int BleedDmg = 3;
+        public static int BleedDmg = 3;
 
         internal protected void Clear()
         {

@@ -34,55 +34,14 @@ namespace Fight_cons
             Output.TwriteLine("Ощущая внутри некую ответственность со странным желанием выполнить поручение\n"
                       + "вы решаетесь открыть глаза, но тьма не дает вам что-либо увидеть...\n", 10);
 
-            GiveHeroClass(hero);
+            CharecterClass.GiveHeroClass(hero);
             GiveHeroWeapon(hero);
-
-            //  Выдать начальные навыки
-            AllHeroSkills.Skills(hero, 1);
 
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
                           + "Догадка была верна, это оказался факел, что освятил пространство. Но ответить на вопрос где вы, пока не удается.\n", 1);
 
-            DefualtLoad(hero, Locations[(int)LocationName.Village]);
             DefualtLoad(hero, Locations[(int)LocationName.CaveStart]);
-        }
-
-        /// <summary>
-        /// Присвоение класса игроку
-        /// </summary>
-        public static void GiveHeroClass(Hero hero)
-        {
-            //HeroClass heroClass = new HeroClass("Воин", hero.ClassBonuses.MaxHp += 1, );
-
-            Console.WriteLine("Выберите класс:\n"
-              + $"1) Воин (Упор на {Output.HPSymbol}, {Output.AttackStr}, {Output.DefenceStr})\n"
-              + $"2) Волшебник (Упор на {Output.ArcaneStr}, {Output.MagicDefenceStr}, {Output.MPSymbol})\n"
-              + $"3) Ловкач (Упор на {Output.CritStr}, {Output.SpeedStr}, {Output.BlockStr})\n");
-
-            switch (Input.ChoisInput(hero, 0, 3))
-            {
-                case 1:
-                    hero.Class_name = "Воин";
-                    hero.ClassBonuses.MaxHp += 5;
-                    hero.ClassBonuses.Attack += 1;
-                    hero.ClassBonuses.Defence += 0.01;
-                    break;
-
-                case 2:
-                    hero.Class_name = "Волшебник";
-                    hero.ClassBonuses.Arcane += 1;
-                    hero.ClassBonuses.MagicDefence += 0.01;
-                    hero.ClassBonuses.MaxMp += 5;
-                    break;
-
-                case 3:
-                    hero.Class_name = "Ловкач";
-                    hero.ClassBonuses.Crit += 0.01;
-                    hero.ClassBonuses.Speed += 0.01;
-                    hero.ClassBonuses.Block += 0.01;
-                    break;
-            }
-        }
+        }        
 
         public static void GiveHeroWeapon(Hero hero)
         {

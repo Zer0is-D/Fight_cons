@@ -64,7 +64,7 @@ namespace Fight_cons
         //  Баффы и дебаффы от состояний, перманентных бонусов и классовых бонусов
         internal Condition Conditions = new Condition();
         internal PermanentBonus PermanentBonuses = new PermanentBonus();
-        internal HeroClass ClassBonuses = new HeroClass("No class", 0);
+        internal CharecterClass ClassBonuses = new CharecterClass("No class", 0);
 
         internal Weapon HeroWeapon = new Weapon(name: "Кулаки", attack: 1, speed: 0.2, cost: 0, crit: 0, block: 0, maxMoves: 2);
         internal Armor HeroArmor = new Armor("Без брони", 0, 0);        

@@ -148,9 +148,9 @@ namespace Fight_cons.Противник
                 if (unit.Conditions.BleedRound > 0)
                 {
                     Output.NameAndId(unit, false);
-                    Output.WriteColorLine(ConsoleColor.DarkRed, $"получает -{unit.Conditions.BleedDmg} HP от ", "кровотечение\n");
+                    Output.WriteColorLine(ConsoleColor.DarkRed, $"получает -{Condition.BleedDmg} HP от ", "кровотечение\n");
                     unit.Conditions.BleedRound--;
-                    unit.HP -= unit.Conditions.BleedDmg;
+                    unit.HP -= Condition.BleedDmg;
                 }
 
                 //  Замедление

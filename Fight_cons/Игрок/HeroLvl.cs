@@ -3,61 +3,6 @@ using System.Windows;
 
 namespace Fight_cons
 {
-    //  Класс допуск
-    public class LvlTicket
-    {
-        public int NextMaxHp = 5,
-            NextMaxMp = 5,
-            NextAttack = 1,
-            NextArcane = 1;
-        public double NextSpeed = 0.02,
-            NextCrit = 0.02,
-            NextDefence = 0.02,
-            NextMagicDefence = 0.02,
-            NextBlock = 0.02;
-
-        public static bool Access(Hero hero)
-        {
-            bool ans = (hero.Exp >= hero.NextLvlExp);
-
-            if (ans)
-            {
-                hero.Exp -= hero.NextLvlExp;
-                hero.Lvl++;
-                hero.NextLvlExp += Hero.NextLvlMargin(hero.Lvl);
-            }
-
-            return ans;
-        }
-
-        public LvlTicket(Hero hero)
-        {
-            NextMaxHp += hero.PermanentBonuses.MaxHp;
-            NextMaxMp += hero.PermanentBonuses.MaxMp;
-            NextAttack += hero.PermanentBonuses.Attack;
-            NextArcane += hero.PermanentBonuses.Arcane;
-            NextSpeed += hero.PermanentBonuses.Speed;
-            NextCrit += hero.PermanentBonuses.Crit;
-            NextDefence += hero.PermanentBonuses.Defence;
-            NextMagicDefence += hero.PermanentBonuses.MagicDefence;
-            NextBlock += hero.PermanentBonuses.Block;
-        }
-
-        internal bool[] Points =
-        {
-            false,  //  0.MAX_HP_point
-            false,  //  1.MAX_MP_point
-            false,  //  2.DEF_point
-            false,  //  3.MAG_DEF_point
-            false,  //  4.BLK_point
-            false,  //  5.SPD_point
-            false,  //  6.ATC_point
-            false,  //  7.ARC_point
-            false   //  8.CRIT_point
-        };
-        internal byte LvlPoints = 3;
-    }
-
     partial class Hero
     {
         //  Система lvl up
@@ -264,5 +209,60 @@ namespace Fight_cons
             Output.WriteColorLine(ConsoleColor.DarkGreen, "\n Поздравляю вы получаете достижение: ", $"{name}");
             Name = name;            
         }
+    }
+
+    //  Класс допуск
+    public class LvlTicket
+    {
+        public int NextMaxHp = 5,
+            NextMaxMp = 5,
+            NextAttack = 1,
+            NextArcane = 1;
+        public double NextSpeed = 0.02,
+            NextCrit = 0.02,
+            NextDefence = 0.02,
+            NextMagicDefence = 0.02,
+            NextBlock = 0.02;
+
+        public static bool Access(Hero hero)
+        {
+            bool ans = (hero.Exp >= hero.NextLvlExp);
+
+            if (ans)
+            {
+                hero.Exp -= hero.NextLvlExp;
+                hero.Lvl++;
+                hero.NextLvlExp += Hero.NextLvlMargin(hero.Lvl);
+            }
+
+            return ans;
+        }
+
+        public LvlTicket(Hero hero)
+        {
+            NextMaxHp += hero.PermanentBonuses.MaxHp;
+            NextMaxMp += hero.PermanentBonuses.MaxMp;
+            NextAttack += hero.PermanentBonuses.Attack;
+            NextArcane += hero.PermanentBonuses.Arcane;
+            NextSpeed += hero.PermanentBonuses.Speed;
+            NextCrit += hero.PermanentBonuses.Crit;
+            NextDefence += hero.PermanentBonuses.Defence;
+            NextMagicDefence += hero.PermanentBonuses.MagicDefence;
+            NextBlock += hero.PermanentBonuses.Block;
+        }
+
+        internal bool[] Points =
+        {
+            false,  //  0.MAX_HP_point
+            false,  //  1.MAX_MP_point
+            false,  //  2.DEF_point
+            false,  //  3.MAG_DEF_point
+            false,  //  4.BLK_point
+            false,  //  5.SPD_point
+            false,  //  6.ATC_point
+            false,  //  7.ARC_point
+            false   //  8.CRIT_point
+        };
+        internal byte LvlPoints = 3;
     }
 }

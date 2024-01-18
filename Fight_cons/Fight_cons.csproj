@@ -130,7 +130,7 @@
     <Compile Include="Игрок\Inventory.cs" />
     <Compile Include="Мир\Locations\AboutLoc.cs" />
     <Compile Include="Мир\Locations\Market.cs" />
-    <Compile Include="Игрок\Умения и прокачка\HeroClass.cs" />
+    <Compile Include="Игрок\Умения и прокачка\CharecterClass.cs" />
     <Compile Include="Игрок\Умения и прокачка\PotionDes.cs" />
     <Compile Include="Основа и настройки\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

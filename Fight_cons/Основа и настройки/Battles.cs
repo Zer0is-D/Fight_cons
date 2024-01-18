@@ -11,8 +11,46 @@ namespace Fight_cons
     {
         public static List<Order> UnitTurnList;
 
+        private static sbyte HeroLvlMargin = 3;
+        private static sbyte MinMuch = 1;
+        private static sbyte MaxMuch = 2;
+        private static sbyte EnemyRangeId = 3;
+
+        
+        public static void MakeRandomBattle(Hero hero, params sbyte[] unitId)
+        {
+            Random random = new Random();
+
+            if (hero.Lvl >= HeroLvlMargin)
+            {
+                HeroLvlMargin += 3;
+                MaxMuch += 1;
+
+                if (HeroLvlMargin >= 6)
+                    EnemyRangeId = 4;
+            }
+
+            sbyte much = (sbyte)random.Next(MinMuch, MaxMuch + 1);
+
+            sbyte[] hostiles = new sbyte[much];
+
+            //  Запись рандомного диапозона ID
+            for (sbyte i = 0; i < much;)
+            {
+                if (unitId != null)
+                    hostiles[i] = unitId[random.Next(unitId.Length)];
+                else
+                    hostiles[i] = (sbyte)random.Next(0, EnemyRangeId);
+
+                Thread.Sleep(100);
+                i++;
+            }
+
+            MakeCurrentBattle(hero, hostiles);
+        }
+
         //  Создание списка противников/союзников и вызов боя
-        public static void MakeBattle(Hero hero, params int[] unitId)
+        public static void MakeCurrentBattle(Hero hero, params sbyte[] unitId)
         {
             foreach (var enemy in unitId)
             {
@@ -57,7 +95,7 @@ namespace Fight_cons
             Sound.BATTLE_MUSIC();
 
             while (hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Run)
-            {                
+            {
                 Random rand = new Random();
 
                 foreach (var unit in UnitTurnList)
@@ -85,22 +123,16 @@ namespace Fight_cons
                     if (cha.charecter.IsPlayer)
                     {
                         while (hero.Turn < hero.TotalMaxMoves & hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Run)
-                        {
-                            CheckForCrops();
                             CombatSolutions.CurrentEnemy(hero, units);
-                        }
                     }
                     else
-                    {
-                        CheckForCrops();
                         Unit.UnitFightChoice(cha.charecter, hero, units);
-                    }
                 }
             }
 
             //  Чистка параметров
             hero.Conditions.Clear();
-            hero.Turn = 0;            
+            hero.Turn = 0;
 
             if (hero.TotalHP <= 0)
                 hero.HeroDeath();
@@ -111,17 +143,38 @@ namespace Fight_cons
                     Output.VictoyLog();
                     hero.HeroStatistic.Wins++;
                     Reward(hero, units);
-                }                
+                }
             }
             hero.Run = false;
             AboutLoc.ListOfUnits.Clear();
         }
 
+        //  Различные проверки        
+        private static bool StillStanding(List<Order> list)
+        {
+            CheckForCrops();
+
+            foreach (var ch in list)
+            {
+                if (ch.charecter.Role != Charecter.ChaRole.Ally 
+                    & ch.charecter.Role != Charecter.ChaRole.Hero
+                    & ch.charecter.IsAlive & !ch.charecter.Run)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Проверка мертвы ли противники 
+        /// </summary>
         public static void CheckForCrops()
         {
             foreach (var ch in UnitTurnList)
             {
-                if (ch.charecter.TotalHP < 0)
+                if (ch.charecter.TotalHP <= 0)
                     ch.charecter.IsAlive = false;
             }
         }
@@ -136,57 +189,7 @@ namespace Fight_cons
             UnitTurnList.Add(new Order(hero, 0));
 
             return UnitTurnList;
-        }
-
-        private static void ListOfNames(List<Order> units)
-        {
-            bool FirstUnit = true;
-
-            foreach (var unit in units)
-            {
-                if (units.Count() == 1)
-                {
-                    Output.WriteColorLine(Output.unitNameColor(unit.charecter.Role), "На вас нападает ", $"{unit.charecter.Name} ");
-                    Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.charecter.HP}", $" {Output.HPSymbol}]\n");
-                    break;
-                }
-                else
-                {
-                    //  Для красивого отображения
-                    if (FirstUnit)
-                    {
-                        Output.WriteColorLine(ConsoleColor.DarkMagenta, "На вас нападают ", $"{unit.charecter.Name} ");
-                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.charecter.HP}", $" {Output.HPSymbol}],\n");
-                        FirstUnit = false;
-                    }
-                    else
-                    {
-                        Output.WriteColorName("", unit.charecter, " ");
-                        //Output.WriteColorLine(ConsoleColor.DarkMagenta, "", $"{enemy.charecter.Name} ");
-                        Output.WriteColorLine(ConsoleColor.DarkRed, "\t[", $"{unit.charecter.HP}", $" {Output.HPSymbol}],\n");
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Проверка мертвы ли противники 
-        /// </summary>
-        private static bool StillStanding(List<Order> list)
-        {
-            sbyte dead = 0;
-
-            foreach (var ch in list)
-            {
-                if (ch.charecter.IsEnemy & ch.charecter.Run | !ch.charecter.IsAlive)
-                    dead++;
-            }
-            var ally = list.Count(x => x.charecter.Role == Charecter.ChaRole.Ally) + 1;
-            if (dead == list.Count() - ally)
-                return false;
-            else
-                return true;
-        }
+        }      
 
         /// <summary>
         /// Награда за победу
@@ -229,8 +232,8 @@ namespace Fight_cons
                         double n = (hero.MaxHp / 100.0) * 10.0;
                         hero.HP -= (int)n;
                         Output.RunLog();
-                        Console.WriteLine($"Вы сбежали с потерей {(int) n} {Output.HPSymbol}\n");
-                    }                    
+                        Console.WriteLine($"Вы сбежали с потерей {(int)n} {Output.HPSymbol}\n");
+                    }
                     hero.Run = true;
                 }
                 else
@@ -238,6 +241,37 @@ namespace Fight_cons
             }
             else
                 Output.TwriteLine("Вы не можете убежать\n", 1);
+        }
+
+        private static void ListOfNames(List<Order> units)
+        {
+            bool FirstUnit = true;
+
+            foreach (var unit in units)
+            {
+                if (units.Count() == 1)
+                {
+                    Output.WriteColorLine(Output.unitNameColor(unit.charecter.Role), "На вас нападает ", $"{unit.charecter.Name} ");
+                    Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.charecter.HP}", $" {Output.HPSymbol}]\n");
+                    break;
+                }
+                else
+                {
+                    //  Для красивого отображения
+                    if (FirstUnit)
+                    {
+                        Output.WriteColorLine(ConsoleColor.DarkMagenta, "На вас нападают ", $"{unit.charecter.Name} ");
+                        Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.charecter.HP}", $" {Output.HPSymbol}],\n");
+                        FirstUnit = false;
+                    }
+                    else
+                    {
+                        Output.WriteColorName("", unit.charecter, " ");
+                        //Output.WriteColorLine(ConsoleColor.DarkMagenta, "", $"{enemy.charecter.Name} ");
+                        Output.WriteColorLine(ConsoleColor.DarkRed, "\t[", $"{unit.charecter.HP}", $" {Output.HPSymbol}],\n");
+                    }
+                }
+            }
         }
     }
 

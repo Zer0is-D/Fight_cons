@@ -38,7 +38,7 @@ namespace Fight_cons
                 (Hero hero) => 
                 {
                      if (GameFormulas.Vero(0.4))
-                        Battles.MakeBattle(hero, 3);
+                        Battles.MakeRandomBattle(hero, 3);
                      if (GameFormulas.Vero(0.01))
                         FindingPouchEvent(hero, 1, 7);
                 }, 
@@ -52,7 +52,7 @@ namespace Fight_cons
                     if (GameFormulas.Vero(0.3))
                         FindingPouchEvent(hero, 0, 5);
                     if (GameFormulas.Vero(0.1))
-                        Battles.MakeBattle(hero, 4);
+                        Battles.MakeCurrentBattle(hero, 4);
                 }, 
                 Neighborhood),           
             new Location(4, "Деревня",(Hero hero) =>
@@ -60,7 +60,7 @@ namespace Fight_cons
                     if (GameFormulas.Vero(0.15))
                         FindingPouchEvent(hero, 3, 10);
                     if (GameFormulas.Vero(0.05))
-                        Battles.MakeBattle(hero, 5);
+                        Battles.MakeCurrentBattle(hero, 5);
                 }, 
                 Village),           
             new Location(5, "Трактир",(Hero hero) =>
@@ -156,10 +156,7 @@ namespace Fight_cons
 
             switch (Input.ChoisInput(hero, 1, 3))
             {
-                case 1:
-                    //  Проверка боя с несколькими противниками
-                    //if (GameFormulas.Vero(0.9))
-                    //    Battles.MakeBattle(hero, 1, 101, 102);
+                case 1:           
                     if (GameFormulas.Vero(0.25))
                         if (!Hero.Exit_cave)
                         {
@@ -167,16 +164,8 @@ namespace Fight_cons
                             Hero.Exit_cave = true;
                         }
                     if (GameFormulas.Vero(0.7))
-                    {
-                        if (GameFormulas.Vero(0.4))
-                            Battles.MakeBattle(hero, 1);
-                        else if (GameFormulas.Vero(0.4))
-                            Battles.MakeBattle(hero, 4);
-                        else if (GameFormulas.Vero(0.4))
-                            Battles.MakeBattle(hero, 3);
-                        else
-                            Battles.MakeBattle(hero, 2);
-                    }
+                        Battles.MakeRandomBattle(hero, 0, 1, 2);
+
                     hero.HeroStatistic.CaveResearch++;
                     Research(hero);
                     break;
@@ -186,7 +175,7 @@ namespace Fight_cons
                     else
                     {
                         RestEvent(hero);
-                        Battles.MakeBattle(hero, 1);
+                        Battles.MakeRandomBattle(hero, 0, 1, 2);
                     }
                     break;
                 case 3:
@@ -208,19 +197,19 @@ namespace Fight_cons
             {
                 case 1:
                     if (GameFormulas.Vero(0.7))
-                    {
-                        if (GameFormulas.Vero(0.4))
-                            Battles.MakeBattle(hero, 1);
-                        else if (GameFormulas.Vero(0.4))
-                            Battles.MakeBattle(hero, 3);
-                        else
-                            Battles.MakeBattle(hero, 2);
-                    }
+                        Battles.MakeRandomBattle(hero, 0, 1, 2);
+
                     hero.HeroStatistic.CaveResearch++;
                     Research(hero);
                     break;
                 case 2:
-                    RestEvent(hero);
+                    if (GameFormulas.Vero(0.8))
+                        RestEvent(hero);
+                    else
+                    {
+                        RestEvent(hero);
+                        Battles.MakeRandomBattle(hero, 0, 1, 2);
+                    }
                     break;
                 case 3:
                     DefualtLoad(hero, Locations[(int)LocationName.Vally]);
@@ -246,14 +235,21 @@ namespace Fight_cons
                         hero.HeroQuests.MainQ(hero);
                     }
                     else if (GameFormulas.Vero(0.6))
-                        Battles.MakeBattle(hero, 4);
-                    else if (GameFormulas.Vero(0.4))
-                        Battles.MakeBattle(hero, 5);
+                        Battles.MakeRandomBattle(hero, 4, 5);
                     else
                         Output.TwriteLine("Вы ничего не находите\n", 1);
+
+                    hero.HeroStatistic.WoodsResearch++;
+                    Research(hero);
                     break;
                 case 2:
-                    RestEvent(hero);
+                    if (GameFormulas.Vero(0.8))
+                        RestEvent(hero);
+                    else
+                    {
+                        RestEvent(hero);
+                        Battles.MakeRandomBattle(hero, 4, 5);
+                    }
                     break;
                 case 3:
                     DefualtLoad(hero, Locations[(int)LocationName.Vally]);
@@ -276,7 +272,13 @@ namespace Fight_cons
                     DefualtLoad(hero, Locations[(int)LocationName.Caves]);
                     break;
                 case 2:
-                    RestEvent(hero);
+                    if (GameFormulas.Vero(0.8))
+                        RestEvent(hero);
+                    else
+                    {
+                        RestEvent(hero);
+                        Battles.MakeRandomBattle(hero, 3);
+                    }
                     break;
                 case 3:
                     DefualtLoad(hero, Locations[(int)LocationName.Neighborhood]);
@@ -301,7 +303,13 @@ namespace Fight_cons
                     DefualtLoad(hero, Locations[(int)LocationName.Village]);
                     break;
                 case 2:
-                    RestEvent(hero);
+                    if (GameFormulas.Vero(0.9))
+                        RestEvent(hero);
+                    else
+                    {
+                        RestEvent(hero);
+                        Battles.MakeCurrentBattle(hero, 5);
+                    }
                     break;
                 case 3:
                     DefualtLoad(hero, Locations[(int)LocationName.Vally]);
@@ -450,7 +458,7 @@ namespace Fight_cons
             if (hero.HeroStatistic.CaveResearch == 30)
             {
                 Console.WriteLine("Вы слышите в темноте как что-то огромное надвигается на вас!");
-                Battles.MakeBattle(hero, 6);
+                Battles.MakeCurrentBattle(hero, 6);
             }
         }
 
@@ -477,38 +485,53 @@ namespace Fight_cons
             hero.drunk++;
         }
 
-        //  Отдых  
+        //  Событие отдых
         private static void RestEvent(Hero hero)
         {
-            sbyte usualResoredHP = 30;            
+            if (hero.Class_name != "Волшебник")
+                MakeRest(hero);
+            else
+            {
+                Console.WriteLine("Выберите вид отдыха:\n" +
+                            "1) Обычный\n" +
+                            "2) Медитация");
+
+                switch (Input.ChoisInput(hero, 1, 2))
+                {
+                    case 1:
+                        MakeRest(hero);
+                        break;
+                    case 2:
+                        MakeMeditation(hero);
+                        break;
+                }
+            }                  
+        }
+
+        //  Отдых
+        private static void MakeRest(Hero hero)
+        {
+            sbyte usualResoredHP = 30;
             sbyte usualResoredMP = 20;
 
+            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP);
+            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP);
+            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP)} ", $"{Output.HPSymbol} ");
+            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP)} ", $"{Output.MPSymbol}\n");
+            Output.WaitNext(3, ".");
+        }
+        //  Медитация
+        private static void MakeMeditation(Hero hero)
+        {
             //  Mage restore
             sbyte mageResoredHP = 20;
             sbyte mageResoredMP = 50;
 
-            if (hero.Class_name == "Волшебник")
-            Console.WriteLine("Выберите вид отдыха:\n" +
-                            "1) Обычный\n" +
-                            "2) Медитация");
-
-            switch (Input.ChoisInput(hero, 1, 2))
-            {
-                case 1:
-                    hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP);
-                    hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP);
-                    Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP)} ", $"{Output.HPSymbol} ");
-                    Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP)} ", $"{Output.MPSymbol}\n");
-                    Output.WaitNext(3, ".");
-                    break;
-                case 2:
-                    hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP);
-                    hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP);
-                    Output.WriteColorLine(ConsoleColor.Green, "Медитация восстановила вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP)} ", $"{Output.HPSymbol} ");
-                    Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP)} ", $"{Output.MPSymbol}\n");
-                    Output.WaitNext(3, ".");
-                    break;
-            }           
+            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP);
+            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP);
+            Output.WriteColorLine(ConsoleColor.Green, "Медитация восстановила вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP)} ", $"{Output.HPSymbol} ");
+            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP)} ", $"{Output.MPSymbol}\n");
+            Output.WaitNext(3, ".");
         }
 
         //  Кошелек
@@ -528,7 +551,7 @@ namespace Fight_cons
                         hero.Money += minGold;
                     }
                     else
-                        Battles.MakeBattle(hero, 5);
+                        Battles.MakeCurrentBattle(hero, 5);
                     break;
                 case 2:
                     Output.TwriteLine("Вы проходите мимо", 40);

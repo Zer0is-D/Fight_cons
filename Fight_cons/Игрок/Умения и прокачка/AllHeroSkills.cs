@@ -28,7 +28,7 @@ namespace Fight_cons
                 AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {enemy.Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
+                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Condition.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
                 };
             }
 
@@ -67,7 +67,7 @@ namespace Fight_cons
                 AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {enemy.Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
+                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Condition.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
                 };
             }
 

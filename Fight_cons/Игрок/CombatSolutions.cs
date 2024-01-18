@@ -110,6 +110,8 @@ namespace Fight_cons
 
             //  Минус от эффектов
             NegativeEffectImpact(hero, unit);
+
+
         }
 
         #region Отображение боевоей информации

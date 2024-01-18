@@ -23,7 +23,8 @@
 
         //  Мини игры
         //  Изучение пещеры
-        public int CaveResearch;
+        public byte CaveResearch;
+        public byte WoodsResearch;
 
         //  Победы в мини-играх
         public int ArmGameWins;
