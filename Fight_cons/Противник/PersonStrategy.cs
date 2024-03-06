@@ -120,7 +120,7 @@ namespace Fight_cons
                         }
 
                         //  Заклинание замедления
-                        if (hero.Conditions.MaxMoves < 3)
+                        if (hero.Conditions.Moves < 3)
                         {
                             if (GameFormulas.Vero(0.7))
                             {
@@ -209,8 +209,8 @@ namespace Fight_cons
         /// <summary>
         /// Проверка побега
         /// </summary>
-        public static bool NeedToRun(Charecter person, byte min1, byte? min2 = null)
-        {            
+        public static bool NeedToRun(Charecter person, sbyte min1, short? min2 = null)
+        {
             if (min2 == null)
             {
                 if (GameFormulas.PercentHp(person) < min1)

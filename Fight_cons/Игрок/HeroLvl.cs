@@ -56,31 +56,31 @@ namespace Fight_cons
                     switch (Input.ChoisInput(hero, 1, 9))
                     {
                         case 1:
-                            MaxHp = (int) SelectedParam(0, MaxHp, LTicket.NextMaxHp, hero.ClassBonuses.MaxHp);
+                            MaxHp = (short) SelectedParam(0, MaxHp, LTicket.NextMaxHp, hero.ClassBonuses.MaxHp);
                             break;
                         case 2:
-                            MaxMp = (int) SelectedParam(1, hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MaxMp);
+                            MaxMp = (short) SelectedParam(1, hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MaxMp);
                             break;
                         case 3:
-                            Defence = SelectedParam(2, hero.Defence, LTicket.NextDefence, hero.ClassBonuses.Defence);
+                            Defence = (float) SelectedParam(2, hero.Defence, LTicket.NextDefence, hero.ClassBonuses.Defence);
                             break;
                         case 4:
-                            MagicDefence = SelectedParam(3, hero.MagicDefence, LTicket.NextMagicDefence, hero.ClassBonuses.MagicDefence);
+                            MagicDefence = (float) SelectedParam(3, hero.MagicDefence, LTicket.NextMagicDefence, hero.ClassBonuses.MagicDefence);
                             break;
                         case 5:
-                            Block = SelectedParam(4, hero.Block, LTicket.NextBlock, hero.ClassBonuses.Block);
+                            Block = (float) SelectedParam(4, hero.Block, LTicket.NextBlock, hero.ClassBonuses.Block);
                             break;
                         case 6:
-                            Speed = SelectedParam(5, hero.Speed, LTicket.NextSpeed, hero.ClassBonuses.Speed);
+                            Speed = (float) SelectedParam(5, hero.Speed, LTicket.NextSpeed, hero.ClassBonuses.Speed);
                             break;
                         case 7:
-                            Attack = (int) SelectedParam(6, hero.Attack, LTicket.NextAttack, hero.ClassBonuses.Attack);
+                            Attack = (short) SelectedParam(6, hero.Attack, LTicket.NextAttack, hero.ClassBonuses.Attack);
                             break;
                         case 8:
-                            Arcane = (int) SelectedParam(7, hero.Arcane, LTicket.NextArcane, hero.ClassBonuses.Arcane);
+                            Arcane = (short) SelectedParam(7, hero.Arcane, LTicket.NextArcane, hero.ClassBonuses.Arcane);
                             break;
                         case 9:
-                            Crit = SelectedParam(8, hero.Crit, LTicket.NextCrit, hero.ClassBonuses.Crit);
+                            Crit = (float)SelectedParam(8, hero.Crit, LTicket.NextCrit, hero.ClassBonuses.Crit);
                             break;
                     }
                 }
@@ -90,7 +90,7 @@ namespace Fight_cons
             }
         }
 
-        public double SelectedParam(int pointIndex, double mainParam, double val, double classBonusVal)
+        public double SelectedParam(short pointIndex, float mainParam, float val, float classBonusVal)
         {
             if (!LTicket.Points[pointIndex])
             {
@@ -112,7 +112,7 @@ namespace Fight_cons
         }
 
         //  Отображение выбранных улучшений
-        public void ParamsLvlUp(int i, bool point, string paramName, double mainParam, double paramVal, double classBonusParam, bool IsParcent)
+        public void ParamsLvlUp(byte i, bool point, string paramName, float mainParam, float paramVal, float classBonusParam, bool IsParcent)
         {
             if (IsParcent)
             {
@@ -214,15 +214,15 @@ namespace Fight_cons
     //  Класс допуск
     public class LvlTicket
     {
-        public int NextMaxHp = 5,
+        public short NextMaxHp = 5,
             NextMaxMp = 5,
             NextAttack = 1,
             NextArcane = 1;
-        public double NextSpeed = 0.02,
-            NextCrit = 0.02,
-            NextDefence = 0.02,
-            NextMagicDefence = 0.02,
-            NextBlock = 0.02;
+        public float NextSpeed = 0.02f,
+            NextCrit = 0.02f,
+            NextDefence = 0.02f,
+            NextMagicDefence = 0.02f,
+            NextBlock = 0.02f;
 
         public static bool Access(Hero hero)
         {

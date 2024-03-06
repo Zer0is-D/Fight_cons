@@ -43,8 +43,8 @@ namespace Fight_cons
         //  Выпить зелье лечения
         public static void HealPotion(Hero hero)
         {
-            double n = (hero.MaxHp / 100.0) * 50.0;
-            hero.HP += (int)n;
+            float n = (float)(hero.MaxHp / 100.0 * 50.0);
+            hero.HP += (short)n;
             Output.WriteColorLine(ConsoleColor.Green, "Зелье лечения восстановливает ", $"+{(int)n} ", $"{Output.HPSymbol}\n"); 
             Sound.DRINK();
         }

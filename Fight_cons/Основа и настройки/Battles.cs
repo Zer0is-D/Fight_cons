@@ -9,13 +9,13 @@ namespace Fight_cons
 {
     public class Battles
     {
-        public static List<Order> UnitTurnList;
-
+        #region Генерация кол. противников 
+        //  Можно доработать и добалвять или заменять встречающихся противников
+        
         private static sbyte HeroLvlMargin = 3;
         private static sbyte MinMuch = 1;
         private static sbyte MaxMuch = 2;
         private static sbyte EnemyRangeId = 3;
-
         
         public static void MakeRandomBattle(Hero hero, params sbyte[] unitId)
         {
@@ -48,23 +48,23 @@ namespace Fight_cons
 
             MakeCurrentBattle(hero, hostiles);
         }
+        #endregion
+
+        public static List<Order> UnitTurnList;
 
         //  Создание списка противников/союзников и вызов боя
         public static void MakeCurrentBattle(Hero hero, params sbyte[] unitId)
         {
             foreach (var enemy in unitId)
             {
-                //  ПИЗДЕЦ КОСТЫЛЬ
-                if (enemy > 99)
-                {
-                    AboutLoc.ListOfUnits.Add(new Order(AboutLoc.Allies(enemy - 100)));
-                    Thread.Sleep(50);
-                }
+                var u = new Order(DifrentFiles.LoudedEnemies(enemy));
+
+                if (u.charecter != null)
+                    AboutLoc.ListOfUnits.Add(u);
                 else
-                {
-                    AboutLoc.ListOfUnits.Add(new Order(AboutLoc.Enemies(enemy)));
-                    Thread.Sleep(50);
-                }
+                    Console.WriteLine($"ID: {enemy} нет в списках!\n");
+
+                Thread.Sleep(50);
             }
 
             Battle(hero, AboutLoc.ListOfUnits);
@@ -156,12 +156,8 @@ namespace Fight_cons
 
             foreach (var ch in list)
             {
-                if (ch.charecter.Role != Charecter.ChaRole.Ally 
-                    & ch.charecter.Role != Charecter.ChaRole.Hero
-                    & ch.charecter.IsAlive & !ch.charecter.Run)
-                {
+                if (ch.charecter.Role != Charecter.ChaRole.Ally & ch.charecter.Role != Charecter.ChaRole.Hero & ch.charecter.IsAlive & !ch.charecter.Run)
                     return true;
-                }
             }
 
             return false;
@@ -221,7 +217,7 @@ namespace Fight_cons
         //  Проверка на побег
         public static void CantRun(Hero hero, Charecter unit)
         {
-            if (!unit.No_run)
+            if (!unit.CantRun)
             {
                 if (GameFormulas.Vero(0.5))
                 {
@@ -230,7 +226,7 @@ namespace Fight_cons
                     else
                     {
                         double n = (hero.MaxHp / 100.0) * 10.0;
-                        hero.HP -= (int)n;
+                        hero.HP -= (short) n;
                         Output.RunLog();
                         Console.WriteLine($"Вы сбежали с потерей {(int)n} {Output.HPSymbol}\n");
                     }

@@ -85,10 +85,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bestiaria.cs" />
+    <Compile Include="DifrentFiles.cs" />
+    <Compile Include="PatternUnit.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SerAsync.cs" />
     <Compile Include="Мир\Locations\Location.cs" />
@@ -104,10 +112,7 @@
     <Compile Include="Мир\Spying.cs" />
     <Compile Include="Игрок\Умения и прокачка\PermanentBonus.cs" />
     <Compile Include="Игрок\Умения и прокачка\AllHeroSkills.cs" />
-    <Compile Include="Основа и настройки\Entitys\Armor.cs" />
     <Compile Include="Игрок\CombatSolutions.cs" />
-    <Compile Include="Противник\Ally.cs" />
-    <Compile Include="Противник\Enemy.cs" />
     <Compile Include="Противник\UnitSkills.cs" />
     <Compile Include="Противник\PersonStrategy.cs" />
     <Compile Include="Противник\Unit.cs" />
@@ -140,12 +145,23 @@
     <Compile Include="Мир\Sound.cs" />
     <Compile Include="Игрок\Умения и прокачка\SpellDes.cs" />
     <Compile Include="Игрок\Statistic.cs" />
-    <Compile Include="Основа и настройки\Entitys\Weapon.cs" />
+    <Compile Include="Формы\ConfigTry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Формы\ConfigTry.Designer.cs">
+      <DependentUpon>ConfigTry.cs</DependentUpon>
+    </Compile>
     <Compile Include="Формы\Map.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Формы\Map.Designer.cs">
       <DependentUpon>Map.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Формы\SpellMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Формы\SpellMenu.Designer.cs">
+      <DependentUpon>SpellMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Формы\Village_map.cs">
       <SubType>Form</SubType>
@@ -157,6 +173,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -181,8 +201,15 @@
     <EmbeddedResource Include="Формы\Arm_game.resx">
       <DependentUpon>Arm_game.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Формы\ConfigTry.resx">
+      <DependentUpon>ConfigTry.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Формы\Map.resx">
       <DependentUpon>Map.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Формы\SpellMenu.resx">
+      <DependentUpon>SpellMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Формы\Village_map.resx">
       <DependentUpon>Village_map.cs</DependentUpon>

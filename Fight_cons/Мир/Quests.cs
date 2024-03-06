@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Fight_cons.AboutLoc;
+using static Fight_cons.ItemChar;
 
 namespace Fight_cons
 {
@@ -59,7 +60,6 @@ namespace Fight_cons
                     //  END GAME
                     if (hero.HeroQuests.Que[0] == 2)
                     {
-                        Settings.BildVersActive = true;
                         Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
                         Console.ReadKey();
                         Output.Final();
@@ -106,16 +106,16 @@ namespace Fight_cons
                         Console.ReadKey(true);
                         Sound.Voice_Leva("- Ты можешь взять один мой огненный меч! ", 1);
                         Console.ReadKey(true);
-                        Weapon Q_Leva_swored = new Weapon(name: "Меч 'Бегемота Левы'", cost: 300, attack: 11, speed: 0.2, crit: 0.2, block: 0.2, maxMoves: 1);
+                        ItemChar Q_Leva_swored = new ItemChar(name: "Меч 'Бегемота Левы'", itemType: ItemTyps.Weapon, cost: 300, attack: 11, speed: 0.2f, crit: 0.2f, block: 0.2f, maxMoves: 1);
 
                         Output.WriteColorLine(ConsoleColor.White, $"\n", $"{Q_Leva_swored.Name} ", "| ");
-                        ItemChar.ItemStats(hero.HeroWeapon, Q_Leva_swored);
-                        ItemChar.Comparison(hero.HeroWeapon.Attack, Q_Leva_swored.Attack, text_mid: "ATT");
-                        ItemChar.Comparison(hero.HeroWeapon.Speed, Q_Leva_swored.Speed, text_mid: "SPD", true);
-                        ItemChar.Comparison(hero.HeroWeapon.Crit, Q_Leva_swored.Crit, text_mid: "CRT", true);
-                        ItemChar.Comparison(hero.HeroWeapon.Block, Q_Leva_swored.Block, text_mid: "BLK", true);
-                        if (Q_Leva_swored.MaxMoves >= 1)
-                            ItemChar.Comparison(hero.HeroWeapon.MaxMoves, Q_Leva_swored.MaxMoves, text_mid: "MOV");
+                        ItemStats(hero.HeroWeapon, Q_Leva_swored);
+                        Comparison(hero.HeroWeapon.Attack, Q_Leva_swored.Attack, text_mid: "ATT");
+                        Comparison(hero.HeroWeapon.Speed, Q_Leva_swored.Speed, text_mid: "SPD", true);
+                        Comparison(hero.HeroWeapon.Crit, Q_Leva_swored.Crit, text_mid: "CRT", true);
+                        Comparison(hero.HeroWeapon.Block, Q_Leva_swored.Block, text_mid: "BLK", true);
+                        if (Q_Leva_swored.Moves >= 1)
+                            Comparison(hero.HeroWeapon.Moves, Q_Leva_swored.Moves, text_mid: "MOV");
                         else
                             Console.WriteLine();
 

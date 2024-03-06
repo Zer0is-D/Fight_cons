@@ -44,17 +44,18 @@ namespace Fight_cons
             {
                 File.Create(Path).Close();
                 File.WriteAllText(Path, $"<?xml version=\"1.0\" encoding=\"utf-8\"?>{Environment.NewLine}<catalog></catalog>");
-                foreach(var pl in players)
+                for (sbyte i = 0; i < 20;)
                 {
-                    SaveUserScore(pl);
+                    SaveUserScore(players[i]);                    
+                    i++;
                 }
             }
 
             XDocument document = XDocument.Load(Path);
 
             XElement xelem = new XElement("record",
-                new XElement("user_name", user.Name),
-                new XElement("user_score", user.Score));
+                new XElement("userName", user.Name),
+                new XElement("userScore", user.Score));
 
             document.Root.Add(xelem);
             document.Save(Path);
@@ -65,8 +66,12 @@ namespace Fight_cons
         {
             TopPlayers player = new TopPlayers();
 
-            Console.WriteLine("Назовите себя (имя более 1 символа):");
-            Name = player.Name = Console.ReadLine();
+            do
+            {
+                Console.WriteLine("Назовите себя (мин 3 символа):");
+                Name = player.Name = Console.ReadLine();
+            } while (Name.Length < 3);
+            
 
             Score = player.Score = (int)(
                 (hero.Lvl * 10) +
@@ -90,7 +95,7 @@ namespace Fight_cons
                 hero.TotalBlock +
                 hero.PermanentBonuses.Block +
                 hero.TotalMaxMoves +
-                hero.PermanentBonuses.MaxMoves);
+                hero.PermanentBonuses.Moves);
 
             return player;
         }
@@ -100,13 +105,13 @@ namespace Fight_cons
         {
             XDocument document = XDocument.Load(Path);
             int num = 1;
-            var list = document.Root.Elements().OrderByDescending(x => Convert.ToInt32(x.Element("user_score").Value));
+            var list = document.Root.Elements().OrderByDescending(x => Convert.ToInt32(x.Element("userScore").Value));
 
             Console.WriteLine("\nЛокальный рейтинг:");
             foreach (XElement element in list)
             {
                 if (num < 21)
-                    Console.WriteLine($"{num++}) {element.Element("user_name").Value}: {element.Element("user_score").Value}");
+                    Console.WriteLine($"{num++}) {element.Element("userName").Value}: {element.Element("userScore").Value}");
                 else
                 {
                     Console.WriteLine($"...) {Name}: {Score}");

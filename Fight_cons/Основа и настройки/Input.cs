@@ -8,11 +8,24 @@ namespace Fight_cons
 {
     class Input
     {
-        //  Проверка на соответствие
-        public static sbyte ChoisInput(Hero hero, sbyte minNum, sbyte maxNum)
+        /// <summary>
+        /// Проверка на соответствие
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <param name="minNum">Минимальное значение</param>
+        /// <param name="maxNum">Максимальное значение</param>
+        /// <param name="question">Повторяющейся вопрос</param>
+        /// <returns></returns>
+        public static sbyte ChoisInput(Hero hero, sbyte minNum, sbyte maxNum, string question = "")
         {
             sbyte s = 0;
-            do { s = SbyteInput(hero); }
+            do 
+            {
+                if (question.Length > 1)
+                    Console.WriteLine(question);
+
+                s = SbyteInput(hero); 
+            }
             while (!(s > minNum - 1 && s < maxNum + 1));
             return s;
         }
@@ -54,6 +67,7 @@ namespace Fight_cons
         public static sbyte SbyteInput(Hero hero)
         {
             Dictionary<string, Action> KeyWords = new Dictionary<string, Action>();
+            #region Ключевые слова
             KeyWords["save"] = () => { Console.WriteLine($"{hero.Name} saved!"); };
             KeyWords["сохранить"] = () => { Console.WriteLine($"{hero.Name} saved!"); };
             KeyWords["инвентарь"] = () => { Inventory.ShowInventory(hero); };
@@ -88,35 +102,41 @@ namespace Fight_cons
             KeyWords["tavern1"] = () => { SerAsync.TavernLocal(hero); };
             KeyWords["gsettings"] = () =>
             {
-                Console.WriteLine("\nИгровые параметры:\n" +
-                                $"1) Количество бонусов у оружия в магазине (1-8): {Market.NamOfBonusies}\n" +
-                                $"2) Количество предметов в магазине (1-100): {Market.NamOfGoods}\n" +
-                                $"3) Урон от кровотечения: {Condition.BleedDmg}\n" +
+                sbyte ans;
+                do
+                {
+                    Console.WriteLine("\nИгровые параметры:\n" +
+                                $"1) Количество бонусов у оружия в магазине\n" +
+                                $"2) Количество предметов в магазине\n" +
+                                $"3) Урон от кровотечения\n" +
                                 $"4) Режим игры\n" +
                                 $"5) Выйти\n");
 
-                switch (ChoisInput(hero, 1, 5))
-                {
-                    case 1:
-                        Console.WriteLine("\nУстановите нужное количество");
-                        Market.NamOfBonusies = ChoisInput(hero, 1, 8);
-                        break;
-                    case 2:
-                        Console.WriteLine("\nУстановите нужное количество");
-                        Market.NamOfGoods = ChoisInput(hero, 1, 100);
-                        break;
-                    case 3:
-                        Console.WriteLine("\nУстановите нужное количество");
-                        Condition.BleedDmg = ChoisInput(hero, 1, 100);
-                        break;
-                    case 4:
-                        Settings.OptionVersions(hero);
-                        break;
-                    case 5:
-                        break;
+                    ans = ChoisInput(hero, 1, 5);
+                    switch (ans)
+                    {
+                        case 1:
+                            Market.NamOfBonusies = ChoisInput(hero, 1, 8, "Установите нужное количество (1-8)\n" +
+                                $"Сейчас: {Market.NamOfBonusies}");
+                            break;
+                        case 2:
+                            Market.NamOfGoods = ChoisInput(hero, 1, 100, "Установите нужное количество (1-100)\n" +
+                                $"Сейчас: {Market.NamOfGoods}");
+                            break;
+                        case 3:
+                            Condition.BleedDmg = ChoisInput(hero, 1, 100, "Установите нужное количество\n" +
+                                $"Сейчас: {Condition.BleedDmg}");
+                            break;
+                        case 4:
+                            Settings.OptionVersions(hero);
+                            break;
+                        case 5:
+                            break;
+                    }
+                } while (ans != 5);
 
-                }
             };
+            #endregion
 
             string str;
             sbyte x;

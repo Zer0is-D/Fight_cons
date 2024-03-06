@@ -11,8 +11,8 @@ namespace Fight_cons
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public byte SpellСost { get; set; }
-        public int SpellPower { get; set; }
+        public sbyte SpellСost { get; set; }
+        public sbyte SpellPower { get; set; }
 
         public SpellDes(Hero hero, string name)
         {
@@ -33,11 +33,11 @@ namespace Fight_cons
 
         #region Заклинания
         //  Действие: Очищающий луч
-        public static void CleansingRaySpell(Hero hero, Charecter victim, int cost, int spellPower)
+        public static void CleansingRaySpell(Hero hero, Charecter victim, short cost, sbyte spellPower)
         {
             Random rand = new Random();
 
-            int damag = GameFormulas.MagicDamage(hero, victim, spellPower);
+            short damag = GameFormulas.MagicDamage(hero, victim, spellPower);
 
             if (rand.NextDouble() <= 1 - victim.TotalSpeed)
             {
@@ -62,32 +62,32 @@ namespace Fight_cons
         }
 
         //  Малое лечение
-        public static void HealSpell(Hero hero, Charecter enemy, int cost, int power)
+        public static void HealSpell(Hero hero, Charecter enemy, short cost, sbyte spellPower)
         {
-            double crit = GameFormulas.CheckCrit(hero, true);
-            double Heal = ((hero.MaxHp / 100.0) * 30.0) + crit;
+            float crit = GameFormulas.CheckCrit(hero, true);
+            float Heal = (float)((hero.MaxHp / 100.0 * 30.0) + crit);
 
             if (crit > 1)
                 Output.WriteColorLine(ConsoleColor.Green, "\nВы критически восстановили себе ", $"+{(int)Heal} ", $"{Output.HPSymbol}\n");
             else
                 Output.WriteColorLine(ConsoleColor.Green, "\nВы восстановили себе ", $"+{(int)Heal} ", $"{Output.HPSymbol}\n");
 
-            hero.HP += (int)Heal;
+            hero.HP += (short) Heal;
 
             hero.HeroStatistic.Spells++;
         }
 
         //  Замедление
-        public static void SlowDownSpell(Hero hero, Charecter enemy, int cost, int power)
+        public static void SlowDownSpell(Hero hero, Charecter enemy, short cost, sbyte spellPower)
         {
-            enemy.Conditions.Speed = -0.2;
+            enemy.Conditions.Speed = -0.2f;
             Console.WriteLine("Вы замедлили противника!");
 
             hero.HeroStatistic.Spells++;
         }
 
         //  Исцеление
-        public static void ExcisionSpell(Hero hero, Charecter enemy, int cost, int power)
+        public static void ExcisionSpell(Hero hero, Charecter enemy, short cost, sbyte spellPower)
         {
             Console.WriteLine("\nВы избавились от всех негатив. эффектов\n");
             hero.Conditions.Clear();

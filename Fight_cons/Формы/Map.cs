@@ -46,6 +46,11 @@ namespace Fight_cons.form
                 DialogResult = dialog_rez;
             }
         }
+
+        private void Map_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
     class LocationButton : Button

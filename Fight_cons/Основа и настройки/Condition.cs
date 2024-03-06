@@ -10,14 +10,14 @@ namespace Fight_cons
         public bool SheeldUp = false;        
 
         //  Debuffs
-        internal protected int FrezRound;
-        internal protected int SlowRound;
-        internal protected int PoisentRound;
-        internal protected int BleedRound;
+        internal protected sbyte FrezRound;
+        internal protected sbyte SlowRound;
+        internal protected sbyte PoisentRound;
+        internal protected sbyte BleedRound;
 
         //  Базовый урон от эффектов
-        internal protected int PoisentDmg = 3;
-        public static int BleedDmg = 3;
+        internal protected sbyte PoisentDmg = 3;
+        public static sbyte BleedDmg = 3;
 
         internal protected void Clear()
         {
@@ -31,7 +31,7 @@ namespace Fight_cons
             Defence = 0;
             MagicDefence = 0;
             Block = 0;
-            MaxMoves = 0;
+            Moves = 0;
 
             //  Обнуление ходов
             FrezRound = 0;

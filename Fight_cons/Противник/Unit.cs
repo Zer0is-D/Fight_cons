@@ -4,90 +4,60 @@ using System.Collections.Generic;
 
 namespace Fight_cons.Противник
 {
-    internal class Unit : Charecter
+    public class Unit : Charecter
     {
-        public static int ExpForKill(int HP, int Attack) => (HP / 2) + (Attack / 2);
+        public static int ExpForKill(int HP, short Attack) => (HP / 2) + (Attack / 2);
 
-        internal static void Consrtucter(Unit unit, string name, sbyte phase, int hp,
-                  int attack, int speed, int crit_chance,
-                  int defence, int magic_defence, int block,
-                  sbyte max_moves, bool no_run)
-        {
-            switch (unit)
-            {
-                case Enemy:
-                    unit.IsEnemy = true;
-                    unit.Role = ChaRole.Enemy;
-                    break;
-                case Ally:
-                    unit.IsEnemy = false;
-                    unit.Role = ChaRole.Ally;
-                    break;
-                default:
-                    unit.Role = ChaRole.Wild;
-                    break;
-            }               
-
-            unit.Phase = phase;
-
-            unit.Name = name;
-            unit.HP = unit.MaxHp = hp;
-
-            unit.Attack = attack;
-            unit.Speed = speed;
-            unit.Crit = crit_chance * 0.01;
-            unit.Defence = defence * 0.01;
-            unit.MagicDefence = magic_defence * 0.01;
-            unit.Block = block * 0.01;
-            unit.MaxMoves = max_moves;
-            unit.No_run = no_run;
-
-            unit.KillExp = ExpForKill(unit.HP, unit.Attack);
-        }
-
-        public void Consrtucter(Unit unit, string name, sbyte phase,
-            int HP_min, int HP_max,
-            int ATT_min, int ATT_max,
-            int SPD_min, int SPD_max,
-            int CRIT_min, int CRIT_max,
-            int DEF_min, int DEF_max,
-            int M_DEF_min, int M_DEF_max,
-            int BLK_min, int BLK_max,
-            sbyte max_turn_min, sbyte max_turn_max,
-            int strategy, ChaRole role)
+        public Unit(Bestiaria bestiaria)
         {
             Random rand = new Random();
 
-            switch (unit)
+            switch (bestiaria.Role)
             {
-                case Enemy:
-                    unit.IsEnemy = true;
+                case ChaRole.Enemy:
+                    IsEnemy = true;
                     break;
-                case Ally:
-                    unit.IsEnemy = false;
-                    break;
-                default:
-                    unit.Role = ChaRole.Wild;
+                case ChaRole.Ally:
+                    IsEnemy = false;
                     break;
             }
 
-            unit.Role = role;
-            unit.Phase = phase;
-            unit.Name = name;
+            Role = bestiaria.Role;
+            Phase = bestiaria.Phase;
+            Name = bestiaria.Name;
 
-            if (unit.Role == ChaRole.Wild)
-                unit.MaxHp = rand.Next(HP_min, HP_max) * rand.Next(2, 5);
+            if (Role == ChaRole.Wild)
+                MaxHp = (bestiaria.HpMax == 0) ?
+                    (short)(bestiaria.HpMin * rand.Next(2, 5)) : (short)(rand.Next(bestiaria.HpMin, bestiaria.HpMax) * rand.Next(2, 5));
             else
-                unit.MaxHp = rand.Next(HP_min, HP_max);
-            unit.HP = rand.Next(HP_min, unit.MaxHp);
-            unit.Attack = rand.Next(ATT_min, ATT_max);
-            unit.Speed = rand.Next(SPD_min, SPD_max) * 0.01;
-            unit.Crit = rand.Next(CRIT_min, CRIT_max) * 0.01;
-            unit.Defence = rand.Next(DEF_min, DEF_max) * 0.01;
-            unit.MagicDefence = rand.Next(M_DEF_min, M_DEF_max) * 0.01;
-            unit.Block = rand.Next(BLK_min, BLK_max) * 0.01;
-            unit.MaxMoves = rand.Next(max_turn_min, max_turn_max);
-            unit.strategeis = (Strategeis)strategy;
+                MaxHp = (bestiaria.HpMax == 0) ?
+                    bestiaria.HpMin : (short)rand.Next(bestiaria.HpMin, bestiaria.HpMax);
+
+            HP = (bestiaria.HpMax == 0) ?
+                 bestiaria.HpMin : (short)rand.Next(bestiaria.HpMin, bestiaria.HpMax);
+
+            Attack = (bestiaria.HpMax == 0) ?
+                 bestiaria.AttMin : (short)rand.Next(bestiaria.AttMin, bestiaria.AttMax);
+
+            Speed = (bestiaria.HpMax == 0) ?
+                bestiaria.SpdMin : (float)(rand.Next(bestiaria.SpdMin, bestiaria.SpdMax) * 0.01);
+
+            Crit = (bestiaria.HpMax == 0) ?
+                (float)(bestiaria.CrtMin * 0.01) : (float)(rand.Next(bestiaria.CrtMin, bestiaria.CrtMax) * 0.01);
+
+            Defence = (bestiaria.HpMax == 0) ?
+                (float)(bestiaria.DefMin * 0.01) : (float)(rand.Next(bestiaria.DefMin, bestiaria.DefMax) * 0.01);
+
+            MagicDefence = (bestiaria.HpMax == 0) ?
+                (float)(bestiaria.MDefMin * 0.01) : (float)(rand.Next(bestiaria.MDefMin, bestiaria.MDefMax) * 0.01);
+
+            Block = (bestiaria.HpMax == 0) ?
+                (float)(bestiaria.BlkMin * 0.01) : (float)(rand.Next(bestiaria.BlkMin, bestiaria.BlkMax) * 0.01);
+
+            Moves = (bestiaria.HpMax == 0) ?
+                bestiaria.MovMin : (sbyte)rand.Next(bestiaria.MovMin, bestiaria.MovMax);
+
+            Strategy = bestiaria.Strategy;
 
             KillExp = ExpForKill(HP, Attack);
         }
@@ -104,7 +74,7 @@ namespace Fight_cons.Противник
 
                 unit.Conditions.SheeldUp = false;
 
-                switch (unit.strategeis)
+                switch (unit.Strategy)
                 {
                     //  Любая базовая стратегия поведения
                     case Strategeis.Any:
@@ -142,7 +112,7 @@ namespace Fight_cons.Противник
         //  Вычитание негативыне эффекты
         public static void NegativeEffectImpact(Charecter unit)
         {
-            if (unit.Conditions.MaxMoves > 0 || unit.Conditions.PoisentRound > 0 || unit.Conditions.BleedRound > 0)
+            if (unit.Conditions.Moves > 0 || unit.Conditions.PoisentRound > 0 || unit.Conditions.BleedRound > 0)
             {
                 //  Кровотечение
                 if (unit.Conditions.BleedRound > 0)
@@ -154,7 +124,7 @@ namespace Fight_cons.Противник
                 }
 
                 //  Замедление
-                if (unit.Conditions.MaxMoves > 0)
+                if (unit.Conditions.Moves > 0)
                     unit.Conditions.SlowRound--;
 
                 //  Отравление

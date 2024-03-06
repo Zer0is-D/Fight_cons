@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using static Fight_cons.AboutLoc;
+using static Fight_cons.ItemChar;
 
 namespace Fight_cons
 {
@@ -45,18 +46,18 @@ namespace Fight_cons
 
         public static void GiveHeroWeapon(Hero hero)
         {
-            Weapon Sword_N_sheeld = new Weapon("Меч и щит", attack: 4, speed: 0, cost: 10, crit: 0, block: 0.25, maxMoves: -1);
-            Weapon Twohand_sword = new Weapon("Двуручник", attack: 8, speed: -0.2, cost: 10, crit: 0.1, block: 0, maxMoves: -1);
-            Weapon Two_knifes = new Weapon("Два клинка", attack: 3, speed: 0.2, cost: 10, crit: 0.3, block: 0, maxMoves: 0);
-            Weapon Bow = new Weapon("Лук", attack: 5, speed: 0, cost: 10, crit: 0.1, block: 0, maxMoves: 1);
+            ItemChar Sword_N_sheeld = new ItemChar("Меч и щит", ItemTyps.Weapon, attack: 4, speed: 0, cost: 10, crit: 0, block: 0.25f, maxMoves: -1);
+            ItemChar Twohand_sword = new ItemChar("Двуручник", ItemTyps.Weapon, attack: 8, speed: -0.2f, cost: 10, crit: 0.1f, block: 0, maxMoves: -1);
+            ItemChar Two_knifes = new ItemChar("Два клинка", ItemTyps.Weapon, attack: 3, speed: 0.2f, cost: 10, crit: 0.3f, block: 0, maxMoves: 0);
+            ItemChar Bow = new ItemChar("Лук", ItemTyps.Weapon, attack: 5, speed: 0, cost: 10, crit: 0.1f, block: 0, maxMoves: 1);
 
-            Console.WriteLine("Выбери оружие?\n"
-                          + $"1) {ItemChar.ItemStats(Sword_N_sheeld)}\n"
-                          + $"2) {ItemChar.ItemStats(Twohand_sword)}\n"
-                          + $"3) {ItemChar.ItemStats(Two_knifes)}\n"
-                          + $"4) {ItemChar.ItemStats(Bow)}");
+            string quo = "Выбери оружие?\n"
+                          + $"1) {ItemStats(Sword_N_sheeld)}\n"
+                          + $"2) {ItemStats(Twohand_sword)}\n"
+                          + $"3) {ItemStats(Two_knifes)}\n"
+                          + $"4) {ItemStats(Bow)}";
 
-            switch (Input.ChoisInput(hero, 0, 4))
+            switch (Input.ChoisInput(hero, 0, 4, quo))
             {
                 case 1:
                     hero.HeroWeapon = Sword_N_sheeld;

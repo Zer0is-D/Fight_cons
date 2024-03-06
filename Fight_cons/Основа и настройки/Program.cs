@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Fight_cons.Формы;
+using System;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Fight_cons
 {
@@ -14,15 +15,22 @@ namespace Fight_cons
 
             Hero hero = new Hero(25, 10);
 
-            Output.GameLogo(vers: "2.6 (Альфа)");            
+            Output.GameLogo(vers: "2.6 (Альфа)");
 
-            if (Settings.BildVersActive)
-                Settings.OptionVersions(hero);
+            DifrentFiles.LoadBestiarList();
 
-            Settings.OptionWaitSkip(hero);
+            DataFromWF.ConfigData();
             
             Hero.CreateHero(hero);
             Console.ReadKey();
+        }
+    }
+
+    public class DataFromWF : Form
+    {
+        public static void ConfigData()
+        {
+            var ConfigTry = new ConfigTry().ShowDialog();             
         }
     }
 }

@@ -2,12 +2,12 @@
 {
     internal class PermanentBonus : Characteristics
     {
-        internal protected new int HP
+        internal protected new short HP
         {
             get => this.MaxHp;
             set => this.MaxHp = value;
         }
-        internal protected new int MP
+        internal protected new short MP
         {
             get => this.MaxMp;
             set => this.MaxMp = value;

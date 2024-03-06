@@ -19,23 +19,23 @@ namespace Fight_cons.Основа_и_настройки
         }
 
         //  Здоровье
-        private protected int _maxHp;
-        public int MaxHp
+        private protected short _maxHp;
+        public short MaxHp
         {
             get => _maxHp;
             set => _maxHp = value;
         }
 
-        private protected int _hp;
-        public int HP
+        private protected short _hp;
+        public short HP
         {
             get => _hp;
             set => _hp = value;
         }
 
         //  Мана
-        private protected int _maxMp;
-        public int MaxMp
+        private protected short _maxMp;
+        public short MaxMp
         {
             get => _maxMp;
             set => _maxMp = value;
@@ -58,32 +58,32 @@ namespace Fight_cons.Основа_и_настройки
         }
 
         //  Атака
-        private protected int _attack;
-        public int Attack
+        private protected short _attack;
+        public short Attack
         {
             get => _attack;
             set => _attack = value;
         }
 
         //  Сила магии
-        private protected int _arcane;
-        public int Arcane
+        private protected short _arcane;
+        public short Arcane
         {
             get => _arcane;
             set => _arcane = value;
         }
 
         //  Скорость
-        private protected double _speed;
-        public double Speed
+        private protected float _speed;
+        public float Speed
         {
             get => _speed;
             set => _speed = value;
         }
 
         //  Шанс крита
-        private protected double _crit;
-        public double Crit
+        private protected float _crit;
+        public float Crit
         {
             get => _crit;
             set
@@ -94,8 +94,8 @@ namespace Fight_cons.Основа_и_настройки
         }
 
         //  Физическая защита
-        private protected double _defence;
-        public double Defence
+        private protected float _defence;
+        public float Defence
         {
             get => _defence;
             set
@@ -108,8 +108,8 @@ namespace Fight_cons.Основа_и_настройки
         }
 
         //  Магическая защита
-        private protected double _magicDefence;
-        public double MagicDefence
+        private protected float _magicDefence;
+        public float MagicDefence
         {
             get => _magicDefence;
             set
@@ -122,8 +122,8 @@ namespace Fight_cons.Основа_и_настройки
         }
 
         //  Шанс блока
-        private protected double _block;
-        public double Block
+        private protected float _block;
+        public float Block
         {
             get => _block;
             set
@@ -136,7 +136,7 @@ namespace Fight_cons.Основа_и_настройки
         }
 
         //  Макс. ходов
-        public int MaxMoves;
+        public sbyte Moves;
 
         public void GetItemParamFields(Characteristics cha)
         {
@@ -181,7 +181,7 @@ namespace Fight_cons.Основа_и_настройки
                 new Info(cha.Speed, Output.SpeedStr),
                 new Info(cha.Crit, Output.CritStr),
                 new Info(cha.Block, Output.BlockStr),
-                new Info(cha.MaxMoves, Output.MaxMovesStr)
+                new Info(cha.Moves, Output.MaxMovesStr)
             };
             ItemList.AddRange(list);
         }

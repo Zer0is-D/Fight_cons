@@ -1,7 +1,5 @@
-﻿using Fight_cons.Мир;
-using Fight_cons.Мир.Locations;
+﻿using Fight_cons.Мир.Locations;
 using Fight_cons.Основа_и_настройки;
-using Fight_cons.Противник;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -22,19 +20,22 @@ namespace Fight_cons
             DeepWoods = 7
         }
 
+        //  Запись событий перед заходов в локацию
         public static List<Location> Locations = new List<Location>()
         {
             new Location(0, "???", 
                 (Hero hero) =>
                 {
-                   
+                    Fight_cons.Market.ShowArmorGoods(hero);
+                    if (GameFormulas.Vero(0.4))
+                        Battles.MakeCurrentBattle(hero, 2, 0);
                 }, CavesStart),
-            new Location(1, "Пещеры", 
+            new Location(0, "Пещеры", 
                 (Hero hero) => 
                 { 
 
                 }, Caves),           
-            new Location(2, "Долина", 
+            new Location(1, "Долина", 
                 (Hero hero) => 
                 {
                      if (GameFormulas.Vero(0.4))
@@ -43,7 +44,7 @@ namespace Fight_cons
                         FindingPouchEvent(hero, 1, 7);
                 }, 
                 Vally),           
-            new Location(3, "Окрестности деревни",
+            new Location(2, "Окрестности деревни",
                 (Hero hero) =>
                 {
                     hero.HeroQuests.StartQ(hero, 2);
@@ -55,7 +56,7 @@ namespace Fight_cons
                         Battles.MakeCurrentBattle(hero, 4);
                 }, 
                 Neighborhood),           
-            new Location(4, "Деревня",(Hero hero) =>
+            new Location(3, "Деревня",(Hero hero) =>
                 {
                     if (GameFormulas.Vero(0.15))
                         FindingPouchEvent(hero, 3, 10);
@@ -63,18 +64,18 @@ namespace Fight_cons
                         Battles.MakeCurrentBattle(hero, 5);
                 }, 
                 Village),           
-            new Location(5, "Трактир",(Hero hero) =>
+            new Location(4, "Трактир",(Hero hero) =>
                 {
                     //if (s.Contains("Атронахов"))
                     //    hero.Class_name = "Атронах";
                 }, Inn),           
-            new Location(6, "Рынок",(Hero hero) =>
+            new Location(5, "Рынок",(Hero hero) =>
                 {
                     if (GameFormulas.Vero(0.01))
                         FindingPouchEvent(hero, 10, 100);
                 }, 
                 Market),
-            new Location(7, "Леса",(Hero hero) =>
+            new Location(6, "Леса",(Hero hero) =>
                 {
 
                 },
@@ -89,45 +90,38 @@ namespace Fight_cons
         /// <summary>
         /// Выбор противника из списка
         /// </summary>
-        public static Enemy Enemies(int id)
-        {
-            List<Enemy> enemies = new List<Enemy>()
-            {
-                //  Пещерные противники
-                /*0*/new Enemy("Нечто Неизведанное", phase: 0, HP_min: 5, HP_max: 15, ATT_min: 1, ATT_max: 3, SPD_min: 30, SPD_max: 40, CRIT_min: 5, CRIT_max: 10, DEF_min: 0, DEF_max: 0, M_DEF_min: 0, M_DEF_max: 0, BLK_min: 10, BLK_max: 30, max_turn_min: 2, max_turn_max: 3, strategy: 0, role: Charecter.ChaRole.Enemy),
-                /*1*/new Enemy("Нечто Бронированное", phase: 0, HP_min: 5, HP_max: 15, ATT_min: 1, ATT_max: 2, SPD_min: 30, SPD_max: 40, CRIT_min: 5, CRIT_max: 10, DEF_min: 20, DEF_max: 70, M_DEF_min: 0, M_DEF_max: 0, BLK_min: 10, BLK_max: 30, max_turn_min: 1, max_turn_max: 2, strategy: 0, role : Charecter.ChaRole.Enemy),
-                /*2*/new Enemy("Нечто Магическое", phase: 0, HP_min: 5, HP_max: 15, ATT_min: 1, ATT_max: 2, SPD_min: 30, SPD_max: 45, CRIT_min: 5, CRIT_max: 10, DEF_min: 0, DEF_max: 0, M_DEF_min: 30, M_DEF_max: 70, BLK_min: 10, BLK_max: 30, max_turn_min: 2, max_turn_max: 3, strategy: 0, role : Charecter.ChaRole.Enemy),
+        //public static Unit Enemies(int id)
+        //{
+        //    List<Unit> enemies = new List<Unit>()
+        //    {
+        //        //  Пещерные противники
+        //        /*0*/new Unit("Нечто Неизведанное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 3, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, maxTurnMin: 2, maxTurnMax: 3, role : Charecter.ChaRole.Enemy, strategy : Charecter.Strategeis.Any),
+        //        /*1*/new Unit("Нечто Бронированное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 20, defMax: 70, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, maxTurnMin: 1, maxTurnMax: 2, role : Charecter.ChaRole.Enemy,strategy: Charecter.Strategeis.Any),
+        //        /*2*/new Unit("Нечто Магическое", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 45, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 30, mDefMax: 70, blkMin: 10, blkMax: 30, maxTurnMin: 2, maxTurnMax: 3, role : Charecter.ChaRole.Enemy, strategy : Charecter.Strategeis.Any),
 
-                //  Противники в долине
-                /*3*/new Enemy("Зверь", phase: 0, HP_min: 10, HP_max: 20, ATT_min: 1, ATT_max: 5, SPD_min: 30, SPD_max: 30, CRIT_min: 1, CRIT_max: 2, DEF_min: 0, DEF_max: 0, M_DEF_min: 0, M_DEF_max: 0, BLK_min: 20, BLK_max: 40, max_turn_min: 1, max_turn_max: 2, strategy: 1, role : Charecter.ChaRole.Wild),
+        //        //  Противники в долине
+        //        /*3*/new Unit("Зверь", phase: 0, hpMin: 10, hpMax: 20, attMin: 1, attMax: 5, spdMin: 30, spdMax: 30, critMin: 1, critMax: 2, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 20, blkMax: 40, maxTurnMin: 1, maxTurnMax: 2, role : Charecter.ChaRole.Wild, strategy: Charecter.Strategeis.Agresive),
 
-                //  Противники в лесу
-                /*4*/new Enemy("Демон", phase: 0, HP_min: 15, HP_max: 30, ATT_min: 3, ATT_max: 5, SPD_min: 30, SPD_max: 30, CRIT_min: 10, CRIT_max: 15, DEF_min: 0, DEF_max: 0, M_DEF_min: 20, M_DEF_max: 30, BLK_min: 1, BLK_max: 5, max_turn_min: 2, max_turn_max: 5, strategy: 0, role : Charecter.ChaRole.Enemy),
+        //        //  Противники в лесу
+        //        /*4*/new Unit("Демон", phase: 0, hpMin: 15, hpMax: 30, attMin: 3, attMax: 5, spdMin: 30, spdMax: 30, critMin: 10, critMax: 15, defMin: 0, defMax: 0, mDefMin: 20, mDefMax: 30, blkMin: 1, blkMax: 5, maxTurnMin: 2, maxTurnMax: 5, role : Charecter.ChaRole.Enemy, strategy : Charecter.Strategeis.Any),
 
-                //  Противники в деревне
-                /*5*/new Enemy("Ворюга", phase: 0, HP_min: 10, HP_max: 15, ATT_min: 3, ATT_max: 5, SPD_min: 30, SPD_max: 30, CRIT_min: 20, CRIT_max: 30, DEF_min: 0, DEF_max: 0, M_DEF_min: 0, M_DEF_max: 0, BLK_min: 20, BLK_max: 40, max_turn_min: 4, max_turn_max: 5, strategy: 1, role : Charecter.ChaRole.Enemy),
-                //  Противники в деревне
-                /*6*/new Enemy("Ог", phase: 4, HP_min: 40, HP_max: 60, ATT_min: 1, ATT_max: 2, SPD_min: 0, SPD_max: 10, CRIT_min: 5, CRIT_max: 10, DEF_min: 0, DEF_max: 0, M_DEF_min: 0, M_DEF_max: 0, BLK_min: 0, BLK_max: 0, max_turn_min: 1, max_turn_max: 2, strategy: 1, role : Charecter.ChaRole.Enemy),
-                /*7*/new Enemy("Таотот", phase: 3, hp: 50, attack: 3, speed: 30, crit_chance: 20, defence: 10, magic_defence: 30, block: 0, max_moves: 5, no_run: true),
-                /*8*/new Enemy("Камень", phase: 0, hp: 6, attack: 0, speed: 0, crit_chance: 0, defence: 0, magic_defence: 0, block: 0, max_moves: 2, no_run: true),
-                /*9*/new Enemy("Некромант", phase: 0, hp: 20, attack: 0, speed: 20, crit_chance: 0, defence: 0, magic_defence: 30, block: 0, max_moves: 5, no_run: true, strategy: 3),
-                /*10*/new Enemy("Жертвиник", phase: 0, hp: 20, attack: 0, speed: 0, crit_chance: 0, defence: 0, magic_defence: 0, block: 0, max_moves: 2, no_run: true, strategy: 4),
-            };
+        //        //  Противники в деревне
+        //        /*5*/new Unit("Ворюга", phase: 0, hpMin: 10, hpMax: 15, attMin: 3, attMax: 5, spdMin: 30, spdMax: 30, critMin: 20, critMax: 30, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 20, blkMax: 40, maxTurnMin: 4, maxTurnMax: 5, role : Charecter.ChaRole.Enemy, strategy: Charecter.Strategeis.Agresive),
+        //        //  Противники в деревне
+        //        /*6*/new Unit("Ог", phase: 4, hpMin: 40, hpMax: 60, attMin: 1, attMax: 2, spdMin: 0, spdMax: 10, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 0, blkMax: 0, maxTurnMin: 1, maxTurnMax: 2, role : Charecter.ChaRole.Enemy, strategy: Charecter.Strategeis.Agresive),
+        //        /*7*/new Unit("Таотот", phase: 3, hp: 50, attack: 3, speed: 30, critChance: 20, defence: 10, magicDefence: 30, block: 0, maxMoves: 5, noRun: true, Charecter.ChaRole.Enemy),
+        //        /*8*/new Unit("Камень", phase: 0, hp: 6, attack: 0, speed: 0, critChance: 0, defence: 0, magicDefence: 0, block: 0, maxMoves: 2, noRun: true, Charecter.ChaRole.Enemy),
+        //        /*9*/new Unit("Некромант", phase: 0, hp: 20, attack: 0, speed: 20, critChance: 0, defence: 0, magicDefence: 30, block: 0, maxMoves: 5, noRun: true, Charecter.ChaRole.Enemy, strategy: Charecter.Strategeis.Necromancer),
+        //        /*10*/new Unit("Жертвиник", phase: 0, hp: 20, attack: 0, speed: 0, critChance: 0, defence: 0, magicDefence: 0, block: 0, maxMoves: 2, noRun: true, Charecter.ChaRole.Enemy, strategy: Charecter.Strategeis.Healer),
 
-            return enemies[id];
-        }
-        public static Ally Allies(int id)
-        {
-            List<Ally> allies = new List<Ally>()
-            {
-                //  Пещерные противники
-                /*0*/new Ally("Доброе Неизведанное", phase: 0, HP_min: 5, HP_max: 15, ATT_min: 1, ATT_max: 3, SPD_min: 30, SPD_max: 30, CRIT_min: 5, CRIT_max: 10, DEF_min: 0, DEF_max: 0, M_DEF_min: 0, M_DEF_max: 0, BLK_min: 10, BLK_max: 30, max_turn_min: 2, max_turn_max: 3, strategy: 0, role : Charecter.ChaRole.Ally),
-                /*1*/new Ally("Доброе Бронированное", phase: 0, HP_min: 5, HP_max: 15, ATT_min: 1, ATT_max: 2, SPD_min: 30, SPD_max: 30, CRIT_min: 5, CRIT_max: 10, DEF_min: 20, DEF_max: 70, M_DEF_min: 0, M_DEF_max: 0, BLK_min: 10, BLK_max: 30, max_turn_min: 1, max_turn_max: 2, strategy: 0, role : Charecter.ChaRole.Ally),
-                /*2*/new Ally("Доброе Магическое", phase: 0, HP_min: 5, HP_max: 15, ATT_min: 1, ATT_max: 2, SPD_min: 30, SPD_max: 30, CRIT_min: 5, CRIT_max: 10, DEF_min: 0, DEF_max: 0, M_DEF_min: 30, M_DEF_max: 70, BLK_min: 10, BLK_max: 30, max_turn_min: 2, max_turn_max: 3, strategy: 0, role : Charecter.ChaRole.Ally),
-            };
+        //        //  Союзники после 99
+        //        /*100*/new Unit("Доброе Неизведанное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 3, spdMin: 30, spdMax: 30, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, maxTurnMin: 2, maxTurnMax: 3, role : Charecter.ChaRole.Ally, strategy : Charecter.Strategeis.Any),
+        //        /*101*/new Unit("Доброе Бронированное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 30, critMin: 5, critMax: 10, defMin: 20, defMax: 70, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, maxTurnMin: 1, maxTurnMax: 2, role : Charecter.ChaRole.Ally, strategy : Charecter.Strategeis.Any),
+        //        /*102*/new Unit("Доброе Магическое", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 30, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 30, mDefMax: 70, blkMin: 10, blkMax: 30, maxTurnMin: 2, maxTurnMax: 3, role : Charecter.ChaRole.Ally, strategy : Charecter.Strategeis.Any),
+        //    };
 
-            return allies[id];
-        }
+        //    return enemies[id];
+        //}
 
         public static void DefualtLoad(Hero hero, Location location)
         {
@@ -180,7 +174,7 @@ namespace Fight_cons
                     break;
                 case 3:
                     if (Hero.Exit_cave)
-                        DefualtLoad(hero, Locations[(int)LocationName.Caves]);
+                        DefualtLoad(hero, Locations[(sbyte)LocationName.Vally]);
                     break;
             }
         }
@@ -188,12 +182,12 @@ namespace Fight_cons
         //  Пещеры
         public static void Caves(Hero hero)
         {
-            Console.WriteLine("\nВаши действия?\n"
+            string quo = "\nВаши действия?\n"
                             + "1) Обыскать пещеру\n"
                             + "2) Отдохнуть\n"
-                            + "3) Выйти из пещеры");
+                            + "3) Выйти из пещеры";
 
-            switch (Input.ChoisInput(hero, 1, 3))
+            switch (Input.ChoisInput(hero, 1, 3, quo))
             {
                 case 1:
                     if (GameFormulas.Vero(0.7))
@@ -212,7 +206,7 @@ namespace Fight_cons
                     }
                     break;
                 case 3:
-                    DefualtLoad(hero, Locations[(int)LocationName.Vally]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Vally]);
                     break;
             }
         }
@@ -220,12 +214,12 @@ namespace Fight_cons
         //  Леса
         public static void DeepWoods(Hero hero)
         {
-            Console.WriteLine("\nВаши действия?\n"
+            string quo = "\nВаши действия?\n"
                             + "1) Бродить\n"
                             + "2) Отдохнуть\n"
-                            + "3) Вернуться в долину");
+                            + "3) Вернуться в долину";
 
-            switch (Input.ChoisInput(hero, 1, 3))
+            switch (Input.ChoisInput(hero, 1, 3, quo))
             {
                 case 1:
                     //  Босс
@@ -252,7 +246,7 @@ namespace Fight_cons
                     }
                     break;
                 case 3:
-                    DefualtLoad(hero, Locations[(int)LocationName.Vally]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Vally]);
                     break;
             }
         }
@@ -260,16 +254,16 @@ namespace Fight_cons
         //  Долина
         public static void Vally(Hero hero)
         {
-            Console.WriteLine("\nВаши действия?\n"
+            string quo = "\nВаши действия?\n"
                             + "1) Вернуться в пещеры\n"
                             + "2) Передохнуть\n"
                             + "3) Пойти в деревню\n"
-                            + "4) Пойти в лес");
+                            + "4) Пойти в лес";
 
-            switch (Input.ChoisInput(hero, 1, 4))
+            switch (Input.ChoisInput(hero, 1, 4, quo))
             {
                 case 1:
-                    DefualtLoad(hero, Locations[(int)LocationName.Caves]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Caves]);
                     break;
                 case 2:
                     if (GameFormulas.Vero(0.8))
@@ -281,10 +275,10 @@ namespace Fight_cons
                     }
                     break;
                 case 3:
-                    DefualtLoad(hero, Locations[(int)LocationName.Neighborhood]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Neighborhood]);
                     break;
                 case 4:
-                    DefualtLoad(hero, Locations[(int)LocationName.DeepWoods]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.DeepWoods]);
                     break;
             }
         }
@@ -292,15 +286,15 @@ namespace Fight_cons
         //  Окрестности
         public static void Neighborhood(Hero hero)
         {
-            Console.WriteLine("\nВаши действия?\n"
+            string quo = "\nВаши действия?\n"
                             + "1) Войти в деревню\n"
                             + "2) Отдохнуть\n"
-                            + "3) Вернуться в долину");
+                            + "3) Вернуться в долину";
 
-            switch (Input.ChoisInput(hero, 1, 3))
+            switch (Input.ChoisInput(hero, 1, 3, quo))
             {
                 case 1:
-                    DefualtLoad(hero, Locations[(int)LocationName.Village]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
                     break;
                 case 2:
                     if (GameFormulas.Vero(0.9))
@@ -312,7 +306,7 @@ namespace Fight_cons
                     }
                     break;
                 case 3:
-                    DefualtLoad(hero, Locations[(int)LocationName.Vally]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Vally]);
                     break;
             }
         }
@@ -333,15 +327,15 @@ namespace Fight_cons
             {
                 case 1:
                     if (hero.Lvl > hero.HeroStatistic.HeroLvlKickOff)
-                        DefualtLoad(hero, Locations[(int)LocationName.Inn]);
+                        DefualtLoad(hero, Locations[(sbyte)LocationName.Inn]);
                     else
-                        DefualtLoad(hero, Locations[(int)LocationName.Village]);
+                        DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
                     break;
                 case 2:
                     Market(hero);
                     break;
                 case 3:
-                    DefualtLoad(hero, Locations[(int)LocationName.Neighborhood]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Neighborhood]);
                     break;
             }
         }
@@ -376,7 +370,7 @@ namespace Fight_cons
                         Output.TwriteLine("Бесплатно не интересует\n", 1);
                     break;
                 case 4:
-                    DefualtLoad(hero, Locations[(int)LocationName.Village]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
                     break;
             }
         }
@@ -431,7 +425,7 @@ namespace Fight_cons
                     break;
 
                 case 6:
-                    DefualtLoad(hero, Locations[(int)LocationName.Village]);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
                     break;
             }
         }
@@ -479,7 +473,7 @@ namespace Fight_cons
                 Console.ReadKey();
                 hero.drunk = 0;
                 hero.Max_drunk += 1;
-                DefualtLoad(hero, Locations[(int)LocationName.Village]);
+                DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
             }
             hero.HeroSpying.Sneak = 0;
             hero.drunk++;
@@ -492,11 +486,11 @@ namespace Fight_cons
                 MakeRest(hero);
             else
             {
-                Console.WriteLine("Выберите вид отдыха:\n" +
+                string quo = "Выберите вид отдыха:\n" +
                             "1) Обычный\n" +
-                            "2) Медитация");
+                            "2) Медитация";
 
-                switch (Input.ChoisInput(hero, 1, 2))
+                switch (Input.ChoisInput(hero, 1, 2, quo))
                 {
                     case 1:
                         MakeRest(hero);

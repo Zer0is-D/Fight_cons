@@ -11,10 +11,10 @@ namespace Fight_cons
         //  Magic_slow!!!
         public static void SlowerSpell(Charecter attacker, Charecter victim)
         {
-            int spellPower = 5;
+            sbyte spellPower = 5;
 
-            int damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
-            victim.Conditions.MaxMoves++;
+            short damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
+            victim.Conditions.Moves++;
             victim.Conditions.SlowRound = 3;
 
             Output.NameAndId(attacker, true);
@@ -39,9 +39,9 @@ namespace Fight_cons
         //  Заморозка
         public static void FrezSpell(Charecter attacker, Charecter victim)
         {
-            int spellPower = 5;
+            sbyte spellPower = 5;
 
-            int damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
+            short damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
             victim.Conditions.FrezRound = 2;
 
             Output.NameAndId(attacker, true);
@@ -58,7 +58,7 @@ namespace Fight_cons
         //  Магический щит
         public static void MagicSheeldSpell(Charecter person)
         {
-            person.Conditions.MagicDefence = 2.0;
+            person.Conditions.MagicDefence = 2.0f;
 
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", "Щит \n");
@@ -83,7 +83,7 @@ namespace Fight_cons
         {
             attacker.Turn += 1;
 
-            int damag = GameFormulas.Damage(attacker, victim, false, true);
+            short damag = GameFormulas.Damage(attacker, victim, false, true);
 
             BattleLog(attacker, victim, damag);
         }
@@ -91,7 +91,7 @@ namespace Fight_cons
         //  Отравляющая атака
         public static void Poisent_att(Charecter attacker, Charecter victim)
         {
-            int damag = GameFormulas.Damage(attacker, victim) / 2;
+            short damag = (short)(GameFormulas.Damage(attacker, victim) / 2);
 
             victim.Conditions.PoisentRound = 3;
 
@@ -110,7 +110,7 @@ namespace Fight_cons
         //  Вамперизм
         public static void Vamperism(Charecter attacker, Charecter victim)
         {
-            int damag = GameFormulas.Damage(attacker, victim) / 2;
+            short damag = (short)(GameFormulas.Damage(attacker, victim) / 2);
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkRed, "использует ", $"вампиризм ");
@@ -134,7 +134,7 @@ namespace Fight_cons
         #endregion
 
         //  Log
-        internal static void BattleLog(Charecter attacker, Charecter victim, int damag)
+        internal static void BattleLog(Charecter attacker, Charecter victim, short damag)
         {
             Output.NameAndId(attacker, true);
             Console.Write("сносит ");

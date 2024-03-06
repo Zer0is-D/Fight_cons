@@ -1,23 +1,25 @@
-﻿using System;
+﻿using Fight_cons.Противник;
+using System;
+using System.Xml.Linq;
 
 namespace Fight_cons.Основа_и_настройки
 {
     internal class GameFormulas
     {
         //  Для формул
-        private const double ArmorFine = 1.5;
-        private const int MinCritChance = 15;
-        private const int MaxCritChance = 20;
+        private const float ArmorFine = 1.5f;
+        private const sbyte MinCritChance = 15;
+        private const sbyte MaxCritChance = 20;
 
         /// <summary>
         /// Получить 1% от MAX HP
         /// </summary>
-        public static double PercentHp(Charecter person) => ((double)person.HP / (double)person.MaxHp) * 100.0;
+        public static float PercentHp(Charecter person) => ((float)person.HP / (float)person.MaxHp) * 100.0f;
 
         /// <summary>
         /// Получить n% от MAX HP
         /// </summary>
-        public static int GetCurrentPercent(double num, int percent) => (int)((double)(num / 100) * percent);
+        public static short GetCurrentPercent(float num, sbyte percent) => (short)((num / 100) * percent);
 
         /// <summary>
         /// Итоговый урон после всех проверок 
@@ -27,10 +29,10 @@ namespace Fight_cons.Основа_и_настройки
         /// <param name="throwBranch">Пробитие брони</param>
         /// <param name="parry">Парирование</param>
         /// <returns></returns>
-        public static int Damage(Charecter attacker, Charecter victim, bool throwBranch = false, bool parry = false)
+        public static short Damage(Charecter attacker, Charecter victim, bool throwBranch = false, bool parry = false)
         {
-            double crit = CheckCrit(attacker);
-            double attack;
+            float crit = CheckCrit(attacker);
+            float attack;
 
             if (!throwBranch)
                 attack = attacker.TotalAttack + crit;
@@ -41,7 +43,7 @@ namespace Fight_cons.Основа_и_настройки
                 if (CheckParry(attacker, victim))
                     victim.Conditions.RandomDebuff(attacker, victim);
 
-            int damag = CheckDefence(victim, attack);
+            short damag = CheckDefence(victim, attack);
 
             return damag;
         }
@@ -65,13 +67,13 @@ namespace Fight_cons.Основа_и_настройки
                 return false;
         }
 
-        public static int MagicDamage(Charecter attacker, Charecter victim, int spellPower)
+        public static short MagicDamage(Charecter attacker, Charecter victim, short spellPower)
         {
-            double crit = CheckCrit(attacker, true);
-            double att = spellPower + attacker.TotalArcane + crit;
+            float crit = CheckCrit(attacker, true);
+            float att = spellPower + attacker.TotalArcane + crit;
 
             //  Урон по врагу с магической защитой
-            int damag = CheckMagicDefence(victim, att);
+            short damag = CheckMagicDefence(victim, att);
 
             return damag;
         }
@@ -97,24 +99,24 @@ namespace Fight_cons.Основа_и_настройки
         }
 
         //  Проверка на защиту и блок
-        public static int CheckDefence(Charecter charecter, double att)
+        public static short CheckDefence(Charecter charecter, float att)
         {
             if (charecter.Conditions.SheeldUp)
                 att = att * (1 - charecter.TotalBlock) + (1 - charecter.TotalDefence);
             else
                 att = att * (1 - charecter.TotalDefence);
 
-            return (int) att;
+            return (short) att;
         }
 
         //  Проверка на магическую защиту
-        public static int CheckMagicDefence(Charecter enemy, double att)
+        public static short CheckMagicDefence(Charecter enemy, float att)
         {
             att = att * (1 - enemy.TotalMagicDefence);
-            return (int) att;
+            return (short) att;
         }
 
-        public static bool CheckMana(Hero hero, int cost)
+        public static bool CheckMana(Hero hero, short cost)
         {
             if (hero.MP >= cost)
             {
@@ -140,29 +142,65 @@ namespace Fight_cons.Основа_и_настройки
         }
 
         #region Формулы для юнитов
-        public static void DoScale(int lvlScale, Charecter enemy)
+        public static void DoScale(sbyte lvlScale, Charecter enemy)
         {
             Random rand = new Random();
 
             enemy.HP = ScaleMAXHP(lvlScale, enemy.HP);
             if (enemy.Wild)
-                enemy.MaxHp = ScaleMAXHP(lvlScale, enemy.HP) * rand.Next(2, 3);
+                enemy.MaxHp = (short)(ScaleMAXHP(lvlScale, enemy.HP) * rand.Next(2, 3));
             else
                 enemy.MaxHp = ScaleMAXHP(lvlScale, enemy.HP);
             enemy.Attack = ScaleATT(lvlScale, enemy.Attack);
         }
 
         //  Скейл параметров противника от уровня героя
-        public static int ScaleMAXHP(int lvlScale, int x)
+        public static short ScaleMAXHP(sbyte lvlScale, short x)
         {
-            return (int)(lvlScale * 1.5) + x;
+            return (short)((lvlScale * 1.5) + x);
         }
 
         //  Скейл параметров противника от уровня героя
-        public static int ScaleATT(int lvlScale, int x)
+        public static short ScaleATT(sbyte lvlScale, short x)
         {
-            return (int)(lvlScale * 0.5) + x;
+            return (short)((lvlScale * 0.5) + x);
+        }
+
+        public bool Equals(Unit unit1, Unit unit2)
+        {
+            return
+                unit1.Name == unit2.Name &&
+                unit1.Phase == unit2.Phase &&
+                unit1.HP == unit2.HP &&
+                unit1.Attack == unit2.Attack &&
+                unit1.Speed == unit2.Speed &&
+                unit1.Crit == unit2.Crit &&
+                unit1.Defence == unit2.Defence &&
+                unit1.MagicDefence == unit2.MagicDefence &&
+                unit1.Block == unit2.Block &&
+                unit1.Moves == unit2.Moves &&
+                unit1.CantRun == unit2.CantRun &&
+                unit1.Role == unit2.Role &&
+                unit1.Strategy == unit2.Strategy;
+        }
+
+        public int GetHashCode(Unit obj)
+        {
+            return
+                obj.Name.GetHashCode() ^
+                obj.Phase.GetHashCode() ^
+                obj.HP.GetHashCode() ^
+                obj.Attack.GetHashCode() ^
+                obj.Speed.GetHashCode() ^
+                obj.Crit.GetHashCode() ^
+                obj.Defence.GetHashCode() ^
+                obj.MagicDefence.GetHashCode() ^
+                obj.Block.GetHashCode() ^
+                obj.Moves.GetHashCode() ^
+                obj.CantRun.GetHashCode() ^
+                obj.Role.GetHashCode() ^
+                obj.Strategy.GetHashCode();
         }
         #endregion
     }
-}
+}                  

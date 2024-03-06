@@ -8,12 +8,12 @@ namespace Fight_cons
         public string Class_name = "???";
 
         //  Здоровье
-        internal new protected int MaxHp
+        internal new protected short MaxHp
         {
             get => _maxHp;
             set => _maxHp = value;
         }
-        public new int HP
+        public new short HP
         {
             get => _hp;
             set
@@ -28,8 +28,8 @@ namespace Fight_cons
         #region Левл и опыт
         internal protected int NextLvlExp = 10;
 
-        private protected int _lvl = 1;
-        internal protected int Lvl
+        private protected sbyte _lvl = 1;
+        internal protected sbyte Lvl
         {
             get => _lvl;
             set
@@ -118,17 +118,17 @@ namespace Fight_cons
         #endregion
 
         //  Конструктор героя
-        public Hero(int hp, int mp) 
+        public Hero(short hp, short mp) 
         {
             MaxHp = hp;
             HP = hp;
             MaxMp = mp;
             MP = mp;
             Attack = 1;
-            Speed = 0.2;
-            Crit = 0.05;
-            Block = 0.10;
-            MaxMoves = 3;
+            Speed = 0.2f;
+            Crit = 0.05f;
+            Block = 0.10f;
+            Moves = 2;
             IsPlayer = true;
             IsAlive = true;
             Role = ChaRole.Hero;

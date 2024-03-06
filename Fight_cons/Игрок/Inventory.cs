@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using static Fight_cons.ItemChar;
 
 namespace Fight_cons
 {
@@ -27,7 +28,7 @@ namespace Fight_cons
 
         internal static void ItemAdd(Hero hero, string name, bool MustHave = false)
         {
-            ItemChar item = new ItemChar();
+            ItemChar item = new ItemChar(name, ItemTyps.Item);
             item.Name = name;
             if (MustHave)
             {

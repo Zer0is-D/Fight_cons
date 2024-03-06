@@ -1,73 +1,74 @@
 ﻿using Fight_cons.Основа_и_настройки;
 using System;
+using static Fight_cons.ItemChar;
 
 namespace Fight_cons
 {
     public delegate void SkillsDele(Hero hero, Charecter enemy);
-    public delegate void SpellDele(Hero hero, Charecter enemy, int cost, int power);
+    public delegate void SpellDele(Hero hero, Charecter enemy, short cost, sbyte spellPower);
 
     public abstract class Charecter : Characteristics
     {
-        internal protected int Id;
-        internal protected int TotalHP
+        internal protected short Id;
+
+        #region Окончательные характеристики 
+        internal protected short TotalHP
         {
-            get => (int)(HP + HeroWeapon.HP + HeroArmor.HP + Conditions.HP + PermanentBonuses.HP);
+            get => (short)(HP + HeroWeapon.HP + HeroArmor.HP + Conditions.HP + PermanentBonuses.HP);
         }
-        internal protected int TotalMaxHP
+        internal protected short TotalMaxHP
         {
-            get => (int)(MaxHp + HeroWeapon.MaxHp + HeroArmor.MaxHp + Conditions.MaxHp + PermanentBonuses.MaxHp);
+            get => (short)(MaxHp + HeroWeapon.MaxHp + HeroArmor.MaxHp + Conditions.MaxHp + PermanentBonuses.MaxHp);
         }
-        internal protected int TotalMP
+        internal protected short TotalMP
         {
-            get => (int)(MP + HeroWeapon.MP + HeroArmor.MP + Conditions.MP + PermanentBonuses.MP);
+            get => (short)(MP + HeroWeapon.MP + HeroArmor.MP + Conditions.MP + PermanentBonuses.MP);
         }
-        internal protected int TotalMaxMP
+        internal protected short TotalMaxMP
         {
-            get => (int)(MaxMp + HeroWeapon.MaxMp + HeroArmor.MaxMp + Conditions.MaxMp + PermanentBonuses.MaxMp);
+            get => (short)(MaxMp + HeroWeapon.MaxMp + HeroArmor.MaxMp + Conditions.MaxMp + PermanentBonuses.MaxMp);
         }
-        internal protected int TotalAttack
+        internal protected short TotalAttack
         {
-            get => (int)(Attack + HeroWeapon.Attack + HeroArmor.Attack + Conditions.Attack + PermanentBonuses.Attack);
+            get => (short)(Attack + HeroWeapon.Attack + HeroArmor.Attack + Conditions.Attack + PermanentBonuses.Attack);
         }
-        internal protected int TotalArcane
+        internal protected short TotalArcane
         {
-            get => (int)(Arcane + HeroWeapon.Arcane + HeroArmor.Arcane + Conditions.Arcane + PermanentBonuses.Arcane);
+            get => (short)(Arcane + HeroWeapon.Arcane + HeroArmor.Arcane + Conditions.Arcane + PermanentBonuses.Arcane);
         }
-        internal protected double TotalSpeed 
+        internal protected float TotalSpeed
         {
             get => Speed + HeroWeapon.Speed + HeroArmor.Speed + Conditions.Speed + PermanentBonuses.Speed;
         }
-        internal protected  double TotalCrit 
+        internal protected float TotalCrit
         {
             get => Crit + HeroWeapon.Crit + HeroArmor.Crit + Conditions.Crit + PermanentBonuses.Crit;
         }
-        internal protected double TotalDefence
+        internal protected float TotalDefence
         {
             get => Defence + HeroWeapon.Defence + HeroArmor.Defence + Conditions.Defence + PermanentBonuses.Defence;
         }
-        internal protected double TotalMagicDefence
+        internal protected float TotalMagicDefence
         {
             get => MagicDefence + HeroWeapon.MagicDefence + HeroArmor.MagicDefence + Conditions.MagicDefence + PermanentBonuses.MagicDefence;
         }
-        internal protected double TotalBlock 
+        internal protected float TotalBlock
         {
             get => Block + HeroWeapon.Block + HeroArmor.Block + Conditions.Block + PermanentBonuses.Block;
         }
-        internal protected int TotalMaxMoves 
+        internal protected sbyte TotalMaxMoves
         {
-            get => MaxMoves + HeroWeapon.MaxMoves + HeroArmor.MaxMoves + Conditions.MaxMoves + PermanentBonuses.MaxMoves;
+            get => (sbyte)(Moves + HeroWeapon.Moves + HeroArmor.Moves + Conditions.Moves + PermanentBonuses.Moves);
         }
-
-        //  Характеристики 
-        //internal Characteristics characteristics = new Characteristics();
+        #endregion
 
         //  Баффы и дебаффы от состояний, перманентных бонусов и классовых бонусов
         internal Condition Conditions = new Condition();
         internal PermanentBonus PermanentBonuses = new PermanentBonus();
         internal CharecterClass ClassBonuses = new CharecterClass("No class", 0);
 
-        internal Weapon HeroWeapon = new Weapon(name: "Кулаки", attack: 1, speed: 0.2, cost: 0, crit: 0, block: 0, maxMoves: 2);
-        internal Armor HeroArmor = new Armor("Без брони", 0, 0);        
+        internal ItemChar HeroWeapon = new ItemChar(name: "Кулаки", itemType: ItemTyps.Weapon,  attack: 1, speed: 0.2f, cost: 0, crit: 0, block: 0, maxMoves: 2);
+        internal ItemChar HeroArmor = new ItemChar("Без брони", itemType: ItemTyps.Armor, 0, 0);        
 
         //  Сбежать с боя
         internal protected bool Run = false;
@@ -80,7 +81,7 @@ namespace Fight_cons
         //  Общие
         internal protected sbyte? Phase;
 
-        internal bool IsPlayer;
+        public bool IsPlayer;
         public bool IsAlive = true;
         public bool IsEnemy = false;
         public enum ChaRole
@@ -92,7 +93,7 @@ namespace Fight_cons
         }
         public ChaRole Role;
 
-        internal protected bool No_run;
+        internal protected bool CantRun;
 
         internal protected bool Wild;
 
@@ -105,7 +106,7 @@ namespace Fight_cons
             Necromancer = 3,
             Healer = 4
         }
-        public Strategeis strategeis = new Strategeis();
+        public Strategeis Strategy = new Strategeis();
         #endregion
 
         //  МЕТОДЫ

@@ -5,10 +5,11 @@ namespace Fight_cons
     public class Settings
     {
         //  Режим
-        public static bool BildVersActive = false;
+        //public static bool BildVersActive = false;
         public static bool OwnBildVersion = false;
         public static bool DelayEffects = false;
         public static bool SoundEffects = false;
+        public static bool DetiledParamValue = false;
 
         //  Настройка окна
         //public static void Console_window()
@@ -18,11 +19,11 @@ namespace Fight_cons
 
         public static void OptionWaitSkip(Hero hero)
         {
-            Console.WriteLine("Убать задержку?\n"
+            string quo = "Убать задержку?\n"
                             + "1) Да\n"
-                            + "2) Нет");
+                            + "2) Нет";
             
-            if (Input.ChoisInput(hero, 1, 2) == 2)
+            if (Input.ChoisInput(hero, 1, 2, quo) == 2)
                 DelayEffects = true;
             else
                 DelayEffects = false;

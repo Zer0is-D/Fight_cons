@@ -1,5 +1,6 @@
 ﻿using Fight_cons.Основа_и_настройки;
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace Fight_cons
@@ -7,19 +8,21 @@ namespace Fight_cons
     class ParamScaleTicket
     {
         //  дописать модуль для ореинтирования конкретных классов
-        public int
+        public short
         ATTMin = 0, ATTMax = 10,
         ARCMin = 0, ARCMax = 10,
-        DEFMin = -30, DEFMax = 50,
-        MDEFMin = -30, MDEFMax = 50,
         MAXHpMin = -20, MAXHpMax = 50,
-        MAXMp_min = -30, MAXMpMax = 50,
+        MAXMp_min = -30, MAXMpMax = 50;
+
+        public sbyte
+        DEFMin = -30, DEFMax = 50,
+        MDEFMin = -30, MDEFMax = 50,        
         SPDMin = -50, SPDMax = 50,
         CRITMin = -50, CRITMax = 50,
-        BLKMin = -20, BLKMax = 30;
-        public sbyte MaxTurnMin = -2, MaxTurnMax = 4;
+        BLKMin = -20, BLKMax = 30,
+        MaxTurnMin = -2, MaxTurnMax = 4;
 
-        protected ParamScaleTicket(int lvl)
+        protected ParamScaleTicket(sbyte lvl)
         {
             ATTMin += lvl; ATTMax += lvl;
             ARCMin += lvl; ARCMax += lvl;
@@ -33,142 +36,169 @@ namespace Fight_cons
         }
     }
 
-    class WeaponScaleTicket(int lvl) : ParamScaleTicket(lvl)
+    class WeaponScaleTicket(sbyte lvl) : ParamScaleTicket(lvl)
     {
-        public new int
+        public new short
         ATTMin = 0, ATTMax = 10,
         ARCMin = 0, ARCMax = 10,
+        MAXHpMin = -10, MAXHpMax = 10,
+        MAXMp_min = -10, MAXMpMax = 10;
+        
+        public new sbyte
         DEFMin = -10, DEFMax = 10,
         MDEFMin = -10, MDEFMax = 10,
-        MAXHpMin = -10, MAXHpMax = 10,
-        MAXMp_min = -10, MAXMpMax = 10,
         SPDMin = -20, SPDMax = 10,
         CRITMin = -20, CRITMax = 40,
-        BLKMin = -20, BLKMax = 30;
-        public new sbyte MaxTurnMin = -2, MaxTurnMax = 4;
+        BLKMin = -20, BLKMax = 30,
+        MaxTurnMin = -2, MaxTurnMax = 4;
     }
 
-    class ArmorScaleTicket(int lvl) : ParamScaleTicket(lvl)
+    class ArmorScaleTicket(sbyte lvl) : ParamScaleTicket(lvl)
     {
-        public new int
+        public new short
         ATTMin = 0, ATTMax = 2,
         ARCMin = 0, ARCMax = 2,
+        MAXHpMin = -20, MAXHpMax = 50,
+        MAXMp_min = -30, MAXMpMax = 50;
+        
+        public new sbyte
         DEFMin = -30, DEFMax = 50,
         MDEFMin = -30, MDEFMax = 50,
-        MAXHpMin = -20, MAXHpMax = 50,
-        MAXMp_min = -30, MAXMpMax = 50,
         SPDMin = -40, SPDMax = 40,
         CRITMin = -10, CRITMax = 10,
-        BLKMin = -5, BLKMax = 5;
-        public new sbyte MaxTurnMin = -2, MaxTurnMax = 4;
+        BLKMin = -5, BLKMax = 5,
+        MaxTurnMin = -2, MaxTurnMax = 4;
     }
 
     class ItemChar : Characteristics
     {
-        public int Id;
+        public byte Id;
 
-        public int Cost;
+        public enum ItemTyps
+        {
+            Item = 0,
+            Weapon = 1,
+            Armor = 2
+        }
+        public ItemTyps ItemType;
+
+        public short Cost;
 
         #region Конструторы для предметов
-        public static void ItemConsrtucter(ItemChar item, string name, int cost, int attack,
-            double defence = 0, int arcane = 0, int magDefence = 0,
-            int maxHp = 0, int maxMp = 0, double speed = 0,
-            double crit = 0, double block = 0, sbyte maxMoves = 0)
+        public ItemChar(string name, ItemTyps itemType, short cost = 0, short attack = 0,
+            float defence = 0, short arcane = 0, sbyte magDefence = 0,
+            short maxHp = 0, short maxMp = 0, float speed = 0,
+            float crit = 0, float block = 0, sbyte maxMoves = 0)
         {
-            item.Name = name;
-            item.Cost = cost;
-            item.Attack = attack;
-            item.Defence = defence;
+            Name = name;
+            ItemType = itemType;
 
-            item.Arcane = arcane;
-            item.MagicDefence = magDefence;
-            item.MaxHp = maxHp;
-            item.MaxMp = maxMp;
-            item.Speed = speed;
-            item.Crit = crit;
-            item.Block = block;
-            item.MaxMoves = maxMoves;
+            Cost = cost;
+            Attack = attack;
+            Defence = defence;
+
+            Arcane = arcane;
+            MagicDefence = magDefence;
+            MaxHp = maxHp;
+            MaxMp = maxMp;
+            Speed = speed;
+            Crit = crit;
+            Block = block;
+            Moves = maxMoves;
+
+            GetItemParamFields(this);
         }
 
-        public static void ItemConsrtucter(ItemChar item, int bonusies,
-            int ATT_min, int ATT_max, int ARC_min, int ARC_max,
-            int DEF_min, int DEF_max, int MDEF_min, int MDEF_max,
-            int MAXHp_min, int MAXHp_max, int MAXMp_min, int MAXMp_max,
-            int SPD_min, int SPD_max, int CRIT_min, int CRIT_max,
-            int BLK_min, int BLK_max, sbyte max_turn_min, sbyte max_turn_max,
-            int lvl)
+        public ItemChar(ItemTyps itemType, short bonusies,
+            short ATT_min, short ATT_max, short ARC_min, short ARC_max,
+            sbyte DEF_min, sbyte DEF_max, sbyte MDEF_min, sbyte MDEF_max,
+            short MAXHp_min, short MAXHp_max, short MAXMp_min, short MAXMp_max,
+            sbyte SPD_min, sbyte SPD_max, sbyte CRIT_min, sbyte CRIT_max,
+            sbyte BLK_min, sbyte BLK_max, sbyte max_turn_min, sbyte max_turn_max,
+            sbyte lvl)
         {
             Random rand = new Random();
+            ItemType = itemType;
 
             //  Количество бонусных параметров
-            bonusies = rand.Next(0, bonusies);            
+            bonusies = (short) rand.Next(0, bonusies);            
             int[] masOfParamNum = new int[bonusies];
 
             foreach (var m in masOfParamNum)
                 masOfParamNum[m] = rand.Next(1, 11);
 
-            if (item is Weapon weapon)
+            Name = GenerateName(this);
+
+            switch (itemType)
             {
-                weapon.Name = weapon.WeaponNames();
-                weapon.Attack = rand.Next(ATT_min, ATT_max);
+                case ItemTyps.Weapon:
+                    Attack = (short) rand.Next(ATT_min, ATT_max);
+                    break;
+                case ItemTyps.Armor:
+                    Defence = (float) (rand.Next(DEF_min, DEF_max) * 0.01);
+                    break;
             }
-            else
-            {
-                (item as Armor).Name = (item as Armor).ArmorNames();
-                item.Defence = rand.Next(DEF_min, DEF_max) * 0.01;
-            }
-            Thread.Sleep(50);
 
             foreach (var num in masOfParamNum)
             {
                 switch (num)
                 {
                     case 1:
-                        item.Arcane = rand.Next(ARC_min, ARC_max);
+                        Arcane = (short) rand.Next(ARC_min, ARC_max);
                         break;
                     case 2:
-                        item.MagicDefence = rand.Next(MDEF_min, MDEF_max) * 0.01;
+                        MagicDefence = (float) (rand.Next(MDEF_min, MDEF_max) * 0.01);
                         break;
                     case 3:
-                        item.MaxHp = rand.Next(MAXHp_min, MAXHp_max);
+                        MaxHp = (short) rand.Next(MAXHp_min, MAXHp_max);
                         break;
                     case 4:
-                        item.MaxMp = rand.Next(MAXMp_min, MAXMp_max);
+                        MaxMp = (short) rand.Next(MAXMp_min, MAXMp_max);
                         break;
                     case 5:
-                        item.Speed = rand.Next(SPD_min, SPD_max) * 0.01;
+                        Speed = (float) (rand.Next(SPD_min, SPD_max) * 0.01);
                         break;
                     case 6:
-                        item.Crit = rand.Next(CRIT_min, CRIT_max) * 0.01;
+                        Crit = (float) (rand.Next(CRIT_min, CRIT_max) * 0.01);
                         break;
                     case 7:
-                        item.Block = rand.Next(BLK_min, BLK_max) * 0.01;
+                        Block = (float) (rand.Next(BLK_min, BLK_max) * 0.01);
                         break;
                     case 8:
-                        item.MaxMoves = (sbyte)rand.Next(max_turn_min, max_turn_max);
+                        Moves = (sbyte)rand.Next(max_turn_min, max_turn_max);
                         break;
                     case 9:
-                        item.Attack += rand.Next(ATT_min, ATT_max);
+                        Attack += (short) rand.Next(ATT_min, ATT_max);
                         break;
                     case 10:
-                        item.Defence += rand.Next(DEF_min, DEF_max) * 0.01;
+                        Defence += (float) (rand.Next(DEF_min, DEF_max) * 0.01);
                         break;
                 }
                 Thread.Sleep(50);
             }
 
-            int Spd_part = (int)((item.Speed > 0) ? item.Speed * 100 : 0);
+            short Spd_part = (short) ((Speed > 0) ? Speed * 100 : 0);
 
-            if (item is Weapon weapon1)
-                weapon1.Cost = (int)item.Attack + Spd_part + (int)(item.Crit * 100) + (int)(item.Block * 100) + (lvl * 10);
-            else
-                (item as Armor).Cost = 50 + (int)(item.Defence * 1000) + (lvl * 10);
+            switch (itemType)
+            {
+                case ItemTyps.Weapon:
+                    Cost = (short)(Attack + Spd_part + (Crit * 100) + (Block * 100) + (lvl * 10));
+                    break;
+                case ItemTyps.Armor:
+                    Cost = (short)(50 + (Defence * 1000) + (lvl * 10));
+                    break;
+                case ItemTyps.Item:
+                    Cost = 50;
+                    break;
+            }
+            Thread.Sleep(50);
         }
         #endregion
 
         public static string ItemStats(ItemChar item, bool ShowName = true)
         {
             string str = "";
+
             if (ShowName)
                 str = $"{item.Name} | ";
 
@@ -199,25 +229,55 @@ namespace Fight_cons
             Comparison(item1.Speed, item2.Speed, Output.SpeedStr, true);
             Comparison(item1.Crit, item2.Crit, Output.CritStr, true);
             Comparison(item1.Block, item2.Block, Output.BlockStr, true);
-            Comparison(item1.MaxMoves, item2.MaxMoves, Output.MaxMovesStr);
+            Comparison(item1.Moves, item2.Moves, Output.MaxMovesStr);
         }
 
-
         //  Метод сравнение параметров (double)
-        public static void Comparison(double parametr_1, double parametr_2, string text_mid = "", bool isDouble = false)
+        public static void Comparison(float parametr_1, float parametr_2, string text_mid = "", bool isFloat = false)
         {
-            string space = "  ";    // 2 пробела
-            string curString = $"{parametr_2}";
+            const string space = "  ";    // 2 пробела
+            string curString = "";
+            string actualValue = "";
 
-            if (isDouble)
-                curString = $"{parametr_2 * 100}%";
-
-            if (parametr_2 > parametr_1)
-                Output.WriteColorLine(ConsoleColor.Green, "", $"{curString} {text_mid} {Output.UpSymbol} {space}", $"\t|");
-            else if (parametr_2 == parametr_1) Console.Write("");
-                //Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{curString} {text_mid} {space}", $"\t|");
+            if (isFloat)
+            {
+                if (Settings.DetiledParamValue)
+                {
+                    curString = $"{(parametr_2 - parametr_1) * 100}%";
+                    actualValue = $"{parametr_2 * 100}%";
+                }
+                else
+                    curString = $"{parametr_2 * 100}%";
+            }
             else
-                Output.WriteColorLine(ConsoleColor.Red, "", $"{curString} {text_mid} {Output.DownSymbol} {space}", $"\t|");
+            {
+                if (Settings.DetiledParamValue)
+                {
+                    curString = $"{parametr_2 - parametr_1}";
+                    actualValue = $"{parametr_2}";
+                }                    
+                else
+                    curString = $"{parametr_2}";
+            }
+
+            if (Settings.DetiledParamValue)
+            {
+                if (parametr_2 > parametr_1)
+                    Output.WriteColorLine(ConsoleColor.Green, "", $"{curString} {text_mid} ({actualValue}) {Output.UpSymbol} {space}", $"\t|");
+                else if (parametr_2 == parametr_1) Console.Write("");
+                //Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{curString} {text_mid} {space}", $"\t|");
+                else
+                    Output.WriteColorLine(ConsoleColor.Red, "", $"{curString} {text_mid} ({actualValue}) {Output.DownSymbol} {space}", $"\t|");
+            }
+            else
+            {
+                if (parametr_2 > parametr_1)
+                    Output.WriteColorLine(ConsoleColor.Green, "", $"{curString} {text_mid} {Output.UpSymbol} {space}", $"\t|");
+                else if (parametr_2 == parametr_1) Console.Write("");
+                //Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{curString} {text_mid} {space}", $"\t|");
+                else
+                    Output.WriteColorLine(ConsoleColor.Red, "", $"{curString} {text_mid} {Output.DownSymbol} {space}", $"\t|");
+            }
         }
 
         public static string Stat(int weaponStat, string statName)
@@ -242,5 +302,89 @@ namespace Fight_cons
             }
             return "";
         }
+        public string GenerateName(ItemChar item)
+        {
+            Random rand = new Random();
+
+            string[] WeaponNames =
+            {
+                //  Тяжелые оружия
+                "Большой топор",
+                "Топорище",
+                "Секира",
+                "Тяжелый арбалет",
+                "Буба",
+
+                //  Средние оружия
+                "Рапира",
+                "Меч",
+                "Копье",
+                "Катана",
+                "Топор",
+                "Арбалет",
+
+                //  Легкое оружия
+                "Нож",
+                "Клинок",
+                "Серп",
+                "Молот",
+                "Скрытый клинок",
+            };
+            // 16 - 1
+
+            string[] WeaponDop =
+            {
+                "Обычный ",
+                "Необычный ",
+                "Великолепный ",
+                "Потрясающий ",
+                "Магический ",
+            };
+            // 5 - 1
+
+            string[] ArmorNames =
+            {
+                //  Тяжелая броня
+                "Железная броня",
+                "Кожаная",
+
+                //  Средняя броня
+                "Кираса",
+                "Стальной нагрудник",
+
+                //  Легкая броня
+
+            };
+            // 4 - 1
+
+            switch (item.ItemType)
+            {
+                case ItemTyps.Weapon:
+                    return WeaponDop[rand.Next(0, WeaponDop.Length)] + WeaponNames[rand.Next(0, WeaponNames.Length)];
+                    break;
+                case ItemTyps.Armor:
+                    return ArmorNames[rand.Next(0, ArmorNames.Count())];
+                    break;
+            }
+
+            Console.WriteLine("Ошибка наименования объекта!");
+            return "NullName";
+        }
+
+        //public string Armor_stats_market(ItemChar armor_on, ItemChar armor_new, bool Show_all = false, bool Name_show = true)
+        //{
+        //    if (Name_show)
+        //        Output.WriteColorLine(ConsoleColor.DarkYellow, "", $"{Name} | ");
+
+        //    //  Сравнение брони
+        //    if (armor_new.Defence > armor_on.Defence)
+        //        Output.WriteColorLine(ConsoleColor.Green, "", $"{Defence * 100}% DEF {Output.UpSymbol} ");
+        //    else if (armor_new.Defence == armor_on.Defence)
+        //        Output.WriteColorLine(ConsoleColor.White, "", $"{Defence * 100}% DEF ");
+        //    else
+        //        Output.WriteColorLine(ConsoleColor.Red, "", $"{Defence * 100}% DEF {Output.DownSymbol} ");
+
+        //    return "";
+        //}
     }
 }

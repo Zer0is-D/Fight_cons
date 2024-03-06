@@ -11,7 +11,7 @@ namespace Fight_cons.Мир.Locations
 
     internal class Location
     {
-        public int Id;
+        public byte Id;
 
         public string Name;
 
@@ -77,7 +77,7 @@ namespace Fight_cons.Мир.Locations
         public Method LocationEvents { get; set; }
         public Method LocationChoices { get; set; }
 
-        public Location(int id, string name, Method locEvents, Method locChoices)
+        public Location(byte id, string name, Method locEvents, Method locChoices)
         {            
             Id = id;
             Name = name;
@@ -88,7 +88,7 @@ namespace Fight_cons.Мир.Locations
         /// <summary>
         /// Вызов рандомномного описания из массива описаний
         /// </summary>
-        public static string Dicscriptions(int i)
+        public static string Dicscriptions(byte i)
         {
             Random rand = new Random();
             return Discript[i][rand.Next(Discript[i].Length)];

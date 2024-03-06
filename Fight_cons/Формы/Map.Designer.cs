@@ -82,6 +82,7 @@
             this.Controls.Add(this.Cave_bt);
             this.Name = "Map";
             this.Text = "Map";
+            this.Load += new System.EventHandler(this.Map_Load);
             this.ResumeLayout(false);
 
         }

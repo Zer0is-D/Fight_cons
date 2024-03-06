@@ -1,4 +1,5 @@
 ﻿using Fight_cons.Основа_и_настройки;
+using Fight_cons.Противник;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,8 +111,6 @@ namespace Fight_cons
 
             //  Минус от эффектов
             NegativeEffectImpact(hero, unit);
-
-
         }
 
         #region Отображение боевоей информации
@@ -185,7 +184,7 @@ namespace Fight_cons
                 if (GameFormulas.CheckMana(hero, hero.SpellList[BattleChoise - 1].SpellСost))
                 {
                     var heroSpell = hero.SpellList[BattleChoise - 1];
-                    heroSpell.Spell(hero, (Enemy)unit, heroSpell.SpellСost, heroSpell.SpellPower);
+                    heroSpell.Spell(hero, (Unit)unit, heroSpell.SpellСost, heroSpell.SpellPower);
                 }
                 else
                 {
@@ -215,10 +214,12 @@ namespace Fight_cons
                     Output.WriteColorLine(ConsoleColor.DarkGray, "  ", $"{p.ID}) {p.Description} {p.CountPotion}\n");
             }
 
-            Console.Write($"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
-                      + $"X) Убежать\n");
+            string quo = $"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
+                      + $"X) Убежать\n";
+            //Console.Write($"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
+            //          + $"X) Убежать\n");
 
-            BattleChoise = Input.ChoisInput(hero, 0, (sbyte)(hero.PotionList.Count));
+            BattleChoise = Input.ChoisInput(hero, 0, (sbyte)(hero.PotionList.Count), quo);
             if (BattleChoise != 0 && hero.PotionList[BattleChoise - 1].Count > 0)
                 hero.PotionList[BattleChoise - 1].Drink(hero);
             else
@@ -306,7 +307,7 @@ namespace Fight_cons
 
                 //  Замедление
                 if (hero.Conditions.SlowRound > 0)
-                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Conditions.MaxMoves} {Output.EffMovSymbol}] ({hero.Conditions.SlowRound})\n");
+                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Conditions.Moves} {Output.EffMovSymbol}] ({hero.Conditions.SlowRound})\n");
 
                 //  Заморозка
                 if (hero.Conditions.FrezRound > 0)
