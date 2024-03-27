@@ -41,7 +41,7 @@ namespace Fight_cons.Основа_и_настройки
 
             if (parry)
                 if (CheckParry(attacker, victim))
-                    victim.Conditions.RandomDebuff(attacker, victim);
+                    victim.Condition.RandomDebuff(attacker, victim);
 
             short damag = CheckDefence(victim, attack);
 
@@ -53,7 +53,7 @@ namespace Fight_cons.Основа_и_настройки
         protected static bool CheckParry(Charecter attacker, Charecter victim)
         {
             Random rand = new Random();
-            if (victim.Conditions.AttackParry)
+            if (victim.Condition.AttackParry)
             {
                 if (victim.TotalSpeed >= rand.NextDouble())
                     return true;
@@ -101,7 +101,7 @@ namespace Fight_cons.Основа_и_настройки
         //  Проверка на защиту и блок
         public static short CheckDefence(Charecter charecter, float att)
         {
-            if (charecter.Conditions.SheeldUp)
+            if (charecter.Condition.SheeldUp)
                 att = att * (1 - charecter.TotalBlock) + (1 - charecter.TotalDefence);
             else
                 att = att * (1 - charecter.TotalDefence);
@@ -147,7 +147,7 @@ namespace Fight_cons.Основа_и_настройки
             Random rand = new Random();
 
             enemy.HP = ScaleMAXHP(lvlScale, enemy.HP);
-            if (enemy.Wild)
+            if (enemy.CharecterProfile.Wild)
                 enemy.MaxHp = (short)(ScaleMAXHP(lvlScale, enemy.HP) * rand.Next(2, 3));
             else
                 enemy.MaxHp = ScaleMAXHP(lvlScale, enemy.HP);
@@ -170,7 +170,7 @@ namespace Fight_cons.Основа_и_настройки
         {
             return
                 unit1.Name == unit2.Name &&
-                unit1.Phase == unit2.Phase &&
+                unit1.CharecterProfile.Phase == unit2.CharecterProfile.Phase &&
                 unit1.HP == unit2.HP &&
                 unit1.Attack == unit2.Attack &&
                 unit1.Speed == unit2.Speed &&
@@ -179,16 +179,16 @@ namespace Fight_cons.Основа_и_настройки
                 unit1.MagicDefence == unit2.MagicDefence &&
                 unit1.Block == unit2.Block &&
                 unit1.Moves == unit2.Moves &&
-                unit1.CantRun == unit2.CantRun &&
-                unit1.Role == unit2.Role &&
-                unit1.Strategy == unit2.Strategy;
+                unit1.CharecterProfile.TooBrave == unit2.CharecterProfile.TooBrave &&
+                unit1.CharecterProfile.Role == unit2.CharecterProfile.Role &&
+                unit1.CharecterProfile.Strategy == unit2.CharecterProfile.Strategy;
         }
 
         public int GetHashCode(Unit obj)
         {
             return
                 obj.Name.GetHashCode() ^
-                obj.Phase.GetHashCode() ^
+                obj.CharecterProfile.Phase.GetHashCode() ^
                 obj.HP.GetHashCode() ^
                 obj.Attack.GetHashCode() ^
                 obj.Speed.GetHashCode() ^
@@ -197,9 +197,9 @@ namespace Fight_cons.Основа_и_настройки
                 obj.MagicDefence.GetHashCode() ^
                 obj.Block.GetHashCode() ^
                 obj.Moves.GetHashCode() ^
-                obj.CantRun.GetHashCode() ^
-                obj.Role.GetHashCode() ^
-                obj.Strategy.GetHashCode();
+                obj.CharecterProfile.TooBrave.GetHashCode() ^
+                obj.CharecterProfile.Role.GetHashCode() ^
+                obj.CharecterProfile.Strategy.GetHashCode();
         }
         #endregion
     }

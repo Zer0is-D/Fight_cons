@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static Fight_cons.Charecter;
+using static Fight_cons.Основа_и_настройки.CharecterProfiles;
 
 namespace Fight_cons
 {
@@ -194,7 +195,7 @@ namespace Fight_cons
                         XElement xelem = new XElement($"Unit",
                             new XElement("ID", uni.Id),
                             new XElement("Name", uni.Name),
-                            new XElement("Phase", uni.Phase),
+                            new XElement("Phase", uni.CharecterProfile.Phase),
 
                             new XElement("MinHp", uni.HpMin), new XElement("MaxHp", uni.HpMax),
                             new XElement("MinAttack", uni.AttMin), new XElement("MaxAttack", uni.AttMax),
@@ -204,8 +205,8 @@ namespace Fight_cons
                             new XElement("MinMagicDefence", uni.MDefMin), new XElement("MaxMagicDefence", uni.MDefMax),
                             new XElement("MinBlock", uni.BlkMin), new XElement("MaxBlock", uni.BlkMax),
                             new XElement("MinMoves", uni.MovMin), new XElement("MaxMoves", uni.MovMax),
-                            new XElement("Role", uni.Role),
-                            new XElement("Strategeis", uni.Strategy));
+                            new XElement("Role", uni.CharecterProfile.Role),
+                            new XElement("Strategeis", uni.CharecterProfile.Strategy));
 
                         document.Root.Add(xelem);
                     }
@@ -214,7 +215,7 @@ namespace Fight_cons
                         XElement xelem = new XElement($"Unit",
                             new XElement("ID", uni.Id),
                             new XElement("Name", uni.Name),
-                            new XElement("Phase", uni.Phase),
+                            new XElement("Phase", uni.CharecterProfile.Phase),
                             new XElement("HP", uni.HpMin),
                             new XElement("Attack", uni.AttMin),
                             new XElement("Speed", uni.SpdMin),
@@ -223,9 +224,9 @@ namespace Fight_cons
                             new XElement("MagicDefence", uni.MDefMin),
                             new XElement("Block", uni.BlkMin),
                             new XElement("Moves", uni.MovMin),
-                            new XElement("CantRun", uni.CantRun),
-                            new XElement("Role", uni.Role),
-                            new XElement("Strategeis", uni.Strategy));
+                            new XElement("CantRun", uni.CharecterProfile.TooBrave),
+                            new XElement("Role", uni.CharecterProfile.Role),
+                            new XElement("Strategeis", uni.CharecterProfile.Strategy));
 
                         document.Root.Add(xelem);
                     }

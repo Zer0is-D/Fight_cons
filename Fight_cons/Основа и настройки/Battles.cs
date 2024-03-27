@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace Fight_cons
 {
@@ -70,6 +71,63 @@ namespace Fight_cons
             Battle(hero, AboutLoc.ListOfUnits);
         }
 
+        public static List<Order> AddNewUnit(Hero hero, List<Order> units, params sbyte[] unitId)
+        {
+            List<Order> newList = new List<Order>();
+
+            foreach (var enemy in unitId)
+            {
+                var u = new Order(DifrentFiles.LoudedEnemies(enemy));
+
+                if (u.charecter != null)
+                {
+                    newList.Add(u);
+                }
+                else
+                    Console.WriteLine($"ID: {enemy} нет в списках!\n");
+
+                Thread.Sleep(50);
+            }
+
+            //  Скейл параметров противника
+            foreach (var unit in newList)
+            {
+                if (unit.charecter.CharecterProfile.Role == CharecterProfiles.ChaRole.Enemy)
+                    GameFormulas.DoScale(hero.Lvl, unit.charecter);
+            }
+
+            units.AddRange(newList);
+
+            //  Запись всех участников битвы
+            UnitTurnList = BattleMemberList(hero, units);
+
+            Random rand = new Random();
+
+            foreach (var unit in UnitTurnList)
+            {
+                unit.Speed = (rand.Next(0, 100) * 0.01) + unit.charecter.TotalSpeed;
+                Thread.Sleep(100);
+            }
+
+            UnitTurnList = UnitTurnList.OrderByDescending(c => c.Speed).ToList();
+
+            //  Присвоение id юнитам, кроме героя
+            sbyte i = 1;
+            foreach (var unit in units)
+            {
+                if (!unit.charecter.CharecterProfile.IsPlayer)
+                {
+                    unit.charecter.Id = i;
+                    i++;
+                }
+            }
+
+            if (newList != null)
+                return newList;
+            else
+                return null;
+        }
+
         //  Битва
         public static void Battle(Hero hero, List<Order> units)
         {
@@ -78,7 +136,7 @@ namespace Fight_cons
             //  Скейл параметров противника
             foreach (var unit in units)
             {
-                if (unit.charecter.IsEnemy)
+                if (unit.charecter.CharecterProfile.Role == CharecterProfiles.ChaRole.Enemy)
                     GameFormulas.DoScale(hero.Lvl, unit.charecter);
             }
 
@@ -87,20 +145,20 @@ namespace Fight_cons
             Output.FightLog();
 
             //  Перечисление противников
-            ListOfNames(units);
+            ShowAttackersNames(units);
 
             //  Запись всех участников битвы
             UnitTurnList = BattleMemberList(hero, units);
 
             Sound.BATTLE_MUSIC();
 
-            while (hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Run)
+            while (hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Condition.LeavedBattle)
             {
                 Random rand = new Random();
 
                 foreach (var unit in UnitTurnList)
                 {
-                    unit.Speed = (rand.Next(1, 999) * 0.001) + unit.charecter.TotalSpeed;
+                    unit.Speed = (rand.Next(0, 100) * 0.01) + unit.charecter.TotalSpeed;
                     Thread.Sleep(100);
                 }
 
@@ -110,7 +168,7 @@ namespace Fight_cons
                 sbyte i = 1;
                 foreach (var unit in units)
                 {
-                    if (!unit.charecter.IsPlayer)
+                    if (!unit.charecter.CharecterProfile.IsPlayer)
                     {
                         unit.charecter.Id = i;
                         i++;
@@ -120,9 +178,9 @@ namespace Fight_cons
                 //  Бой
                 foreach (var cha in UnitTurnList)
                 {
-                    if (cha.charecter.IsPlayer)
+                    if (cha.charecter.CharecterProfile.IsPlayer)
                     {
-                        while (hero.Turn < hero.TotalMaxMoves & hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Run)
+                        while (hero.Turn < hero.TotalMaxMoves & hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Condition.LeavedBattle)
                             CombatSolutions.CurrentEnemy(hero, units);
                     }
                     else
@@ -131,21 +189,21 @@ namespace Fight_cons
             }
 
             //  Чистка параметров
-            hero.Conditions.Clear();
+            hero.Condition.Clear();
             hero.Turn = 0;
 
             if (hero.TotalHP <= 0)
                 hero.HeroDeath();
             else
             {
-                if (!hero.Run)
+                if (!hero.Condition.LeavedBattle)
                 {
                     Output.VictoyLog();
-                    hero.HeroStatistic.Wins++;
+                    hero.Statistic.Wins++;
                     Reward(hero, units);
                 }
             }
-            hero.Run = false;
+            hero.Condition .LeavedBattle = false;
             AboutLoc.ListOfUnits.Clear();
         }
 
@@ -156,7 +214,7 @@ namespace Fight_cons
 
             foreach (var ch in list)
             {
-                if (ch.charecter.Role != Charecter.ChaRole.Ally & ch.charecter.Role != Charecter.ChaRole.Hero & ch.charecter.IsAlive & !ch.charecter.Run)
+                if (ch.charecter.CharecterProfile.Role != CharecterProfiles.ChaRole.Ally & ch.charecter.CharecterProfile.Role != CharecterProfiles.ChaRole.Hero & ch.charecter.Condition.IsAlive & !ch.charecter.Condition.LeavedBattle)
                     return true;
             }
 
@@ -171,7 +229,7 @@ namespace Fight_cons
             foreach (var ch in UnitTurnList)
             {
                 if (ch.charecter.TotalHP <= 0)
-                    ch.charecter.IsAlive = false;
+                    ch.charecter.Condition.IsAlive = false;
             }
         }
 
@@ -193,13 +251,29 @@ namespace Fight_cons
         private static void Reward(Hero hero, List<Order> units)
         {
             Random random = new Random();
-            int money = 0;
-            int exp = 0;
+            short money = 0;
+            short exp = 0;
 
             foreach (var unit in units)
             {
-                money += random.Next(0, 5) + (int)(unit.charecter.TotalCrit * 10) + (int)(unit.charecter.TotalBlock * 10) + (int)(unit.charecter.TotalSpeed * 10);
-                exp += unit.charecter.KillExp;
+                if (unit.charecter.Condition.LeavedBattle)
+                {
+                    money += (short)((random.Next(0, 5)
+                        + (unit.charecter.TotalCrit * 10)
+                        + (unit.charecter.TotalBlock * 10)
+                        + (unit.charecter.TotalSpeed * 10)) / 2);
+
+                    exp += (short)(unit.charecter.KillExp / 2);
+                }
+                else
+                {
+                    money += (short)(random.Next(0, 5)
+                        + (unit.charecter.TotalCrit * 10)
+                        + (unit.charecter.TotalBlock * 10)
+                        + (unit.charecter.TotalSpeed * 10));
+
+                    exp += (short)unit.charecter.KillExp;
+                }
             }
 
             Output.WriteColorLine(ConsoleColor.DarkCyan, $"Вы получили ", $"{exp}{Output.ExpSymbol} ");
@@ -215,9 +289,9 @@ namespace Fight_cons
         }
 
         //  Проверка на побег
-        public static void CantRun(Hero hero, Charecter unit)
+        public static void RunFromBattle(Hero hero, Charecter unit)
         {
-            if (!unit.CantRun)
+            if (!unit.CharecterProfile.TooBrave)
             {
                 if (GameFormulas.Vero(0.5))
                 {
@@ -230,7 +304,7 @@ namespace Fight_cons
                         Output.RunLog();
                         Console.WriteLine($"Вы сбежали с потерей {(int)n} {Output.HPSymbol}\n");
                     }
-                    hero.Run = true;
+                    hero.Condition.LeavedBattle = true;
                 }
                 else
                     Output.TwriteLine("Побег не удался!\n", 1);
@@ -239,7 +313,7 @@ namespace Fight_cons
                 Output.TwriteLine("Вы не можете убежать\n", 1);
         }
 
-        private static void ListOfNames(List<Order> units)
+        private static void ShowAttackersNames(List<Order> units)
         {
             bool FirstUnit = true;
 
@@ -247,7 +321,7 @@ namespace Fight_cons
             {
                 if (units.Count() == 1)
                 {
-                    Output.WriteColorLine(Output.unitNameColor(unit.charecter.Role), "На вас нападает ", $"{unit.charecter.Name} ");
+                    Output.WriteColorLine(Output.unitNameColor(unit.charecter.CharecterProfile.Role), "На вас нападает ", $"{unit.charecter.Name} ");
                     Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.charecter.HP}", $" {Output.HPSymbol}]\n");
                     break;
                 }
@@ -277,6 +351,8 @@ namespace Fight_cons
         public Charecter? charecter;
 
         public double Speed;
+
+        public byte Round;
         public Order(Charecter cha, double speed = 0)
         {
             charecter = cha;

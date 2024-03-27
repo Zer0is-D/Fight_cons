@@ -1,4 +1,5 @@
 ﻿using Fight_cons.Основа_и_настройки;
+using Fight_cons.Противник;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,31 +15,69 @@ namespace Fight_cons
 
             foreach (var cha in units)
             {
-                switch (person.Role)
+                switch (person.CharecterProfile.Role)
                 {
-                    case Charecter.ChaRole.Wild:
-                        if (cha.charecter.Id != person.Id & cha.charecter.IsAlive & !cha.charecter.Run)
+                    case CharecterProfiles.ChaRole.Wild:
+                        if (cha.charecter.Id != person.Id & cha.charecter.Condition.IsAlive & !cha.charecter.Condition.LeavedBattle)
                             MyEnemies.Add(cha.charecter);
                         break;
 
-                    case Charecter.ChaRole.Enemy:
-                        if (!cha.charecter.IsEnemy & cha.charecter.Id != person.Id & cha.charecter.IsAlive & !cha.charecter.Run)
+                    case CharecterProfiles.ChaRole.Enemy:
+                        if (cha.charecter.CharecterProfile.Role != CharecterProfiles.ChaRole.Enemy & cha.charecter.Id != person.Id & cha.charecter.Condition.IsAlive & !cha.charecter.Condition.LeavedBattle)
                             MyEnemies.Add(cha.charecter);
                         break;
 
-                    case Charecter.ChaRole.Ally:
-                        if (cha.charecter.IsEnemy & cha.charecter.Id != person.Id & cha.charecter.IsAlive & !cha.charecter.Run)
+                    case CharecterProfiles.ChaRole.Ally:
+                        if (cha.charecter.CharecterProfile.Role == CharecterProfiles.ChaRole.Enemy & cha.charecter.Id != person.Id & cha.charecter.Condition.IsAlive & !cha.charecter.Condition.LeavedBattle)
                             MyEnemies.Add(cha.charecter);
                         break;
                 }                    
             }
-            if (person.Role != Charecter.ChaRole.Ally)
+            if (person.CharecterProfile.Role != CharecterProfiles.ChaRole.Ally)
                 MyEnemies.Add(hero);
 
             if (MyEnemies.Count() == 0)
                 return null;
 
             return MyEnemies[rand.Next(0, MyEnemies.Count)];
+        }
+
+        public static void UnitAction(Charecter unit, Hero hero, List<Order> units)
+        {
+            switch (unit.CharecterProfile.Strategy)
+            {
+                //  Любая базовая стратегия поведения
+                case CharecterProfiles.Strategeis.Any:
+                    if (GameFormulas.Vero(0.5))
+                        StrgATC(unit, hero, units);
+                    else
+                        StrgMAG(unit, hero, units);
+                    break;
+
+                //  Атакующй стратегия
+                case CharecterProfiles.Strategeis.Agresive:
+                    StrgATC(unit, hero, units);
+                    break;
+
+                //  Стратегия волшебника
+                case CharecterProfiles.Strategeis.Mage:
+                    StrgMAG(unit, hero, units);
+                    break;
+
+                //  Стратегия некроманта
+                case CharecterProfiles.Strategeis.Necromancer:
+                    StrgNECRO(unit, hero, units);
+                    break;
+
+                //  Стратегия хилера
+                case CharecterProfiles.Strategeis.BeastMaster:
+                    StrgBeastMaster(unit, hero, units);
+                    break;
+
+                default:
+                    StrgATC(unit, hero, units);
+                    break;
+            }
         }
 
         public static void StrgATC(Charecter attacker, Hero hero, List<Order> units)
@@ -66,17 +105,17 @@ namespace Fight_cons
                 }
                 if (WhoToBeat(attacker, hero, units) != null)
                 {
-                    if (!hero.Conditions.AttackParry)
+                    if (!hero.Condition.AttackParry)
                     {
                         UnitSkills.EnemyHits(attacker, WhoToBeat(attacker, hero, units));
                         break;
                     }
                     //  Отравляющая атака                
-                    if (hero.Conditions.PoisentRound == 0)
+                    if (hero.Condition.PoisentRound == 0)
                     {
                         if (GameFormulas.Vero(0.5))
                         {
-                            UnitSkills.Poisent_att(attacker, WhoToBeat(attacker, hero, units));
+                            UnitSkills.PoisentAtt(attacker, WhoToBeat(attacker, hero, units));
                             break;
                         }
                     }
@@ -120,7 +159,7 @@ namespace Fight_cons
                         }
 
                         //  Заклинание замедления
-                        if (hero.Conditions.Moves < 3)
+                        if (hero.Condition.Moves < 3)
                         {
                             if (GameFormulas.Vero(0.7))
                             {
@@ -172,11 +211,11 @@ namespace Fight_cons
                     //  Заклинания
                     if (GameFormulas.Vero(0.9))
                     {
-                        if (GameFormulas.Vero(0.8) & units.Any(e => e.charecter.IsAlive == false))
+                        if (GameFormulas.Vero(0.8) & units.Any(e => e.charecter.Condition.IsAlive == false))
                         {
                             foreach (var en in units)
                             {
-                                if (en.charecter.IsAlive == false)
+                                if (en.charecter.Condition.IsAlive == false)
                                 {
                                     UnitSkills.RevievSpell(attacker, en.charecter);
                                     break;
@@ -187,18 +226,59 @@ namespace Fight_cons
                         //  Заклинание вампиризм
                         else if (GameFormulas.Vero(0.5))
                         {
-                            UnitSkills.Vamperism(WhoToBeat(attacker, hero, units), attacker);
+                            UnitSkills.Vamperism(attacker, WhoToBeat(attacker, hero, units));
                             break;
                         }
                     }
                     else if (GameFormulas.Vero(0.3))
                     {
-                        UnitSkills.EnemyHits(WhoToBeat(attacker, hero, units), attacker);
+                        UnitSkills.EnemyHits(attacker, WhoToBeat(attacker, hero, units));
                         break;
                     }
                 }               
                 else
                 {
+                    UnitSkills.HoldTheSheeld(attacker);
+                    break;
+                }
+            }
+            attacker.Turn = 0;
+        }
+
+        public static void StrgBeastMaster(Charecter attacker, Hero hero, List<Order> units)
+        {
+            while (attacker.Turn < attacker.TotalMaxMoves)
+            {
+                //  Если здоровье меньше 10-20% то сбегаем
+                if (NeedToRun(attacker, min1: 10, min2: 20))
+                    break;
+
+                //  Условья
+                //  Если здоровье меньше 30% (атака 60% / оборона 40%)
+                if (GameFormulas.PercentHp(attacker) < 30)
+                {
+                    if (GameFormulas.Vero(0.4))
+                    {
+                        UnitSkills.SpawnSpell(attacker, hero, units);
+                        break;
+                    }
+                    else if(GameFormulas.Vero(0.6))
+                    {
+                        UnitSkills.EnemyHits(attacker, WhoToBeat(attacker, hero, units));
+                        break;
+                    }
+                }
+                if (WhoToBeat(attacker, hero, units) != null)
+                {
+                    if (!hero.Condition.AttackParry)
+                    {
+                        UnitSkills.EnemyHits(attacker, WhoToBeat(attacker, hero, units));
+                        break;
+                    }
+                }
+                else
+                {
+                    UnitSkills.SpawnSpell(attacker, hero, units);//////////////////////////////////////////////////////////
                     UnitSkills.HoldTheSheeld(attacker);
                     break;
                 }
@@ -217,8 +297,8 @@ namespace Fight_cons
                 {
                     if (GameFormulas.Vero(0.8))
                     {
-                        Output.WriteColorLine(Output.unitNameColor(person.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
-                        person.Run = true;
+                        Output.WriteColorLine(Output.unitNameColor(person.CharecterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
+                        person.Condition.LeavedBattle = true;
                         return true;
                     }
                 }
@@ -229,8 +309,8 @@ namespace Fight_cons
                 {
                     if (GameFormulas.Vero(0.8))
                     {
-                        Output.WriteColorLine(Output.unitNameColor(person.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
-                        person.Run = true;
+                        Output.WriteColorLine(Output.unitNameColor(person.CharecterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
+                        person.Condition.LeavedBattle = true;
                         return true;
                     }
                 }

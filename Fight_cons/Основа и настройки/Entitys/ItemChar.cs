@@ -216,7 +216,7 @@ namespace Fight_cons
             return str;
         }
 
-        public static void ItemStats(ItemChar item1, ItemChar item2, bool next = false)
+        public static void ItemStats(ItemChar item1, ItemChar item2)
         {
             //if (next) Console.WriteLine();
             Comparison(item1.Attack, item2.Attack, Output.AttackStr);

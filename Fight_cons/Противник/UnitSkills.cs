@@ -1,11 +1,12 @@
 ﻿using Fight_cons.Основа_и_настройки;
 using System;
+using System.Collections.Generic;
 
 namespace Fight_cons
 {
     public class UnitSkills
     {
-        public SkillsDele Unit_skill { get; set; }
+        public SkillsDele UnitSkill { get; set; }
 
         #region Магия
         //  Magic_slow!!!
@@ -14,8 +15,8 @@ namespace Fight_cons
             sbyte spellPower = 5;
 
             short damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
-            victim.Conditions.Moves++;
-            victim.Conditions.SlowRound = 3;
+            victim.Condition.Moves++;
+            victim.Condition.SlowRound = 3;
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.Blue, "", $"замедляет ");
@@ -25,6 +26,7 @@ namespace Fight_cons
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPSymbol}\n");
 
             victim.HP -= damag;
+            attacker.Statistic.Spells++;
             attacker.Turn += 2;
         }
 
@@ -33,6 +35,7 @@ namespace Fight_cons
         {
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkYellow, "", $"Ускоряет ", "себя!\n");
+            person.Statistic.Spells++;
             person.Turn += 2;
         }
 
@@ -42,37 +45,62 @@ namespace Fight_cons
             sbyte spellPower = 5;
 
             short damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
-            victim.Conditions.FrezRound = 2;
+            victim.Condition.FrezRound = 2;
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", $"Замораживает ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Yellow, $"на {victim.Conditions.FrezRound} хода и сносит ", $"{damag} ", "урона! У ");
+            Output.WriteColorLine(ConsoleColor.Yellow, $"на {victim.Condition.FrezRound} хода и сносит ", $"{damag} ", "урона! У ");
             Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPSymbol}\n");
 
             victim.HP -= damag;
+            attacker.Statistic.Spells++;
             attacker.Turn += 2;
         }
 
         //  Магический щит
         public static void MagicSheeldSpell(Charecter person)
         {
-            person.Conditions.MagicDefence = 2.0f;
+            person.Condition.MagicDefence = 2.0f;
 
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", "Щит \n");
+            person.Statistic.Spells++;
             person.Turn += 2;
         }
 
         public static void RevievSpell(Charecter reviever, Charecter riser)
         {
             Output.NameAndId(reviever, true);
-            Output.WriteColorLine(ConsoleColor.DarkYellow, "воскрешает ", $"{riser.Name}", $"!\n");
-            riser.HP = GameFormulas.GetCurrentPercent(riser.MaxHp, 10);
-            riser.IsAlive = true;
+            Output.WriteColorLine(ConsoleColor.DarkBlue, "", "воскрешает ");
+            Output.NameAndId(riser);
+            Console.WriteLine();
 
+            riser.HP = GameFormulas.GetCurrentPercent(riser.MaxHp, 10);
+            riser.Condition.IsAlive = true;
+            riser.CharecterProfile.TooBrave = false;
+
+            reviever.Statistic.Spells++;
             reviever.Turn += 4;
+        }
+
+        public static void SpawnSpell(Charecter person, Hero hero, List<Order> units)
+        {
+            Output.NameAndId(person, true);
+            Output.WriteColorLine(ConsoleColor.DarkBlue, "", "призывает ");
+            var NewOne = Battles.AddNewUnit(hero, units, 3, 3, 3);
+
+            foreach (var o in NewOne)
+            {
+                Output.NameAndId(o.charecter);
+                Console.Write(", ");
+
+            }
+            Console.WriteLine();
+
+            person.Statistic.Spells++;
+            person.Turn += 4;
         }
 
         #endregion
@@ -84,16 +112,17 @@ namespace Fight_cons
             attacker.Turn += 1;
 
             short damag = GameFormulas.Damage(attacker, victim, false, true);
+            attacker.Statistic.Attacks++;
 
             BattleLog(attacker, victim, damag);
         }
 
         //  Отравляющая атака
-        public static void Poisent_att(Charecter attacker, Charecter victim)
+        public static void PoisentAtt(Charecter attacker, Charecter victim)
         {
             short damag = (short)(GameFormulas.Damage(attacker, victim) / 2);
 
-            victim.Conditions.PoisentRound = 3;
+            victim.Condition.PoisentRound = 3;
 
             Output.NameAndId(attacker, true);
             Console.Write("накладывает на ");
@@ -104,6 +133,7 @@ namespace Fight_cons
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPSymbol}\n");
 
             victim.HP -= damag;
+            attacker.Statistic.Attacks++;
             attacker.Turn += 1;
         }
 
@@ -120,13 +150,14 @@ namespace Fight_cons
 
             attacker.HP += damag;
             victim.HP -= damag;
+            attacker.Statistic.Attacks++;
             attacker.Turn += 1;
         }
 
         //  Defence!!!
         public static void HoldTheSheeld(Charecter person)
         {
-            person.Conditions.SheeldUp = true;
+            person.Condition.SheeldUp = true;
             Output.NameAndId(person, true);
             Console.Write("держит оборону\n");
             person.Turn += 5;

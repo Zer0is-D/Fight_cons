@@ -36,23 +36,23 @@ namespace Fight_cons
                     Battles.MakeCurrentBattle(hero, 7);
 
                     //  Чистка параметров
-                    hero.Conditions.Clear();
+                    hero.Condition.Clear();
                     hero.Turn = 0;
 
                     if (hero.TotalHP <= 0)
                         hero.HeroDeath();
                     else
                     {
-                        if (!hero.Run)
+                        if (!hero.Condition.LeavedBattle)
                         {
                             hero.HeroQuests.Que[0] = 2;
                             hero.HeroQuests.MainQ(hero);
 
                             Output.VictoyLog();
-                            hero.HeroStatistic.Wins++;
+                            hero.Statistic.Wins++;
                         }
                     }
-                    hero.Run = false;
+                    hero.Condition.LeavedBattle = false;
                     AboutLoc.ListOfUnits.Clear();
                     break;
 
@@ -109,13 +109,13 @@ namespace Fight_cons
                         ItemChar Q_Leva_swored = new ItemChar(name: "Меч 'Бегемота Левы'", itemType: ItemTyps.Weapon, cost: 300, attack: 11, speed: 0.2f, crit: 0.2f, block: 0.2f, maxMoves: 1);
 
                         Output.WriteColorLine(ConsoleColor.White, $"\n", $"{Q_Leva_swored.Name} ", "| ");
-                        ItemStats(hero.HeroWeapon, Q_Leva_swored);
-                        Comparison(hero.HeroWeapon.Attack, Q_Leva_swored.Attack, text_mid: "ATT");
-                        Comparison(hero.HeroWeapon.Speed, Q_Leva_swored.Speed, text_mid: "SPD", true);
-                        Comparison(hero.HeroWeapon.Crit, Q_Leva_swored.Crit, text_mid: "CRT", true);
-                        Comparison(hero.HeroWeapon.Block, Q_Leva_swored.Block, text_mid: "BLK", true);
+                        ItemStats(hero.CharecterWeapon, Q_Leva_swored);
+                        Comparison(hero.CharecterWeapon.Attack, Q_Leva_swored.Attack, text_mid: "ATT");
+                        Comparison(hero.CharecterWeapon.Speed, Q_Leva_swored.Speed, text_mid: "SPD", true);
+                        Comparison(hero.CharecterWeapon.Crit, Q_Leva_swored.Crit, text_mid: "CRT", true);
+                        Comparison(hero.CharecterWeapon.Block, Q_Leva_swored.Block, text_mid: "BLK", true);
                         if (Q_Leva_swored.Moves >= 1)
-                            Comparison(hero.HeroWeapon.Moves, Q_Leva_swored.Moves, text_mid: "MOV");
+                            Comparison(hero.CharecterWeapon.Moves, Q_Leva_swored.Moves, text_mid: "MOV");
                         else
                             Console.WriteLine();
 
@@ -128,14 +128,14 @@ namespace Fight_cons
                         switch (Input.ChoisInput(hero, 1, 2))
                         {
                             case 1:
-                                hero.HeroWeapon = Q_Leva_swored;
+                                hero.CharecterWeapon = Q_Leva_swored;
                                 Sound.Voice_Leva("Будь аккуратен с ним!\n", 1);
                                 break;
                             case 2:
                                 Sound.Voice_Leva("В таком случаи секрет в том...", 1);
                                 Sound.Voice_Leva("... чтобы качать только здоровья, ну и немного атаку...\n", 1);
-                                hero.PermanentBonuses.MaxHp += 3;
-                                hero.PermanentBonuses.Attack += 1;
+                                hero.PermanentBonus.MaxHp += 3;
+                                hero.PermanentBonus.Attack += 1;
                                 break;
                         }
                         hero.HeroQuests.Que[1] = 4;
@@ -157,10 +157,8 @@ namespace Fight_cons
             switch (Input.ChoisInput(hero, 1, 6))
             {
                 case 1:
-                    if (hero.Money >= Output.QStatueCost)
+                    if (Output.Spent(hero.Money, Output.QStatueCost))
                     {
-                        Output.Spent(hero, Output.QStatueCost);
-
                         Inventory.ItemAdd(hero, "Статуэтка", true);
                         Output.TwriteLine("\nСпасибо за покупку!", 1);
                         hero.HeroQuests.Que[1] = 3;
@@ -178,9 +176,9 @@ namespace Fight_cons
                     break;
 
                 case 4:
-                    if (hero.Money >= Output.PotionHPCost)
+                    if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья"))
                     {
-                        Output.Spent(hero, Output.PotionHPCost, "Зелье здоровья");
+                        
                         hero.PotionList[0].Count += 1;
                     }
                     else
@@ -188,13 +186,8 @@ namespace Fight_cons
                     break;
 
                 case 5:
-                    if (hero.Money >= Output.PotionMPCost)
-                    {
-                        Output.Spent(hero, Output.PotionMPCost, "Зелье маны");
+                    if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
                         hero.PotionList[1].Count += 1;
-                    }
-                    else
-                        Output.TwriteLine("\nВы нищеброд! Проваливайте!\n", 1);
                     break;
 
                 case 6:
@@ -231,11 +224,11 @@ namespace Fight_cons
                 switch (Input.ChoisInput(hero, 1, 2))
                 {
                     case 1:
-                        hero.HeroStatistic.know_name = true;
+                        hero.Statistic.knowYourName = true;
                         break;
                     case 2:
                         hero.Name = "Камень";
-                        hero.HeroStatistic.know_name = true;
+                        hero.Statistic.knowYourName = true;
                         break;
                 }
                 Output.TwriteLine("- Вы его извините, он совсем неугомонный. С ним я даже с работой не успеваю.", 10);

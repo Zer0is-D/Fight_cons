@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading;
 using static Fight_cons.Charecter;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Serialization;
+using static Fight_cons.Основа_и_настройки.CharecterProfiles;
 
 namespace Fight_cons
 {
@@ -73,9 +76,15 @@ namespace Fight_cons
         #endregion
 
         #region Цены (общие)
+        public static sbyte BeerCost = 5;
+
         public static sbyte PotionHPCost = 20;
         public static sbyte PotionMPCost = 30;
         public static sbyte QStatueCost = 30;
+
+        public static sbyte ShowNewItemsCost = 10;
+
+        public static sbyte VisionSkillCost = 50;
         #endregion
 
         #region Логи
@@ -148,7 +157,7 @@ namespace Fight_cons
         }
         public static void WriteColorName(string NextL, Charecter charecter, string str = null)
         {
-            Console.ForegroundColor = unitNameColor(charecter.Role);
+            Console.ForegroundColor = unitNameColor(charecter.CharecterProfile.Role);
             Console.Write(NextL+charecter.Name);
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(str);
@@ -196,19 +205,39 @@ namespace Fight_cons
         #endregion
 
         #region Уведомления
-        public static void Spent(Hero hero, int cost = 0, string itemName = "", bool Find = false)
+        public static void Spent(string itemName, bool Find = false)
         {
             if (Find)
                 WriteColorLine(ConsoleColor.Green, "[Вы нашли ", $"{itemName}", "!]\n\n");
-            if (cost > 0)
-            {
-                WriteColorLine(ConsoleColor.Yellow, "\n[Вы потратили -", $"{cost}{MoneySymbol}", "!]\n");
-                hero.Money -= cost;
-            }
             if (itemName.Length > 1 && !Find)
                 WriteColorLine(ConsoleColor.Green, "[Вы получили ", $"{itemName}", "!]\n");
 
             Thread.Sleep(1000);
+        }
+
+        public static bool Spent(int money, int cost = 0, string itemName = "", string NoMoneyMes = "")
+        {
+            if (money >= cost)
+            {
+                WriteColorLine(ConsoleColor.Yellow, "\n[Вы потратили -", $"{cost}{MoneySymbol}", "!]\n");
+                money -= cost;
+
+                if (itemName.Length >= 1)
+                    WriteColorLine(ConsoleColor.Green, "[Вы получили ", $"{itemName}", "!]\n");
+
+                Thread.Sleep(1000);
+                return true;
+            }
+            else
+            {
+                if (NoMoneyMes.Length != 0)
+                    Console.WriteLine(NoMoneyMes);
+                else
+                    Console.WriteLine("Недостаточно средств");
+
+                Thread.Sleep(1000);
+                return false;
+            }           
         }
 
         public static void StartQuest(string name)
@@ -221,25 +250,47 @@ namespace Fight_cons
             if (NextLine)
                 Console.WriteLine();
 
-            if (!charecter.IsPlayer)
+            if (!charecter.CharecterProfile.IsPlayer)
                 Console.Write($"[{charecter.Id}] ");
-            else if (!charecter.IsPlayer & !NextLine)
+            else if (!charecter.CharecterProfile.IsPlayer & !NextLine)
                 Console.Write($"[{charecter.Id}] ");
 
 
             WriteColorName("", charecter, " ");
         }
+
+        public static void PayMoneyLine(string message, sbyte value, int money)
+        {
+            if (money >= value)
+                WriteColorLine(ConsoleColor.Yellow, $"{message} (", $"{value}{MoneySymbol}", ")\n");
+            else
+                WriteColorLine(ConsoleColor.DarkGray, "", $"{message} (вам нехватает {value - money}{MoneySymbol})", "\n");
+        }
         #endregion       
 
         //  Определение цвета юнита
-        public static ConsoleColor unitHPColor(bool isEnemy)
+        public static ConsoleColor unitHPColor(ChaRole role)
         {
             ConsoleColor UnitHPColor;
 
-            if (isEnemy)
-                UnitHPColor = ConsoleColor.DarkRed;
-            else
-                UnitHPColor = ConsoleColor.Green;
+            switch (role)
+            {
+                case ChaRole.Enemy:
+                    UnitHPColor = ConsoleColor.DarkRed;
+                    break;
+
+                case ChaRole.Wild:
+                    UnitHPColor = ConsoleColor.DarkRed;
+                    break;
+
+                case ChaRole.Ally: 
+                    UnitHPColor = ConsoleColor.Green; 
+                    break;
+
+                default:
+                    UnitHPColor = ConsoleColor.Green;
+                    break;
+            }
 
             return UnitHPColor;
         }

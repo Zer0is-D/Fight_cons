@@ -20,8 +20,8 @@ namespace Fight_cons
                             + $"{Output.SpeedStr}: {TotalSpeed * 100}%\t{Output.CritStr}: {TotalCrit * 100}%\n"
                             + $"{Output.BlockStr}: {TotalBlock * 100}%\n");
             Output.WriteColorLine(ConsoleColor.Yellow, $"Money: {Money}", $"{Output.MoneySymbol}\n");
-            Output.WriteColorLine(ConsoleColor.Cyan, "Экиперовано оружие:\n", $"{HeroWeapon.Name} ", $"| {ItemChar.ItemStats(HeroWeapon, false)}");
-            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкиперована броня:\n", $"{HeroArmor.Name} ", $"| {ItemChar.ItemStats(HeroArmor, false)}\n");
+            Output.WriteColorLine(ConsoleColor.Cyan, "Экиперовано оружие:\n", $"{CharecterWeapon.Name} ", $"| {ItemChar.ItemStats(CharecterWeapon, false)}");
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкиперована броня:\n", $"{CharecterArmor.Name} ", $"| {ItemChar.ItemStats(CharecterArmor, false)}\n");
         }
 
         //  Начало начал
@@ -35,7 +35,7 @@ namespace Fight_cons
             Output.TwriteLine("Ощущая внутри некую ответственность со странным желанием выполнить поручение\n"
                       + "вы решаетесь открыть глаза, но тьма не дает вам что-либо увидеть...\n", 10);
 
-            CharecterClass.GiveHeroClass(hero);
+            CharecterClases.GiveHeroClass(hero);
             GiveHeroWeapon(hero);
 
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
@@ -60,19 +60,19 @@ namespace Fight_cons
             switch (Input.ChoisInput(hero, 0, 4, quo))
             {
                 case 1:
-                    hero.HeroWeapon = Sword_N_sheeld;
+                    hero.CharecterWeapon = Sword_N_sheeld;
                     break;
 
                 case 2:
-                    hero.HeroWeapon = Twohand_sword;
+                    hero.CharecterWeapon = Twohand_sword;
                     break;
 
                 case 3:
-                    hero.HeroWeapon = Two_knifes;
+                    hero.CharecterWeapon = Two_knifes;
                     break;
 
                 case 4:
-                    hero.HeroWeapon = Bow;
+                    hero.CharecterWeapon = Bow;
                     break;
             }
         }

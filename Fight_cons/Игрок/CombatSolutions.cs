@@ -10,7 +10,8 @@ namespace Fight_cons
     class CombatSolutions
     {
         //  Боевые решения
-        private static int BattleChoise;
+        private static sbyte BattleChoise;
+        private static bool QuickCommandDone = false;
 
         public static void CurrentEnemy(Hero hero, List<Order> units)
         {
@@ -22,13 +23,13 @@ namespace Fight_cons
             {
                 Console.WriteLine("\nВыберите противника");
 
-                LoadListOfUnits(units, hero.EnemyAbout);
+                LoadListOfUnits(units, hero.CharecterProfile.EnemyAbout);
 
                 //  Выбор юнита из списка
                 var ch = Input.ChoisInput(0, (sbyte)units.Count());
                 foreach (var enemy in units)
                 {
-                    if (enemy.charecter.Id == ch & enemy.charecter.TotalHP > 0 & !enemy.charecter.Run)
+                    if (enemy.charecter.Id == ch & enemy.charecter.TotalHP > 0 & !enemy.charecter.Condition.LeavedBattle)
                     {
                         Console.WriteLine();
                         FightChoice(hero, enemy.charecter, units);
@@ -49,7 +50,7 @@ namespace Fight_cons
             // Выбор боевых действий
             Console.Write("Ваши действия?\n");
 
-            if (hero.EnemyAbout)
+            if (hero.CharecterProfile.EnemyAbout)
                 Console.Write("0) Узнать о противнике\n");
 
             Console.Write("1) Нападение\n"
@@ -65,45 +66,48 @@ namespace Fight_cons
                 Console.Write($"5) Убежать\n");
 
             if (units != null)
-                BattleChoise = Input.ChoisInput(0, 6);
+                BattleChoise = BattleChoisInput(0, 6, hero, unit, units);
             else
-                BattleChoise = Input.ChoisInput(0, 5);
+                BattleChoise = BattleChoisInput(0, 5, hero, unit, units);
 
-            switch (BattleChoise)
+            if (!QuickCommandDone)
             {
-                case 0:
-                    if (hero.EnemyAbout)
-                        InformationAboutUnit(hero, unit);
-                    else
-                        FightChoice(hero, unit, units);
-                    break;
+                switch (BattleChoise)
+                {
+                    case 0:
+                        if (hero.CharecterProfile.EnemyAbout)
+                            InformationAboutUnit(hero, unit);
+                        else
+                            FightChoice(hero, unit, units);
+                        break;
 
-                case 1:
-                    AttackList(hero, unit, units);
-                    break;
+                    case 1:
+                        AttackList(hero, unit, units);
+                        break;
 
-                case 2:
-                    SpellList(hero, unit, units);
-                    break;
+                    case 2:
+                        SpellList(hero, unit, units);
+                        break;
 
-                case 3:
-                    PotionList(hero, unit, units);
-                    break;
+                    case 3:
+                        PotionList(hero, unit, units);
+                        break;
 
-                case 4:
-                    hero.Conditions.SheeldUp = true;
-                    hero.Turn = hero.TotalMaxMoves;
-                    break;
+                    case 4:
+                        hero.Condition.SheeldUp = true;
+                        hero.Turn = hero.TotalMaxMoves;
+                        break;
 
-                case 5:
-                    if (units != null)
-                        CurrentEnemy(hero, units);
-                    else
-                        Battles.CantRun(hero, unit);
-                    break;
-                case 6:
-                    Battles.CantRun(hero, unit);
-                    break;
+                    case 5:
+                        if (units != null)
+                            CurrentEnemy(hero, units);
+                        else
+                            Battles.RunFromBattle(hero, unit);
+                        break;
+                    case 6:
+                        Battles.RunFromBattle(hero, unit);
+                        break;
+                }
             }
 
             //  Метод учета ходов и обнуление состояний
@@ -113,20 +117,84 @@ namespace Fight_cons
             NegativeEffectImpact(hero, unit);
         }
 
+        public static sbyte BattleChoisInput(sbyte b1, sbyte b2, Hero hero, Charecter unit, List<Order> units = null)
+        {
+            do
+            {
+                BattleChoise = Input.SbyteInput();
+                if (QuickBattleInput(hero, unit, units))
+                    break;
+
+            }
+            while (!(BattleChoise > b1 - 1 && BattleChoise < b2 + 1));
+            return BattleChoise;
+        }
+
+        private static bool QuickBattleInput(Hero hero, Charecter unit, List<Order> units = null)
+        {
+            if (BattleChoise > 10)
+            {
+                if (BattleChoise <= 19)
+                {
+                    BattleChoise -= 10;
+                    if (BattleChoise <= hero.AttackList.Count)
+                    {
+                        hero.AttackList[BattleChoise - 1].Attack(hero, unit);
+                        QuickCommandDone = true;
+
+                        return true;
+                    }
+                }
+                else if (BattleChoise >= 19 & BattleChoise < 30)
+                {
+                    BattleChoise -= 20;
+                    if (BattleChoise <= hero.SpellList.Count)
+                    {
+                        if (GameFormulas.CheckMana(hero, hero.SpellList[BattleChoise - 1].SpellСost))
+                        {
+                            var heroSpell = hero.SpellList[BattleChoise - 1];
+                            heroSpell.Spell(hero, (Unit)unit, heroSpell.SpellСost, heroSpell.SpellPower);
+                            QuickCommandDone = true;
+
+                            return true;
+                        }
+                        else
+                        {
+                            Output.TwriteLine("\nНедостаточно маны!\n", 1);
+                            BattleChoise += 20;
+                        }
+                    }
+                }
+                else if (BattleChoise >= 31 & BattleChoise < 40)
+                {
+                    BattleChoise -= 30;
+                    if (BattleChoise <= hero.PotionList.Count)
+                    {
+                        hero.PotionList[BattleChoise - 1].Drink(hero);
+                        QuickCommandDone = true;
+
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         #region Отображение боевоей информации
         private static void ShowBattleInfo(Hero hero, Charecter unit, List<Order> units = null)
         {
             //  Отрисовка hp противника
             Output.WriteColorName("\n", unit, ":");
-            if (unit.Phase >= 2)
+            if (unit.CharecterProfile.Phase >= 2)
                 unit.PhaseHPBar();
             else
                 unit.HPBar();
 
             //  Отрисовка mp противника
-            if (hero.EnemyAbout)
-                unit.MPBar();
-            Console.WriteLine();
+            //if (hero.CharecterProfile.EnemyAbout)
+            //    unit.MPBar();
+            //Console.WriteLine();
 
             if (units != null)
                 Turns();
@@ -252,13 +320,13 @@ namespace Fight_cons
             Console.Write("\n\t\t\t[");
             foreach (var t in Battles.UnitTurnList)
             {
-                if (t.charecter.IsPlayer)
-                    Output.WriteColorLine(Output.unitNameColor(t.charecter.Role), "", "Вы ", $"{string.Format("{0:0.00}", t.Speed)}");
-                if (t.charecter.IsAlive & !t.charecter.IsPlayer)
+                if (t.charecter.CharecterProfile.IsPlayer)
+                    Output.WriteColorLine(Output.unitNameColor(t.charecter.CharecterProfile.Role), "", "Вы ", $"{string.Format("{0:0.00}", t.Speed)}");
+                if (t.charecter.Condition.IsAlive & !t.charecter.CharecterProfile.IsPlayer)
                 {
-                    Output.WriteColorLine(Output.unitNameColor(t.charecter.Role), "", "# ", $"{string.Format("{0:0.00}", t.Speed)}");                    
+                    Output.WriteColorLine(Output.unitNameColor(t.charecter.CharecterProfile.Role), "", "# ", $"{string.Format("{0:0.00}", t.Speed)}");                    
                 }
-                if (Battles.UnitTurnList.Min(x => x.Speed) != t.Speed & t.charecter.IsAlive)
+                if (Battles.UnitTurnList.Min(x => x.Speed) != t.Speed & t.charecter.Condition.IsAlive)
                     Console.Write(" | ");
             }
 
@@ -269,8 +337,9 @@ namespace Fight_cons
         private static void MovesTracker(Charecter hero, Charecter unit)
         {
             hero.Turn++;
-            hero.Conditions.SheeldUp = false;
-            hero.Conditions.AttackParry = false;
+            hero.Condition.SheeldUp = false;
+            hero.Condition.AttackParry = false;
+            QuickCommandDone = false;
         }
 
         //  Загрузка списка врагов для выбора
@@ -278,13 +347,13 @@ namespace Fight_cons
         {
             foreach (var enemy in enemies)
             {
-                if (enemy.charecter.TotalHP <= 0 | enemy.charecter.Run)
+                if (enemy.charecter.TotalHP <= 0 | enemy.charecter.Condition.LeavedBattle)
                     Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{enemy.charecter.Id}. {enemy.charecter.Name} [0/{enemy.charecter.TotalMaxHP}]\t");
                 else
                 {
-                    Output.WriteColorLine(Output.unitNameColor(enemy.charecter.Role), $"{enemy.charecter.Id}. ", $"{enemy.charecter.Name}", "\t");
+                    Output.WriteColorLine(Output.unitNameColor(enemy.charecter.CharecterProfile.Role), $"{enemy.charecter.Id}. ", $"{enemy.charecter.Name}", "\t");
 
-                    if (enemy.charecter.Phase >= 2)
+                    if (enemy.charecter.CharecterProfile.Phase >= 2)
                         enemy.charecter.PhaseHPBar();
                     else
                         enemy.charecter.HPBar(true);
@@ -301,38 +370,38 @@ namespace Fight_cons
         //  Отображение негативыне эффекты
         private static void NegativeEffectView(Charecter hero, Charecter enemy)
         {
-            if (hero.Conditions.SlowRound > 0 || hero.Conditions.PoisentRound > 0 || hero.Conditions.FrezRound > 0)
+            if (hero.Condition.SlowRound > 0 || hero.Condition.PoisentRound > 0 || hero.Condition.FrezRound > 0)
             {
                 Console.Write("\nУ вас эффект:\n");
 
                 //  Замедление
-                if (hero.Conditions.SlowRound > 0)
-                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Conditions.Moves} {Output.EffMovSymbol}] ({hero.Conditions.SlowRound})\n");
+                if (hero.Condition.SlowRound > 0)
+                    Output.WriteColorLine(ConsoleColor.Blue, " ", "Замедление ", $" [-{hero.Condition.Moves} {Output.EffMovSymbol}] ({hero.Condition.SlowRound})\n");
 
                 //  Заморозка
-                if (hero.Conditions.FrezRound > 0)
-                    Output.WriteColorLine(ConsoleColor.DarkBlue, " ", "Заморозка ", $" ({hero.Conditions.FrezRound})\n");                
+                if (hero.Condition.FrezRound > 0)
+                    Output.WriteColorLine(ConsoleColor.DarkBlue, " ", "Заморозка ", $" ({hero.Condition.FrezRound})\n");                
 
                 //  Отравление
-                if (hero.Conditions.PoisentRound > 0)
-                    Output.WriteColorLine(ConsoleColor.DarkGreen, " ", "Отравление ", $" [-{enemy.Conditions.PoisentDmg} {Output.HPSymbol}] ({hero.Conditions.PoisentRound})\n");
+                if (hero.Condition.PoisentRound > 0)
+                    Output.WriteColorLine(ConsoleColor.DarkGreen, " ", "Отравление ", $" [-{enemy.Condition.PoisentDmg} {Output.HPSymbol}] ({hero.Condition.PoisentRound})\n");
             }           
         }
 
         //  Вычитание негативыне эффекты
         private static void NegativeEffectImpact(Hero hero, Charecter enemy)
         {
-            if (hero.Conditions.SlowRound > 0 || hero.Conditions.PoisentRound > 0)
+            if (hero.Condition.SlowRound > 0 || hero.Condition.PoisentRound > 0)
             {
                 //  Замедление
-                if (hero.Conditions.SlowRound > 0)
-                    hero.Conditions.SlowRound--;                    
+                if (hero.Condition.SlowRound > 0)
+                    hero.Condition.SlowRound--;                    
 
                 //  Отравление
-                if (hero.Conditions.PoisentRound > 0)
+                if (hero.Condition.PoisentRound > 0)
                 {
-                    hero.Conditions.PoisentRound--;
-                    hero.HP -= enemy.Conditions.PoisentDmg;
+                    hero.Condition.PoisentRound--;
+                    hero.HP -= enemy.Condition.PoisentDmg;
                 }                    
             }
         }
@@ -347,14 +416,14 @@ namespace Fight_cons
                 + $"4) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
                 + $"5) Убежать\n");
 
-            hero.Conditions.FrezRound--;
+            hero.Condition.FrezRound--;
             Thread.Sleep(400);
         }
 
         private static void ConditionCheck(Hero hero)
         {
             //  Проверка на Замарозку
-            if (hero.Conditions.FrezRound != 0)
+            if (hero.Condition.FrezRound != 0)
                 FreezMenu(hero);
         }
         #endregion

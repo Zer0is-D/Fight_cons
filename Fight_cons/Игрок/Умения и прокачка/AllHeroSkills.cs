@@ -23,17 +23,17 @@ namespace Fight_cons
             };
 
             //  Способность: Кровотечение
-            if (hero.HeroStatistic.Attacks >= 10)
+            if (hero.Statistic.Attacks >= 10)
             {
                 AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Condition.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
+                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
                 };
             }
 
             //  Способность: Парирование
-            if (hero.HeroStatistic.Attacks >= 15)
+            if (hero.Statistic.Attacks >= 15)
             {
                 AttackDes Attac_Parry = new AttackDes(hero, "Парировать")
                 {
@@ -51,7 +51,7 @@ namespace Fight_cons
             Cleansing_ray.Description = $"Очищающий луч ({Cleansing_ray.SpellPower + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {Cleansing_ray.SpellСost} {Output.MPSymbol})";
 
             //  Способность: Малое лечение
-            if (hero.HeroStatistic.Spells >= 5)
+            if (hero.Statistic.Spells >= 5)
             {
                 SpellDes Healing = new SpellDes(hero, "Малое лечение")
                 {
@@ -62,20 +62,20 @@ namespace Fight_cons
             }
 
             //  Способность: Кровотечение
-            if (hero.HeroStatistic.Attacks >= 10)
+            if (hero.Statistic.Attacks >= 10)
             {
                 AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Condition.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
+                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
                 };
             }
 
-            Clear_dub(hero, enemy);
+            ClearDuplicat(hero, enemy);
         }
 
         //  Чистка от дубликатов
-        public static void Clear_dub(Hero hero, Charecter enemy)
+        public static void ClearDuplicat(Hero hero, Charecter enemy)
         {
             //  Чистка заклинаний
             //  По схожему описанию

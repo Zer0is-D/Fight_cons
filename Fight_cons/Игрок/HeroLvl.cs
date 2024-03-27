@@ -27,60 +27,60 @@ namespace Fight_cons
                     Console.Write($"Повышение характеристик, у вас осталось {LTicket.LvlPoints} ячеек\n", 1);
 
                     //  Макс здоровье
-                    ParamsLvlUp(0, LTicket.Points[0], Output.MaxHpStr, hero.MaxHp, LTicket.NextMaxHp, hero.ClassBonuses.HP, false);
+                    ParamsLvlUp(0, LTicket.Points[0], Output.MaxHpStr, hero.MaxHp, LTicket.NextMaxHp, hero.CharecterClass.HP, false);
 
                     //  Макс мана
-                    ParamsLvlUp(1, LTicket.Points[1], Output.MaxMpStr, hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MP, false);
+                    ParamsLvlUp(1, LTicket.Points[1], Output.MaxMpStr, hero.MaxMp, LTicket.NextMaxMp, hero.CharecterClass.MP, false);
 
                     //  Защита
-                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenceStr, hero.Defence, LTicket.NextDefence, hero.ClassBonuses.Defence, true);
+                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenceStr, hero.Defence, LTicket.NextDefence, hero.CharecterClass.Defence, true);
 
                     //  Маг защита
-                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenceStr, hero.MagicDefence, LTicket.NextMagicDefence, hero.ClassBonuses.MagicDefence, true);
+                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenceStr, hero.MagicDefence, LTicket.NextMagicDefence, hero.CharecterClass.MagicDefence, true);
 
                     //  Блок
-                    ParamsLvlUp(4, LTicket.Points[4], Output.BlockStr, hero.Block, LTicket.NextBlock, hero.ClassBonuses.Block, true);
+                    ParamsLvlUp(4, LTicket.Points[4], Output.BlockStr, hero.Block, LTicket.NextBlock, hero.CharecterClass.Block, true);
 
                     //  Скорость
-                    ParamsLvlUp(5, LTicket.Points[5], Output.SpeedStr, hero.Speed, LTicket.NextSpeed, hero.ClassBonuses.Speed, true);
+                    ParamsLvlUp(5, LTicket.Points[5], Output.SpeedStr, hero.Speed, LTicket.NextSpeed, hero.CharecterClass.Speed, true);
 
                     //  Атака
-                    ParamsLvlUp(6, LTicket.Points[6], Output.AttackStr, hero.Attack, LTicket.NextAttack, hero.ClassBonuses.Attack, false);
+                    ParamsLvlUp(6, LTicket.Points[6], Output.AttackStr, hero.Attack, LTicket.NextAttack, hero.CharecterClass.Attack, false);
 
                     //  Arcane
-                    ParamsLvlUp(7, LTicket.Points[7], Output.ArcaneStr, hero.Arcane, LTicket.NextArcane, hero.ClassBonuses.Arcane, false);
+                    ParamsLvlUp(7, LTicket.Points[7], Output.ArcaneStr, hero.Arcane, LTicket.NextArcane, hero.CharecterClass.Arcane, false);
 
                     //  Крит
-                    ParamsLvlUp(8, LTicket.Points[8], Output.CritStr, hero.Crit, LTicket.NextCrit, hero.ClassBonuses.Crit, true);
+                    ParamsLvlUp(8, LTicket.Points[8], Output.CritStr, hero.Crit, LTicket.NextCrit, hero.CharecterClass.Crit, true);
 
                     switch (Input.ChoisInput(hero, 1, 9))
                     {
                         case 1:
-                            MaxHp = (short) SelectedParam(0, MaxHp, LTicket.NextMaxHp, hero.ClassBonuses.MaxHp);
+                            MaxHp = (short) SelectedParam(0, MaxHp, LTicket.NextMaxHp, hero.CharecterClass.MaxHp);
                             break;
                         case 2:
-                            MaxMp = (short) SelectedParam(1, hero.MaxMp, LTicket.NextMaxMp, hero.ClassBonuses.MaxMp);
+                            MaxMp = (short) SelectedParam(1, hero.MaxMp, LTicket.NextMaxMp, hero.CharecterClass.MaxMp);
                             break;
                         case 3:
-                            Defence = (float) SelectedParam(2, hero.Defence, LTicket.NextDefence, hero.ClassBonuses.Defence);
+                            Defence = (float) SelectedParam(2, hero.Defence, LTicket.NextDefence, hero.CharecterClass.Defence);
                             break;
                         case 4:
-                            MagicDefence = (float) SelectedParam(3, hero.MagicDefence, LTicket.NextMagicDefence, hero.ClassBonuses.MagicDefence);
+                            MagicDefence = (float) SelectedParam(3, hero.MagicDefence, LTicket.NextMagicDefence, hero.CharecterClass.MagicDefence);
                             break;
                         case 5:
-                            Block = (float) SelectedParam(4, hero.Block, LTicket.NextBlock, hero.ClassBonuses.Block);
+                            Block = (float) SelectedParam(4, hero.Block, LTicket.NextBlock, hero.CharecterClass.Block);
                             break;
                         case 6:
-                            Speed = (float) SelectedParam(5, hero.Speed, LTicket.NextSpeed, hero.ClassBonuses.Speed);
+                            Speed = (float) SelectedParam(5, hero.Speed, LTicket.NextSpeed, hero.CharecterClass.Speed);
                             break;
                         case 7:
-                            Attack = (short) SelectedParam(6, hero.Attack, LTicket.NextAttack, hero.ClassBonuses.Attack);
+                            Attack = (short) SelectedParam(6, hero.Attack, LTicket.NextAttack, hero.CharecterClass.Attack);
                             break;
                         case 8:
-                            Arcane = (short) SelectedParam(7, hero.Arcane, LTicket.NextArcane, hero.ClassBonuses.Arcane);
+                            Arcane = (short) SelectedParam(7, hero.Arcane, LTicket.NextArcane, hero.CharecterClass.Arcane);
                             break;
                         case 9:
-                            Crit = (float)SelectedParam(8, hero.Crit, LTicket.NextCrit, hero.ClassBonuses.Crit);
+                            Crit = (float)SelectedParam(8, hero.Crit, LTicket.NextCrit, hero.CharecterClass.Crit);
                             break;
                     }
                 }
@@ -240,15 +240,15 @@ namespace Fight_cons
 
         public LvlTicket(Hero hero)
         {
-            NextMaxHp += hero.PermanentBonuses.MaxHp;
-            NextMaxMp += hero.PermanentBonuses.MaxMp;
-            NextAttack += hero.PermanentBonuses.Attack;
-            NextArcane += hero.PermanentBonuses.Arcane;
-            NextSpeed += hero.PermanentBonuses.Speed;
-            NextCrit += hero.PermanentBonuses.Crit;
-            NextDefence += hero.PermanentBonuses.Defence;
-            NextMagicDefence += hero.PermanentBonuses.MagicDefence;
-            NextBlock += hero.PermanentBonuses.Block;
+            NextMaxHp += hero.PermanentBonus.MaxHp;
+            NextMaxMp += hero.PermanentBonus.MaxMp;
+            NextAttack += hero.PermanentBonus.Attack;
+            NextArcane += hero.PermanentBonus.Arcane;
+            NextSpeed += hero.PermanentBonus.Speed;
+            NextCrit += hero.PermanentBonus.Crit;
+            NextDefence += hero.PermanentBonus.Defence;
+            NextMagicDefence += hero.PermanentBonus.MagicDefence;
+            NextBlock += hero.PermanentBonus.Block;
         }
 
         internal bool[] Points =

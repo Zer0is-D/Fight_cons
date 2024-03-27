@@ -52,7 +52,7 @@ namespace Fight_cons
                 Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", $"{Output.HPSymbol}\n");                
                 victim.HP -= damag;
 
-                hero.HeroStatistic.Spells++;
+                hero.Statistic.Spells++;
             }
             else
             {
@@ -74,25 +74,25 @@ namespace Fight_cons
 
             hero.HP += (short) Heal;
 
-            hero.HeroStatistic.Spells++;
+            hero.Statistic.Spells++;
         }
 
         //  Замедление
         public static void SlowDownSpell(Hero hero, Charecter enemy, short cost, sbyte spellPower)
         {
-            enemy.Conditions.Speed = -0.2f;
+            enemy.Condition.Speed = -0.2f;
             Console.WriteLine("Вы замедлили противника!");
 
-            hero.HeroStatistic.Spells++;
+            hero.Statistic.Spells++;
         }
 
         //  Исцеление
         public static void ExcisionSpell(Hero hero, Charecter enemy, short cost, sbyte spellPower)
         {
             Console.WriteLine("\nВы избавились от всех негатив. эффектов\n");
-            hero.Conditions.Clear();
+            hero.Condition.Clear();
 
-            hero.HeroStatistic.Spells++;
+            hero.Statistic.Spells++;
         }
         #endregion
     }

@@ -85,8 +85,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bestiaria.cs" />
-    <Compile Include="DifrentFiles.cs" />
+    <Compile Include="Основа и настройки\CharecterProfiles.cs" />
+    <Compile Include="Противник\Bestiaria.cs" />
+    <Compile Include="Основа и настройки\DifrentFiles.cs" />
     <Compile Include="PatternUnit.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -103,14 +104,14 @@
     <Compile Include="Основа и настройки\GameFormulas.cs" />
     <Compile Include="Основа и настройки\Info.cs" />
     <Compile Include="Основа и настройки\Entitys\ItemChar.cs" />
-    <Compile Include="Основа и настройки\Condition.cs" />
+    <Compile Include="Основа и настройки\Conditions.cs" />
     <Compile Include="Основа и настройки\Entitys\Characteristics.cs" />
     <Compile Include="Основа и настройки\Battles.cs" />
     <Compile Include="Игрок\HeroLvl.cs" />
     <Compile Include="Игрок\HeroMethods.cs" />
     <Compile Include="Игрок\Rating.cs" />
     <Compile Include="Мир\Spying.cs" />
-    <Compile Include="Игрок\Умения и прокачка\PermanentBonus.cs" />
+    <Compile Include="Игрок\Умения и прокачка\PermanentBonuses.cs" />
     <Compile Include="Игрок\Умения и прокачка\AllHeroSkills.cs" />
     <Compile Include="Игрок\CombatSolutions.cs" />
     <Compile Include="Противник\UnitSkills.cs" />
@@ -135,7 +136,7 @@
     <Compile Include="Игрок\Inventory.cs" />
     <Compile Include="Мир\Locations\AboutLoc.cs" />
     <Compile Include="Мир\Locations\Market.cs" />
-    <Compile Include="Игрок\Умения и прокачка\CharecterClass.cs" />
+    <Compile Include="Игрок\Умения и прокачка\CharecterClases.cs" />
     <Compile Include="Игрок\Умения и прокачка\PotionDes.cs" />
     <Compile Include="Основа и настройки\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

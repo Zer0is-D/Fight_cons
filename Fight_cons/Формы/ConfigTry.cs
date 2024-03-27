@@ -29,7 +29,7 @@ namespace Fight_cons.Формы
 
             Market.NamOfGoods = (sbyte) NumOfGoodsUpDown.Value;
             Market.NamOfBonusies = (sbyte) NamOfBonusiesUpDown.Value;
-            Condition.BleedDmg = (sbyte) BleedDmgUpDown.Value;
+            Conditions.BleedDmg = (sbyte) BleedDmgUpDown.Value;
              
             DialogResult = DialogResult.No;
         }

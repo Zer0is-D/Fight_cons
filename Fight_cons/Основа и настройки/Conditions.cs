@@ -3,11 +3,16 @@ using System;
 
 namespace Fight_cons
 {
-    internal class Condition : Characteristics
+    internal class Conditions : Characteristics
     {
+        public bool IsAlive = true;
+
         //  Состояния
         public bool AttackParry = false;
-        public bool SheeldUp = false;        
+        public bool SheeldUp = false;
+
+        //  Сбежать с боя
+        public bool LeavedBattle = false;
 
         //  Debuffs
         internal protected sbyte FrezRound;
@@ -52,7 +57,7 @@ namespace Fight_cons
                 Output.WriteColorLine(ConsoleColor.DarkMagenta, "\n", $"{victim.Name} ", "пропускает ход\n");
                 victim.Turn = victim.TotalMaxMoves;
                 if (attacker is Hero hero)
-                    hero.HeroStatistic.Attacks++;
+                    hero.Statistic.Attacks++;
             }
         }
     }

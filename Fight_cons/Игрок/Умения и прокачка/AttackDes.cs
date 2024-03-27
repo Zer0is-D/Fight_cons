@@ -36,8 +36,8 @@ namespace Fight_cons
         {
             short damag = GameFormulas.Damage(attacker, victim);
 
-            if (attacker is Hero hero)
-                hero.HeroStatistic.Attacks++;
+            attacker.Statistic.Attacks++;
+            attacker.Statistic.ChaActions.Add(10);
 
             UnitSkills.BattleLog(attacker, victim, damag);
         }
@@ -55,8 +55,8 @@ namespace Fight_cons
 
             victim.HP -= damag;
 
-            if (attacker is Hero hero)
-                hero.HeroStatistic.Attacks++;
+            attacker.Statistic.Attacks++;
+            attacker.Statistic.ChaActions.Add(11);
         }
 
         //  Действие: Кровотечение
@@ -64,7 +64,7 @@ namespace Fight_cons
         {
             short damag = GameFormulas.Damage(attacker, victim);
 
-            victim.Conditions.BleedRound = 3;
+            victim.Condition.BleedRound = 3;
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkRed, "накладывает ", $"Кровотечение ");
@@ -74,14 +74,14 @@ namespace Fight_cons
 
             victim.HP -= damag;
 
-            if (attacker is Hero hero)
-                hero.HeroStatistic.Attacks++;
+            attacker.Statistic.Attacks++;
+            attacker.Statistic.ChaActions.Add(12);
         }
         
         //  Действие: Парирование
         public static void ParryAttack(Charecter person, Charecter victim)
         {
-            person.Conditions.AttackParry = true;
+            person.Condition.AttackParry = true;
             person.Turn = person.TotalMaxMoves;
         }
 
@@ -104,7 +104,7 @@ namespace Fight_cons
             victim.HP -= damag;
 
             if (attacker is Hero hero)
-                hero.HeroStatistic.Attacks++;
+                hero.Statistic.Attacks++;
         }
         #endregion
     }

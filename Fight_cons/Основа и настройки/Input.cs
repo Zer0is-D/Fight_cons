@@ -31,15 +31,15 @@ namespace Fight_cons
         }
 
         //  Проверка выбора во время боя
-        public static int ChoisInput(sbyte b1, sbyte b2)
+        public static sbyte ChoisInput(sbyte b1, sbyte b2)
         {
-            int s = 0;
+            sbyte s = 0;
             do { s = SbyteInput(); }
             while (!(s > b1 - 1 && s < b2 + 1));
             return s;
         }
 
-        public static int SbyteInput()
+        public static sbyte SbyteInput()
         {
             string str;
             sbyte x;
@@ -124,8 +124,8 @@ namespace Fight_cons
                                 $"Сейчас: {Market.NamOfGoods}");
                             break;
                         case 3:
-                            Condition.BleedDmg = ChoisInput(hero, 1, 100, "Установите нужное количество\n" +
-                                $"Сейчас: {Condition.BleedDmg}");
+                            Conditions.BleedDmg = ChoisInput(hero, 1, 100, "Установите нужное количество\n" +
+                                $"Сейчас: {Conditions.BleedDmg}");
                             break;
                         case 4:
                             Settings.OptionVersions(hero);

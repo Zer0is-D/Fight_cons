@@ -17,7 +17,8 @@ namespace Fight_cons
             Village = 4,
             Inn = 5,
             Market = 6,
-            DeepWoods = 7
+            DeepWoods = 7,
+            MagicManHouse = 8
         }
 
         //  Запись событий перед заходов в локацию
@@ -26,9 +27,10 @@ namespace Fight_cons
             new Location(0, "???", 
                 (Hero hero) =>
                 {
-                    Fight_cons.Market.ShowArmorGoods(hero);
-                    if (GameFormulas.Vero(0.4))
-                        Battles.MakeCurrentBattle(hero, 2, 0);
+                    //DefualtLoad(hero, Locations[(sbyte)LocationName.MagicManHouse]);
+
+                    if (GameFormulas.Vero(0.3))
+                        Battles.MakeCurrentBattle(hero, 0, 0, 9);
                 }, CavesStart),
             new Location(0, "Пещеры", 
                 (Hero hero) => 
@@ -38,6 +40,8 @@ namespace Fight_cons
             new Location(1, "Долина", 
                 (Hero hero) => 
                 {
+                    if (GameFormulas.Vero(0.2))
+                        Battles.MakeCurrentBattle(hero, 11);
                      if (GameFormulas.Vero(0.4))
                         Battles.MakeRandomBattle(hero, 3);
                      if (GameFormulas.Vero(0.01))
@@ -71,6 +75,9 @@ namespace Fight_cons
                 }, Inn),           
             new Location(5, "Рынок",(Hero hero) =>
                 {
+                    //  Квесты
+                    if (hero.HeroQuests.Que[1] == 2)
+                        hero.HeroQuests.Q_leva_Market(hero);
                     if (GameFormulas.Vero(0.01))
                         FindingPouchEvent(hero, 10, 100);
                 }, 
@@ -80,48 +87,18 @@ namespace Fight_cons
 
                 },
                 DeepWoods),
+            new Location(7, "Дом колдуна",(Hero hero) =>
+                {
+
+                },
+                MagicManHouse),
         };
 
         /// <summary>
         /// Список противников
         /// </summary>
         public static List<Order> ListOfUnits = new List<Order>();
-
-        /// <summary>
-        /// Выбор противника из списка
-        /// </summary>
-        //public static Unit Enemies(int id)
-        //{
-        //    List<Unit> enemies = new List<Unit>()
-        //    {
-        //        //  Пещерные противники
-        //        /*0*/new Unit("Нечто Неизведанное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 3, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, maxTurnMin: 2, maxTurnMax: 3, role : Charecter.ChaRole.Enemy, strategy : Charecter.Strategeis.Any),
-        //        /*1*/new Unit("Нечто Бронированное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 20, defMax: 70, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, maxTurnMin: 1, maxTurnMax: 2, role : Charecter.ChaRole.Enemy,strategy: Charecter.Strategeis.Any),
-        //        /*2*/new Unit("Нечто Магическое", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 45, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 30, mDefMax: 70, blkMin: 10, blkMax: 30, maxTurnMin: 2, maxTurnMax: 3, role : Charecter.ChaRole.Enemy, strategy : Charecter.Strategeis.Any),
-
-        //        //  Противники в долине
-        //        /*3*/new Unit("Зверь", phase: 0, hpMin: 10, hpMax: 20, attMin: 1, attMax: 5, spdMin: 30, spdMax: 30, critMin: 1, critMax: 2, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 20, blkMax: 40, maxTurnMin: 1, maxTurnMax: 2, role : Charecter.ChaRole.Wild, strategy: Charecter.Strategeis.Agresive),
-
-        //        //  Противники в лесу
-        //        /*4*/new Unit("Демон", phase: 0, hpMin: 15, hpMax: 30, attMin: 3, attMax: 5, spdMin: 30, spdMax: 30, critMin: 10, critMax: 15, defMin: 0, defMax: 0, mDefMin: 20, mDefMax: 30, blkMin: 1, blkMax: 5, maxTurnMin: 2, maxTurnMax: 5, role : Charecter.ChaRole.Enemy, strategy : Charecter.Strategeis.Any),
-
-        //        //  Противники в деревне
-        //        /*5*/new Unit("Ворюга", phase: 0, hpMin: 10, hpMax: 15, attMin: 3, attMax: 5, spdMin: 30, spdMax: 30, critMin: 20, critMax: 30, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 20, blkMax: 40, maxTurnMin: 4, maxTurnMax: 5, role : Charecter.ChaRole.Enemy, strategy: Charecter.Strategeis.Agresive),
-        //        //  Противники в деревне
-        //        /*6*/new Unit("Ог", phase: 4, hpMin: 40, hpMax: 60, attMin: 1, attMax: 2, spdMin: 0, spdMax: 10, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 0, blkMax: 0, maxTurnMin: 1, maxTurnMax: 2, role : Charecter.ChaRole.Enemy, strategy: Charecter.Strategeis.Agresive),
-        //        /*7*/new Unit("Таотот", phase: 3, hp: 50, attack: 3, speed: 30, critChance: 20, defence: 10, magicDefence: 30, block: 0, maxMoves: 5, noRun: true, Charecter.ChaRole.Enemy),
-        //        /*8*/new Unit("Камень", phase: 0, hp: 6, attack: 0, speed: 0, critChance: 0, defence: 0, magicDefence: 0, block: 0, maxMoves: 2, noRun: true, Charecter.ChaRole.Enemy),
-        //        /*9*/new Unit("Некромант", phase: 0, hp: 20, attack: 0, speed: 20, critChance: 0, defence: 0, magicDefence: 30, block: 0, maxMoves: 5, noRun: true, Charecter.ChaRole.Enemy, strategy: Charecter.Strategeis.Necromancer),
-        //        /*10*/new Unit("Жертвиник", phase: 0, hp: 20, attack: 0, speed: 0, critChance: 0, defence: 0, magicDefence: 0, block: 0, maxMoves: 2, noRun: true, Charecter.ChaRole.Enemy, strategy: Charecter.Strategeis.Healer),
-
-        //        //  Союзники после 99
-        //        /*100*/new Unit("Доброе Неизведанное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 3, spdMin: 30, spdMax: 30, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, maxTurnMin: 2, maxTurnMax: 3, role : Charecter.ChaRole.Ally, strategy : Charecter.Strategeis.Any),
-        //        /*101*/new Unit("Доброе Бронированное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 30, critMin: 5, critMax: 10, defMin: 20, defMax: 70, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, maxTurnMin: 1, maxTurnMax: 2, role : Charecter.ChaRole.Ally, strategy : Charecter.Strategeis.Any),
-        //        /*102*/new Unit("Доброе Магическое", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 30, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 30, mDefMax: 70, blkMin: 10, blkMax: 30, maxTurnMin: 2, maxTurnMax: 3, role : Charecter.ChaRole.Ally, strategy : Charecter.Strategeis.Any),
-        //    };
-
-        //    return enemies[id];
-        //}
+        
 
         public static void DefualtLoad(Hero hero, Location location)
         {
@@ -157,10 +134,10 @@ namespace Fight_cons
                             Output.TwriteLine("\nВы находите выход\n", 1);
                             Hero.Exit_cave = true;
                         }
-                    if (GameFormulas.Vero(0.7))
+                    if (GameFormulas.Vero(0.6))
                         Battles.MakeRandomBattle(hero, 0, 1, 2);
 
-                    hero.HeroStatistic.CaveResearch++;
+                    hero.Statistic.CaveResearch++;
                     Research(hero);
                     break;
                 case 2:
@@ -193,7 +170,7 @@ namespace Fight_cons
                     if (GameFormulas.Vero(0.7))
                         Battles.MakeRandomBattle(hero, 0, 1, 2);
 
-                    hero.HeroStatistic.CaveResearch++;
+                    hero.Statistic.CaveResearch++;
                     Research(hero);
                     break;
                 case 2:
@@ -233,7 +210,7 @@ namespace Fight_cons
                     else
                         Output.TwriteLine("Вы ничего не находите\n", 1);
 
-                    hero.HeroStatistic.WoodsResearch++;
+                    hero.Statistic.WoodsResearch++;
                     Research(hero);
                     break;
                 case 2:
@@ -315,18 +292,19 @@ namespace Fight_cons
         public static void Village(Hero hero)
         {
             Console.Write("\nВаши действия?\n");
-            if (hero.Lvl > hero.HeroStatistic.HeroLvlKickOff)
+            if (hero.Lvl > hero.Statistic.HeroLvlKickOff)
                 Console.Write("1) Пойти в трактир\n");
             else
                 Output.WriteColorLine(ConsoleColor.Gray, "", "1) Пойти в трактир (Вас прогнали, приходите позже)\n");
 
             Console.WriteLine("2) Пойти на рынок\n"
-                        + "3) Выйти из деревни");
+                        + "3) Пойти в храм\n"
+                        + "4) Выйти из деревни");
 
-            switch (Input.ChoisInput(hero, 1, 3))
+            switch (Input.ChoisInput(hero, 1, 4))
             {
                 case 1:
-                    if (hero.Lvl > hero.HeroStatistic.HeroLvlKickOff)
+                    if (hero.Lvl > hero.Statistic.HeroLvlKickOff)
                         DefualtLoad(hero, Locations[(sbyte)LocationName.Inn]);
                     else
                         DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
@@ -335,6 +313,9 @@ namespace Fight_cons
                     Market(hero);
                     break;
                 case 3:
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.MagicManHouse]);
+                    break;
+                case 4:
                     DefualtLoad(hero, Locations[(sbyte)LocationName.Neighborhood]);
                     break;
             }
@@ -345,8 +326,8 @@ namespace Fight_cons
         {
             Console.WriteLine("\nВаши действия?\n"
                             + "1) Наблюдать и подслушивать");
-            Output.WriteColorLine(ConsoleColor.Yellow, "2) Выпить (", $"5{Output.MoneySymbol}", ")\n");
-            Output.WriteColorLine(ConsoleColor.Yellow, "3) Армреслинг (", $"{Arm_game.Cost}{Output.MoneySymbol}", ")\n");
+            Output.PayMoneyLine("2) Выпить", Output.BeerCost, hero.Money);
+            Output.PayMoneyLine("3) Армреслинг", Arm_game.Cost, hero.Money);
             Console.WriteLine("4) Выйти из трактира");
 
             switch (Input.ChoisInput(hero, 1, 4))
@@ -355,19 +336,12 @@ namespace Fight_cons
                     hero.HeroSpying.SpyingInTavern(hero);
                     break;
                 case 2:
-                    if (hero.Money >= 5)
-                    {
-                        Output.Spent(hero, 5);
+                    if (Output.Spent(hero.Money, Output.BeerCost, "Заплати, а потом пей!"))
                         Drinking(hero);
-                    }
-                    else
-                        Output.TwriteLine("Заплати, а потом пей!", 1);
                     break;
                 case 3:
-                    if (hero.Money >= Arm_game.Cost)
-                        ArmGameEvent(hero);
-                    else
-                        Output.TwriteLine("Бесплатно не интересует\n", 1);
+                    if (Output.Spent(hero.Money, Arm_game.Cost, "Бесплатно не интересует\n"))
+                        ArmGameEvent(hero); 
                     break;
                 case 4:
                     DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
@@ -378,16 +352,12 @@ namespace Fight_cons
         //  Рынок
         public static void Market(Hero hero)
         {
-            //  Квесты
-            if (hero.HeroQuests.Que[1] == 2)
-                hero.HeroQuests.Q_leva_Market(hero);
-
             Console.WriteLine("\nВаши действия?\n"
                           + "1) Наблюдать и подслушивать\n"
                           + "2) Купить оружие\n"
                           + "3) Купить броню");
-            Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", $"{Output.PotionHPCost}{Output.MoneySymbol}", ")\n");
-            Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", $"{Output.PotionMPCost}{Output.MoneySymbol}", ")\n");
+            Output.PayMoneyLine("4) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
+            Output.PayMoneyLine("5) Купить зелье маны", Output.PotionMPCost, hero.Money);
             Console.WriteLine("6) Выйти");
 
             switch (Input.ChoisInput(hero, 1, 6))
@@ -407,7 +377,7 @@ namespace Fight_cons
                 case 4:
                     if (hero.Money >= Output.PotionHPCost)
                     {
-                        Output.Spent(hero, Output.PotionHPCost, "Зелье здоровья");
+                        Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья");
                         hero.PotionList[0].Count += 1;
                     }
                     else
@@ -417,7 +387,7 @@ namespace Fight_cons
                 case 5:
                     if (hero.Money >= Output.PotionMPCost)
                     {
-                        Output.Spent(hero, Output.PotionMPCost, "Зелье маны");
+                        Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны");
                         hero.PotionList[1].Count += 1;
                     }
                     else
@@ -429,6 +399,34 @@ namespace Fight_cons
                     break;
             }
         }
+
+        //  Деревня
+        public static void MagicManHouse(Hero hero)
+        {
+            Console.Write("\nВаши действия?\n");
+            if (!hero.CharecterProfile.EnemyAbout)
+                Output.PayMoneyLine("1) Способность видеть", Output.VisionSkillCost, hero.Money);
+            else
+                Output.WriteColorLine(ConsoleColor.DarkGray,"", "1) Сопособность веидеть (уже изучено)\n");
+            Console.WriteLine("2) Вернуться");
+
+            switch (Input.ChoisInput(hero, 1, 2))
+            {
+                case 1:
+                    if (!hero.CharecterProfile.EnemyAbout)
+                    {
+                        if (Output.Spent(hero.Money, Output.VisionSkillCost, "Вам нехватает средств"))
+                        {                            
+                            Console.WriteLine("Теперь вы можете видеть врагов");
+                            hero.CharecterProfile.EnemyAbout = true;
+                        }
+                    }
+                    break;
+                case 2:
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
+                    break;
+            }
+        }
         #endregion
 
         /// <summary>
@@ -436,9 +434,9 @@ namespace Fight_cons
         /// </summary>
         public static void Research(Hero hero)
         {
-            if (hero.HeroStatistic.CaveResearch == 20)
+            if (hero.Statistic.CaveResearch == 20)
             {
-                Output.Spent(hero, 0, "Древний свиток исцеления", true);
+                Output.Spent("Древний свиток исцеления", true);
 
                 SpellDes excision = new SpellDes(hero, "Исцеление")
                 {
@@ -449,7 +447,7 @@ namespace Fight_cons
                 };
             }
 
-            if (hero.HeroStatistic.CaveResearch == 30)
+            if (hero.Statistic.CaveResearch == 30)
             {
                 Console.WriteLine("Вы слышите в темноте как что-то огромное надвигается на вас!");
                 Battles.MakeCurrentBattle(hero, 6);
@@ -463,7 +461,7 @@ namespace Fight_cons
             Sound.DRINK();
             Output.TwriteLine("Вы чувствуете как холодный эль заливается в вас", 1);
             Output.TwriteLine("Вам нравится\n", 30);
-            if (hero.drunk > 3)
+            if (hero.DrunkCondition > hero.OverDrunk)
             {
                 Sound.HIT();
                 Output.TwriteLine("*Звук удара головы об стол*", 1);
@@ -471,12 +469,12 @@ namespace Fight_cons
                 Output.TwriteLine("Вы проснулись", 50);
                 Output.TwriteLine("Щас бы эля холодного...", 10);
                 Console.ReadKey();
-                hero.drunk = 0;
-                hero.Max_drunk += 1;
+                hero.DrunkCondition = 0;
+                hero.OverDrunk += 1;
                 DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
             }
             hero.HeroSpying.Sneak = 0;
-            hero.drunk++;
+            hero.DrunkCondition++;
         }
 
         //  Событие отдых

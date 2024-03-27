@@ -12,52 +12,55 @@ namespace Fight_cons.Противник
         {
             Random rand = new Random();
 
-            switch (bestiaria.Role)
-            {
-                case ChaRole.Enemy:
-                    IsEnemy = true;
-                    break;
-                case ChaRole.Ally:
-                    IsEnemy = false;
-                    break;
-            }
-
-            Role = bestiaria.Role;
-            Phase = bestiaria.Phase;
+            CharecterProfile.Role = bestiaria.CharecterProfile.Role;
+            CharecterProfile.Phase = bestiaria.CharecterProfile.Phase;
             Name = bestiaria.Name;
 
-            if (Role == ChaRole.Wild)
+            if (CharecterProfile.Role == CharecterProfiles.ChaRole.Wild)
                 MaxHp = (bestiaria.HpMax == 0) ?
                     (short)(bestiaria.HpMin * rand.Next(2, 5)) : (short)(rand.Next(bestiaria.HpMin, bestiaria.HpMax) * rand.Next(2, 5));
             else
                 MaxHp = (bestiaria.HpMax == 0) ?
                     bestiaria.HpMin : (short)rand.Next(bestiaria.HpMin, bestiaria.HpMax);
 
-            HP = (bestiaria.HpMax == 0) ?
-                 bestiaria.HpMin : (short)rand.Next(bestiaria.HpMin, bestiaria.HpMax);
+            if (bestiaria.HpMax == 0)
+            {
+                HP = bestiaria.HpMin;
 
-            Attack = (bestiaria.HpMax == 0) ?
-                 bestiaria.AttMin : (short)rand.Next(bestiaria.AttMin, bestiaria.AttMax);
+                Attack = bestiaria.AttMin;
 
-            Speed = (bestiaria.HpMax == 0) ?
-                bestiaria.SpdMin : (float)(rand.Next(bestiaria.SpdMin, bestiaria.SpdMax) * 0.01);
+                Speed = bestiaria.SpdMin * 0.01f;
 
-            Crit = (bestiaria.HpMax == 0) ?
-                (float)(bestiaria.CrtMin * 0.01) : (float)(rand.Next(bestiaria.CrtMin, bestiaria.CrtMax) * 0.01);
+                Crit = bestiaria.CrtMin * 0.01f;
 
-            Defence = (bestiaria.HpMax == 0) ?
-                (float)(bestiaria.DefMin * 0.01) : (float)(rand.Next(bestiaria.DefMin, bestiaria.DefMax) * 0.01);
+                Defence = bestiaria.DefMin * 0.01f;
 
-            MagicDefence = (bestiaria.HpMax == 0) ?
-                (float)(bestiaria.MDefMin * 0.01) : (float)(rand.Next(bestiaria.MDefMin, bestiaria.MDefMax) * 0.01);
+                MagicDefence = bestiaria.MDefMin * 0.01f;
 
-            Block = (bestiaria.HpMax == 0) ?
-                (float)(bestiaria.BlkMin * 0.01) : (float)(rand.Next(bestiaria.BlkMin, bestiaria.BlkMax) * 0.01);
+                Block = bestiaria.BlkMin * 0.01f;
 
-            Moves = (bestiaria.HpMax == 0) ?
-                bestiaria.MovMin : (sbyte)rand.Next(bestiaria.MovMin, bestiaria.MovMax);
+                Moves = bestiaria.MovMin;
+            }
+            else
+            {
+                HP = (short)rand.Next(bestiaria.HpMin, bestiaria.HpMax);
 
-            Strategy = bestiaria.Strategy;
+                Attack = (short)rand.Next(bestiaria.AttMin, bestiaria.AttMax);
+
+                Speed = (float)(rand.Next(bestiaria.SpdMin, bestiaria.SpdMax) * 0.01);
+
+                Crit = (float)(rand.Next(bestiaria.CrtMin, bestiaria.CrtMax) * 0.01);
+
+                Defence = (float)(rand.Next(bestiaria.DefMin, bestiaria.DefMax) * 0.01);
+
+                MagicDefence = (float)(rand.Next(bestiaria.MDefMin, bestiaria.MDefMax) * 0.01);
+
+                Block = (float)(rand.Next(bestiaria.BlkMin, bestiaria.BlkMax) * 0.01);
+
+                Moves = (sbyte)rand.Next(bestiaria.MovMin, bestiaria.MovMax);
+            }
+
+            CharecterProfile.Strategy = bestiaria.CharecterProfile.Strategy;
 
             KillExp = ExpForKill(HP, Attack);
         }
@@ -68,70 +71,41 @@ namespace Fight_cons.Противник
             //  Минус от эффектов
             NegativeEffectImpact(unit);
 
-            if (unit.TotalHP > 0 & !unit.Run & !hero.Run)
+            if (unit.TotalHP > 0 & !unit.Condition.LeavedBattle & !hero.Condition.LeavedBattle)
             {
                 hero.Turn = 0;
 
-                unit.Conditions.SheeldUp = false;
+                unit.Condition.SheeldUp = false;
 
-                switch (unit.Strategy)
-                {
-                    //  Любая базовая стратегия поведения
-                    case Strategeis.Any:
-                        if (GameFormulas.Vero(0.5))
-                            PersonStrategy.StrgATC(unit, hero, units);
-                        else
-                            PersonStrategy.StrgMAG(unit, hero, units);
-                        break;
-
-                    //  Атакующй стратегия
-                    case Strategeis.Agresive:
-                        PersonStrategy.StrgATC(unit, hero, units);
-                        break;
-
-                    //  Стратегия волшебника
-                    case Strategeis.Mage:
-                        PersonStrategy.StrgMAG(unit, hero, units);
-                        break;
-
-                    //  Стратегия некроманта
-                    case Strategeis.Necromancer:
-                        PersonStrategy.StrgNECRO(unit, hero, units);
-                        break;
-
-                    //  Стратегия хилера
-                    case Strategeis.Healer:
-                        ///
-                        break;
-                }
+                PersonStrategy.UnitAction(unit, hero, units);                
             }
             else if (unit.TotalHP <= 0)
-                unit.IsAlive = false;
+                unit.Condition.IsAlive = false;
         }
 
         //  Вычитание негативыне эффекты
         public static void NegativeEffectImpact(Charecter unit)
         {
-            if (unit.Conditions.Moves > 0 || unit.Conditions.PoisentRound > 0 || unit.Conditions.BleedRound > 0)
+            if (unit.Condition.Moves > 0 || unit.Condition.PoisentRound > 0 || unit.Condition.BleedRound > 0)
             {
                 //  Кровотечение
-                if (unit.Conditions.BleedRound > 0)
+                if (unit.Condition.BleedRound > 0)
                 {
                     Output.NameAndId(unit, false);
-                    Output.WriteColorLine(ConsoleColor.DarkRed, $"получает -{Condition.BleedDmg} HP от ", "кровотечение\n");
-                    unit.Conditions.BleedRound--;
-                    unit.HP -= Condition.BleedDmg;
+                    Output.WriteColorLine(ConsoleColor.DarkRed, $"получает -{Conditions.BleedDmg} HP от ", "кровотечение\n");
+                    unit.Condition.BleedRound--;
+                    unit.HP -= Conditions.BleedDmg;
                 }
 
                 //  Замедление
-                if (unit.Conditions.Moves > 0)
-                    unit.Conditions.SlowRound--;
+                if (unit.Condition.Moves > 0)
+                    unit.Condition.SlowRound--;
 
                 //  Отравление
-                if (unit.Conditions.PoisentRound > 0)
+                if (unit.Condition.PoisentRound > 0)
                 {
-                    unit.Conditions.PoisentRound--;
-                    unit.HP -= unit.Conditions.PoisentDmg;
+                    unit.Condition.PoisentRound--;
+                    unit.HP -= unit.Condition.PoisentDmg;
                 }
             }
         }

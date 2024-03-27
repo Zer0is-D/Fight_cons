@@ -44,12 +44,12 @@ namespace Fight_cons
             {
                 File.Create(Path).Close();
                 File.WriteAllText(Path, $"<?xml version=\"1.0\" encoding=\"utf-8\"?>{Environment.NewLine}<catalog></catalog>");
-                for (sbyte i = 0; i < 20;)
+                for (sbyte i = 0; i < players.Count;)
                 {
                     SaveUserScore(players[i]);                    
                     i++;
                 }
-            }
+            }            
 
             XDocument document = XDocument.Load(Path);
 
@@ -77,25 +77,25 @@ namespace Fight_cons
                 (hero.Lvl * 10) +
                 (hero.Exp * 2) +
                 hero.TotalMaxHP +
-                hero.PermanentBonuses.MaxHp +
+                hero.PermanentBonus.MaxHp +
                 hero.TotalMaxMP +
-                hero.PermanentBonuses.MaxMp +
+                hero.PermanentBonus.MaxMp +
                 hero.TotalAttack +
-                hero.PermanentBonuses.Attack +
+                hero.PermanentBonus.Attack +
                 hero.TotalArcane +
-                hero.PermanentBonuses.Arcane +
+                hero.PermanentBonus.Arcane +
                 hero.TotalSpeed +
-                hero.PermanentBonuses.Speed +
+                hero.PermanentBonus.Speed +
                 hero.TotalCrit +
-                hero.PermanentBonuses.Crit +
+                hero.PermanentBonus.Crit +
                 hero.TotalDefence +
-                hero.PermanentBonuses.Defence +
+                hero.PermanentBonus.Defence +
                 hero.TotalMagicDefence +
-                hero.PermanentBonuses.MagicDefence +
+                hero.PermanentBonus.MagicDefence +
                 hero.TotalBlock +
-                hero.PermanentBonuses.Block +
+                hero.PermanentBonus.Block +
                 hero.TotalMaxMoves +
-                hero.PermanentBonuses.Moves);
+                hero.PermanentBonus.Moves);
 
             return player;
         }

@@ -30,29 +30,23 @@ namespace Fight_cons
             {
                 Output.TwriteLine("- Пришел уши греть?! Хочешь сидеть в трактире покупай выпивку!\n", 1);
                 Console.Write("Ваши действия?\n");
-                Output.WriteColorLine(ConsoleColor.Yellow, "1) Купить выпивку (", $"5{Output.MoneySymbol}", ")\n");
+                Output.PayMoneyLine("1) Купить выпивку", Output.BeerCost, hero.Money);
                 Console.Write("2) Отказаться и уйти\n");
 
                 switch (Input.ChoisInput(1, 2))
                 {
                     case 1:
-                        if (hero.Money >= 5)
-                        {
-                            hero.Money -= 5;
-                            Output.TwriteLine("\n- Так-то лучше\n", 1);
-                            Output.TwriteLine("*Трактирщик наливает вам выпивки*\n", 1);
+                        if (Output.Spent(hero.Money, Output.BeerCost, "- Пщел отсюда скряга!\n"))
                             Drinking(hero);
-                        }
                         else
                         {
-                            Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
-                            hero.HeroStatistic.HeroLvlKickOff = hero.Lvl;
+                            //Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
+                            hero.Statistic.HeroLvlKickOff = hero.Lvl;
                             DefualtLoad(hero, Locations[(int)LocationName.Village]);
-
                         }
                         break;
                     case 2:
-                        Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
+                        //Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
                         DefualtLoad(hero, Locations[(int)LocationName.Village]);
                         break;
                 }

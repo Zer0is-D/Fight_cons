@@ -72,9 +72,9 @@ namespace Fight_cons
                 Output.WriteColorLine(ConsoleColor.White, $"\n{item.Id + 1}) ", $"{item.Name}\n");
 
                 if (itemChars[0].ItemType == ItemTyps.Weapon)
-                    ItemStats(hero.HeroWeapon, item, true);
+                    ItemStats(hero.CharecterWeapon, item);
                 else
-                    ItemStats(hero.HeroArmor, item, true);
+                    ItemStats(hero.CharecterArmor, item);
 
                 Output.WriteColorLine(ConsoleColor.Yellow, $"\nЦена: ", $"{item.Cost}{Output.MoneySymbol}\n");
             }
@@ -84,13 +84,9 @@ namespace Fight_cons
 
             switch (chois)
             {
-                case 0:
-                    if (hero.Money < 10)
-                        Console.WriteLine("Ну не за бесплатно же!");
-                    else
-                    {
-                        Output.Spent(hero, itemChars[chois - 2].Cost);
-
+                case 0:                   
+                    if (Output.Spent(hero.Money, Output.ShowNewItemsCost, "", "Ну не за бесплатно же!"))
+                    {    
                         switch (itemChars[chois].ItemType)
                         {
                             case ItemTyps.Weapon:                                
@@ -118,14 +114,14 @@ namespace Fight_cons
                         switch (itemChars[chois - 2].ItemType)
                         {
                             case ItemTyps.Weapon:
-                                hero.HeroWeapon = WeaponList[chois - 2];
+                                hero.CharecterWeapon = WeaponList[chois - 2];
                                 break;
                             case ItemTyps.Armor:
-                                hero.HeroArmor = ArmorList[chois - 2];
+                                hero.CharecterArmor = ArmorList[chois - 2];
                                 break;
                         }
 
-                        Output.Spent(hero, itemChars[chois - 2].Cost, itemChars[chois - 2].Name);
+                        Output.Spent(hero.Money, itemChars[chois - 2].Cost, itemChars[chois - 2].Name);
                     }
                     else
                         Output.TwriteLine("Чтобы что-то получить, нужно что-то отдать!", 1);

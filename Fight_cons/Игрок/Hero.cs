@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fight_cons.Основа_и_настройки;
+using System;
 using System.Collections.Generic;
 
 namespace Fight_cons
@@ -68,8 +69,6 @@ namespace Fight_cons
         }
 
         #region Умения героя
-        //  Информация о противниках
-        public bool EnemyAbout = false;
 
         //  Боевые навыки героя
         private protected List<AttackDes> _heroSkills = new List<AttackDes>();
@@ -106,12 +105,9 @@ namespace Fight_cons
         //  Внимательность/шпионаж
         public Spying HeroSpying = new Spying();
 
-        //  Статистика
-        internal Statistic HeroStatistic = new Statistic();
-
         //  Опьянение
-        public byte drunk = 0;
-        public byte Max_drunk = 3;
+        public byte DrunkCondition = 0;
+        public byte OverDrunk = 3;
 
         //  Выход со стартовой позиции
         public static bool Exit_cave;
@@ -129,9 +125,9 @@ namespace Fight_cons
             Crit = 0.05f;
             Block = 0.10f;
             Moves = 2;
-            IsPlayer = true;
-            IsAlive = true;
-            Role = ChaRole.Hero;
+            CharecterProfile.IsPlayer = true;
+            Condition.IsAlive = true;
+            CharecterProfile.Role = CharecterProfiles.ChaRole.Hero;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Fight_cons.Основа_и_настройки
 {
-    internal class PermanentBonus : Characteristics
+    internal class PermanentBonuses : Characteristics
     {
         internal protected new short HP
         {

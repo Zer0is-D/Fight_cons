@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using static Fight_cons.Основа_и_настройки.CharecterProfiles;
 
 namespace Fight_cons
 {
@@ -24,8 +25,8 @@ namespace Fight_cons
         public Bestiaria(string name, sbyte phase, short hp, short attack, sbyte speed, sbyte critChance, sbyte defence, sbyte magicDefence, sbyte block, sbyte moves, bool noRun, ChaRole role, Strategeis strategy = 0)
         {
             Name = name;
-            Phase = phase;
-            Role = role;
+            CharecterProfile.Phase = phase;
+            CharecterProfile.Role = role;
 
             HpMin = hp;
             AttMin = attack;
@@ -36,9 +37,9 @@ namespace Fight_cons
             BlkMin = block;
             MovMin = moves;
 
-            CantRun = noRun;
+            CharecterProfile.TooBrave = noRun;
 
-            Strategy = strategy;
+            CharecterProfile.Strategy = strategy;
         }
 
         public Bestiaria(string name, sbyte phase, short hpMin, short hpMax, short attMin, short attMax, sbyte spdMin, sbyte spdMax, 
@@ -46,8 +47,8 @@ namespace Fight_cons
             Strategeis strategy, ChaRole role)
         {
             Name = name;
-            Phase = phase;
-            Role = role;
+            CharecterProfile.Phase = phase;
+            CharecterProfile.Role = role;
 
             HpMin = hpMin; HpMax = hpMax;
             AttMin = attMin; AttMax = attMax;
@@ -59,7 +60,7 @@ namespace Fight_cons
             BlkMin = blkMin; BlkMax = blkMax;
             MovMin = movMin; MovMax = movMax;
 
-            Strategy = strategy;
+            CharecterProfile.Strategy = strategy;
         }
         
         //  Создание листа противников если он пустой
@@ -97,6 +98,8 @@ namespace Fight_cons
                 new Bestiaria("Некромант", phase: 0, hp: 20, attack: 0, speed: 20, critChance: 0, defence: 0, magicDefence: 30, block: 0, moves: 5, noRun: true, ChaRole.Enemy, strategy: Strategeis.Necromancer) { Id = 9 },
                 /*10*/
                 new Bestiaria("Жертвиник", phase: 0, hp: 20, attack: 0, speed: 0, critChance: 0, defence: 0, magicDefence: 0, block: 0, moves: 2, noRun: true, ChaRole.Enemy, strategy: Strategeis.Healer) { Id = 10 },
+                /*11*/
+                new Bestiaria("Зверолов", phase: 0, hpMin: 10, hpMax: 25, attMin: 1, attMax: 2, spdMin: 30, spdMax: 30, critMin: 5, critMax: 10, defMin: 1, defMax: 15, mDefMin: 10, mDefMax: 50, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, role: ChaRole.Enemy, strategy: Strategeis.BeastMaster) { Id = 11 },
 
                 //  Союзники после 99
                 /*100*/
