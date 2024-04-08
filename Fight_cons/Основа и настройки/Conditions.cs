@@ -51,13 +51,12 @@ namespace Fight_cons
         internal protected void RandomDebuff(Charecter attacker, Charecter victim)
         {
             if (GameFormulas.Vero(0.7))
-                AttackDes.Act_Parry_atc(attacker, victim);
+                AttackDes.ActParryAtt(victim, attacker);
             else
             {
-                Output.WriteColorLine(ConsoleColor.DarkMagenta, "\n", $"{victim.Name} ", "пропускает ход\n");
-                victim.Turn = victim.TotalMaxMoves;
-                if (attacker is Hero hero)
-                    hero.Statistic.Attacks++;
+                Output.WriteColorLine(ConsoleColor.DarkMagenta, "\n", $"{attacker.Name} ", "пропускает ход\n");
+                attacker.Turn = attacker.TotalMaxMoves;
+                victim.Statistic.Attacks++;
             }
         }
     }

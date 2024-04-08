@@ -7,6 +7,7 @@ namespace Fight_cons
     public partial class Hero : Charecter
     {
         public string Class_name = "???";
+        public byte Sneak = 0;
 
         //  Здоровье
         internal new protected short MaxHp

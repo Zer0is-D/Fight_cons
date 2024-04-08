@@ -176,7 +176,7 @@ namespace Fight_cons
         }
 
         //  Метод вывода с ожиданием и переходом на другую строку
-        public static void TwriteLine(string str, int x)
+        public static void TwriteLine(string str, int x, bool waitForKey = false)
         {
             foreach (char s in str)
             {
@@ -188,6 +188,9 @@ namespace Fight_cons
 
             }
             Console.Write("\n");
+
+            if (waitForKey)
+                Console.ReadKey(true);
         }
 
         //  Ожидание между событиями

@@ -17,6 +17,14 @@ namespace Fight_cons
         //    //Console.SetWindowSize(12, 20);
         //}
 
+        public static void RecomendedWindowSize()
+        {
+            Console.WriteLine("\nПеред тем чтобы продолжить отрегулируйте ширину консоли так чтобы нижняя линия была прямая и впрятык к правой стенке");
+            Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "################################################################################", "\n");
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nНажмите ", "Enter", " чтобы продолжить...\n");
+            Console.ReadKey(true);
+        }
+
         public static void OptionWaitSkip(Hero hero)
         {
             string quo = "Убать задержку?\n"

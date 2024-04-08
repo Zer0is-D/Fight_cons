@@ -11,6 +11,10 @@ namespace Fight_cons
         //  На каком уровне выперли героя из бара
         public sbyte HeroLvlKickOff;
 
+        //  Разговорные штуки в таверне:
+        public sbyte TavernTalksProgress;
+
+
         //  Влияния на субъекта
         public sbyte GetDamegeInFight;
 

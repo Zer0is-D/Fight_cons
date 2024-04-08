@@ -86,7 +86,7 @@ namespace Fight_cons
         }
 
         //  Действие: Атака из-за парирования
-        public static void Act_Parry_atc(Charecter attacker, Charecter victim)
+        public static void ActParryAtt(Charecter attacker, Charecter victim)
         {
             short damag = GameFormulas.Damage(attacker, victim);
 

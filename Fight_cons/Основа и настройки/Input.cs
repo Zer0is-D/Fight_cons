@@ -99,7 +99,7 @@ namespace Fight_cons
                 hero.Money += m;
             };
             KeyWords["uphp"] = () => { hero.MaxHp = 300; hero.HP = hero.MaxHp; };
-            KeyWords["tavern1"] = () => { SerAsync.TavernLocal(hero); };
+            KeyWords["tavern1"] = () => { PipeMessage.TavernLocal(hero); };
             KeyWords["gsettings"] = () =>
             {
                 sbyte ans;

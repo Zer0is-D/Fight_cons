@@ -80,7 +80,12 @@ namespace Fight_cons.Противник
                 PersonStrategy.UnitAction(unit, hero, units);                
             }
             else if (unit.TotalHP <= 0)
+            {
+                unit.Condition.Clear();
                 unit.Condition.IsAlive = false;
+            }
+
+                
         }
 
         //  Вычитание негативыне эффекты

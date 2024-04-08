@@ -1,6 +1,8 @@
 ﻿using Fight_cons.Основа_и_настройки;
 using System;
 using System.Collections.Generic;
+using System.Net.Security;
+using System.Threading.Tasks;
 
 namespace Fight_cons
 {
@@ -103,6 +105,25 @@ namespace Fight_cons
             person.Turn += 4;
         }
 
+        public static void AdSpamSpellAsync(Charecter person)
+        {
+            // change to messageMas
+            
+            string[] Dialogs =
+            {
+                "Реклама",
+                "Текст рекламы",
+            };
+
+            Output.NameAndId(person, true);
+            Output.WriteColorLine(ConsoleColor.Yellow, "", "спамит ", "рекламой!\n");
+
+            PipeMessage.MultiAdSpellAsync(Dialogs, 3);
+
+            person.Statistic.Spells++;
+            person.Turn += 2;
+        }
+
         #endregion
 
         #region Атаки
@@ -111,7 +132,7 @@ namespace Fight_cons
         {
             attacker.Turn += 1;
 
-            short damag = GameFormulas.Damage(attacker, victim, false, true);
+            short damag = GameFormulas.Damage(attacker, victim, false);
             attacker.Statistic.Attacks++;
 
             BattleLog(attacker, victim, damag);
@@ -127,7 +148,7 @@ namespace Fight_cons
             Output.NameAndId(attacker, true);
             Console.Write("накладывает на ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.DarkGreen, " ", $"отравление ");
+            Output.WriteColorLine(ConsoleColor.DarkGreen, "", $"отравление ");
             Output.WriteColorLine(ConsoleColor.Yellow, "сносит ", $"{damag} ", "урона! У ");
             Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.TotalHP - damag} ", $"{Output.HPSymbol}\n");

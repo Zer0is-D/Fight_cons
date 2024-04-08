@@ -29,7 +29,7 @@ namespace Fight_cons.Основа_и_настройки
         /// <param name="throwBranch">Пробитие брони</param>
         /// <param name="parry">Парирование</param>
         /// <returns></returns>
-        public static short Damage(Charecter attacker, Charecter victim, bool throwBranch = false, bool parry = false)
+        public static short Damage(Charecter attacker, Charecter victim, bool throwBranch = false)
         {
             float crit = CheckCrit(attacker);
             float attack;
@@ -39,7 +39,7 @@ namespace Fight_cons.Основа_и_настройки
             else
                 attack = attacker.TotalAttack + crit / ArmorFine;
 
-            if (parry)
+            if (victim.Condition.AttackParry)
                 if (CheckParry(attacker, victim))
                     victim.Condition.RandomDebuff(attacker, victim);
 
@@ -53,18 +53,14 @@ namespace Fight_cons.Основа_и_настройки
         protected static bool CheckParry(Charecter attacker, Charecter victim)
         {
             Random rand = new Random();
-            if (victim.Condition.AttackParry)
-            {
-                if (victim.TotalSpeed >= rand.NextDouble())
-                    return true;
-                else
-                {
-                    Console.WriteLine("Парирование не удалось!");
-                    return false;
-                }
-            }
+
+            if (victim.TotalSpeed >= rand.NextDouble())
+                return true;
             else
+            {
+                Console.WriteLine("Парирование не удалось!");
                 return false;
+            }
         }
 
         public static short MagicDamage(Charecter attacker, Charecter victim, short spellPower)

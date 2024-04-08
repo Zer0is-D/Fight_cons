@@ -20,26 +20,39 @@ namespace Fight_cons
                             + $"{Output.SpeedStr}: {TotalSpeed * 100}%\t{Output.CritStr}: {TotalCrit * 100}%\n"
                             + $"{Output.BlockStr}: {TotalBlock * 100}%\n");
             Output.WriteColorLine(ConsoleColor.Yellow, $"Money: {Money}", $"{Output.MoneySymbol}\n");
-            Output.WriteColorLine(ConsoleColor.Cyan, "Экиперовано оружие:\n", $"{CharecterWeapon.Name} ", $"| {ItemChar.ItemStats(CharecterWeapon, false)}");
-            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкиперована броня:\n", $"{CharecterArmor.Name} ", $"| {ItemChar.ItemStats(CharecterArmor, false)}\n");
+            Output.WriteColorLine(ConsoleColor.Cyan, "Экиперовано оружие:\n", $"{CharecterWeapon.Name} ", $"| {ItemStats(CharecterWeapon, false)}");
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкиперована броня:\n", $"{CharecterArmor.Name} ", $"| {ItemStats(CharecterArmor, false)}\n");
         }
 
         //  Начало начал
         public static void CreateHero(Hero hero)
-        {            
-            Output.TwriteLine("Громкий и непонятной природы звук постепенно пробуждает ваше тело.\n"
-                      + "После чего вы слышите голос словно он у вас в голове.\n"
-                      + "'ВСТАВАЙ ДУША, ВЕЛЮ ТЕБЕ РОЗЫСКАТЬ ТОАТОТА И ИЗНЕЧТОЖИТЬ!'\n", 10);
+        {
             hero.Name = "No_name";
-            Console.ReadKey(true);
-            Output.TwriteLine("Ощущая внутри некую ответственность со странным желанием выполнить поручение\n"
-                      + "вы решаетесь открыть глаза, но тьма не дает вам что-либо увидеть...\n", 10);
 
             CharecterClases.GiveHeroClass(hero);
             GiveHeroWeapon(hero);
 
+            Console.WriteLine("\nВаши характеристики:");
+            hero.ShowHeroStats();
+
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nНажмите ", "Enter", " чтобы продолжить...\n");
+            Console.ReadKey(true);
+
+            Output.TwriteLine("\nГромкий и непонятной природы звук постепенно пробуждает ваше тело.\n"
+                            + "После чего вы слышите голос словно он доносться из глубин вашего сознания.\n"
+                            + "'ВСТАВАЙ ДУША, РОЗЫЩИ ТОАТОТА И ПОКОНЧИ С НИМ!'\n", 10, true);
+            Output.TwriteLine("Затихший голос сменяется на острую головную боль", 10, true);
+
+            hero.HP -= 1;
+            Output.WriteColorLine(ConsoleColor.DarkRed, "\n[", "-1 ", $"{Output.HPSymbol} ");
+            Output.WriteColorLine(ConsoleColor.Magenta, $"от ", "головной боли", "]\n");
+            Console.ReadKey(true);
+
+            Output.TwriteLine("\nОщущая внутри некую ответственность со странным желанием выполнить поручение\n"
+                      + "вы решаетесь открыть глаза, но тьма не дает вам что-либо увидеть...\n", 10, true);
+
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
-                          + "Догадка была верна, это оказался факел, что освятил пространство. Но ответить на вопрос где вы, пока не удается.\n", 1);
+                          + "Догадка была верна, это оказался факел, что освятил пространство. Но ответить на вопрос где вы, пока не удается.\n", 1, true);
 
             DefualtLoad(hero, Locations[(int)LocationName.CaveStart]);
         }        

@@ -13,11 +13,13 @@ namespace Fight_cons
             Console.SetWindowSize(80, 30);
             Console.OutputEncoding = Encoding.Unicode;
 
+            Settings.RecomendedWindowSize();
+
             Hero hero = new Hero(25, 10);
 
             Output.GameLogo(vers: "2.6 (Альфа)");
 
-            DifrentFiles.LoadBestiarList();
+            EnemyFromXML.LoadBestiarList();
 
             DataFromWF.ConfigData();
             

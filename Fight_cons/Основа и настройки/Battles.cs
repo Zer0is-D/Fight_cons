@@ -58,7 +58,7 @@ namespace Fight_cons
         {
             foreach (var enemy in unitId)
             {
-                var u = new Order(DifrentFiles.LoudedEnemies(enemy));
+                var u = new Order(EnemyFromXML.LoudedEnemies(enemy));
 
                 if (u.charecter != null)
                     AboutLoc.ListOfUnits.Add(u);
@@ -77,7 +77,7 @@ namespace Fight_cons
 
             foreach (var enemy in unitId)
             {
-                var u = new Order(DifrentFiles.LoudedEnemies(enemy));
+                var u = new Order(EnemyFromXML.LoudedEnemies(enemy));
 
                 if (u.charecter != null)
                 {
@@ -203,7 +203,7 @@ namespace Fight_cons
                     Reward(hero, units);
                 }
             }
-            hero.Condition .LeavedBattle = false;
+            hero.Condition.LeavedBattle = false;
             AboutLoc.ListOfUnits.Clear();
         }
 

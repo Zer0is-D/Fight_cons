@@ -87,7 +87,7 @@
   <ItemGroup>
     <Compile Include="Основа и настройки\CharecterProfiles.cs" />
     <Compile Include="Противник\Bestiaria.cs" />
-    <Compile Include="Основа и настройки\DifrentFiles.cs" />
+    <Compile Include="Основа и настройки\EnemyFromXML.cs" />
     <Compile Include="PatternUnit.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -99,7 +99,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SerAsync.cs" />
+    <Compile Include="PipeMessage.cs" />
     <Compile Include="Мир\Locations\Location.cs" />
     <Compile Include="Основа и настройки\GameFormulas.cs" />
     <Compile Include="Основа и настройки\Info.cs" />

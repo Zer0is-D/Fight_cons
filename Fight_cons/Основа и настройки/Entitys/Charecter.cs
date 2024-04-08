@@ -69,7 +69,7 @@ namespace Fight_cons
         internal CharecterClases CharecterClass = new CharecterClases("No class", 0);
         internal Statistic Statistic = new Statistic();
 
-        internal ItemChar CharecterWeapon = new ItemChar(name: "Кулаки", itemType: ItemTyps.Weapon,  attack: 1, speed: 0.2f, cost: 0, crit: 0, block: 0, maxMoves: 2);
+        internal ItemChar CharecterWeapon = new ItemChar(name: "Без оружия", itemType: ItemTyps.Weapon,  attack: 1, speed: 0.2f, cost: 0, crit: 0, block: 0, maxMoves: 2);
         internal ItemChar CharecterArmor = new ItemChar("Без брони", itemType: ItemTyps.Armor, 0, 0);        
 
         //  Текущий ход

@@ -110,16 +110,6 @@ namespace Fight_cons
 
                         Output.WriteColorLine(ConsoleColor.White, $"\n", $"{Q_Leva_swored.Name} ", "| ");
                         ItemStats(hero.CharecterWeapon, Q_Leva_swored);
-                        Comparison(hero.CharecterWeapon.Attack, Q_Leva_swored.Attack, text_mid: "ATT");
-                        Comparison(hero.CharecterWeapon.Speed, Q_Leva_swored.Speed, text_mid: "SPD", true);
-                        Comparison(hero.CharecterWeapon.Crit, Q_Leva_swored.Crit, text_mid: "CRT", true);
-                        Comparison(hero.CharecterWeapon.Block, Q_Leva_swored.Block, text_mid: "BLK", true);
-                        if (Q_Leva_swored.Moves >= 1)
-                            Comparison(hero.CharecterWeapon.Moves, Q_Leva_swored.Moves, text_mid: "MOV");
-                        else
-                            Console.WriteLine();
-
-                        //Game.TwriteLine($"{Q_Leva_swored.Weapon_stats_market(hero.weapon, Q_Leva_swored, true)}\n", 1);
 
                         Output.TwriteLine("\nВаши действия?\n"
                                       + "1) Взять меч\n"
@@ -176,13 +166,8 @@ namespace Fight_cons
                     break;
 
                 case 4:
-                    if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья"))
-                    {
-                        
+                    if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
                         hero.PotionList[0].Count += 1;
-                    }
-                    else
-                        Output.TwriteLine("\nВы нищеброд! Проваливайте!\n", 1);
                     break;
 
                 case 5:

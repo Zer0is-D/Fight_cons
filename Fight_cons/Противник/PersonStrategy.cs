@@ -137,6 +137,8 @@ namespace Fight_cons
                 if (NeedToRun(attacker, min1: 10, min2: 20))
                     break;
 
+                //UnitSkills.AdSpamSpellAsync(attacker);
+
                 if (WhoToBeat(attacker, hero, units) != null)
                 {
                     if (GameFormulas.PercentHp(attacker) < 60)
@@ -159,7 +161,7 @@ namespace Fight_cons
                         }
 
                         //  Заклинание замедления
-                        if (hero.Condition.Moves < 3)
+                        if (hero.Condition.SlowRound <= 1)
                         {
                             if (GameFormulas.Vero(0.7))
                             {

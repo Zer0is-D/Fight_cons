@@ -1,5 +1,4 @@
-﻿using Fight_cons.form;
-using Fight_cons.Противник;
+﻿using Fight_cons.Противник;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,12 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using static Fight_cons.Charecter;
 using static Fight_cons.Основа_и_настройки.CharecterProfiles;
 
 namespace Fight_cons
 {
-    public class DifrentFiles
+    public class EnemyFromXML
     {
         private static string Path = Application.StartupPath + "\\Units.xml";
 

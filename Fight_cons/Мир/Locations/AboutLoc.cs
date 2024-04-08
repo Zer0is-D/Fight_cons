@@ -27,10 +27,8 @@ namespace Fight_cons
             new Location(0, "???", 
                 (Hero hero) =>
                 {
-                    //DefualtLoad(hero, Locations[(sbyte)LocationName.MagicManHouse]);
-
                     if (GameFormulas.Vero(0.3))
-                        Battles.MakeCurrentBattle(hero, 0, 0, 9);
+                        Battles.MakeCurrentBattle(hero, 0, 9);
                 }, CavesStart),
             new Location(0, "Пещеры", 
                 (Hero hero) => 
@@ -310,7 +308,7 @@ namespace Fight_cons
                         DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
                     break;
                 case 2:
-                    Market(hero);
+                    DefualtLoad(hero, Locations[(sbyte)LocationName.Market]);
                     break;
                 case 3:
                     DefualtLoad(hero, Locations[(sbyte)LocationName.MagicManHouse]);
@@ -336,15 +334,16 @@ namespace Fight_cons
                     hero.HeroSpying.SpyingInTavern(hero);
                     break;
                 case 2:
-                    if (Output.Spent(hero.Money, Output.BeerCost, "Заплати, а потом пей!"))
+                    if (Output.Spent(hero.Money, Output.BeerCost, "", "Заплати, а потом пей!"))
                         Drinking(hero);
                     break;
                 case 3:
-                    if (Output.Spent(hero.Money, Arm_game.Cost, "Бесплатно не интересует\n"))
+                    if (Output.Spent(hero.Money, Arm_game.Cost, "", "Бесплатно не интересует\n"))
                         ArmGameEvent(hero); 
                     break;
                 case 4:
                     DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
+                    PipeMessage.DialogInturapted = true;
                     break;
             }
         }
@@ -375,23 +374,13 @@ namespace Fight_cons
                     break;
 
                 case 4:
-                    if (hero.Money >= Output.PotionHPCost)
-                    {
-                        Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья");
+                    if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
                         hero.PotionList[0].Count += 1;
-                    }
-                    else
-                        Output.TwriteLine("\nВы нищеброд! Проваливайте!\n", 1);
                     break;
 
                 case 5:
-                    if (hero.Money >= Output.PotionMPCost)
-                    {
-                        Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны");
+                    if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
                         hero.PotionList[1].Count += 1;
-                    }
-                    else
-                        Output.TwriteLine("\nВы нищеброд! Проваливайте!\n", 1);
                     break;
 
                 case 6:
@@ -415,7 +404,7 @@ namespace Fight_cons
                 case 1:
                     if (!hero.CharecterProfile.EnemyAbout)
                     {
-                        if (Output.Spent(hero.Money, Output.VisionSkillCost, "Вам нехватает средств"))
+                        if (Output.Spent(hero.Money, Output.VisionSkillCost, "", "Вам нехватает средств"))
                         {                            
                             Console.WriteLine("Теперь вы можете видеть врагов");
                             hero.CharecterProfile.EnemyAbout = true;
@@ -473,7 +462,7 @@ namespace Fight_cons
                 hero.OverDrunk += 1;
                 DefualtLoad(hero, Locations[(sbyte)LocationName.Village]);
             }
-            hero.HeroSpying.Sneak = 0;
+            hero.Sneak = 0;
             hero.DrunkCondition++;
         }
 

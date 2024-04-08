@@ -69,7 +69,7 @@ namespace Fight_cons
         //  Выпить зелье силы
         public static void PowerPotion(Hero hero)
         {
-            hero.Condition.Attack = 200;
+            hero.Condition.Attack = (short)(hero.TotalAttack * 3);
             Console.WriteLine($"Ваша сила теперь {hero.Attack}");
     
             Sound.DRINK();
