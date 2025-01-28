@@ -10,9 +10,9 @@ namespace Fight_cons
     class CombatSolutions
     {
         //  Боевые решения
-        private static sbyte BattleChoise;
+        private static sbyte BattleChoise; 
         private static bool SkipTurn = false;
-        private static bool QuickCommandDone = false;
+        private static bool QuickCommandDone = false; 
 
         public static void CurrentEnemy(Hero hero, List<Order> units)
         {
