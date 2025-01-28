@@ -1,4 +1,4 @@
-﻿using Fight_cons.Основа_и_настройки;
+﻿using Fight_cons.CoreNSettings;
 using System;
 
 namespace Fight_cons

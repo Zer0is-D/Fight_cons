@@ -11,7 +11,7 @@ namespace Fight_cons
     partial class Hero
     {
         //  Шкала здоровья
-        public void HP_bar()
+        public void HPBar()
         {
             double part = MAX_HP / 10.0, c = 0;
             //Console.ForegroundColor = ConsoleColor.White;

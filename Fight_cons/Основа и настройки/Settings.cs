@@ -56,7 +56,7 @@ namespace Fight_cons
         }
 
         //  Настройки звуковых эффектов
-        public static void Option_sound(Hero hero)
+        public static void OptionSound(Hero hero)
         {
             Console.WriteLine("Оставить звук?\n"
                             + "1) Да\n"

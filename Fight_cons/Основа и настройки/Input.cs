@@ -86,7 +86,7 @@ namespace Fight_cons
             KeyWords["настройки"] = () =>
             {
                 Console.WriteLine();
-                Settings.Option_sound(hero);
+                Settings.OptionSound(hero);
                 Settings.OptionWaitSkip(hero);
             };
             //KeyWords["tp"] = () => { Teleport(hero); };

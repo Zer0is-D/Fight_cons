@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Fight_cons.Основа_и_настройки
+namespace Fight_cons.CoreNSettings
 {
     public class Characteristics
     {

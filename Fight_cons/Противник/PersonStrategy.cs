@@ -1,5 +1,5 @@
-﻿using Fight_cons.Основа_и_настройки;
-using Fight_cons.Противник;
+﻿using Fight_cons.CoreNSettings;
+using Fight_cons.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Linq;

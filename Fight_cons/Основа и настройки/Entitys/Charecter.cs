@@ -1,4 +1,4 @@
-﻿using Fight_cons.Основа_и_настройки;
+﻿using Fight_cons.CoreNSettings;
 using System;
 using static Fight_cons.ItemChar;
 

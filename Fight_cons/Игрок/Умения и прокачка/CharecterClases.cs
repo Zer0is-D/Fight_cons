@@ -1,4 +1,4 @@
-﻿using Fight_cons.Основа_и_настройки;
+﻿using Fight_cons.CoreNSettings;
 using System;
 using static Fight_cons.Charecter;
 
@@ -73,21 +73,21 @@ namespace Fight_cons
                     break;
 
                 case ChaClass.Fither:
-                    hero.Class_name = "Воин";
+                    hero.ClassName = "Воин";
                     hero.CharecterClass.MaxHp += 5;
                     hero.CharecterClass.Attack += 1;
                     hero.CharecterClass.Defence += 0.01f;
                     break;
 
                 case ChaClass.Wisard:
-                    hero.Class_name = "Волшебник";
+                    hero.ClassName = "Волшебник";
                     hero.CharecterClass.Arcane += 1;
                     hero.CharecterClass.MagicDefence += 0.01f;
                     hero.CharecterClass.MaxMp += 5;
                     break;
 
                 case ChaClass.Rouge:
-                    hero.Class_name = "Ловкач";
+                    hero.ClassName = "Ловкач";
                     hero.CharecterClass.Crit += 0.01f;
                     hero.CharecterClass.Speed += 0.01f;
                     hero.CharecterClass.Block += 0.01f;

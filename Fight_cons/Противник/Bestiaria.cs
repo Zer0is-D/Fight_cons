@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using static Fight_cons.Основа_и_настройки.CharecterProfiles;
+using static Fight_cons.CoreNSettings.CharecterProfiles;
 
 namespace Fight_cons
 {

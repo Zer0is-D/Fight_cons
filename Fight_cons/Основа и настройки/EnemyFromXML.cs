@@ -1,4 +1,4 @@
-﻿using Fight_cons.Противник;
+﻿using Fight_cons.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using static Fight_cons.Основа_и_настройки.CharecterProfiles;
+using static Fight_cons.CoreNSettings.CharecterProfiles;
 
 namespace Fight_cons
 {

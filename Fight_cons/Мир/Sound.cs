@@ -9,7 +9,7 @@ namespace Fight_cons
 {
     class Sound
     {
-        public static async void Music_player() => await Task.Run(() => LongFanfares_Play());
+        public static async void MusicPlayer() => await Task.Run(() => LongFanfaresPlay());
 
         #region Звуковые эффекты
         public static async void HIT()
@@ -85,7 +85,7 @@ namespace Fight_cons
         #endregion
 
         #region Музыка
-        public static void LongFanfares_Play()
+        public static void LongFanfaresPlay()
         {
             while (true)
             {

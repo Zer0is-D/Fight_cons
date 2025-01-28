@@ -1,4 +1,4 @@
-﻿using Fight_cons.Основа_и_настройки;
+﻿using Fight_cons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 
@@ -6,7 +6,7 @@ namespace Fight_cons
 {
     public partial class Hero : Charecter
     {
-        public string Class_name = "???";
+        public string ClassName = "???";
         public byte Sneak = 0;
 
         //  Здоровье

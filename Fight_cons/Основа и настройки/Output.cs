@@ -1,4 +1,4 @@
-﻿using Fight_cons.Основа_и_настройки;
+﻿using Fight_cons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -9,7 +9,7 @@ using static Fight_cons.Charecter;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using static Fight_cons.Основа_и_настройки.CharecterProfiles;
+using static Fight_cons.CoreNSettings.CharecterProfiles;
 
 namespace Fight_cons
 {

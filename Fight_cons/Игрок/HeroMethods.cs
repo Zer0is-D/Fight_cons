@@ -12,7 +12,7 @@ namespace Fight_cons
         public void ShowHeroStats()
         {
             Output.WriteColorLine(ConsoleColor.DarkGreen, "\nHero name: ", $"{Name}\n");
-            Console.WriteLine($"Class: {Class_name}\n"
+            Console.WriteLine($"Class: {ClassName}\n"
                             + $"Lvl: {Lvl}\t\tExp: {Exp}/{NextLvlExp} \n"
                             + $"{Output.HPSymbol}: {TotalHP}/{TotalMaxHP} \t{Output.MPSymbol}: {MP}/{TotalMaxMP}\n"
                             + $"{Output.AttackStr}: {TotalAttack}\t\t{Output.ArcaneStr}: {TotalArcane}\n"

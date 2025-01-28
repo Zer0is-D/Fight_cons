@@ -1,4 +1,4 @@
-﻿using Fight_cons.Основа_и_настройки;
+﻿using Fight_cons.CoreNSettings;
 using System.Linq;
 
 namespace Fight_cons
@@ -16,7 +16,7 @@ namespace Fight_cons
                 Description = $"Атаковать ({(int)finalDam} {Output.AttackStr} | {Output.CritStr}: {hero.TotalCrit * 100}%)"
             };
 
-            AttackDes Attac_breanch = new AttackDes(hero, "Пробитие")
+            AttackDes AttacBreanch = new AttackDes(hero, "Пробитие")
             {
                 Attack = AttackDes.BreachArmorAttack,
                 Description = $"Пробитие брони и защиты ({(int)(hero.TotalAttack / 1.5)} {Output.AttackStr})"
@@ -25,7 +25,7 @@ namespace Fight_cons
             //  Способность: Кровотечение
             if (hero.Statistic.Attacks >= 10)
             {
-                AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
+                AttackDes AttacBleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
                     Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
@@ -35,20 +35,20 @@ namespace Fight_cons
             //  Способность: Парирование
             if (hero.Statistic.Attacks >= 15)
             {
-                AttackDes Attac_Parry = new AttackDes(hero, "Парировать")
+                AttackDes AttacParry = new AttackDes(hero, "Парировать")
                 {
                     Attack = AttackDes.ParryAttack,
                     Description = $"Парировать атаку ({hero.TotalSpeed * 100}% МЕТ)"//////////////////////////////////////////////////////////////
                 };
             }
 
-            SpellDes Cleansing_ray = new SpellDes(hero, "Очищающий луч")
+            SpellDes CleansingRay = new SpellDes(hero, "Очищающий луч")
             {
                 Spell = SpellDes.CleansingRaySpell,
                 SpellСost = 5,
                 SpellPower = 10
             };
-            Cleansing_ray.Description = $"Очищающий луч ({Cleansing_ray.SpellPower + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {Cleansing_ray.SpellСost} {Output.MPSymbol})";
+            CleansingRay.Description = $"Очищающий луч ({CleansingRay.SpellPower + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {CleansingRay.SpellСost} {Output.MPSymbol})";
 
             //  Способность: Малое лечение
             if (hero.Statistic.Spells >= 5)
@@ -64,7 +64,7 @@ namespace Fight_cons
             //  Способность: Кровотечение
             if (hero.Statistic.Attacks >= 10)
             {
-                AttackDes Attac_bleed = new AttackDes(hero, "Вызвать кровотечение")
+                AttackDes AttacBleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
                     Attack = AttackDes.MakeBleedAttack,
                     Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
@@ -101,42 +101,42 @@ namespace Fight_cons
                     Description = $"Атаковать ({hero.TotalAttack} {Output.AttackStr} | {Output.CritStr}: {hero.TotalCrit * 100}%)"
                 };
 
-                AttackDes Attac_breanch = new AttackDes(hero, "Пробитие")
+                AttackDes AttacBreanch = new AttackDes(hero, "Пробитие")
                 {
                     Attack = AttackDes.BreachArmorAttack,
                     Description = $"Пробитие брони и защиты ({hero.TotalAttack} {Output.AttackStr})"
                 };
 
-                PotionDes Heal_potion = new PotionDes(hero)
+                PotionDes HealPotion = new PotionDes(hero)
                 {
                     Name = "Зелье лечения",
                     Potion = PotionDes.HealPotion,
                     Description = "Зелье лечения",
                 };
-                Heal_potion.Count = 1;
+                HealPotion.Count = 1;
 
-                PotionDes Mana_potion = new PotionDes(hero)
+                PotionDes ManaPotion = new PotionDes(hero)
                 {
                     Name = "Зелье маны",
                     Potion = PotionDes.ManaPotion,
                     Description = "Зелье маны",
                 };
-                Mana_potion.Count = 1;
+                ManaPotion.Count = 1;
 
-                PotionDes Anti_potion = new PotionDes(hero)
+                PotionDes AntiPotion = new PotionDes(hero)
                 {
                     Name = "Противоядие",
                     Potion = PotionDes.ManaPotion,
                     Description = "Противоядие"
                 };
 
-                PotionDes Power_potion = new PotionDes(hero)
+                PotionDes PowerPotion = new PotionDes(hero)
                 {
                     Name = "Зелье силы",
                     Potion = PotionDes.PowerPotion,
                     Description = "Зелье силы"
                 };
-                Power_potion.Count = 1;
+                PowerPotion.Count = 1;
             }
 
             hero.AttackList = hero.AttackList.GroupBy(x => x.Description).Select(x => x.First()).Distinct().ToList();

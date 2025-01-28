@@ -1,5 +1,5 @@
 ﻿using Fight_cons.Мир.Locations;
-using Fight_cons.Основа_и_настройки;
+using Fight_cons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -469,7 +469,7 @@ namespace Fight_cons
         //  Событие отдых
         private static void RestEvent(Hero hero)
         {
-            if (hero.Class_name != "Волшебник")
+            if (hero.ClassName != "Волшебник")
                 MakeRest(hero);
             else
             {
