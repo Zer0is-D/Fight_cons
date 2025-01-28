@@ -86,9 +86,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Основа и настройки\CharecterProfiles.cs" />
-    <Compile Include="Противник\Bestiaria.cs" />
-    <Compile Include="Основа и настройки\EnemyFromXML.cs" />
+    <Compile Include="CoreNSettings\CharecterProfiles.cs" />
+    <Compile Include="Enemies\Bestiaria.cs" />
+    <Compile Include="CoreNSettings\EnemyFromXML.cs" />
     <Compile Include="PatternUnit.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -101,74 +101,74 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="PipeMessage.cs" />
-    <Compile Include="Мир\Locations\Location.cs" />
-    <Compile Include="Основа и настройки\GameFormulas.cs" />
-    <Compile Include="Основа и настройки\Info.cs" />
-    <Compile Include="Основа и настройки\Entitys\ItemChar.cs" />
-    <Compile Include="Основа и настройки\Conditions.cs" />
-    <Compile Include="Основа и настройки\Entitys\Characteristics.cs" />
-    <Compile Include="Основа и настройки\Battles.cs" />
-    <Compile Include="Игрок\HeroLvl.cs" />
-    <Compile Include="Игрок\HeroMethods.cs" />
-    <Compile Include="Игрок\Rating.cs" />
-    <Compile Include="Мир\Spying.cs" />
-    <Compile Include="Игрок\Умения и прокачка\PermanentBonuses.cs" />
-    <Compile Include="Игрок\Умения и прокачка\AllHeroSkills.cs" />
-    <Compile Include="Игрок\CombatSolutions.cs" />
-    <Compile Include="Противник\UnitSkills.cs" />
-    <Compile Include="Противник\PersonStrategy.cs" />
-    <Compile Include="Противник\Unit.cs" />
-    <Compile Include="Формы\Books.cs">
+    <Compile Include="World\Locations\Location.cs" />
+    <Compile Include="CoreNSettings\GameFormulas.cs" />
+    <Compile Include="CoreNSettings\Info.cs" />
+    <Compile Include="CoreNSettings\Entitys\ItemChar.cs" />
+    <Compile Include="CoreNSettings\Conditions.cs" />
+    <Compile Include="CoreNSettings\Entitys\Characteristics.cs" />
+    <Compile Include="CoreNSettings\Battles.cs" />
+    <Compile Include="Player\HeroLvl.cs" />
+    <Compile Include="Player\HeroMethods.cs" />
+    <Compile Include="Player\Rating.cs" />
+    <Compile Include="World\Spying.cs" />
+    <Compile Include="Player\SkillsNLvl\PermanentBonuses.cs" />
+    <Compile Include="Player\SkillsNLvl\AllHeroSkills.cs" />
+    <Compile Include="Player\CombatSolutions.cs" />
+    <Compile Include="Enemies\UnitSkills.cs" />
+    <Compile Include="Enemies\PersonStrategy.cs" />
+    <Compile Include="Enemies\Unit.cs" />
+    <Compile Include="Forms\Books.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Формы\Books.Designer.cs">
+    <Compile Include="Forms\Books.Designer.cs">
       <DependentUpon>Books.cs</DependentUpon>
     </Compile>
-    <Compile Include="Формы\Arm_game.cs">
+    <Compile Include="Forms\Arm_game.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Формы\Arm_game.Designer.cs">
+    <Compile Include="Forms\Arm_game.Designer.cs">
       <DependentUpon>Arm_game.cs</DependentUpon>
     </Compile>
-    <Compile Include="Основа и настройки\Output.cs" />
-    <Compile Include="Игрок\Hero.cs" />
-    <Compile Include="Основа и настройки\Entitys\Charecter.cs" />
-    <Compile Include="Основа и настройки\Input.cs" />
-    <Compile Include="Игрок\Inventory.cs" />
-    <Compile Include="Мир\Locations\AboutLoc.cs" />
-    <Compile Include="Мир\Locations\Market.cs" />
-    <Compile Include="Игрок\Умения и прокачка\CharecterClases.cs" />
-    <Compile Include="Игрок\Умения и прокачка\PotionDes.cs" />
-    <Compile Include="Основа и настройки\Program.cs" />
+    <Compile Include="CoreNSettings\Output.cs" />
+    <Compile Include="Player\Hero.cs" />
+    <Compile Include="CoreNSettings\Entitys\Charecter.cs" />
+    <Compile Include="CoreNSettings\Input.cs" />
+    <Compile Include="Player\Inventory.cs" />
+    <Compile Include="World\Locations\AboutLoc.cs" />
+    <Compile Include="World\Locations\Market.cs" />
+    <Compile Include="Player\SkillsNLvl\CharecterClases.cs" />
+    <Compile Include="Player\SkillsNLvl\PotionDes.cs" />
+    <Compile Include="CoreNSettings\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Мир\Quests.cs" />
-    <Compile Include="Игрок\Умения и прокачка\AttackDes.cs" />
-    <Compile Include="Основа и настройки\Settings.cs" />
-    <Compile Include="Мир\Sound.cs" />
-    <Compile Include="Игрок\Умения и прокачка\SpellDes.cs" />
-    <Compile Include="Игрок\Statistic.cs" />
-    <Compile Include="Формы\ConfigTry.cs">
+    <Compile Include="World\Quests.cs" />
+    <Compile Include="Player\SkillsNLvl\AttackDes.cs" />
+    <Compile Include="CoreNSettings\Settings.cs" />
+    <Compile Include="World\Sound.cs" />
+    <Compile Include="Player\SkillsNLvl\SpellDes.cs" />
+    <Compile Include="Player\Statistic.cs" />
+    <Compile Include="Forms\ConfigTry.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Формы\ConfigTry.Designer.cs">
+    <Compile Include="Forms\ConfigTry.Designer.cs">
       <DependentUpon>ConfigTry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Формы\Map.cs">
+    <Compile Include="Forms\Map.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Формы\Map.Designer.cs">
+    <Compile Include="Forms\Map.Designer.cs">
       <DependentUpon>Map.cs</DependentUpon>
     </Compile>
-    <Compile Include="Формы\SpellMenu.cs">
+    <Compile Include="Forms\SpellMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Формы\SpellMenu.Designer.cs">
+    <Compile Include="Forms\SpellMenu.Designer.cs">
       <DependentUpon>SpellMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Формы\Village_map.cs">
+    <Compile Include="Forms\Village_map.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Формы\Village_map.Designer.cs">
+    <Compile Include="Forms\Village_map.Designer.cs">
       <DependentUpon>Village_map.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -197,23 +197,23 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Формы\Books.resx">
+    <EmbeddedResource Include="Forms\Books.resx">
       <DependentUpon>Books.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Формы\Arm_game.resx">
+    <EmbeddedResource Include="Forms\Arm_game.resx">
       <DependentUpon>Arm_game.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Формы\ConfigTry.resx">
+    <EmbeddedResource Include="Forms\ConfigTry.resx">
       <DependentUpon>ConfigTry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Формы\Map.resx">
+    <EmbeddedResource Include="Forms\Map.resx">
       <DependentUpon>Map.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Формы\SpellMenu.resx">
+    <EmbeddedResource Include="Forms\SpellMenu.resx">
       <DependentUpon>SpellMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Формы\Village_map.resx">
+    <EmbeddedResource Include="Forms\Village_map.resx">
       <DependentUpon>Village_map.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
