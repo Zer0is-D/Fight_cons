@@ -193,7 +193,7 @@ namespace Fight_cons
             Output.NameAndId(victim);
 
             if (damag > attacker.TotalAttack)
-                Output.WriteColorLine(ConsoleColor.Yellow, "критические ", $"{damag} ", "урона! У ");
+                Output.WriteColorLine(ConsoleColor.Yellow, "критические  ", $"{damag} ", "урона! У ");
             else
                 Output.WriteColorLine(ConsoleColor.Yellow, "", $"{damag} ", "урона у ");
 
