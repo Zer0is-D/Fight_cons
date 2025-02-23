@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fight_cons
+namespace FightСons
 {
     public delegate void PotionUse(Hero hero);
 

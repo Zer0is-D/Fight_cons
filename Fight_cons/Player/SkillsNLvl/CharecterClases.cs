@@ -1,8 +1,8 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
 using System;
-using static Fight_cons.Charecter;
+using static FightСons.Charecter;
 
-namespace Fight_cons
+namespace FightСons
 {
     //  Бонусы от класса
     internal class CharecterClases : Characteristics
@@ -36,9 +36,10 @@ namespace Fight_cons
             //HeroClass heroClass = new HeroClass("Воин", hero.ClassBonuses.MaxHp += 1, );
 
             string quo = "Выберите класс:\n"
-              + $"1) Воин (Упор на {Output.HPSymbol}, {Output.AttackStr}, {Output.DefenceStr})\n"
-              + $"2) Волшебник (Упор на {Output.ArcaneStr}, {Output.MagicDefenceStr}, {Output.MPSymbol})\n"
-              + $"3) Ловкач (Упор на {Output.CritStr}, {Output.SpeedStr}, {Output.BlockStr})\n";
+              + $"0) Свобода\n"
+              + $"1) Мощь (Упор на {Output.HPSymbol}, {Output.AttackStr}, {Output.DefenceStr})\n"
+              + $"2) Комбинаторика (Упор на {Output.ArcaneStr}, {Output.MagicDefenceStr}, {Output.MPSymbol})\n"
+              + $"3) Динамика (Упор на {Output.CritStr}, {Output.SpeedStr}, {Output.BlockStr})\n";
 
 
             switch (Input.ChoisInput(hero, 0, 3, quo))
@@ -70,24 +71,25 @@ namespace Fight_cons
             switch (hero.CharecterClass.Class)
             {
                 case ChaClass.NoMan:
+                    hero.ClassName = "Свобода";                    
                     break;
 
                 case ChaClass.Fither:
-                    hero.ClassName = "Воин";
+                    hero.ClassName = "Мощь";
                     hero.CharecterClass.MaxHp += 5;
                     hero.CharecterClass.Attack += 1;
                     hero.CharecterClass.Defence += 0.01f;
                     break;
 
                 case ChaClass.Wisard:
-                    hero.ClassName = "Волшебник";
+                    hero.ClassName = "Комбинатор";
                     hero.CharecterClass.Arcane += 1;
                     hero.CharecterClass.MagicDefence += 0.01f;
                     hero.CharecterClass.MaxMp += 5;
                     break;
 
                 case ChaClass.Rouge:
-                    hero.ClassName = "Ловкач";
+                    hero.ClassName = "Динамика";
                     hero.CharecterClass.Crit += 0.01f;
                     hero.CharecterClass.Speed += 0.01f;
                     hero.CharecterClass.Block += 0.01f;

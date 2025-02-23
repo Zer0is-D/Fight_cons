@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
-using Fight_cons.form;
+using FightСons.form;
 
-namespace Fight_cons
+namespace FightСons
 {
     class Input
     {
@@ -57,7 +57,7 @@ namespace Fight_cons
 
             if (res == DialogResult.OK)
             {
-                Type loc = typeof(AboutLoc);
+                Type loc = typeof(Locations);
                 MethodInfo method = loc.GetMethod(map.CalledLocation);
                 method.Invoke(hero);
             }
@@ -68,27 +68,22 @@ namespace Fight_cons
         {
             Dictionary<string, Action> KeyWords = new Dictionary<string, Action>();
             #region Ключевые слова
-            KeyWords["save"] = () => { Console.WriteLine($"{hero.Name} saved!"); };
-            KeyWords["сохранить"] = () => { Console.WriteLine($"{hero.Name} saved!"); };
+            //KeyWords["save"] = () => { Console.WriteLine($"{hero.Name} saved!"); };
+            //KeyWords["сохранить"] = () => { Console.WriteLine($"{hero.Name} saved!"); };
             KeyWords["инвентарь"] = () => { Inventory.ShowInventory(hero); };
             KeyWords["inv"] = () => { Inventory.ShowInventory(hero); };
             KeyWords["инв"] = () => { Inventory.ShowInventory(hero); };
             KeyWords["статы"] = () => { hero.ShowHeroStats(); };
             KeyWords["stats"] = () => { hero.ShowHeroStats(); };
-            KeyWords["help"] = () =>
-            {
-                Console.WriteLine("\nКлючевые слова:\n");
-                Output.WriteColorLine(ConsoleColor.Cyan, "", "инв ", "- вызов инвентаря (в разработке)\n");
-                Output.WriteColorLine(ConsoleColor.Cyan, "", "статы ", "- вызов меню характеристики героя\n");
-                Output.WriteColorLine(ConsoleColor.Cyan, "", "настройки ", "- вызов меню настроек\n");
-
-            };
+            KeyWords["help"] = () => { Output.HelpCommand(); };
+            KeyWords["негр"] = () => { Output.HelpCommand(); };
             KeyWords["настройки"] = () =>
             {
                 Console.WriteLine();
                 Settings.OptionSound(hero);
                 Settings.OptionWaitSkip(hero);
             };
+            //TODO Упростить способ телепортации
             //KeyWords["tp"] = () => { Teleport(hero); };
             //KeyWords["тп"] = () => { Teleport(hero); };
             KeyWords["gold_"] = () =>
@@ -136,6 +131,7 @@ namespace Fight_cons
                 } while (ans != 5);
 
             };
+            KeyWords["толк"] = () => { Output.Remark(); };
             #endregion
 
             string str;

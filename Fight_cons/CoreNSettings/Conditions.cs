@@ -1,7 +1,7 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
 using System;
 
-namespace Fight_cons
+namespace FightСons
 {
     internal class Conditions : Characteristics
     {

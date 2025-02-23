@@ -1,4 +1,4 @@
-﻿using Fight_cons.Enemies;
+﻿using FightСons.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,9 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using static Fight_cons.CoreNSettings.CharecterProfiles;
+using static FightСons.CoreNSettings.CharecterProfiles;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class EnemyFromXML
     {

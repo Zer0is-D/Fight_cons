@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class Settings
     {
@@ -21,8 +21,11 @@ namespace Fight_cons
         {
             Console.WriteLine("\nПеред тем чтобы продолжить отрегулируйте ширину консоли так чтобы нижняя линия была прямая и впрятык к правой стенке");
             Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "################################################################################", "\n");
-            Output.WriteColorLine(ConsoleColor.Cyan, "\nНажмите ", "Enter", " чтобы продолжить...\n");
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nНажмите ", "Любую кнопку", " чтобы продолжить...\n");
             Console.ReadKey(true);
+
+            //TODO Плохое решение надо найти более грамотный способ (удалять символьно)
+            Console.Clear();
         }
 
         public static void OptionWaitSkip(Hero hero)

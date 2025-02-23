@@ -1,10 +1,10 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Net.Security;
 using System.Threading.Tasks;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class UnitSkills
     {

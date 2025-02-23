@@ -1,4 +1,4 @@
-﻿namespace Fight_cons
+﻿namespace FightСons
 {
     partial class Arm_game
     {

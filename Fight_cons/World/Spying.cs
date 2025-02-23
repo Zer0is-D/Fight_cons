@@ -1,10 +1,11 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
+using FightСons.World.Locations;
 using System;
 using System.IO;
 using System.Windows.Forms;
-using static Fight_cons.AboutLoc;
+using static FightСons.Locations;
 
-namespace Fight_cons
+namespace FightСons
 {
     //  Подслушивание в локациях
     public class Spying
@@ -38,17 +39,17 @@ namespace Fight_cons
                 {
                     case 1:
                         if (Output.Spent(hero.Money, Output.BeerCost, "", "- Пщел отсюда скряга!\n"))
-                            Drinking(hero);
+                            LocationISS.Drinking(hero);
                         else
                         {
                             //Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
                             hero.Statistic.HeroLvlKickOff = hero.Lvl;
-                            DefualtLoad(hero, Locations[(int)LocationName.Village]);
+                            LocationISS.OrdoСolony(hero);
                         }
                         break;
                     case 2:
                         //Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
-                        DefualtLoad(hero, Locations[(int)LocationName.Village]);
+                        LocationISS.OrdoСolony(hero);
                         break;
                 }
             }
@@ -151,7 +152,6 @@ namespace Fight_cons
                     };
 
                     return mas;
-                    break;
                 #endregion
 
                 #region Разговор о кошельках

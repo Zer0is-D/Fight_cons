@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Fight_cons.Формы
+namespace FightСons.WForms
 {
     public partial class ConfigTry : Form
     {

@@ -1,10 +1,11 @@
-﻿using Fight_cons.Мир;
-using System;
+﻿using System;
 using System.Threading;
-using static Fight_cons.AboutLoc;
-using static Fight_cons.ItemChar;
+using static FightСons.Locations;
+using static FightСons.CharecterClases;
+using static FightСons.ItemChar;
+using FightСons.World.Locations;
 
-namespace Fight_cons
+namespace FightСons
 {
     partial class Hero
     {
@@ -12,8 +13,8 @@ namespace Fight_cons
         public void ShowHeroStats()
         {
             Output.WriteColorLine(ConsoleColor.DarkGreen, "\nHero name: ", $"{Name}\n");
-            Console.WriteLine($"Class: {ClassName}\n"
-                            + $"Lvl: {Lvl}\t\tExp: {Exp}/{NextLvlExp} \n"
+            Console.WriteLine(//$"Class: {ClassName}\n"
+                            $"Lvl: {Lvl}\t\tExp: {Exp}/{NextLvlExp} \n"
                             + $"{Output.HPSymbol}: {TotalHP}/{TotalMaxHP} \t{Output.MPSymbol}: {MP}/{TotalMaxMP}\n"
                             + $"{Output.AttackStr}: {TotalAttack}\t\t{Output.ArcaneStr}: {TotalArcane}\n"
                             + $"{Output.DefenceStr}: {TotalDefence * 100}%\t\t{Output.MagicDefenceStr}: {TotalMagicDefence * 100}%\n"
@@ -27,34 +28,82 @@ namespace Fight_cons
         //  Начало начал
         public static void CreateHero(Hero hero)
         {
+            byte ch_place = 0;
+
+            //TODO Придумать имя
             hero.Name = "No_name";
 
+            Output.TwriteLine("", 10, true);
+
+
+            string quo = "- Время отправляться в путь. Куда ты сначала отправишься?\n"
+                            + "1) Точка ИСС\n"
+                            //+ "2) Точка ДЖ"
+                            //+ "3) Точка БТЛ"
+                            //+ "4) Точка ОП"
+                            //+ "5) Точка ПП"
+                            //+ "6) Точка НД"
+                            ;
+
+            switch (Input.ChoisInput(hero, 0, 1, quo))
+            {
+                default:
+                    ch_place = 1;
+                    break;
+                case 1:
+                    ch_place = 1;
+                    break;
+            }
+
+            Output.TwriteLine("- Тебе понадобиться надежное снаряжения для такого пути - голос ненадолго\n затихает - что ты выберишь?\n", 10, false);
             CharecterClases.GiveHeroClass(hero);
+
+            if (hero.CharecterClass.Class == ChaClass.NoMan)
+                Output.TwriteLine("\n- Интересно...\n", 10, true);
+            else
+            {
+                Output.TwriteLine("\nВам вводям в несколько мест раствор", 0, true);
+                Output.TwriteLine("\nНа мгновение в голову вцепляется острая боль, а тело метается между\nзакостинелым напряжением" +
+                    "и легкостью.", 0, true);
+                Output.WriteColorLine(ConsoleColor.DarkRed, "\n[", "-1 ", $"{Output.HPSymbol} ");
+                Output.WriteColorLine(ConsoleColor.Magenta, $"от ", "боли в теле и голове", "]\n\n");
+                hero.HP -= 1;
+                Console.ReadKey(true);
+
+                Output.TwriteLine("В ту же секунду боль в голове и теле ушла. Вам покзалось что боль тянулась намного дольше...\n", 0, true);
+            }
+
             GiveHeroWeapon(hero);
 
             Console.WriteLine("\nВаши характеристики:");
             hero.ShowHeroStats();
 
-            Output.WriteColorLine(ConsoleColor.Cyan, "\nНажмите ", "Enter", " чтобы продолжить...\n");
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nНажмите ", "Enter", " чтобы продолжить...\n\n");
             Console.ReadKey(true);
 
+            /*
             Output.TwriteLine("\nГромкий и непонятной природы звук постепенно пробуждает ваше тело.\n"
                             + "После чего вы слышите голос словно он доносться из глубин вашего сознания.\n"
                             + "'ВСТАВАЙ ДУША, РОЗЫЩИ ТОАТОТА И ПОКОНЧИ С НИМ!'\n", 10, true);
             Output.TwriteLine("Затихший голос сменяется на острую головную боль", 10, true);
+            
 
-            hero.HP -= 1;
-            Output.WriteColorLine(ConsoleColor.DarkRed, "\n[", "-1 ", $"{Output.HPSymbol} ");
             Output.WriteColorLine(ConsoleColor.Magenta, $"от ", "головной боли", "]\n");
             Console.ReadKey(true);
+            
 
             Output.TwriteLine("\nОщущая внутри некую ответственность со странным желанием выполнить поручение\n"
                       + "вы решаетесь открыть глаза, но тьма не дает вам что-либо увидеть...\n", 10, true);
+            */
+
+            Output.TwriteLine("Вы отправились в путешествие которое заняло у вас несколько дней, не столько потому что путь был сложный, сколько ореинтиры на карте были далки от действительности. "
+                          + "\nНайдя похожую пещеры вы проходите дальше надеясь пройти сквоь гору.\nВы заплутали.\n", 1, true);
+
 
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
-                          + "Догадка была верна, это оказался факел, что освятил пространство. Но ответить на вопрос где вы, пока не удается.\n", 1, true);
+                          + "Догадка была верна, это оказался факел, что освятил пространство.\nНо ответить на вопрос где вы, пока не удается.\n", 1, true);
 
-            DefualtLoad(hero, Locations[(int)LocationName.CaveStart]);
+            LocationISS.CavesStart(hero);
         }        
 
         public static void GiveHeroWeapon(Hero hero)
@@ -94,7 +143,7 @@ namespace Fight_cons
         public void HeroDeath()
         {
             if (HeroQuests.Que[0] == 1)
-                Output.TwriteLine("\nВы погибли в попытки остановить Таотота", 30);
+                Output.TwriteLine("\nВы погибли", 30);
             else
                 Console.WriteLine("Вы погибли!");
 

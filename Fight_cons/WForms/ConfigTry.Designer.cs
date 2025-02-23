@@ -1,4 +1,4 @@
-﻿namespace Fight_cons.Формы
+﻿namespace FightСons.WForms
 {
     partial class ConfigTry
     {

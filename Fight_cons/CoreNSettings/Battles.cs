@@ -1,12 +1,13 @@
-﻿using Fight_cons.CoreNSettings;
-using Fight_cons.Enemies;
+﻿using FightСons.CoreNSettings;
+using FightСons.Enemies;
+using FightСons.World.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class Battles
     {
@@ -61,14 +62,14 @@ namespace Fight_cons
                 var u = new Order(EnemyFromXML.LoudedEnemies(enemy));
 
                 if (u.charecter != null)
-                    AboutLoc.ListOfUnits.Add(u);
+                    LocationISS.ListOfUnits.Add(u);
                 else
                     Console.WriteLine($"ID: {enemy} нет в списках!\n");
 
                 Thread.Sleep(50);
             }
 
-            Battle(hero, AboutLoc.ListOfUnits);
+            Battle(hero, LocationISS.ListOfUnits);
         }
 
         public static List<Order> AddNewUnit(Hero hero, List<Order> units, params sbyte[] unitId)
@@ -142,7 +143,7 @@ namespace Fight_cons
 
             //  Уведомление о начале боя
             //SER.SecondWindowByProcces("FightLog");
-            Output.FightLog();
+            Output.FightWarning();
 
             //  Перечисление противников
             ShowAttackersNames(units);
@@ -198,13 +199,13 @@ namespace Fight_cons
             {
                 if (!hero.Condition.LeavedBattle)
                 {
-                    Output.VictoyLog();
+                    Output.VictoyWarning();
                     hero.Statistic.Wins++;
                     Reward(hero, units);
                 }
             }
             hero.Condition.LeavedBattle = false;
-            AboutLoc.ListOfUnits.Clear();
+            LocationISS.ListOfUnits.Clear();
         }
 
         //  Различные проверки        
@@ -301,7 +302,7 @@ namespace Fight_cons
                     {
                         double n = (hero.MaxHp / 100.0) * 10.0;
                         hero.HP -= (short) n;
-                        Output.RunLog();
+                        Output.RunWarning();
                         Console.WriteLine($"Вы сбежали с потерей {(int)n} {Output.HPSymbol}\n");
                     }
                     hero.Condition.LeavedBattle = true;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Xml.Linq;
 
-namespace Fight_cons
+namespace FightСons
 {
     class TopPlayers
     {

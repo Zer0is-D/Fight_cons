@@ -1,11 +1,11 @@
-﻿using Fight_cons.CoreNSettings;
-using Fight_cons.Enemies;
+﻿using FightСons.CoreNSettings;
+using FightСons.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Fight_cons
+namespace FightСons
 {
     class CombatSolutions
     {

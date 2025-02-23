@@ -1,10 +1,10 @@
-﻿using Fight_cons.CoreNSettings;
-using Fight_cons.Enemies;
+﻿using FightСons.CoreNSettings;
+using FightСons.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class PersonStrategy 
     {
@@ -300,6 +300,7 @@ namespace Fight_cons
                     if (GameFormulas.Vero(0.8))
                     {
                         Output.WriteColorLine(Output.unitNameColor(person.CharecterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
+                        Console.ReadKey();
                         person.Condition.LeavedBattle = true;
                         return true;
                     }
@@ -312,6 +313,7 @@ namespace Fight_cons
                     if (GameFormulas.Vero(0.8))
                     {
                         Output.WriteColorLine(Output.unitNameColor(person.CharecterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
+                        Console.ReadKey();
                         person.Condition.LeavedBattle = true;
                         return true;
                     }

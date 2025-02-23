@@ -1,20 +1,43 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading;
-using static Fight_cons.Charecter;
+using static FightСons.Charecter;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using static Fight_cons.CoreNSettings.CharecterProfiles;
+using static FightСons.CoreNSettings.CharecterProfiles;
+using System.Xml.Linq;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class Output
     {
+        //  Лого
+        public static void GameLogo(string vers)
+        {
+            //Game.ChangeColor("", " __                __               ", "\n", ConsoleColor.Yellow);
+            //Game.ChangeColor("", "/__ __ _          (_ _|_    _| o  _ ", "\n", ConsoleColor.Yellow);
+            //Game.ChangeColor("", "\\_| | (_)|_|\\^/   __) |_|_|(_| | (_)", "\n\n", ConsoleColor.Yellow);
+
+            WriteColorLine(ConsoleColor.White, "", "################################################################################");
+            WriteColorLine(ConsoleColor.Green, "\t\t\t", " __               ", "\n");
+            WriteColorLine(ConsoleColor.Green, "\t\t\t", "/__ __ _          ", "\n");
+            WriteColorLine(ConsoleColor.Green, "\t\t\t", "\\_| | (_)|_|\\^/ ", "\n");
+
+            WriteColorLine(ConsoleColor.Red, "\t\t\t\t", " __               ", "\n");
+            WriteColorLine(ConsoleColor.Red, "\t\t\t\t", "(_ _|_    _| o  _ ", "\n");
+            WriteColorLine(ConsoleColor.Red, "\t\t\t\t", "__) |_|_|(_| | (_)", "\n\n");
+            WriteColorLine(ConsoleColor.White, "", "################################################################################", "\n");
+
+            WriteColorLine(ConsoleColor.White, "", $"Сборка: {vers}", "\n");
+            WriteColorLine(ConsoleColor.White, "", $"Просьба поставить размер шрифта 20", "\n\n");
+
+        }
+
         #region Обозначения и символы
         //⌂,↔,∟,↨,▬,§,¶,‼,↕,☼,♫,♥,♣,♦,♠,☺,☻,\u0072
 
@@ -87,11 +110,11 @@ namespace Fight_cons
         public static sbyte VisionSkillCost = 50;
         #endregion
 
-        #region Логи
+        #region Боевой output
         //  Экран нападения
-        public static void FightLog()
+        public static void FightWarning()
         {
-            WriteColorLine(ConsoleColor.DarkGray, "", "##############################################################################################################");
+            WriteColorLine(ConsoleColor.DarkGray, "\n", "##############################################################################################################");
             WriteColorLine(ConsoleColor.Red, "", "    На вас напали!    ");
             WriteColorLine(ConsoleColor.DarkGray, "", "############################################################################################################\n");
         }
@@ -106,7 +129,7 @@ namespace Fight_cons
         }
 
         //  Экран победы над противником
-        public static void VictoyLog()
+        public static void VictoyWarning()
         {
             WriteColorLine(ConsoleColor.DarkGray, "\n", "##############################################################################################################");
             WriteColorLine(ConsoleColor.Green, "", "    Вы победили!    ");
@@ -114,37 +137,79 @@ namespace Fight_cons
         }
 
         //  Экран побега
-        public static void RunLog()
+        public static void RunWarning()
         {
             WriteColorLine(ConsoleColor.DarkGray, "", "##############################################################################################################");
             WriteColorLine(ConsoleColor.White, "", "    Вы сбежали!    ");
             WriteColorLine(ConsoleColor.DarkGray, "", "###############################################################################################################\n");
         }
 
-        //  Лого
-        public static void GameLogo(string vers)
+        public static void NameAndId(Charecter charecter, bool NextLine = false)
         {
-            //Game.ChangeColor("", " __                __               ", "\n", ConsoleColor.Yellow);
-            //Game.ChangeColor("", "/__ __ _          (_ _|_    _| o  _ ", "\n", ConsoleColor.Yellow);
-            //Game.ChangeColor("", "\\_| | (_)|_|\\^/   __) |_|_|(_| | (_)", "\n\n", ConsoleColor.Yellow);
+            if (NextLine)
+                Console.WriteLine();
 
-            WriteColorLine(ConsoleColor.White, "", "################################################################################");
-            WriteColorLine(ConsoleColor.Green, "\t\t\t", " __               ", "\n");
-            WriteColorLine(ConsoleColor.Green, "\t\t\t", "/__ __ _          ", "\n");
-            WriteColorLine(ConsoleColor.Green, "\t\t\t", "\\_| | (_)|_|\\^/ ", "\n");
+            if (!charecter.CharecterProfile.IsPlayer)
+                Console.Write($"[{charecter.Id}] ");
+            else if (!charecter.CharecterProfile.IsPlayer & !NextLine)
+                Console.Write($"[{charecter.Id}] ");
 
-            WriteColorLine(ConsoleColor.Red, "\t\t\t\t", " __               ", "\n");
-            WriteColorLine(ConsoleColor.Red, "\t\t\t\t", "(_ _|_    _| o  _ ", "\n");
-            WriteColorLine(ConsoleColor.Red, "\t\t\t\t", "__) |_|_|(_| | (_)", "\n\n");
-            WriteColorLine(ConsoleColor.White, "", "################################################################################", "\n");
 
-            WriteColorLine(ConsoleColor.White, "", $"Сборка: {vers}", "\n");
-            WriteColorLine(ConsoleColor.White, "", $"Просьба поставить размер шрифта 20", "\n\n");
+            WriteColorName("", charecter, " ");
+        }
 
+        //  Определение цвета юнита
+        public static ConsoleColor unitHPColor(ChaRole role)
+        {
+            ConsoleColor UnitHPColor;
+
+            switch (role)
+            {
+                case ChaRole.Enemy:
+                    UnitHPColor = ConsoleColor.DarkRed;
+                    break;
+
+                case ChaRole.Wild:
+                    UnitHPColor = ConsoleColor.DarkRed;
+                    break;
+
+                case ChaRole.Ally:
+                    UnitHPColor = ConsoleColor.Green;
+                    break;
+
+                default:
+                    UnitHPColor = ConsoleColor.Green;
+                    break;
+            }
+
+            return UnitHPColor;
+        }
+
+        public static ConsoleColor unitNameColor(ChaRole num)
+        {
+            ConsoleColor UnitNameColor;
+
+            switch (num)
+            {
+                case ChaRole.Ally:
+                    UnitNameColor = ConsoleColor.Green;
+                    break;
+                case ChaRole.Enemy:
+                    UnitNameColor = ConsoleColor.DarkMagenta;
+                    break;
+                case ChaRole.Wild:
+                    UnitNameColor = ConsoleColor.DarkYellow;
+                    break;
+                default:
+                    UnitNameColor = ConsoleColor.Green;
+                    break;
+            }
+
+            return UnitNameColor;
         }
         #endregion
-        
-        #region Работа со строками
+
+        #region Методы вывода и цвета
         //  String color changer
         public static void WriteColorLine(ConsoleColor color, string before, string str, string after = null)
         {
@@ -207,7 +272,7 @@ namespace Fight_cons
         }
         #endregion
 
-        #region Уведомления
+        #region Интерфейсные подсказки
         public static void Spent(string itemName, bool Find = false)
         {
             if (Find)
@@ -248,20 +313,6 @@ namespace Fight_cons
             WriteColorLine(ConsoleColor.Green, "\t\t\t[Квест \"", $"{name}", "\"]\n");
         }
 
-        public static void NameAndId(Charecter charecter, bool NextLine = false)
-        {
-            if (NextLine)
-                Console.WriteLine();
-
-            if (!charecter.CharecterProfile.IsPlayer)
-                Console.Write($"[{charecter.Id}] ");
-            else if (!charecter.CharecterProfile.IsPlayer & !NextLine)
-                Console.Write($"[{charecter.Id}] ");
-
-
-            WriteColorName("", charecter, " ");
-        }
-
         public static void PayMoneyLine(string message, sbyte value, int money)
         {
             if (money >= value)
@@ -269,57 +320,37 @@ namespace Fight_cons
             else
                 WriteColorLine(ConsoleColor.DarkGray, "", $"{message} (вам нехватает {value - money}{MoneySymbol})", "\n");
         }
+
+        //Пояснения характеристик
+        public static void Remark()
+        {
+            Console.WriteLine("\nОсновные понятия:\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "Lvl ", "- уровень персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "Exp ", "- опыт персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "HP ", "- здоровье персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "vHP ", "- максимальное здоровье персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "MP ", "- мана персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "vMP ", "- максимальная мана персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "ATT ", "- урон персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "ARC ", "- магический урон персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "DEF ", "- защита персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "MDEF ", "- магическая защита персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "SPD ", "- скорость персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "CRI ", "- критический урон персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "BLK ", "- блок персонажа\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "vMOV ", "- максимальное количество ходов персонажа\n");
+        }
+
+        //Подсказка команд
+        public static void HelpCommand()
+        {
+            Console.WriteLine("\nКлючевые слова:\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "инв ", "- вызов инвентаря (в разработке)\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "статы ", "- вызов меню характеристики героя\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "настройки ", "- вызов меню настроек\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "толк ", "- вызов окна с объяснением параметров\n");
+        }
         #endregion       
-
-        //  Определение цвета юнита
-        public static ConsoleColor unitHPColor(ChaRole role)
-        {
-            ConsoleColor UnitHPColor;
-
-            switch (role)
-            {
-                case ChaRole.Enemy:
-                    UnitHPColor = ConsoleColor.DarkRed;
-                    break;
-
-                case ChaRole.Wild:
-                    UnitHPColor = ConsoleColor.DarkRed;
-                    break;
-
-                case ChaRole.Ally: 
-                    UnitHPColor = ConsoleColor.Green; 
-                    break;
-
-                default:
-                    UnitHPColor = ConsoleColor.Green;
-                    break;
-            }
-
-            return UnitHPColor;
-        }
-
-        public static ConsoleColor unitNameColor(ChaRole num)
-        {
-            ConsoleColor UnitNameColor;
-
-            switch (num)
-            {
-                case ChaRole.Ally:
-                    UnitNameColor = ConsoleColor.Green;
-                    break;
-                case ChaRole.Enemy:
-                    UnitNameColor = ConsoleColor.DarkMagenta;
-                    break;
-                case ChaRole.Wild:
-                    UnitNameColor = ConsoleColor.DarkYellow;
-                    break;
-                default:
-                    UnitNameColor = ConsoleColor.Green;
-                    break;
-            }
-
-            return UnitNameColor;
-        }
 
         public static void Final()
         {

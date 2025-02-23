@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Fight_cons
+namespace FightСons
 {
     class Sound
     {

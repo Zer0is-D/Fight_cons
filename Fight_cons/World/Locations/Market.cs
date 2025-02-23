@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FightСons.World.Locations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Fight_cons.ItemChar;
+using static FightСons.ItemChar;
 
-namespace Fight_cons
+namespace FightСons
 {
     class Market
     {
@@ -104,7 +105,7 @@ namespace Fight_cons
                     break;
                 case 1:
                     Output.TwriteLine("Возвращяйся скорее! Желательно с деньгами!\n", 1);
-                    AboutLoc.Market(hero);
+                    LocationISS.Market(hero);
                     break;               
                 default:
                     if (hero.Money >= itemChars[chois - 2].Cost)

@@ -1,11 +1,12 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Fight_cons.AboutLoc;
-using static Fight_cons.ItemChar;
+using static FightСons.Locations;
+using static FightСons.ItemChar;
+using FightСons.World.Locations;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class Quests
     {
@@ -48,12 +49,12 @@ namespace Fight_cons
                             hero.HeroQuests.Que[0] = 2;
                             hero.HeroQuests.MainQ(hero);
 
-                            Output.VictoyLog();
+                            Output.VictoyWarning();
                             hero.Statistic.Wins++;
                         }
                     }
                     hero.Condition.LeavedBattle = false;
-                    AboutLoc.ListOfUnits.Clear();
+                    LocationISS.ListOfUnits.Clear();
                     break;
 
                     case 2:
@@ -63,6 +64,7 @@ namespace Fight_cons
                         Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
                         Console.ReadKey();
                         Output.Final();
+                        LocationISS.Vally(hero);
                     }
                     break;
             }            
@@ -176,7 +178,7 @@ namespace Fight_cons
                     break;
 
                 case 6:
-                    DefualtLoad(hero, Locations[(int)LocationName.Village]);
+                    LocationISS.OrdoСolony(hero);
                     break;
             }
         }

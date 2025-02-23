@@ -1,8 +1,8 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
 using System;
 using System.Linq;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class SpellDes
     {

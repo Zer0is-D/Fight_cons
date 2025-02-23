@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{612FD586-685C-4930-A396-245F582EEEFE}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fight_cons</RootNamespace>
-    <AssemblyName>Fight_cons</AssemblyName>
+    <RootNamespace>FightСons</RootNamespace>
+    <AssemblyName>FightСons</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -58,7 +58,7 @@
     </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Fight_cons.Program</StartupObject>
+    <StartupObject>FightСons.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -101,7 +101,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="PipeMessage.cs" />
-    <Compile Include="World\Locations\Location.cs" />
     <Compile Include="CoreNSettings\GameFormulas.cs" />
     <Compile Include="CoreNSettings\Info.cs" />
     <Compile Include="CoreNSettings\Entitys\ItemChar.cs" />
@@ -111,6 +110,14 @@
     <Compile Include="Player\HeroLvl.cs" />
     <Compile Include="Player\HeroMethods.cs" />
     <Compile Include="Player\Rating.cs" />
+    <Compile Include="World\Locations\LocationBoss.cs" />
+    <Compile Include="World\Locations\LocationBTL.cs" />
+    <Compile Include="World\Locations\LocationDJ.cs" />
+    <Compile Include="World\Locations\LocationISS.cs" />
+    <Compile Include="World\Locations\LocationND.cs" />
+    <Compile Include="World\Locations\LocationOP.cs" />
+    <Compile Include="World\Locations\LocationPP.cs" />
+    <Compile Include="World\Locations\LocationVN.cs" />
     <Compile Include="World\Spying.cs" />
     <Compile Include="Player\SkillsNLvl\PermanentBonuses.cs" />
     <Compile Include="Player\SkillsNLvl\AllHeroSkills.cs" />
@@ -118,16 +125,16 @@
     <Compile Include="Enemies\UnitSkills.cs" />
     <Compile Include="Enemies\PersonStrategy.cs" />
     <Compile Include="Enemies\Unit.cs" />
-    <Compile Include="Forms\Books.cs">
+    <Compile Include="WForms\Books.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Books.Designer.cs">
+    <Compile Include="WForms\Books.Designer.cs">
       <DependentUpon>Books.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Arm_game.cs">
+    <Compile Include="WForms\Arm_game.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Arm_game.Designer.cs">
+    <Compile Include="WForms\Arm_game.Designer.cs">
       <DependentUpon>Arm_game.cs</DependentUpon>
     </Compile>
     <Compile Include="CoreNSettings\Output.cs" />
@@ -135,7 +142,7 @@
     <Compile Include="CoreNSettings\Entitys\Charecter.cs" />
     <Compile Include="CoreNSettings\Input.cs" />
     <Compile Include="Player\Inventory.cs" />
-    <Compile Include="World\Locations\AboutLoc.cs" />
+    <Compile Include="World\Locations\Locations.cs" />
     <Compile Include="World\Locations\Market.cs" />
     <Compile Include="Player\SkillsNLvl\CharecterClases.cs" />
     <Compile Include="Player\SkillsNLvl\PotionDes.cs" />
@@ -147,28 +154,28 @@
     <Compile Include="World\Sound.cs" />
     <Compile Include="Player\SkillsNLvl\SpellDes.cs" />
     <Compile Include="Player\Statistic.cs" />
-    <Compile Include="Forms\ConfigTry.cs">
+    <Compile Include="WForms\ConfigTry.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ConfigTry.Designer.cs">
+    <Compile Include="WForms\ConfigTry.Designer.cs">
       <DependentUpon>ConfigTry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Map.cs">
+    <Compile Include="WForms\Map.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Map.Designer.cs">
+    <Compile Include="WForms\Map.Designer.cs">
       <DependentUpon>Map.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SpellMenu.cs">
+    <Compile Include="WForms\SpellMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SpellMenu.Designer.cs">
+    <Compile Include="WForms\SpellMenu.Designer.cs">
       <DependentUpon>SpellMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Village_map.cs">
+    <Compile Include="WForms\Village_map.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Village_map.Designer.cs">
+    <Compile Include="WForms\Village_map.Designer.cs">
       <DependentUpon>Village_map.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -197,23 +204,23 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Books.resx">
+    <EmbeddedResource Include="WForms\Books.resx">
       <DependentUpon>Books.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Arm_game.resx">
+    <EmbeddedResource Include="WForms\Arm_game.resx">
       <DependentUpon>Arm_game.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ConfigTry.resx">
+    <EmbeddedResource Include="WForms\ConfigTry.resx">
       <DependentUpon>ConfigTry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Map.resx">
+    <EmbeddedResource Include="WForms\Map.resx">
       <DependentUpon>Map.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SpellMenu.resx">
+    <EmbeddedResource Include="WForms\SpellMenu.resx">
       <DependentUpon>SpellMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Village_map.resx">
+    <EmbeddedResource Include="WForms\Village_map.resx">
       <DependentUpon>Village_map.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

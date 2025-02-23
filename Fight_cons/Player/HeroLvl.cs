@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace Fight_cons
+namespace FightСons
 {
     partial class Hero
     {

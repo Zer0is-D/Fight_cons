@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class Statistic
     {
+        //TODO Довести до ума статистику 
+
         //  Имя
         public bool knowYourName = false;
 

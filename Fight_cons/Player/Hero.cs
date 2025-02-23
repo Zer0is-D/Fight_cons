@@ -1,8 +1,8 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 
-namespace Fight_cons
+namespace FightСons
 {
     public partial class Hero : Charecter
     {
@@ -109,9 +109,6 @@ namespace Fight_cons
         //  Опьянение
         public byte DrunkCondition = 0;
         public byte OverDrunk = 3;
-
-        //  Выход со стартовой позиции
-        public static bool Exit_cave;
         #endregion
 
         //  Конструктор героя

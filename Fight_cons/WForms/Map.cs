@@ -1,8 +1,9 @@
-﻿using System;
+﻿using FightСons.World.Locations;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace Fight_cons.form
+namespace FightСons.form
 {
     public partial class Map : Form
     {
@@ -38,13 +39,16 @@ namespace Fight_cons.form
 
         private void Neighborhood_bt_Click(object sender, EventArgs e)
         {
-            Village_map village_ = new Village_map(hero_tp);            
-            var dialog_rez = village_.ShowDialog();
-            if (dialog_rez != DialogResult.Cancel)
-            {
-                CalledLocation = village_.CalledLocation;
-                DialogResult = dialog_rez;
-            }
+            Village_map village_ = new Village_map(hero_tp);
+
+            LocationISS.Neighborhood(hero_tp);
+            
+            //var dialog_rez = village_.ShowDialog();
+            //if (dialog_rez != DialogResult.Cancel)
+            //{
+            //    CalledLocation = village_.CalledLocation;
+            //    DialogResult = dialog_rez;
+            //}
         }
 
         private void Map_Load(object sender, EventArgs e)

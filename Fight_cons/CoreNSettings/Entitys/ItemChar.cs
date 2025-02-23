@@ -1,9 +1,9 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
 using System;
 using System.Linq;
 using System.Threading;
 
-namespace Fight_cons
+namespace FightСons
 {
     class ParamScaleTicket
     {

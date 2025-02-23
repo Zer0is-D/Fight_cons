@@ -1,9 +1,9 @@
-﻿using Fight_cons.Мир;
+﻿using FightСons.World.Locations;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace Fight_cons.form
+namespace FightСons.form
 {
     public partial class Village_map : Form
     {
@@ -38,7 +38,7 @@ namespace Fight_cons.form
 
         private void Market_loc_bt_Click(object sender, EventArgs e)
         {
-            AboutLoc.Market(hero_tp);
+            LocationISS.Market(hero_tp);
             this.Close();
         }
 
@@ -57,13 +57,13 @@ namespace Fight_cons.form
 
         private void Neighborhood_bt_Click(object sender, EventArgs e)
         {
-            AboutLoc.Neighborhood(hero_tp);
+            LocationISS.Neighborhood(hero_tp);
             this.Close();
         }
 
         private void Inn_bt_Click(object sender, EventArgs e)
         {
-            AboutLoc.Inn(hero_tp);
+            LocationISS.Inn(hero_tp);
             this.Close();
         }
     }

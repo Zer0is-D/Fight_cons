@@ -1,9 +1,9 @@
-﻿using Fight_cons.Формы;
+﻿using FightСons.WForms;
 using System;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Fight_cons
+namespace FightСons
 {
     class Program
     {
@@ -17,11 +17,12 @@ namespace Fight_cons
 
             Hero hero = new Hero(25, 10);
 
-            Output.GameLogo(vers: "2.6 (Альфа)");
+            Output.GameLogo(vers: "Universa 1.0 (Преальфа)");
 
             EnemyFromXML.LoadBestiarList();
 
-            DataFromWF.ConfigData();
+            // TODO Доработать позже 
+            //DataFromWF.ConfigData();
             
             Hero.CreateHero(hero);
             Console.ReadKey();

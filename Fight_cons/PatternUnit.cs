@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fight_cons
+namespace FightСons
 {
     internal class PatternUnit
     {

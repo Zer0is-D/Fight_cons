@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using static Fight_cons.CoreNSettings.CharecterProfiles;
+using static FightСons.CoreNSettings.CharecterProfiles;
 
-namespace Fight_cons
+namespace FightСons
 {
     public class Bestiaria : Charecter
     {

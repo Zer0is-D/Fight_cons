@@ -1,8 +1,8 @@
-﻿using Fight_cons.CoreNSettings;
+﻿using FightСons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 
-namespace Fight_cons.Enemies
+namespace FightСons.Enemies
 {
     public class Unit : Charecter
     {

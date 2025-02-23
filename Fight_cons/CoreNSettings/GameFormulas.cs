@@ -1,8 +1,8 @@
-﻿using Fight_cons.Enemies;
+﻿using FightСons.Enemies;
 using System;
 using System.Xml.Linq;
 
-namespace Fight_cons.CoreNSettings
+namespace FightСons.CoreNSettings
 {
     internal class GameFormulas
     {
