@@ -107,7 +107,7 @@ namespace FightCons
 
         public static sbyte ShowNewItemsCost = 10;
 
-        public static sbyte VisionSkillCost = 50;
+        public static short VisionSkillCost = 500;
         #endregion
 
         #region Боевой output
@@ -246,10 +246,19 @@ namespace FightCons
             foreach (char s in str)
             {
                 Console.Write(s);
-                if (Settings.DelayEffects)
+                //if (Settings.DelayEffects)
                     Thread.Sleep(x);
                 if (Settings.SoundEffects)
-                    Console.Beep(800, 5);
+                    Console.Beep(800, 25);
+
+                //foreach (char s in str)
+                //{
+                //    Console.Write(s);
+                //    Thread.Sleep(x);
+                //    if (Settings.SoundEffects)
+                //        Console.Beep(220, 25);
+                //}
+                //Console.Write("\n");
 
             }
             Console.Write("\n");
@@ -313,12 +322,12 @@ namespace FightCons
             WriteColorLine(ConsoleColor.Green, "\t\t\t[Квест \"", $"{name}", "\"]\n");
         }
 
-        public static void PayMoneyLine(string message, sbyte value, int money)
+        public static void PayMoneyLine(string message, int value, int money)
         {
             if (money >= value)
                 WriteColorLine(ConsoleColor.Yellow, $"{message} (", $"{value}{MoneySymbol}", ")\n");
             else
-                WriteColorLine(ConsoleColor.DarkGray, "", $"{message} (вам нехватает {value - money}{MoneySymbol})", "\n");
+                WriteColorLine(ConsoleColor.DarkGray, "", $"{message} (вам нахватает {value - money}{MoneySymbol})", "\n");
         }
 
         //Пояснения характеристик

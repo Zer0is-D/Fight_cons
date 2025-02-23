@@ -14,7 +14,7 @@ namespace FightCons
 
     class Rating
     {
-        private static string Path = System.Windows.Forms.Application.StartupPath + "\\Palyers.xml";
+        private static string Path = System.Windows.Forms.Application.StartupPath + "\\Player.xml";
         private static string Name;
         private static int Score;
 
@@ -28,11 +28,11 @@ namespace FightCons
 
         public static void RatingSystem(Hero hero)
         {
-            TopPlayers new_player = CountHeroScore(hero);
-            SaveUserScore(new_player);
+            TopPlayers NewPlayer = CountHeroScore(hero);
+            SaveUserScore(NewPlayer);
 
             //  Сортировка согласно новым данным
-            players.Add(new_player);            
+            players.Add(NewPlayer);            
             var s = players.OrderBy(x => x.Score).ToList();
 
             ShowRaiting();
@@ -66,12 +66,12 @@ namespace FightCons
         {
             TopPlayers player = new TopPlayers();
 
-            do
-            {
-                Console.WriteLine("Назовите себя (мин 3 символа):");
-                Name = player.Name = Console.ReadLine();
-            } while (Name.Length < 3);
-            
+            //do
+            //{
+            //    Console.WriteLine("Назовите себя (мин 3 символа):");
+            //    Name = player.Name = Console.ReadLine();
+            //} while (Name.Length < 3);
+            player.Name = hero.Name;
 
             Score = player.Score = (int)(
                 (hero.Lvl * 10) +

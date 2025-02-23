@@ -114,7 +114,7 @@ namespace FightCons
 
         #region Симуляция голоса
         //  Метод вывода с ожиданием и переходом на другую строку
-        public static void Voice_Leva(string str, int x, int f = 220)
+        public static void VoiceLeva(string str, int x, int f = 220)
         {
             foreach (char s in str)
             {

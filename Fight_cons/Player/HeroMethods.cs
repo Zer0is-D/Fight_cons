@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
-using static FightCons.Locations;
 using static FightCons.CharecterClases;
 using static FightCons.ItemChar;
 using FightCons.World.Locations;
+using System.Numerics;
 
 namespace FightCons
 {
@@ -12,7 +12,7 @@ namespace FightCons
         //  Характеристики героя
         public void ShowHeroStats()
         {
-            Output.WriteColorLine(ConsoleColor.DarkGreen, "\nHero name: ", $"{Name}\n");
+            Output.WriteColorLine(ConsoleColor.DarkGreen, "\nИмя: ", $"{Name}\n");
             Console.WriteLine(//$"Class: {ClassName}\n"
                             $"Lvl: {Lvl}\t\tExp: {Exp}/{NextLvlExp} \n"
                             + $"{Output.HPSymbol}: {TotalHP}/{TotalMaxHP} \t{Output.MPSymbol}: {MP}/{TotalMaxMP}\n"
@@ -28,49 +28,45 @@ namespace FightCons
         //  Начало начал
         public static void CreateHero(Hero hero)
         {
-            byte ch_place = 0;
+            string HNmae;
+            sbyte ChPlace;
 
             //TODO Придумать имя
-            hero.Name = "No_name";
-
-            Output.TwriteLine("", 10, true);
-
-
-            string quo = "- Время отправляться в путь. Куда ты сначала отправишься?\n"
-                            + "1) Точка ИСС\n"
-                            //+ "2) Точка ДЖ"
-                            //+ "3) Точка БТЛ"
-                            //+ "4) Точка ОП"
-                            //+ "5) Точка ПП"
-                            //+ "6) Точка НД"
-                            ;
-
-            switch (Input.ChoisInput(hero, 0, 1, quo))
+            Output.TwriteLine("- Выбери себе имя которым будешь называться", 20, true);
+            do
             {
-                default:
-                    ch_place = 1;
-                    break;
-                case 1:
-                    ch_place = 1;
-                    break;
-            }
+                Console.WriteLine("Назовите себя (мин 3 символа):");
+                HNmae = Console.ReadLine();
+            } while (HNmae.Length < 3);
 
-            Output.TwriteLine("- Тебе понадобиться надежное снаряжения для такого пути - голос ненадолго\n затихает - что ты выберешь?\n", 300, false);//10
+            hero.Name = HNmae;
+
+            string quo = "\n- Время отправляться в путь. Куда ты сначала отправишься?\n"
+                            + "1) Точка ИСС\n"
+                            + "2) Точка ДЖ\n"
+                            + "3) Точка БТЛ\n"
+                            + "4) Точка ОП\n"
+                            + "5) Точка ПП\n"
+                            + "6) Точка НД";
+
+            ChPlace = Input.ChoisInput(hero, 1, 6, quo);
+
+            Output.TwriteLine("- Тебе понадобиться надежное снаряжения для такого пути - голос ненадолго\n затихает - что ты выберешь?\n", 20, false);//10
             GiveHeroClass(hero);
 
             if (hero.CharecterClass.Class == ChaClass.NoMan)
-                Output.TwriteLine("\n- Интересно...\n", 300, true);
+                Output.TwriteLine("\n- Интересно...\n", 20, true);
             else
             {
-                Output.TwriteLine("\nВам вводят в несколько мест раствор", 100, true);
+                Output.TwriteLine("\nВам вводят в несколько мест раствор", 20, true);
                 Output.TwriteLine("\nНа мгновение в голову вцепляется острая боль, а тело метается между\nзакостенелым напряжением" +
-                    "и легкостью.", 400, true);
+                    "и легкостью.", 20, true);
                 Output.WriteColorLine(ConsoleColor.DarkRed, "\n[", "-1 ", $"{Output.HPSymbol} ");
                 Output.WriteColorLine(ConsoleColor.Magenta, $"от ", "боли в теле и голове", "]\n\n");
                 hero.HP -= 1;
                 Console.ReadKey(true);
 
-                Output.TwriteLine("В ту же секунду боль в голове и теле ушла. Вам показалось что боль тянулась\n намного дольше...\n", 200, true);
+                Output.TwriteLine("В ту же секунду боль в голове и теле ушла. Вам показалось что боль тянулась\nнамного дольше...\n", 20, true);
             }
 
             GiveHeroWeapon(hero);
@@ -103,7 +99,27 @@ namespace FightCons
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
                           + "Догадка была верна, это оказался факел, что освятил пространство.\nНо ответить на вопрос где вы, пока не удается.\n", 1, true);
 
-            LocationISS.CavesStart(hero);
+            switch (ChPlace)
+            {
+                case 1:
+                    LocationISS.CavesStart(hero);
+                    break;
+                case 2:
+                    LocationDJ.Woods1(hero);
+                    break;
+                case 3:
+                    LocationBTL.Deepwoods(hero);
+                    break;
+                case 4:
+                    LocationOP.Island1(hero);
+                    break;
+                case 5:
+                    LocationPP.Coast(hero);
+                    break;
+                case 6:
+                    LocationND.Island1(hero);
+                    break;
+            }            
         }        
 
         public static void GiveHeroWeapon(Hero hero)

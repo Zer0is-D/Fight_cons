@@ -88,9 +88,9 @@ namespace FightCons
             //KeyWords["тп"] = () => { Teleport(hero); };
             KeyWords["gold_"] = () =>
             {
-                int m;
+                short m;
 
-                int.TryParse(Console.ReadLine(), out m);
+                short.TryParse(Console.ReadLine(), out m);
                 hero.Money += m;
             };
             KeyWords["uphp"] = () => { hero.MaxHp = 300; hero.HP = hero.MaxHp; };

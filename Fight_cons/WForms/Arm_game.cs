@@ -23,11 +23,11 @@ namespace FightCons
         Dispatcher dispatcher;
         static Hero arm_hero;
 
-        //  Характеристики стандартного опонента
+        //  Характеристики стандартного оппонента
         //static string PersonName;
         static private int Interval = 150;
-        static private sbyte Difficult = 20;
-        public static sbyte Cost = 20;
+        static private short Difficult = 20;
+        public static short Cost = 20;
 
 
         public Arm_game(Hero hero)

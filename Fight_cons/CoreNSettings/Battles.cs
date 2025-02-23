@@ -322,7 +322,7 @@ namespace FightCons
             {
                 if (units.Count() == 1)
                 {
-                    Output.WriteColorLine(Output.unitNameColor(unit.charecter.CharecterProfile.Role), "На вас нападает ", $"{unit.charecter.Name} ");
+                    Output.WriteColorLine(Output.unitNameColor(unit.charecter.CharecterProfile.Role), "На вас нападает ", $"{unit.charecter.HP} ");
                     Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.charecter.HP}", $" {Output.HPSymbol}]\n");
                     break;
                 }

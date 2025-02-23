@@ -59,18 +59,28 @@ namespace FightCons.World.Locations
                 {
                     quo = "\nВаши действия?\n"
                         + "1) Пойти в хоромы\n"
-                        + "2) Отдохнуть\n"
-                        + "3) Вернуться в долину";
+                        + "2) Точка ИСС\n"
+                        + "3) Точка ДЖ\n"
+                        + "4) Точка БТЛ\n"
+                        + "5) Точка ОП\n"
+                        + "6) Точка ПП\n"
+                        + "7) Точка НД\n"
+                        + "8) Отдохнуть";
                 }
                 else
                 {
                     quo = "\nВаши действия?\n"
                         + "1) Бродить\n"
-                        + "2) Отдохнуть\n"
-                        + "3) Вернуться в долину";
+                        + "2) Точка ИСС\n"
+                        + "3) Точка ДЖ\n"
+                        + "4) Точка БТЛ\n"
+                        + "5) Точка ОП\n"
+                        + "6) Точка ПП\n"
+                        + "7) Точка НД\n"
+                        + "8) Отдохнуть\n";
                 }
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+                switch (Input.ChoisInput(hero, 1, 8, quo))
                 {
                     case 1:
                         if (FindBoss)
@@ -87,6 +97,24 @@ namespace FightCons.World.Locations
                         }
                         break;
                     case 2:
+                        LocationISS.CavesStart(hero);
+                        break;
+                    case 3:
+                        LocationDJ.Woods1(hero);
+                        break;
+                    case 4:
+                        LocationBTL.Deepwoods(hero);
+                        break;
+                    case 5:
+                        LocationOP.Island1(hero);
+                        break;
+                    case 6:
+                        LocationPP.Coast(hero);
+                        break;
+                    case 7:
+                        LocationND.Island1(hero);
+                        break;
+                    case 8:
                         if (GameFormulas.Vero(0.8))
                             RestEvent(hero);
                         else
@@ -94,10 +122,7 @@ namespace FightCons.World.Locations
                             RestEvent(hero);
                             Battles.MakeRandomBattle(hero, 4, 5);
                         }
-                        break;
-                    case 3:
-                        LocationISS.Valley(hero);
-                        break;
+                    break;
                 }
             }
         }

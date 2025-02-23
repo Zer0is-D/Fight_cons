@@ -31,60 +31,67 @@ namespace FightCons.World.Locations
 
         public static string[][] Descript = new string[][]
         {
-            //  Пещеры
+            //Старт Пещеры
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Долина
+            //Пещеры
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Окрестности Ордо
+            //Долина
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Деревня Ордо
+            //Поселение Ордо
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Трактир
+            //Трактир
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Рынок
+            //Предгорье
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Леса
+            //Поселение Сенисус
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Дом Алхимиков
+            //Дом Алхимии
             new string[]
             {
-                "111",
-            }
+                "...",
+            },
+            //Окрестности Решеноми
+            new string[]
+            {
+                "...",
+            },
+            //Поселение Решеноми
+            new string[]
+            {
+                "...",
+            },
+            //Рынок
+            new string[]
+            {
+                "...",
+            },
+            //Леса
+            new string[]
+            {
+                "...",
+            },
+
         };
 
         private static string Descriptions(byte i)
@@ -103,6 +110,7 @@ namespace FightCons.World.Locations
         #endregion
 
         #region Локации ИСС
+        //  Пещеры
         public static void CavesStart(Hero hero)
         {
             if (GameFormulas.Vero(0.3))
@@ -294,7 +302,7 @@ namespace FightCons.World.Locations
                             OrdoColony(hero);
                         break;
                     case 3:
-                        Neighborhood(hero);
+                        Valley(hero);
                         break;
                 }
             }
@@ -394,7 +402,7 @@ namespace FightCons.World.Locations
                 switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
-                        OrdoColony(hero);
+                        AlchemyHouse(hero);
                         break;
                     case 2:
                         //if (GameFormulas.Vero(0.9))
@@ -427,15 +435,18 @@ namespace FightCons.World.Locations
                 if (!hero.CharecterProfile.EnemyAbout)
                     Output.PayMoneyLine("1) Способность видеть", Output.VisionSkillCost, hero.Money);
                 else
-                    Output.WriteColorLine(ConsoleColor.DarkGray, "", "1) Сопособность веидеть (уже изучено)\n");
+                    Output.WriteColorLine(ConsoleColor.DarkGray, "", "1) Способность видеть (уже изучено)\n");
                 Console.WriteLine("2) Вернуться");
+                //TODO Перенести строчки к алхимикам
+                Output.PayMoneyLine("3) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
+                Output.PayMoneyLine("4) Купить зелье маны", Output.PotionMPCost, hero.Money);
 
-                switch (Input.ChoisInput(hero, 1, 2))
+                switch (Input.ChoisInput(hero, 1, 4))
                 {
                     case 1:
                         if (!hero.CharecterProfile.EnemyAbout)
                         {
-                            if (Output.Spent(hero.Money, Output.VisionSkillCost, "", "Вам нехватает средств"))
+                            if (Output.Spent(hero.Money, Output.VisionSkillCost, "", "Вам нахватает средств"))
                             {
                                 Console.WriteLine("Теперь вы можете видеть врагов");
                                 hero.CharecterProfile.EnemyAbout = true;
@@ -449,7 +460,7 @@ namespace FightCons.World.Locations
             }
         }
 
-        //  Окрестности Решеноми
+        //Окрестности Решеноми
         public static void Neighborhood(Hero hero)
         {
             //hero.HeroQuests.StartQ(hero, 2);
@@ -552,9 +563,6 @@ namespace FightCons.World.Locations
                           + "1) Наблюдать и подслушивать\n"
                           + "2) Купить оружие\n"
                           + "3) Купить броню");
-                //TODO Перенести строчки к алхимикам
-                //Output.PayMoneyLine("4) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
-                //Output.PayMoneyLine("5) Купить зелье маны", Output.PotionMPCost, hero.Money);
                 Console.WriteLine("4) Выйти");
 
                 switch (Input.ChoisInput(hero, 1, 4))

@@ -55,18 +55,27 @@ namespace FightCons
                     }
                     hero.Condition.LeavedBattle = false;
                     LocationISS.ListOfUnits.Clear();
-                    break;
+                break;
 
-                    case 2:
-                    //  END GAME
-                    if (hero.HeroQuests.Que[0] == 2)
-                    {
-                        Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
-                        Console.ReadKey();
-                        Output.Final();
-                        LocationISS.Valley(hero);
-                    }
-                    break;
+                case 2:
+                //  END GAME
+                if (hero.HeroQuests.Que[0] == 2)
+                {
+                    Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
+                    Console.ReadKey();
+                    //Output.Final();
+                    //LocationISS.Valley(hero);
+                }
+                break;
+                case 3:
+                //  END GAME
+                if (hero.HeroQuests.Que[0] == 3)
+                {
+                    Output.Final();
+                    //Output.Final();
+                    //LocationISS.Valley(hero);
+                }
+                break;
             }            
         }
 
@@ -84,13 +93,13 @@ namespace FightCons
                         
                         Output.TwriteLine("К вам подсаживается Бегемот и говорит:", 1);
                         Console.ReadKey(true);
-                        Sound.Voice_Leva("- Вижу в глазах твоих битву! *кашляет и вытерает руку об пузо* ", 30);
+                        Sound.VoiceLeva("- Вижу в глазах твоих битву! *кашляет и вытирает руку об пузо* ", 30);
                         Console.ReadKey(true);
-                        Sound.Voice_Leva("- Раскрою тебе секрет! Но только тебе!", 1);
+                        Sound.VoiceLeva("- Раскрою тебе секрет! Но только тебе!", 1);
                         Console.ReadKey(true);
                         Output.TwriteLine("*Он подсаживается ближе и говорит на ухо*", 10);
                         Console.ReadKey(true);
-                        Sound.Voice_Leva("- Но при условии если раздобудешь красивую деревянную статуэтку и 50 золотых\n", 10);
+                        Sound.VoiceLeva("- Но при условии если раздобудешь красивую деревянную статуэтку и 50 золотых\n", 10);
                         Console.ReadKey(true);
                         hero.HeroQuests.Que[1] = 2;
                     }
@@ -104,9 +113,9 @@ namespace FightCons
                         var item = hero.HeroInventory.FirstOrDefault(x => x.Name.Contains("Статуэтка"));
                         hero.HeroInventory.Remove(item);
 
-                        Sound.Voice_Leva("- Вот она статуэтка!", 1);
+                        Sound.VoiceLeva("- Вот она статуэтка!", 1);
                         Console.ReadKey(true);
-                        Sound.Voice_Leva("- Ты можешь взять один мой огненный меч! ", 1);
+                        Sound.VoiceLeva("- Ты можешь взять один мой огненный меч! ", 1);
                         Console.ReadKey(true);
                         ItemChar Q_Leva_swored = new ItemChar(name: "Меч 'Бегемота Левы'", itemType: ItemTyps.Weapon, cost: 300, attack: 11, speed: 0.2f, crit: 0.2f, block: 0.2f, maxMoves: 1);
 
@@ -121,11 +130,11 @@ namespace FightCons
                         {
                             case 1:
                                 hero.CharecterWeapon = Q_Leva_swored;
-                                Sound.Voice_Leva("Будь аккуратен с ним!\n", 1);
+                                Sound.VoiceLeva("Будь аккуратен с ним!\n", 1);
                                 break;
                             case 2:
-                                Sound.Voice_Leva("В таком случаи секрет в том...", 1);
-                                Sound.Voice_Leva("... чтобы качать только здоровья, ну и немного атаку...\n", 1);
+                                Sound.VoiceLeva("В таком случаи секрет в том...", 1);
+                                Sound.VoiceLeva("... чтобы качать только здоровья, ну и немного атаку...\n", 1);
                                 hero.PermanentBonus.MaxHp += 3;
                                 hero.PermanentBonus.Attack += 1;
                                 break;

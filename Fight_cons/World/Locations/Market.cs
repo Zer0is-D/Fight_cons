@@ -67,7 +67,7 @@ namespace FightCons
 
         public static void GoodsOut(Hero hero, List<ItemChar> itemChars)
         {
-            Output.TwriteLine("1) Выйти", 1);
+            Output.TwriteLine("1) Выйти\n", 1);
             foreach (var item in itemChars)
             {
                 Output.WriteColorLine(ConsoleColor.White, $"\n{item.Id + 1}) ", $"{item.Name}\n");
