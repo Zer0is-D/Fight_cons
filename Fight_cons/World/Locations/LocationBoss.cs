@@ -1,90 +1,34 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FightСons.World.Locations
+namespace FightCons.World.Locations
 {
-    internal class LocationBoss : FightСons.Locations
+    internal class LocationBoss : FightCons.Locations
     {
         #region Данные и настроки локации
         public enum LocationName
         {
-            CaveStart = 0,
-            Caves = 1,
-            Vally = 2,
-            OrdoNeighborhood = 3,
-            VillageOrdo = 4,
-            Inn = 5,
-            Market = 6,
-            Woods = 7,
-            MagicManHouse = 8
+            Endroom = 0
         }
 
-        public static string[][] Discript = new string[][]
+        public static string[][] Descript = new string[][]
         {
-            //  Пещеры
+            //  Хоромы
             new string[]
             {
-                "...",
-                "...",
-                "...",
-            },
-            //  Долина
-            new string[]
-            {
-                "...",
-                "...",
-                "...",
-            },
-            //  Окрестности Ордо
-            new string[]
-            {
-                "...",
-                "...",
-                "...",
-            },
-            //  Деревня Ордо
-            new string[]
-            {
-                "...",
-                "...",
-                "...",
-            },
-            //  Трактир
-            new string[]
-            {
-                "...",
-                "...",
-                "...",
-            },
-            //  Рынок
-            new string[]
-            {
-                "...",
-                "...",
-                "...",
-            },
-            //  Леса
-            new string[]
-            {
-                "...",
-                "...",
-                "...",
-            },
-            //  Храм
-            new string[]
-            {
-                "111",
+                "Огромные шкафы под завязку забитые сведеньями и данными которые никому больше не пригодятся.",
+                "Вы вспоминаете лица тех кто положил жизнь на поиск этого места. Места которого не станет",
             }
         };
 
-        private static string Dicscriptions(byte i)
+        private static string Descriptions(byte i)
         {
             Random rand = new Random();
-            return Discript[i][rand.Next(Discript[i].Length)];
+            return Descript[i][rand.Next(Descript[i].Length)];
         }
 
         /// <summary>
@@ -99,7 +43,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Хоромы\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Endroom)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -134,7 +78,7 @@ namespace FightСons.World.Locations
                         }
                         break;
                     case 3:
-                        LocationISS.Vally(hero);
+                        LocationVN.SpilledSpace(hero);
                         break;
                 }
             }

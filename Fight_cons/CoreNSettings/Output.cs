@@ -1,18 +1,18 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading;
-using static FightСons.Charecter;
+using static FightCons.Charecter;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using static FightСons.CoreNSettings.CharecterProfiles;
+using static FightCons.CoreNSettings.CharecterProfiles;
 using System.Xml.Linq;
 
-namespace FightСons
+namespace FightCons
 {
     public class Output
     {

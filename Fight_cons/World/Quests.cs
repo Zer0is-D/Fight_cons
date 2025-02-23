@@ -1,12 +1,12 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static FightСons.Locations;
-using static FightСons.ItemChar;
-using FightСons.World.Locations;
+using static FightCons.Locations;
+using static FightCons.ItemChar;
+using FightCons.World.Locations;
 
-namespace FightСons
+namespace FightCons
 {
     public class Quests
     {
@@ -64,7 +64,7 @@ namespace FightСons
                         Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
                         Console.ReadKey();
                         Output.Final();
-                        LocationISS.Vally(hero);
+                        LocationISS.Valley(hero);
                     }
                     break;
             }            
@@ -178,7 +178,7 @@ namespace FightСons
                     break;
 
                 case 6:
-                    LocationISS.OrdoСolony(hero);
+                    LocationISS.OrdoColony(hero);
                     break;
             }
         }

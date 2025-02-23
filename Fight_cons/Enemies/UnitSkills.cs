@@ -1,10 +1,10 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Net.Security;
 using System.Threading.Tasks;
 
-namespace FightСons
+namespace FightCons
 {
     public class UnitSkills
     {
@@ -193,7 +193,7 @@ namespace FightСons
             Output.NameAndId(victim);
 
             if (damag > attacker.TotalAttack)
-                Output.WriteColorLine(ConsoleColor.Yellow, "критические  ", $"{damag} ", "урона! У ");
+                Output.WriteColorLine(ConsoleColor.Yellow, "критические ", $"{damag} ", "урона! У ");
             else
                 Output.WriteColorLine(ConsoleColor.Yellow, "", $"{damag} ", "урона у ");
 

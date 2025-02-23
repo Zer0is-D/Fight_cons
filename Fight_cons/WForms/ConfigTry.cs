@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FightСons.WForms
+namespace FightCons.WForms
 {
     public partial class ConfigTry : Form
     {
@@ -28,7 +28,7 @@ namespace FightСons.WForms
             Settings.DetiledParamValue = CurrentParamValue_checkBox.Checked;
 
             Market.NamOfGoods = (sbyte) NumOfGoodsUpDown.Value;
-            Market.NamOfBonusies = (sbyte) NamOfBonusiesUpDown.Value;
+            Market.NamOfBonuses = (sbyte) NamOfBonusiesUpDown.Value;
             Conditions.BleedDmg = (sbyte) BleedDmgUpDown.Value;
              
             DialogResult = DialogResult.No;

@@ -1,10 +1,10 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace FightСons
+namespace FightCons
 {
     public class Locations
     {
@@ -103,7 +103,7 @@ namespace FightСons
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Решноми\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Решеноми\n");
                 //Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
 
                 hero.HPBar();
@@ -161,13 +161,13 @@ namespace FightСons
         //  Отдых
         private static void MakeRest(Hero hero)
         {
-            sbyte usualResoredHP = 30;
-            sbyte usualResoredMP = 20;
+            sbyte usualRestoredHP = 30;
+            sbyte usualRestoredMP = 20;
 
-            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP);
-            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP);
-            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP)} ", $"{Output.HPSymbol} ");
-            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP)} ", $"{Output.MPSymbol}\n");
+            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, usualRestoredHP);
+            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, usualRestoredMP);
+            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, usualRestoredHP)} ", $"{Output.HPSymbol} ");
+            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, usualRestoredMP)} ", $"{Output.MPSymbol}\n");
             Output.WaitNext(3, ".");
         }
 
@@ -175,13 +175,13 @@ namespace FightСons
         private static void MakeMeditation(Hero hero)
         {
             //  Mage restore
-            sbyte mageResoredHP = 20;
-            sbyte mageResoredMP = 50;
+            sbyte mageRestoredHP = 20;
+            sbyte mageRestoredMP = 50;
 
-            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP);
-            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP);
-            Output.WriteColorLine(ConsoleColor.Green, "Медитация восстановила вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP)} ", $"{Output.HPSymbol} ");
-            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP)} ", $"{Output.MPSymbol}\n");
+            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, mageRestoredHP);
+            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, mageRestoredMP);
+            Output.WriteColorLine(ConsoleColor.Green, "Медитация восстановила вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, mageRestoredHP)} ", $"{Output.HPSymbol} ");
+            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, mageRestoredMP)} ", $"{Output.MPSymbol}\n");
             Output.WaitNext(3, ".");
         }
     }

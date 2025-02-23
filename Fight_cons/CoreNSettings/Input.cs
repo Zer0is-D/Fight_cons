@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
-using FightСons.form;
+using FightCons.form;
 
-namespace FightСons
+namespace FightCons
 {
     class Input
     {
@@ -111,8 +111,8 @@ namespace FightСons
                     switch (ans)
                     {
                         case 1:
-                            Market.NamOfBonusies = ChoisInput(hero, 1, 8, "Установите нужное количество (1-8)\n" +
-                                $"Сейчас: {Market.NamOfBonusies}");
+                            Market.NamOfBonuses = ChoisInput(hero, 1, 8, "Установите нужное количество (1-8)\n" +
+                                $"Сейчас: {Market.NamOfBonuses}");
                             break;
                         case 2:
                             Market.NamOfGoods = ChoisInput(hero, 1, 100, "Установите нужное количество (1-100)\n" +

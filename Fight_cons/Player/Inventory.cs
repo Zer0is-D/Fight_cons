@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using static FightСons.ItemChar;
+using static FightCons.ItemChar;
 
-namespace FightСons
+namespace FightCons
 {
     internal class Inventory
     {

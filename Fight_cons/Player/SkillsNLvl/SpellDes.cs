@@ -1,8 +1,8 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Linq;
 
-namespace FightСons
+namespace FightCons
 {
     public class SpellDes
     {
@@ -57,7 +57,7 @@ namespace FightСons
             else
             {
                 Output.NameAndId(victim, true);
-                Console.Write(" уворачивается\n");
+                Console.Write("уворачивается\n");
             }
         }
 

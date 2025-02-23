@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FightСons
+namespace FightCons
 {
     public class Statistic
     {

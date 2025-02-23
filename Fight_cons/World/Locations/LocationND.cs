@@ -1,4 +1,4 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,86 +6,143 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FightСons.World.Locations
+namespace FightCons.World.Locations
 {
     internal class LocationND
     {
         #region Данные и настроки локации
         public enum LocationName
         {
-            CaveStart = 0,
-            Caves = 1,
-            Vally = 2,
-            OrdoNeighborhood = 3,
-            VillageOrdo = 4,
-            Inn = 5,
-            Market = 6,
-            Woods = 7,
-            MagicManHouse = 8
+            Island1 = 0,
+            SectorDzeta = 1,
+            NewIaregaCity = 2,
+            SectorEtta = 3,
+            NewEdinstvenyCity = 4,
+            SectorTeta = 5,
+            GeliotopolCity = 6,
+            SectorCsi = 7,
+            HladnyPrimeCity = 8,
+            SectorOmicron = 9,
+            Cosmolit = 10,
+            DarkGranulation = 11,
+            SectorPi = 12,
+            VladichiaOrbitaCity = 13,
+            SectorHi = 14,
+            OldIaregaCity = 15,
+            SectorPsi = 16,
+            Cvantograd = 17,
+            SectorOmega = 18,
+            GreenVectorVillage = 19,
         }
 
-        public static string[][] Discript = new string[][]
+        public static string[][] Descript = new string[][]
         {
-            //  Пещеры
+            //  Island1
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Долина
+            //  SectorDzeta
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Окрестности Ордо
+            //  NewIaregaCity
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Деревня Ордо
+            //  SectorEtta
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Трактир
+            //  NewEdinstvenyCity
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Рынок
+            //  SectorTeta
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Леса
+            //  GeliotopolCity
             new string[]
             {
-                "...",
-                "...",
                 "...",
             },
-            //  Храм
+            //  SectorCsi
             new string[]
             {
-                "111",
-            }
+                "...",
+            },
+            //  HladnyPrimeCity
+            new string[]
+            {
+                "...",
+            },
+            //  SectorOmicron
+            new string[]
+            {
+                "...",
+            },
+            //  Cosmolit
+            new string[]
+            {
+                "...",
+            },
+            //  DarkGranulation
+            new string[]
+            {
+                "...",
+            },
+            //  SectorPi
+            new string[]
+            {
+                "...",
+            },
+            //  VladichiaOrbitaCity
+            new string[]
+            {
+                "...",
+            },
+            //  SectorHi
+            new string[]
+            {
+                "...",
+            },
+            //  OldIaregaCity
+            new string[]
+            {
+                "...",
+            },
+            //  SectorPsi
+            new string[]
+            {
+                "...",
+            },
+            //  Cvantograd
+            new string[]
+            {
+                "...",
+            },
+            //  SectorOmega
+            new string[]
+            {
+                "...",
+            },
+            //  GreenVectorVillage
+            new string[]
+            {
+                "...",
+            },
         };
 
-        private static string Dicscriptions(byte i)
+        private static string Descriptions(byte i)
         {
             Random rand = new Random();
-            return Discript[i][rand.Next(Discript[i].Length)];
+            return Descript[i][rand.Next(Descript[i].Length)];
         }
 
         /// <summary>
@@ -94,574 +151,681 @@ namespace FightСons.World.Locations
         public static List<Order> ListOfUnits = new List<Order>();
 
         //  Выход со стартовой позиции
-        public static bool Exit_cave;
+        public static bool ExitCave;
         #endregion
 
-        #region Локации ИСС
-        public static void CavesStart(Hero hero)
-        {
-            if (GameFormulas.Vero(0.3))
-                Battles.MakeCurrentBattle(hero, 0, 9);
-
-            while (true)
-            {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"???\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.CaveStart)), 1);
-
-                hero.HPBar();
-                hero.MPBar();
-
-                Console.Write("Ваши действия?\n"
-                                + "1) Обыскать пещеру\n"
-                                + "2) Отдохнуть\n");
-                if (Exit_cave)
-                    Console.Write("3) Выйти из пещеры\n");
-
-                switch (Input.ChoisInput(hero, 1, 3))
-                {
-                    case 1:
-                        if (GameFormulas.Vero(0.25))
-                            if (!Exit_cave)
-                            {
-                                Output.TwriteLine("\nВы находите выход\n", 1);
-                                Exit_cave = true;
-                            }
-                        if (GameFormulas.Vero(0.6))
-                            Battles.MakeRandomBattle(hero, 0, 1, 2);
-
-                        hero.Statistic.CaveResearch++;
-                        Research(hero);
-                        break;
-                    case 2:
-                        if (GameFormulas.Vero(0.8))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 0, 1, 2);
-                        }
-                        break;
-                    case 3:
-                        if (Exit_cave)
-                            Vally(hero);
-                        break;
-                }
-            }
-
-
-        }
-
-        //  Пещеры
-        public static void Caves(Hero hero)
+        #region Локации НД
+        //Остров1
+        public static void Island1(Hero hero)
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Пещеры\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Caves)), 1);
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Остров1\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.Island1)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 string quo = "\nВаши действия?\n"
-                            + "1) Обыскать пещеру\n"
-                            + "2) Отдохнуть\n"
-                            + "3) Выйти из пещеры";
+                           + "1) Осмотреться\n"
+                           + "2) Лететь в Сектор Дзета\n"
+                           + "3) Выйти из НД";
+
 
                 switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
-                        if (GameFormulas.Vero(0.7))
-                            Battles.MakeRandomBattle(hero, 0, 1, 2);
-
-                        hero.Statistic.CaveResearch++;
-                        Research(hero);
+                        //TODO Событие прослушивание  
                         break;
                     case 2:
-                        if (GameFormulas.Vero(0.8))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 0, 1, 2);
-                        }
+                        SectorDzeta(hero);
                         break;
                     case 3:
-                        Vally(hero);
+                        LocationVN.SpilledSpace(hero);
                         break;
                 }
             }
         }
 
-        //  Долина
-        public static void Vally(Hero hero)
+        //Сектор Дзета
+        public static void SectorDzeta(Hero hero)
         {
-            if (GameFormulas.Vero(0.2))
-                Battles.MakeCurrentBattle(hero, 11);
-            if (GameFormulas.Vero(0.4))
-                Battles.MakeRandomBattle(hero, 3);
-            if (GameFormulas.Vero(0.01))
-                FindingPouchEvent(hero, 1, 7);
-
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Долина\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Vally)), 1);
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Дзета\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorDzeta)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 string quo = "\nВаши действия?\n"
-                            + "1) Пойти в поселение Ордо\n"
-                            + "2) Пойти в предгорье\n"
-                            + "3) Пойти в окрестности\n" // появления инфы позже
-                            + "4) Пойти в лес\n"
-                            + "5) Передохнуть\n"
-                            + "6) Вернуться в пещеры";
+                           + "1) Осмотреться\n"
+                           + "2) Лететь в город Новая Ярега\n"
+                           + "3) Лететь в сектор Этта\n"
+                           + "4) Лететь в сектор Пи\n"
+                           + "5) Вернуться на остров1";
+
+
+                switch (Input.ChoisInput(hero, 1, 5, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        NewIaregaCity(hero);
+                        break;
+                    case 3:
+                        SectorEtta(hero);
+                        break;
+                    case 4:
+                        SectorPi(hero);
+                        break;
+                    case 5:
+                        Island1(hero);
+                        break;
+                }
+            }
+        }
+
+        //Город Новая Ярега
+        public static void NewIaregaCity(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новая Ярега\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.NewIaregaCity)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
+
+                switch (Input.ChoisInput(hero, 1, 3, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        SectorDzeta(hero);
+                        break;
+                }
+            }
+        }
+
+        //Сектор Этта
+        public static void SectorEtta(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Этта\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorEtta)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Идти в Город Новый Единственный\n"
+                           + "3) Лететь в сектор Тета\n"
+                           + "4) Лететь в сектор Дзета\n"
+                           + "5) Лететь в сектор Омикрон";
+
+
+                switch (Input.ChoisInput(hero, 1, 5, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        NewEdinstvenyCity(hero);
+                        break;
+                    case 3:
+                        SectorTeta(hero);
+                        break;
+                    case 4:
+                        SectorDzeta(hero);
+                        break;
+                    case 5:
+                        SectorOmicron(hero);
+                        break;
+                }
+            }
+        }
+
+        //Город Новый Единственный
+        public static void NewEdinstvenyCity(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.NewEdinstvenyCity)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
+
+                switch (Input.ChoisInput(hero, 1, 3, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        SectorEtta(hero);
+                        break;
+                }
+            }
+        }
+
+        //Сектор Тета
+        public static void SectorTeta(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Тета\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorTeta)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Идти в Город Гелиотополь\n"
+                           + "3) Лететь в сектор Этта\n"
+                           + "4) Лететь в сектор Кси";
+
 
                 switch (Input.ChoisInput(hero, 1, 4, quo))
                 {
                     case 1:
-                        Caves(hero);
+                        //TODO Событие прослушивание  
                         break;
                     case 2:
-                        if (GameFormulas.Vero(0.8))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 3);
-                        }
+                        GeliotopolCity(hero);
                         break;
                     case 3:
-                        OrdoNeighborhood(hero);
+                        SectorEtta(hero);
                         break;
                     case 4:
-                        Woods(hero);
+                        SectorCsi(hero);
                         break;
                 }
             }
         }
 
-        //  Поселение Ордо
-        public static void VillageOrdo(Hero hero)
-        {
-            if (GameFormulas.Vero(0.15))
-                FindingPouchEvent(hero, 3, 10);
-            if (GameFormulas.Vero(0.05))
-                Battles.MakeCurrentBattle(hero, 5);
-
-            while (true)
-            {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Ордо\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.VillageOrdo)), 1);
-
-                hero.HPBar();
-                hero.MPBar();
-
-                Console.Write("\nВаши действия?\n");
-
-                if (hero.Lvl > hero.Statistic.HeroLvlKickOff)
-                    Console.Write("1) Пойти в трактир\n");
-                else
-                    Output.WriteColorLine(ConsoleColor.Gray, "", "1) Пойти в трактир (Вас прогнали, приходите позже)\n");
-
-                Console.WriteLine("2) Пойти на рынок\n"
-                            + "3) Пойти в храм\n"
-                            + "4) Выйти из деревни");
-
-                switch (Input.ChoisInput(hero, 1, 4))
-                {
-                    case 1:
-                        if (hero.Lvl > hero.Statistic.HeroLvlKickOff)
-                            Inn(hero);
-                        else
-                            VillageOrdo(hero);
-                        break;
-                    case 2:
-                        Market(hero);
-                        break;
-                    case 3:
-                        AlchemyHouse(hero);
-                        break;
-                    case 4:
-                        OrdoNeighborhood(hero);
-                        break;
-                }
-            }
-        }
-
-        //  Трактир
-        public static void Inn(Hero hero)
+        //Город Гелиотополь
+        public static void GeliotopolCity(Hero hero)
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Трактир\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Inn)), 1);
-
-                hero.HPBar();
-                hero.MPBar();
-
-                Console.WriteLine("\nВаши действия?\n"
-                           + "1) Наблюдать и подслушивать");
-                Output.PayMoneyLine("2) Выпить", Output.BeerCost, hero.Money);
-                Output.PayMoneyLine("3) Армреслинг", Arm_game.Cost, hero.Money);
-                Console.WriteLine("4) Выйти из трактира");
-
-                switch (Input.ChoisInput(hero, 1, 4))
-                {
-                    case 1:
-                        hero.HeroSpying.SpyingInTavern(hero);
-                        break;
-                    case 2:
-                        if (Output.Spent(hero.Money, Output.BeerCost, "", "Заплати, а потом пей!"))
-                            Drinking(hero);
-                        break;
-                    case 3:
-                        if (Output.Spent(hero.Money, Arm_game.Cost, "", "Бесплатно не интересует\n"))
-                            ArmGameEvent(hero);
-                        break;
-                    case 4:
-                        VillageOrdo(hero);
-                        PipeMessage.DialogInturapted = true;
-                        break;
-                }
-            }
-        }
-
-        //Предгорье
-        public static void Foothills(Hero hero)
-        {
-            while (true)
-            {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Предгорье\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.GeliotopolCity)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 string quo = "\nВаши действия?\n"
-                           + "1) Войти в деревню\n"
-                           + "2) Отдохнуть\n"
-                           + "3) Вернуться в долину";
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
 
                 switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
-                        VillageOrdo(hero);
+                        //TODO Событие прослушивание  
                         break;
                     case 2:
-                        if (GameFormulas.Vero(0.9))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
-                        }
-                        break;
-                    case 3:
-                        Vally(hero);
+                        SectorTeta(hero);
                         break;
                 }
             }
         }
 
-        //Поселение Сенисус
-        public static void SenisusСolony(Hero hero)
+        //Сектор Кси
+        public static void SectorCsi(Hero hero)
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Сенисус\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Кси\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorCsi)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 string quo = "\nВаши действия?\n"
-                           + "1) Войти в деревню\n"
-                           + "2) Отдохнуть\n"
-                           + "3) Вернуться в долину";
+                           + "1) Осмотреться\n"
+                           + "2) Идти в Город Новый Единственный\n"
+                           + "3) Лететь в сектор Тета\n"
+                           + "4) Лететь в сектор Омикрон\n"
+                           + "5) Лететь в сектор Хи";
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+
+                switch (Input.ChoisInput(hero, 1, 5, quo))
                 {
                     case 1:
-                        VillageOrdo(hero);
+                        //TODO Событие прослушивание  
                         break;
                     case 2:
-                        if (GameFormulas.Vero(0.9))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
-                        }
+                        NewEdinstvenyCity(hero);
                         break;
                     case 3:
-                        Vally(hero);
+                        SectorTeta(hero);
                         break;
-                }
-            }
-        }
-
-        //Дом Алхимии
-        public static void AlchemyHouse(Hero hero)
-        {
-            while (true)
-            {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Дом алхимии\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
-
-                hero.HPBar();
-                hero.MPBar();
-
-                Console.Write("\nВаши действия?\n");
-                if (!hero.CharecterProfile.EnemyAbout)
-                    Output.PayMoneyLine("1) Способность видеть", Output.VisionSkillCost, hero.Money);
-                else
-                    Output.WriteColorLine(ConsoleColor.DarkGray, "", "1) Сопособность веидеть (уже изучено)\n");
-                Console.WriteLine("2) Вернуться");
-
-                switch (Input.ChoisInput(hero, 1, 2))
-                {
-                    case 1:
-                        if (!hero.CharecterProfile.EnemyAbout)
-                        {
-                            if (Output.Spent(hero.Money, Output.VisionSkillCost, "", "Вам нехватает средств"))
-                            {
-                                Console.WriteLine("Теперь вы можете видеть врагов");
-                                hero.CharecterProfile.EnemyAbout = true;
-                            }
-                        }
-                        break;
-                    case 2:
-                        VillageOrdo(hero);
-                        break;
-                }
-            }
-        }
-
-        //  Окрестности Решеноми
-        public static void OrdoNeighborhood(Hero hero)
-        {
-            //hero.HeroQuests.StartQ(hero, 2);
-            //hero.HeroQuests.QYourName(hero);
-
-            if (GameFormulas.Vero(0.3))
-                FindingPouchEvent(hero, 0, 5);
-            if (GameFormulas.Vero(0.1))
-                Battles.MakeCurrentBattle(hero, 4);
-
-            while (true)
-            {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Окрестности посления\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.OrdoNeighborhood)), 1);
-
-                hero.HPBar();
-                hero.MPBar();
-
-                string quo = "\nВаши действия?\n"
-                           + "1) Войти в деревню\n"
-                           + "2) Отдохнуть\n"
-                           + "3) Вернуться в долину";
-
-                switch (Input.ChoisInput(hero, 1, 3, quo))
-                {
-                    case 1:
-                        VillageOrdo(hero);
-                        break;
-                    case 2:
-                        if (GameFormulas.Vero(0.9))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
-                        }
-                        break;
-                    case 3:
-                        Vally(hero);
-                        break;
-                }
-            }
-        }
-
-        //Поселение Решеноми
-        public static void ReshinomiСolony(Hero hero)
-        {
-            while (true)
-            {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Решноми\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
-
-                hero.HPBar();
-                hero.MPBar();
-
-                string quo = "\nВаши действия?\n"
-                           + "1) Войти в деревню\n"
-                           + "2) Отдохнуть\n"
-                           + "3) Вернуться в долину";
-
-                switch (Input.ChoisInput(hero, 1, 3, quo))
-                {
-                    case 1:
-                        VillageOrdo(hero);
-                        break;
-                    case 2:
-                        if (GameFormulas.Vero(0.9))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
-                        }
-                        break;
-                    case 3:
-                        Vally(hero);
-                        break;
-                }
-            }
-        }
-
-        //  Рынок
-        public static void Market(Hero hero)
-        {
-            //  Квесты
-            if (hero.HeroQuests.Que[1] == 2)
-                hero.HeroQuests.Q_leva_Market(hero);
-            if (GameFormulas.Vero(0.01))
-                FindingPouchEvent(hero, 10, 100);
-
-            while (true)
-            {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Рынок\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Market)), 1);
-
-                hero.HPBar();
-                hero.MPBar();
-
-                Console.WriteLine("\nВаши действия?\n"
-                          + "1) Наблюдать и подслушивать\n"
-                          + "2) Купить оружие\n"
-                          + "3) Купить броню");
-                Output.PayMoneyLine("4) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
-                Output.PayMoneyLine("5) Купить зелье маны", Output.PotionMPCost, hero.Money);
-                Console.WriteLine("6) Выйти");
-
-                switch (Input.ChoisInput(hero, 1, 6))
-                {
-                    case 1:
-                        //  Событие прослушивание  
-                        break;
-
-                    case 2:
-                        FightСons.Market.ShowWeaponGoods(hero);
-                        break;
-
-                    case 3:
-                        FightСons.Market.ShowArmorGoods(hero);
-                        break;
-
                     case 4:
-                        if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
-                            hero.PotionList[0].Count += 1;
+                        SectorOmicron(hero);
                         break;
-
                     case 5:
-                        if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
-                            hero.PotionList[1].Count += 1;
+                        SectorHi(hero);
                         break;
+                }
+            }
+        }
 
+        //Город Хладный Прайм
+        public static void HladnyPrimeCity(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.HladnyPrimeCity)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
+
+                switch (Input.ChoisInput(hero, 1, 3, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        SectorEtta(hero);
+                        break;
+                }
+            }
+        }
+
+        //Сектор Омикрон
+        public static void SectorOmicron(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Омикрон\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorOmicron)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Идти к Космолиту\n"
+                           + "3) Идти к Темной грануляции\n"
+                           + "4) Лететь в сектор Этта\n"
+                           + "5) Лететь в сектор Кси\n"
+                           + "6) Лететь в сектор Пи\n"
+                           + "7) Лететь в сектор Пси";
+
+
+                switch (Input.ChoisInput(hero, 1, 7, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        Cosmolit(hero);
+                        break;
+                    case 3:
+                        DarkGranulation(hero);
+                        break;
+                    case 4:
+                        SectorEtta(hero);
+                        break;
+                    case 5:
+                        SectorCsi(hero);
+                        break;
                     case 6:
-                        VillageOrdo(hero);
+                        SectorPi(hero);
+                        break;
+                    case 7:
+                        SectorPsi(hero);
                         break;
                 }
             }
         }
 
-        //  Леса
-        public static void Woods(Hero hero)
+        //Космолит
+        public static void Cosmolit(Hero hero)
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.Cosmolit)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 string quo = "\nВаши действия?\n"
-                            + "1) Бродить\n"
-                            + "2) Отдохнуть\n"
-                            + "3) Вернуться в долину";
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
 
                 switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
-                        //  Босс
-                        if (GameFormulas.Vero(0.2) & hero.HeroQuests.Que[0] == 0)
-                        {
-                            hero.HeroQuests.Que[0] = 1;
-                            hero.HeroQuests.MainQ(hero);
-                        }
-                        else if (GameFormulas.Vero(0.6))
-                            Battles.MakeRandomBattle(hero, 4, 5);
-                        else
-                            Output.TwriteLine("Вы ничего не находите\n", 1);
-
-                        hero.Statistic.WoodsResearch++;
-                        Research(hero);
+                        //TODO Событие прослушивание  
                         break;
                     case 2:
-                        if (GameFormulas.Vero(0.8))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 4, 5);
-                        }
-                        break;
-                    case 3:
-                        Vally(hero);
+                        SectorEtta(hero);
                         break;
                 }
             }
         }
 
-        //Загатовка
-        public static void Lorem(Hero hero)
+        //Темная грануляция
+        public static void DarkGranulation(Hero hero)
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Решноми\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.DarkGranulation)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 string quo = "\nВаши действия?\n"
-                           + "1) Войти в деревню\n"
-                           + "2) Отдохнуть\n"
-                           + "3) Вернуться в долину";
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
 
                 switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
-                        VillageOrdo(hero);
+                        //TODO Событие прослушивание  
                         break;
                     case 2:
-                        if (GameFormulas.Vero(0.9))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
-                        }
-                        break;
-                    case 3:
-                        Vally(hero);
+                        SectorEtta(hero);
                         break;
                 }
             }
         }
+
+        //Сектор Пи
+        public static void SectorPi(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Пи\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorPi)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Идти в город Владычья Орбита\n"
+                           + "3) Лететь в сектор Дзета\n"
+                           + "4) Лететь в сектор Омикрон\n"
+                           + "5) Лететь в сектор Омега";
+
+
+                switch (Input.ChoisInput(hero, 1, 5, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        NewEdinstvenyCity(hero);
+                        break;
+                    case 3:
+                        SectorDzeta(hero);
+                        break;
+                    case 4:
+                        SectorOmicron(hero);
+                        break;
+                    case 5:
+                        SectorOmega(hero);
+                        break;
+                }
+            }
+        }
+
+        //Город Владычья Орбита
+        public static void VladichiaOrbitaCity(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.VladichiaOrbitaCity)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
+
+                switch (Input.ChoisInput(hero, 1, 3, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        SectorEtta(hero);
+                        break;
+                }
+            }
+        }
+
+        //Сектор Хи
+        public static void SectorHi(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Хи\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorHi)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Идти в город Старая Ярега\n"
+                           + "3) Лететь в сектор Кси\n"
+                           + "4) Лететь в сектор Пси";
+
+
+                switch (Input.ChoisInput(hero, 1, 5, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        NewEdinstvenyCity(hero);
+                        break;
+                    case 3:
+                        SectorTeta(hero);
+                        break;
+                    case 4:
+                        SectorOmicron(hero);
+                        break;
+                    case 5:
+                        SectorDzeta(hero);
+                        break;
+                }
+            }
+        }
+
+        //Город Старая Ярега
+        public static void OldIaregaCity(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.OldIaregaCity)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
+
+                switch (Input.ChoisInput(hero, 1, 3, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        SectorEtta(hero);
+                        break;
+                }
+            }
+        }
+
+        //Сектор Пси
+        public static void SectorPsi(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Пси\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorPsi)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Идти в город Квантоград\n"
+                           + "3) Лететь в сектор Омикрон\n"
+                           + "4) Лететь в сектор Хи\n"
+                           + "5) Лететь в сектор Омега";
+
+
+                switch (Input.ChoisInput(hero, 1, 5, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        Cvantograd(hero);
+                        break;
+                    case 3:
+                        SectorOmicron(hero);
+                        break;
+                    case 4:
+                        SectorHi(hero);
+                        break;
+                    case 5:
+                        SectorOmega(hero);
+                        break;
+                }
+            }
+        }
+
+        //Квантоград
+        public static void Cvantograd(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Квантоград\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.Cvantograd)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
+
+                switch (Input.ChoisInput(hero, 1, 3, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        SectorEtta(hero);
+                        break;
+                }
+            }
+        }
+
+        //Сектор Омега
+        public static void SectorOmega(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Омега\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorOmega)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Идти в поселение Зеленый Вектор\n"
+                           + "3) Лететь в сектор Пи\n"
+                           + "4) Лететь в сектор Пси";
+
+
+                switch (Input.ChoisInput(hero, 1, 5, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        GreenVectorVillage(hero);
+                        break;
+                    case 3:
+                        SectorPi(hero);
+                        break;
+                    case 4:
+                        SectorPsi(hero);
+                        break;
+                }
+            }
+        }
+
+        //Поселение Зеленый Вектор
+        public static void GreenVectorVillage(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.GreenVectorVillage)), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                string quo = "\nВаши действия?\n"
+                           + "1) Осмотреться\n"
+                           + "2) Вернуться";
+
+
+                switch (Input.ChoisInput(hero, 1, 3, quo))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+                    case 2:
+                        SectorEtta(hero);
+                        break;
+                }
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -706,7 +870,7 @@ namespace FightСons.World.Locations
                 Console.ReadKey();
                 hero.DrunkCondition = 0;
                 hero.OverDrunk += 1;
-                VillageOrdo(hero);
+                //VillageOrdo(hero);
             }
             hero.Sneak = 0;
             hero.DrunkCondition++;

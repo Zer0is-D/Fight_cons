@@ -1,10 +1,10 @@
-﻿using FightСons.World.Locations;
+﻿using FightCons.World.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static FightСons.ItemChar;
+using static FightCons.ItemChar;
 
-namespace FightСons
+namespace FightCons
 {
     class Market
     {
@@ -12,7 +12,7 @@ namespace FightСons
         private static List<ItemChar> ArmorList = new List<ItemChar>();
 
         public static sbyte NamOfGoods = 4;
-        public static sbyte NamOfBonusies = 2; //  1-8
+        public static sbyte NamOfBonuses = 2; //  1-8
 
         private static int LVL = 1;
 
@@ -28,7 +28,7 @@ namespace FightСons
                 LVL = hero.Lvl;
                 for (byte i = 0; i < NamOfGoods; i++)
                 {
-                    WeaponList.Add(new ItemChar(ItemTyps.Weapon, NamOfBonusies, weapon.ATTMin, weapon.ATTMax, 
+                    WeaponList.Add(new ItemChar(ItemTyps.Weapon, NamOfBonuses, weapon.ATTMin, weapon.ATTMax, 
                     weapon.ARCMin, weapon.ARCMax, weapon.DEFMin, weapon.DEFMax,
                     weapon.MDEFMin, weapon.MDEFMax, weapon.MAXHpMin, weapon.MAXHpMax,
                     weapon.MAXMp_min, weapon.MAXMpMax, weapon.SPDMin, weapon.SPDMax,
@@ -52,7 +52,7 @@ namespace FightСons
 
                 for (byte i = 0; i < NamOfGoods; i++)
                 {
-                    ArmorList.Add(new ItemChar(ItemTyps.Armor, NamOfBonusies, armor.ATTMin, armor.ATTMax,
+                    ArmorList.Add(new ItemChar(ItemTyps.Armor, NamOfBonuses, armor.ATTMin, armor.ATTMax,
                     armor.ARCMin, armor.ARCMax, armor.DEFMin, armor.DEFMax,
                     armor.MDEFMin, armor.MDEFMax, armor.MAXHpMin, armor.MAXHpMax,
                     armor.MAXMp_min, armor.MAXMpMax, armor.SPDMin, armor.SPDMax,
@@ -104,7 +104,7 @@ namespace FightСons
                     }                    
                     break;
                 case 1:
-                    Output.TwriteLine("Возвращяйся скорее! Желательно с деньгами!\n", 1);
+                    Output.TwriteLine("Возвращайся скорее! Желательно с деньгами!\n", 1);
                     LocationISS.Market(hero);
                     break;               
                 default:

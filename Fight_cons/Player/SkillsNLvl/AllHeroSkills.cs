@@ -1,7 +1,7 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System.Linq;
 
-namespace FightСons
+namespace FightCons
 {
     class AllHeroSkills
     {

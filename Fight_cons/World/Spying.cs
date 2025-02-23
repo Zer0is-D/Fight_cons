@@ -1,11 +1,10 @@
-﻿using FightСons.CoreNSettings;
-using FightСons.World.Locations;
+﻿using FightCons.CoreNSettings;
+using FightCons.World.Locations;
 using System;
 using System.IO;
 using System.Windows.Forms;
-using static FightСons.Locations;
 
-namespace FightСons
+namespace FightCons
 {
     //  Подслушивание в локациях
     public class Spying
@@ -44,12 +43,12 @@ namespace FightСons
                         {
                             //Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
                             hero.Statistic.HeroLvlKickOff = hero.Lvl;
-                            LocationISS.OrdoСolony(hero);
+                            LocationISS.OrdoColony(hero);
                         }
                         break;
                     case 2:
                         //Output.TwriteLine("- Пщел отсюда скряга!\n", 1);
-                        LocationISS.OrdoСolony(hero);
+                        LocationISS.OrdoColony(hero);
                         break;
                 }
             }

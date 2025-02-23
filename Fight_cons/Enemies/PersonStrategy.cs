@@ -1,10 +1,10 @@
-﻿using FightСons.CoreNSettings;
-using FightСons.Enemies;
+﻿using FightCons.CoreNSettings;
+using FightCons.Enemies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FightСons
+namespace FightCons
 {
     public class PersonStrategy 
     {

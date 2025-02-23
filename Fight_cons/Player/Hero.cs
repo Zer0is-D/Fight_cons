@@ -1,8 +1,8 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 
-namespace FightСons
+namespace FightCons
 {
     public partial class Hero : Charecter
     {

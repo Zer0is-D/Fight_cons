@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
-using static FightСons.Locations;
-using static FightСons.CharecterClases;
-using static FightСons.ItemChar;
-using FightСons.World.Locations;
+using static FightCons.Locations;
+using static FightCons.CharecterClases;
+using static FightCons.ItemChar;
+using FightCons.World.Locations;
 
-namespace FightСons
+namespace FightCons
 {
     partial class Hero
     {
@@ -21,8 +21,8 @@ namespace FightСons
                             + $"{Output.SpeedStr}: {TotalSpeed * 100}%\t{Output.CritStr}: {TotalCrit * 100}%\n"
                             + $"{Output.BlockStr}: {TotalBlock * 100}%\n");
             Output.WriteColorLine(ConsoleColor.Yellow, $"Money: {Money}", $"{Output.MoneySymbol}\n");
-            Output.WriteColorLine(ConsoleColor.Cyan, "Экиперовано оружие:\n", $"{CharecterWeapon.Name} ", $"| {ItemStats(CharecterWeapon, false)}");
-            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкиперована броня:\n", $"{CharecterArmor.Name} ", $"| {ItemStats(CharecterArmor, false)}\n");
+            Output.WriteColorLine(ConsoleColor.Cyan, "Экипировано оружие:\n", $"{CharecterWeapon.Name} ", $"| {ItemStats(CharecterWeapon, false)}");
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкипирована броня:\n", $"{CharecterArmor.Name} ", $"| {ItemStats(CharecterArmor, false)}\n");
         }
 
         //  Начало начал
@@ -55,22 +55,22 @@ namespace FightСons
                     break;
             }
 
-            Output.TwriteLine("- Тебе понадобиться надежное снаряжения для такого пути - голос ненадолго\n затихает - что ты выберишь?\n", 10, false);
-            CharecterClases.GiveHeroClass(hero);
+            Output.TwriteLine("- Тебе понадобиться надежное снаряжения для такого пути - голос ненадолго\n затихает - что ты выберешь?\n", 300, false);//10
+            GiveHeroClass(hero);
 
             if (hero.CharecterClass.Class == ChaClass.NoMan)
-                Output.TwriteLine("\n- Интересно...\n", 10, true);
+                Output.TwriteLine("\n- Интересно...\n", 300, true);
             else
             {
-                Output.TwriteLine("\nВам вводям в несколько мест раствор", 0, true);
-                Output.TwriteLine("\nНа мгновение в голову вцепляется острая боль, а тело метается между\nзакостинелым напряжением" +
-                    "и легкостью.", 0, true);
+                Output.TwriteLine("\nВам вводят в несколько мест раствор", 100, true);
+                Output.TwriteLine("\nНа мгновение в голову вцепляется острая боль, а тело метается между\nзакостенелым напряжением" +
+                    "и легкостью.", 400, true);
                 Output.WriteColorLine(ConsoleColor.DarkRed, "\n[", "-1 ", $"{Output.HPSymbol} ");
                 Output.WriteColorLine(ConsoleColor.Magenta, $"от ", "боли в теле и голове", "]\n\n");
                 hero.HP -= 1;
                 Console.ReadKey(true);
 
-                Output.TwriteLine("В ту же секунду боль в голове и теле ушла. Вам покзалось что боль тянулась намного дольше...\n", 0, true);
+                Output.TwriteLine("В ту же секунду боль в голове и теле ушла. Вам показалось что боль тянулась\n намного дольше...\n", 200, true);
             }
 
             GiveHeroWeapon(hero);
@@ -96,8 +96,8 @@ namespace FightСons
                       + "вы решаетесь открыть глаза, но тьма не дает вам что-либо увидеть...\n", 10, true);
             */
 
-            Output.TwriteLine("Вы отправились в путешествие которое заняло у вас несколько дней, не столько потому что путь был сложный, сколько ореинтиры на карте были далки от действительности. "
-                          + "\nНайдя похожую пещеры вы проходите дальше надеясь пройти сквоь гору.\nВы заплутали.\n", 1, true);
+            Output.TwriteLine("Вы отправились в путешествие которое заняло у вас несколько дней, не столько потому что путь был сложный, сколько ориентиры на карте были далеки от действительности. "
+                          + "\nНайдя похожую пещеры вы проходите дальше надеясь пройти сквозь гору.\nВы заплутали.\n", 1, true);
 
 
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"

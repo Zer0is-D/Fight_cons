@@ -1,9 +1,9 @@
-﻿using FightСons.World.Locations;
+﻿using FightCons.World.Locations;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace FightСons.form
+namespace FightCons.form
 {
     public partial class Map : Form
     {

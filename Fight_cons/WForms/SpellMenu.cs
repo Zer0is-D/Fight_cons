@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FightСons.WForms
+namespace FightCons.WForms
 {
     public partial class SpellMenu : Form
     {

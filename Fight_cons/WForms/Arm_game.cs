@@ -5,7 +5,7 @@ using System.Windows.Threading;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
-namespace FightСons
+namespace FightCons
 {
     //  Категории сложности
     public enum RestlingDifficult

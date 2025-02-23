@@ -1,4 +1,4 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FightСons.World.Locations
+namespace FightCons.World.Locations
 {
-    public class LocationISS : FightСons.Locations
+    public class LocationISS : FightCons.Locations
     {
         //TODO Доделать нормальное наследование чтобы не плодить одинаковые методы
 
@@ -17,16 +17,19 @@ namespace FightСons.World.Locations
         {
             CaveStart = 0,
             Caves = 1,
-            Vally = 2,
-            Neighborhood = 3,
-            VillageOrdo = 4,
-            Inn = 5,
-            Market = 6,
-            Woods = 7,
-            MagicManHouse = 8
+            Valley = 2,
+            VillageOrdo = 3,
+            Inn = 4,
+            Foothills = 5,
+            SenisusColony = 6,
+            AlchemyHouse = 7,
+            Neighborhood = 8,
+            ReshinomiColony = 9,
+            Market = 10,
+            Woods = 11
         }
 
-        public static string[][] Discript = new string[][]
+        public static string[][] Descript = new string[][]
         {
             //  Пещеры
             new string[]
@@ -77,17 +80,17 @@ namespace FightСons.World.Locations
                 "...",
                 "...",
             },
-            //  Храм
+            //  Дом Алхимиков
             new string[]
             {
                 "111",
             }
         };
 
-        private static string Dicscriptions(byte i)
+        private static string Descriptions(byte i)
         {
             Random rand = new Random();
-            return Discript[i][rand.Next(Discript[i].Length)];
+            return Descript[i][rand.Next(Descript[i].Length)];
         }
 
         /// <summary>
@@ -96,7 +99,7 @@ namespace FightСons.World.Locations
         public static List<Order> ListOfUnits = new List<Order>();
 
         //  Выход со стартовой позиции
-        public static bool Exit_cave;
+        public static bool ExitCave;
         #endregion
 
         #region Локации ИСС
@@ -111,7 +114,7 @@ namespace FightСons.World.Locations
                 //DefualtLoad(hero.HPBar, );
 
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"???\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.CaveStart)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.CaveStart)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -119,17 +122,17 @@ namespace FightСons.World.Locations
                 Console.Write("Ваши действия?\n"
                                 + "1) Обыскать пещеру\n"
                                 + "2) Отдохнуть\n");
-                if (Exit_cave)
+                if (ExitCave)
                     Console.Write("3) Выйти из пещеры\n");
 
                 switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
                         if (GameFormulas.Vero(0.25))
-                            if (!Exit_cave)
+                            if (!ExitCave)
                             {
                                 Output.TwriteLine("\nВы находите выход\n", 1);
-                                Exit_cave = true;
+                                ExitCave = true;
                             }
                         if (GameFormulas.Vero(0.6))
                             Battles.MakeRandomBattle(hero, 0, 1, 2);
@@ -147,8 +150,8 @@ namespace FightСons.World.Locations
                         }
                         break;
                     case 3:
-                        if (Exit_cave)
-                            Vally(hero);
+                        if (ExitCave)
+                            Valley(hero);
                         break;
                 }
             }
@@ -160,7 +163,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Пещеры\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Caves)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Caves)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -189,14 +192,14 @@ namespace FightСons.World.Locations
                         }
                         break;
                     case 3:
-                        Vally(hero);
+                        Valley(hero);
                         break;
                 }
             }
         }
 
         //  Долина
-        public static void Vally(Hero hero)
+        public static void Valley(Hero hero)
         {
             if (GameFormulas.Vero(0.2))
                 Battles.MakeCurrentBattle(hero, 11);
@@ -208,7 +211,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Долина\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Vally)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Valley)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -226,7 +229,7 @@ namespace FightСons.World.Locations
                 switch (Input.ChoisInput(hero, 1, 6, quo))
                 {
                     case 1:
-                        OrdoСolony(hero);
+                        OrdoColony(hero);
                         break;
                     case 2:
                         Foothills(hero);
@@ -254,7 +257,7 @@ namespace FightСons.World.Locations
         }
 
         //  Поселение Ордо
-        public static void OrdoСolony(Hero hero)
+        public static void OrdoColony(Hero hero)
         {
             if (GameFormulas.Vero(0.15))
                 FindingPouchEvent(hero, 3, 10);
@@ -264,7 +267,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Ордо\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.VillageOrdo)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.VillageOrdo)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -272,28 +275,25 @@ namespace FightСons.World.Locations
                 Console.Write("\nВаши действия?\n");
 
                 if (hero.Lvl > hero.Statistic.HeroLvlKickOff)
-                    Console.Write("1) Пойти в трактир\n");
+                    Console.Write("1) Пройтись\n");
                 else
                     Output.WriteColorLine(ConsoleColor.Gray, "", "1) Пойти в трактир (Вас прогнали, приходите позже)\n");
 
-                Console.WriteLine("2) Пройтись"
-                            + "3) Выйти из деревни");
+                Console.WriteLine("2) Пойти в трактир\n"
+                                + "3) Вернуться в долину");
 
-                switch (Input.ChoisInput(hero, 1, 4))
+                switch (Input.ChoisInput(hero, 1, 3))
                 {
                     case 1:
+                        //Контент
+                        break;
+                    case 2:
                         if (hero.Lvl > hero.Statistic.HeroLvlKickOff)
                             Inn(hero);
                         else
-                            OrdoСolony(hero);
-                        break;
-                    case 2:
-                        Market(hero);
+                            OrdoColony(hero);
                         break;
                     case 3:
-                        AlchemyHouse(hero);
-                        break;
-                    case 4:
                         Neighborhood(hero);
                         break;
                 }
@@ -306,7 +306,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Трактир\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Inn)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Inn)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -331,7 +331,7 @@ namespace FightСons.World.Locations
                             ArmGameEvent(hero);
                         break;
                     case 4:
-                        OrdoСolony(hero);
+                        OrdoColony(hero);
                         PipeMessage.DialogInturapted = true;
                         break;
                 }
@@ -344,7 +344,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Предгорье\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -357,7 +357,7 @@ namespace FightСons.World.Locations
                 switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
-                        SenisusСolony(hero);
+                        SenisusColony(hero);
                         break;
                     case 2:
                         if (GameFormulas.Vero(0.9))
@@ -369,19 +369,19 @@ namespace FightСons.World.Locations
                         }
                         break;
                     case 3:
-                        Vally(hero);
+                        Valley(hero);
                         break;
                 }
             }
         }
 
         //Поселение Сенисус
-        public static void SenisusСolony(Hero hero)
+        public static void SenisusColony(Hero hero)
         {
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Сенисус\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -394,7 +394,7 @@ namespace FightСons.World.Locations
                 switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
-                        OrdoСolony(hero);
+                        OrdoColony(hero);
                         break;
                     case 2:
                         //if (GameFormulas.Vero(0.9))
@@ -418,7 +418,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Дом алхимии\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -443,7 +443,7 @@ namespace FightСons.World.Locations
                         }
                         break;
                     case 2:
-                        SenisusСolony(hero);
+                        SenisusColony(hero);
                         break;
                 }
             }
@@ -463,7 +463,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Окрестности посления\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Neighborhood)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Neighborhood)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -476,7 +476,7 @@ namespace FightСons.World.Locations
                 switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
-                        ReshinomiСolony(hero);
+                        ReshinomiColony(hero);
                         break;
                     case 2:
                         if (GameFormulas.Vero(0.9))
@@ -488,19 +488,19 @@ namespace FightСons.World.Locations
                         }
                         break;
                     case 3:
-                        Vally(hero);
+                        Valley(hero);
                         break;
                 }
             }
         }
 
         //Поселение Решеноми
-        public static void ReshinomiСolony(Hero hero)
+        public static void ReshinomiColony(Hero hero)
         {
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Решноми\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -543,7 +543,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Рынок\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Market)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Market)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -564,15 +564,15 @@ namespace FightСons.World.Locations
                         break;
 
                     case 2:
-                        FightСons.Market.ShowWeaponGoods(hero);
+                        FightCons.Market.ShowWeaponGoods(hero);
                         break;
 
                     case 3:
-                        FightСons.Market.ShowArmorGoods(hero);
+                        FightCons.Market.ShowArmorGoods(hero);
                         break;
 
                     case 4:
-                        ReshinomiСolony(hero);
+                        ReshinomiColony(hero);
                         break;
                 }
             }
@@ -584,7 +584,7 @@ namespace FightСons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -638,7 +638,7 @@ namespace FightСons.World.Locations
                         }
                         break;
                     case 3:
-                        Vally(hero);
+                        Valley(hero);
                         break;
                 }
             }
@@ -687,7 +687,7 @@ namespace FightСons.World.Locations
                 Console.ReadKey();
                 hero.DrunkCondition = 0;
                 hero.OverDrunk += 1;
-                OrdoСolony(hero);
+                OrdoColony(hero);
             }
             hero.Sneak = 0;
             hero.DrunkCondition++;

@@ -1,13 +1,13 @@
-﻿using FightСons.CoreNSettings;
-using FightСons.Enemies;
-using FightСons.World.Locations;
+﻿using FightCons.CoreNSettings;
+using FightCons.Enemies;
+using FightCons.World.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
-namespace FightСons
+namespace FightCons
 {
     public class Battles
     {

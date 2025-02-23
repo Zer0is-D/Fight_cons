@@ -1,4 +1,4 @@
-﻿namespace FightСons.CoreNSettings
+﻿namespace FightCons.CoreNSettings
 {
     internal class PermanentBonuses : Characteristics
     {

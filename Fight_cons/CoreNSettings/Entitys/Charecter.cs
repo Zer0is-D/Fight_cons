@@ -1,8 +1,8 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
-using static FightСons.ItemChar;
+using static FightCons.ItemChar;
 
-namespace FightСons
+namespace FightCons
 {
     public delegate void SkillsDele(Hero hero, Charecter enemy);
     public delegate void SpellDele(Hero hero, Charecter enemy, short cost, sbyte spellPower);

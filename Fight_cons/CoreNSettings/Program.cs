@@ -1,9 +1,9 @@
-﻿using FightСons.WForms;
+﻿using FightCons.WForms;
 using System;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FightСons
+namespace FightCons
 {
     class Program
     {

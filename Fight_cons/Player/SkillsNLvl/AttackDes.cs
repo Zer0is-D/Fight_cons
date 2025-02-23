@@ -1,8 +1,8 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
 using System.Linq;
 
-namespace FightСons
+namespace FightCons
 {
     public class AttackDes
     {

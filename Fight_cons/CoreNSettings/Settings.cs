@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FightСons
+namespace FightCons
 {
     public class Settings
     {

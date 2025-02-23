@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace FightСons.WForms
+namespace FightCons.WForms
 {
     /// <summary>
     /// Эта форма должна открывать и показывать кнопки

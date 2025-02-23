@@ -1,8 +1,8 @@
-﻿using FightСons.CoreNSettings;
+﻿using FightCons.CoreNSettings;
 using System;
-using static FightСons.Charecter;
+using static FightCons.Charecter;
 
-namespace FightСons
+namespace FightCons
 {
     //  Бонусы от класса
     internal class CharecterClases : Characteristics
@@ -36,10 +36,10 @@ namespace FightСons
             //HeroClass heroClass = new HeroClass("Воин", hero.ClassBonuses.MaxHp += 1, );
 
             string quo = "Выберите класс:\n"
-              + $"0) Свобода\n"
               + $"1) Мощь (Упор на {Output.HPSymbol}, {Output.AttackStr}, {Output.DefenceStr})\n"
               + $"2) Комбинаторика (Упор на {Output.ArcaneStr}, {Output.MagicDefenceStr}, {Output.MPSymbol})\n"
-              + $"3) Динамика (Упор на {Output.CritStr}, {Output.SpeedStr}, {Output.BlockStr})\n";
+              + $"3) Динамика (Упор на {Output.CritStr}, {Output.SpeedStr}, {Output.BlockStr})\n"
+              + $"0) Свобода\n";
 
 
             switch (Input.ChoisInput(hero, 0, 3, quo))

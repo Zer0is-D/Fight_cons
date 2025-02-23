@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace FightСons.CoreNSettings
+namespace FightCons.CoreNSettings
 {
     public class Characteristics
     {

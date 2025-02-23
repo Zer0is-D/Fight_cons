@@ -1,4 +1,4 @@
-﻿namespace FightСons.form
+﻿namespace FightCons.form
 {
     partial class Map
     {
