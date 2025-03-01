@@ -6,7 +6,7 @@ using static FightCons.ItemChar;
 
 namespace FightCons
 {
-    class Market
+    class MarketMethods
     {
         private static List<ItemChar> WeaponList = new List<ItemChar>();
         private static List<ItemChar> ArmorList = new List<ItemChar>();
@@ -67,7 +67,7 @@ namespace FightCons
 
         public static void GoodsOut(Hero hero, List<ItemChar> itemChars)
         {
-            Output.TwriteLine("1) Выйти\n", 1);
+            Output.WriteColorLine(ConsoleColor.Yellow, "\n1) Обновить товары за (", $"10{Output.MoneySymbol}", ")\n");
             foreach (var item in itemChars)
             {
                 Output.WriteColorLine(ConsoleColor.White, $"\n{item.Id + 1}) ", $"{item.Name}\n");
@@ -79,18 +79,21 @@ namespace FightCons
 
                 Output.WriteColorLine(ConsoleColor.Yellow, $"\nЦена: ", $"{item.Cost}{Output.MoneySymbol}\n");
             }
-            Output.WriteColorLine(ConsoleColor.Yellow, "0) Обновить товары за (", $"10{Output.MoneySymbol}",")\n");
+            Output.TwriteLine("\n0) Выйти\n", 1);
 
             int chois = Input.ChoisInput(hero, 0, (sbyte)(itemChars.Count() + 1));
 
             switch (chois)
             {
-                case 0:                   
+                case 0:
+                    Output.TwriteLine("Возвращайся скорее! Желательно с деньгами!\n", 1);               
+                    break;
+                case 1:
                     if (Output.Spent(hero.Money, Output.ShowNewItemsCost, "", "Ну не за бесплатно же!"))
-                    {    
+                    {
                         switch (itemChars[chois].ItemType)
                         {
-                            case ItemTyps.Weapon:                                
+                            case ItemTyps.Weapon:
                                 WeaponList.Clear();
                                 Console.WriteLine("Вот новые товары:");
                                 ShowWeaponGoods(hero);
@@ -101,11 +104,7 @@ namespace FightCons
                                 ShowArmorGoods(hero);
                                 break;
                         }
-                    }                    
-                    break;
-                case 1:
-                    Output.TwriteLine("Возвращайся скорее! Желательно с деньгами!\n", 1);
-                    LocationISS.Market(hero);
+                    }
                     break;               
                 default:
                     if (hero.Money >= itemChars[chois - 2].Cost)

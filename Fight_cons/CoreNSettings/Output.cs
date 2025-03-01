@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using static FightCons.CoreNSettings.CharecterProfiles;
 using System.Xml.Linq;
+using System.Security.Policy;
 
 namespace FightCons
 {
@@ -129,7 +130,7 @@ namespace FightCons
         }
 
         //  Экран победы над противником
-        public static void VictoyWarning()
+        public static void VictoryWarning()
         {
             WriteColorLine(ConsoleColor.DarkGray, "\n", "##############################################################################################################");
             WriteColorLine(ConsoleColor.Green, "", "    Вы победили!    ");
@@ -231,13 +232,17 @@ namespace FightCons
         //  Метод вывода с ожиданием
         /// <param name="str">Текст</param>
         /// <param name="x">Время задержки перед след символом</param>
-        public static void Twrite(string str, int x)
+        public static void Twrite(string str, int x, bool waitForKey = false)
         {
             foreach (char s in str)
             {
                 Console.Write(s);
-                Thread.Sleep(x);
+                if (Settings.DelayEffects)
+                    Thread.Sleep(x);
             }
+
+            if (waitForKey)
+                Console.ReadKey(true);
         }
 
         //  Метод вывода с ожиданием и переходом на другую строку
@@ -246,7 +251,7 @@ namespace FightCons
             foreach (char s in str)
             {
                 Console.Write(s);
-                //if (Settings.DelayEffects)
+                if (Settings.DelayEffects)
                     Thread.Sleep(x);
                 if (Settings.SoundEffects)
                     Console.Beep(800, 25);
@@ -358,6 +363,30 @@ namespace FightCons
             WriteColorLine(ConsoleColor.Cyan, "", "статы ", "- вызов меню характеристики героя\n");
             WriteColorLine(ConsoleColor.Cyan, "", "настройки ", "- вызов меню настроек\n");
             WriteColorLine(ConsoleColor.Cyan, "", "толк ", "- вызов окна с объяснением параметров\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "fstate ", "- вызов окна статистики\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "ach ", "- вызов окна достижений\n");
+        }
+
+        //Полная статистика 
+        public static void ShowFullHeroStats(Hero hero)
+        {            
+            Console.WriteLine("\nПолная статистика:\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "Всего заработанных денег ", $"- {hero.Statistic.Money}\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "Количество атак ", $"- {hero.Statistic.Attacks}\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "Количество успешных заклинаний ", $"- {hero.Statistic.Spells}\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "Количество побед ", $"- {hero.Statistic.Wins}\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "Изучение пещеры ", $"- {hero.Statistic.CaveResearch}\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "Изучение леса ", $"- {hero.Statistic.WoodsResearch}\n");
+            WriteColorLine(ConsoleColor.Cyan, "", "Количество побед в арм реслинге ", $"- {hero.Statistic.ArmGameWins}\n");
+        }
+
+        //Достижения
+        public static void HeroAchievements(Hero hero)
+        {
+            Console.WriteLine("\nДостижения:\n");
+
+            WriteColorLine(hero.HeroQuests.Que[7] == 2 ? ConsoleColor.Cyan : ConsoleColor.DarkGray, "", "Победитель победителей ", 
+                           hero.HeroQuests.Que[7] == 2 ? $"- получено\n" : $"- не получено\n");
         }
         #endregion       
 

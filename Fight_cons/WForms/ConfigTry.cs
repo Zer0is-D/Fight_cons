@@ -25,10 +25,10 @@ namespace FightCons.WForms
             Settings.OwnBildVersion = BildVers_checkBox.Checked;
             Settings.DelayEffects = DelayEffect_checkBox.Checked;
             Settings.SoundEffects = Sound_checkBox.Checked;
-            Settings.DetiledParamValue = CurrentParamValue_checkBox.Checked;
+            Settings.DetailedParamValue = CurrentParamValue_checkBox.Checked;
 
-            Market.NamOfGoods = (sbyte) NumOfGoodsUpDown.Value;
-            Market.NamOfBonuses = (sbyte) NamOfBonusiesUpDown.Value;
+            MarketMethods.NamOfGoods = (sbyte) NumOfGoodsUpDown.Value;
+            MarketMethods.NamOfBonuses = (sbyte) NamOfBonusiesUpDown.Value;
             Conditions.BleedDmg = (sbyte) BleedDmgUpDown.Value;
              
             DialogResult = DialogResult.No;

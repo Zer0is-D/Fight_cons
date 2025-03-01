@@ -24,12 +24,6 @@ namespace FightCons.World.Locations
                 "Вы вспоминаете лица тех кто положил жизнь на поиск этого места. Места которого не станет",
             }
         };
-
-        private static string Descriptions(byte i)
-        {
-            Random rand = new Random();
-            return Descript[i][rand.Next(Descript[i].Length)];
-        }
         #endregion
 
         //  Хоромы
@@ -38,7 +32,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Хоромы\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Endroom)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Endroom), Descript), 0);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -52,12 +46,8 @@ namespace FightCons.World.Locations
                 {
                     case 1:
                         //  Босс
-                        if (GameFormulas.Vero(0.2) & hero.HeroQuests.Que[0] == 2)
-                        {
-                            //TODO Сделать боссфайт финальный
-                            hero.HeroQuests.Que[0] = 3;
-                            //hero.HeroQuests.MainQ(hero);
-                        }
+                        if (GameFormulas.Vero(0.2) /*& hero.HeroQuests.Que[0] == 2*/)
+                            hero.HeroQuests.MainMainQ(hero);
                         else if (GameFormulas.Vero(0.6))
                             Battles.MakeRandomBattle(hero, 4, 5);
                         else
@@ -69,7 +59,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 4, 5);
+                            Battles.MakeRandomBattle(hero, 0, 1);
                         }
                         break;
                     case 3:

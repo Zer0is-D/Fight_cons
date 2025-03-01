@@ -24,12 +24,6 @@ namespace FightCons.World.Locations
             }
         };
 
-        private static string Descriptions(byte i)
-        {
-            Random rand = new Random();
-            return Descript[i][rand.Next(Descript[i].Length)];
-        }
-
         //  Выход со стартовой позиции
         public static bool FindBoss;
         #endregion
@@ -43,7 +37,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Разлитый космос\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SpilledSpace)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SpilledSpace), Descript), 0);
 
                 hero.HPBar();
                 hero.MPBar();

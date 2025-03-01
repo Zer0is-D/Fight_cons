@@ -131,11 +131,11 @@
     <Compile Include="WForms\Books.Designer.cs">
       <DependentUpon>Books.cs</DependentUpon>
     </Compile>
-    <Compile Include="WForms\Arm_game.cs">
+    <Compile Include="WForms\ArmGame.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WForms\Arm_game.Designer.cs">
-      <DependentUpon>Arm_game.cs</DependentUpon>
+    <Compile Include="WForms\ArmGame.Designer.cs">
+      <DependentUpon>ArmGame.cs</DependentUpon>
     </Compile>
     <Compile Include="CoreNSettings\Output.cs" />
     <Compile Include="Player\Hero.cs" />
@@ -143,7 +143,7 @@
     <Compile Include="CoreNSettings\Input.cs" />
     <Compile Include="Player\Inventory.cs" />
     <Compile Include="World\Locations\Locations.cs" />
-    <Compile Include="World\Locations\Market.cs" />
+    <Compile Include="World\Locations\MarketMethods.cs" />
     <Compile Include="Player\SkillsNLvl\CharecterClases.cs" />
     <Compile Include="Player\SkillsNLvl\PotionDes.cs" />
     <Compile Include="CoreNSettings\Program.cs" />
@@ -207,8 +207,8 @@
     <EmbeddedResource Include="WForms\Books.resx">
       <DependentUpon>Books.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WForms\Arm_game.resx">
-      <DependentUpon>Arm_game.cs</DependentUpon>
+    <EmbeddedResource Include="WForms\ArmGame.resx">
+      <DependentUpon>ArmGame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WForms\ConfigTry.resx">
       <DependentUpon>ConfigTry.cs</DependentUpon>

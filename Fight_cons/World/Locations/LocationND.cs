@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace FightCons.World.Locations
 {
-    internal class LocationND
+    internal class LocationND : FightCons.Locations
     {
         #region Данные и настроки локации
         public enum LocationName
@@ -33,6 +33,7 @@ namespace FightCons.World.Locations
             Cvantograd = 17,
             SectorOmega = 18,
             GreenVectorVillage = 19,
+            Dealer = 20,
         }
 
         public static string[][] Descript = new string[][]
@@ -139,12 +140,6 @@ namespace FightCons.World.Locations
             },
         };
 
-        private static string Descriptions(byte i)
-        {
-            Random rand = new Random();
-            return Descript[i][rand.Next(Descript[i].Length)];
-        }
-
         //  Выход со стартовой позиции
         public static bool ExitCave;
         #endregion
@@ -156,7 +151,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Остров1\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Island1)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Island1), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -191,7 +186,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Дзета\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SectorDzeta)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorDzeta), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -231,7 +226,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новая Ярега\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.NewIaregaCity)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.NewIaregaCity), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -262,7 +257,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Этта\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SectorEtta)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorEtta), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -302,13 +297,14 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.NewEdinstvenyCity)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.NewEdinstvenyCity), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
+                           + "1) Пойти к торговцам\n"
                            + "2) Вернуться";
 
 
@@ -318,7 +314,60 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
+                        Dealer(hero);  
+                        break;
+                    case 3:
                         SectorEtta(hero);
+                        break;
+                }
+            }
+        }
+
+        //Торговец
+        public static void Dealer(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Торговец\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.Dealer), Descript), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                Console.WriteLine("\nВаши действия?\n"
+                          + "1) Наблюдать и подслушивать\n"
+                          + "2) Купить оружие\n"
+                          + "3) Купить броню");
+                Output.PayMoneyLine("4) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
+                Output.PayMoneyLine("5) Купить зелье маны", Output.PotionMPCost, hero.Money);
+                Console.WriteLine("6) Выйти");
+
+                switch (Input.ChoisInput(hero, 1, 6))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+
+                    case 2:
+                        MarketMethods.ShowWeaponGoods(hero);
+                        break;
+
+                    case 3:
+                        MarketMethods.ShowArmorGoods(hero);
+                        break;
+
+                    case 4:
+                        if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[0].Count += 1;
+                        break;
+
+                    case 5:
+                        if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[1].Count += 1;
+                        break;
+
+                    case 6:
+                        NewEdinstvenyCity(hero);
                         break;
                 }
             }
@@ -333,7 +382,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Тета\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SectorTeta)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorTeta), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -369,7 +418,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.GeliotopolCity)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.GeliotopolCity), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -400,7 +449,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Кси\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SectorCsi)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorCsi), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -440,7 +489,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.HladnyPrimeCity)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.HladnyPrimeCity), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -471,7 +520,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Омикрон\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SectorOmicron)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorOmicron), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -519,7 +568,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Cosmolit)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Cosmolit), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -547,7 +596,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.DarkGranulation)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.DarkGranulation), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -578,7 +627,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Пи\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SectorPi)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorPi), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -618,7 +667,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.VladichiaOrbitaCity)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.VladichiaOrbitaCity), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -649,7 +698,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Хи\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SectorHi)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorHi), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -688,7 +737,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.OldIaregaCity)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.OldIaregaCity), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -719,7 +768,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Пси\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SectorPsi)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorPsi), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -759,7 +808,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Квантоград\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Cvantograd)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Cvantograd), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -790,7 +839,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Омега\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.SectorOmega)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.SectorOmega), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -826,7 +875,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.GreenVectorVillage)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.GreenVectorVillage), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -848,145 +897,6 @@ namespace FightCons.World.Locations
             }
         }
 
-        #endregion
-
-        /// <summary>
-        ///  Находки при исследовании локаций
-        /// </summary>
-        public static void Research(Hero hero)
-        {
-            if (hero.Statistic.CaveResearch == 20)
-            {
-                Output.Spent("Древний свиток исцеления", true);
-
-                SpellDes excision = new SpellDes(hero, "Исцеление")
-                {
-                    Spell = SpellDes.ExcisionSpell,
-                    Description = $"Исцеление (3 {Output.MPSymbol})",
-                    SpellСost = 0,
-                    SpellPower = 0,
-                };
-            }
-
-            if (hero.Statistic.CaveResearch == 30)
-            {
-                Console.WriteLine("Вы слышите в темноте как что-то огромное надвигается на вас!");
-                Battles.MakeCurrentBattle(hero, 6);
-            }
-        }
-
-        #region События на локациях
-        //  Выпить в таверне
-        public static void Drinking(Hero hero)
-        {
-            Sound.DRINK();
-            Output.TwriteLine("Вы чувствуете как холодный эль заливается в вас", 1);
-            Output.TwriteLine("Вам нравится\n", 30);
-            if (hero.DrunkCondition > hero.OverDrunk)
-            {
-                Sound.HIT();
-                Output.TwriteLine("*Звук удара головы об стол*", 1);
-                Output.WaitNext(9, "Z");
-                Output.TwriteLine("Вы проснулись", 50);
-                Output.TwriteLine("Щас бы эля холодного...", 10);
-                Console.ReadKey();
-                hero.DrunkCondition = 0;
-                hero.OverDrunk += 1;
-                //VillageOrdo(hero);
-            }
-            hero.Sneak = 0;
-            hero.DrunkCondition++;
-        }
-
-        //  Событие отдых
-        private static void RestEvent(Hero hero)
-        {
-            if (hero.ClassName != "Волшебник")
-                MakeRest(hero);
-            else
-            {
-                string quo = "Выберите вид отдыха:\n" +
-                            "1) Обычный\n" +
-                            "2) Медитация";
-
-                switch (Input.ChoisInput(hero, 1, 2, quo))
-                {
-                    case 1:
-                        MakeRest(hero);
-                        break;
-                    case 2:
-                        MakeMeditation(hero);
-                        break;
-                }
-            }
-        }
-
-        //  Отдых
-        private static void MakeRest(Hero hero)
-        {
-            sbyte usualResoredHP = 30;
-            sbyte usualResoredMP = 20;
-
-            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP);
-            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP);
-            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP)} ", $"{Output.HPSymbol} ");
-            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP)} ", $"{Output.MPSymbol}\n");
-            Output.WaitNext(3, ".");
-        }
-        //  Медитация
-        private static void MakeMeditation(Hero hero)
-        {
-            //  Mage restore
-            sbyte mageResoredHP = 20;
-            sbyte mageResoredMP = 50;
-
-            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP);
-            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP);
-            Output.WriteColorLine(ConsoleColor.Green, "Медитация восстановила вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP)} ", $"{Output.HPSymbol} ");
-            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP)} ", $"{Output.MPSymbol}\n");
-            Output.WaitNext(3, ".");
-        }
-
-        //  Кошелек
-        public static void FindingPouchEvent(Hero hero, int minGold, int maxGold)
-        {
-            Output.TwriteLine("Вы находите кошелек!\n"
-                                         + "1) Взять его\n"
-                                         + "2) Пройти мимо\n", 40);
-
-            switch (Input.ChoisInput(hero, 1, 2))
-            {
-                case 1:
-                    if (GameFormulas.Vero(0.7))
-                    {
-                        Random rand = new Random();
-                        Output.WriteColorLine(ConsoleColor.Yellow, "Открывая кошелек вы находите ", $"{minGold = rand.Next(minGold, maxGold)}{Output.MoneySymbol} ", "монеток\n");
-                        hero.Money += minGold;
-                    }
-                    else
-                        Battles.MakeCurrentBattle(hero, 5);
-                    break;
-                case 2:
-                    Output.TwriteLine("Вы проходите мимо", 40);
-                    break;
-            }
-        }
-
-        //  Bar-game
-        public static void ArmGameEvent(Hero hero)
-        {
-            hero.Money -= Arm_game.Cost;
-
-            Arm_game form1 = new Arm_game(hero);
-            DialogResult res = form1.ShowDialog();
-            if (res == DialogResult.Yes)
-            {
-                Console.WriteLine("Поздравляю! Вот ваши деньги\n");
-                hero.Money += Arm_game.Cost * 2;
-            }
-            else
-                Console.WriteLine("Слабак...\n");
-        }
         #endregion
     }
 }

@@ -9,20 +9,15 @@ namespace FightCons
         //  Имя
         public bool knowYourName = false;
 
-        //  События из бара
-        //  На каком уровне выперли героя из бара
-        public sbyte HeroLvlKickOff;
-
-        //  Разговорные штуки в таверне:
-        public sbyte TavernTalksProgress;
-
-
         //  Влияния на субъекта
-        public sbyte GetDamegeInFight;
+        public sbyte GetDamageInFight;
 
 
         //  Действия субъекта
         //  Боевая статистика
+        //  Количество заработанных денег 
+        public int Money;
+
         //  Количество физ атак
         public sbyte Attacks;
 
@@ -33,10 +28,18 @@ namespace FightCons
         public sbyte Wins;
 
 
-        //  Мини игры
         //  Изучение пещеры
         public byte CaveResearch;
         public byte WoodsResearch;
+
+
+
+        //  События из бара
+        //  На каком уровне выперли героя из бара
+        public sbyte HeroLvlKickOff;
+
+        //  Разговорные штуки в таверне:
+        public sbyte TavernTalksProgress;
 
         //  Победы в мини-играх
         public sbyte ArmGameWins;

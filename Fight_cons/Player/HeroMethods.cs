@@ -7,7 +7,7 @@ using System.Numerics;
 
 namespace FightCons
 {
-    partial class Hero
+    partial class Hero  
     {
         //  Характеристики героя
         public void ShowHeroStats()
@@ -29,7 +29,7 @@ namespace FightCons
         public static void CreateHero(Hero hero)
         {
             string HNmae;
-            sbyte ChPlace;
+            sbyte ChPlace;            
 
             //TODO Придумать имя
             Output.TwriteLine("- Выбери себе имя которым будешь называться", 20, true);
@@ -51,7 +51,8 @@ namespace FightCons
 
             ChPlace = Input.ChoisInput(hero, 1, 6, quo);
 
-            Output.TwriteLine("- Тебе понадобиться надежное снаряжения для такого пути - голос ненадолго\n затихает - что ты выберешь?\n", 20, false);//10
+            Output.TwriteLine("- Тебе понадобиться надежное снаряжения для такого пути - голос ненадолго затихает ", 20, true);//10
+            Output.Twrite("- что ты выберешь?\n", 20, false);
             GiveHeroClass(hero);
 
             if (hero.CharecterClass.Class == ChaClass.NoMan)
@@ -76,6 +77,8 @@ namespace FightCons
 
             Output.WriteColorLine(ConsoleColor.Cyan, "\nНажмите ", "Enter", " чтобы продолжить...\n\n");
             Console.ReadKey(true);
+
+            //LocationBoss.Endroom(hero);
 
             /*
             Output.TwriteLine("\nГромкий и непонятной природы звук постепенно пробуждает ваше тело.\n"
@@ -167,7 +170,7 @@ namespace FightCons
             Console.WriteLine("\nВаш счет:");
             Console.WriteLine($"Ур: {Lvl}\n"
                            + $"Опыт: {Exp}/{NextLvlExp}\n"
-                           + $"Золото: {Money}\n");
+                           + $"Золото: {Statistic.Money}\n");
             Console.ReadKey();
 
             //  Подсчет победных очков и запись в локальный рейтинг

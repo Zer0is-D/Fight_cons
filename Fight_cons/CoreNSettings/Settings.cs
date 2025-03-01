@@ -9,7 +9,7 @@ namespace FightCons
         public static bool OwnBildVersion = false;
         public static bool DelayEffects = false;
         public static bool SoundEffects = false;
-        public static bool DetiledParamValue = false;
+        public static bool DetailedParamValue = false;
 
         //  Настройка окна
         //public static void Console_window()
@@ -17,9 +17,9 @@ namespace FightCons
         //    //Console.SetWindowSize(12, 20);
         //}
 
-        public static void RecomendedWindowSize()
+        public static void RecommendedWindowSize()
         {
-            Console.WriteLine("\nПеред тем чтобы продолжить отрегулируйте ширину консоли так чтобы нижняя линия была прямая и впрятык к правой стенке");
+            Console.WriteLine("\nПеред тем чтобы продолжить отрегулируйте ширину консоли так чтобы нижняя линия была прямая и впритык к правой стенке");
             Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "################################################################################", "\n");
             Output.WriteColorLine(ConsoleColor.Cyan, "\nНажмите ", "Любую кнопку", " чтобы продолжить...\n");
             Console.ReadKey(true);
@@ -30,7 +30,7 @@ namespace FightCons
 
         public static void OptionWaitSkip(Hero hero)
         {
-            string quo = "Убать задержку?\n"
+            string quo = "Убрать задержку?\n"
                             + "1) Да\n"
                             + "2) Нет";
             

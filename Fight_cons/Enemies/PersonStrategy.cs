@@ -85,7 +85,7 @@ namespace FightCons
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (NeedToRun(attacker, min1: 10, min2: 20))
+                if (!attacker.CharecterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
                     break;
 
                 //  Условья
@@ -134,7 +134,7 @@ namespace FightCons
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (NeedToRun(attacker, min1: 10, min2: 20))
+                if (!attacker.CharecterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
                     break;
 
                 //UnitSkills.AdSpamSpellAsync(attacker);
@@ -197,7 +197,7 @@ namespace FightCons
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (NeedToRun(attacker, min1: 10, min2: 20))
+                if (!attacker.CharecterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
                     break;
                 if (WhoToBeat(attacker, hero, units) != null)
                 {
@@ -252,7 +252,7 @@ namespace FightCons
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (NeedToRun(attacker, min1: 10, min2: 20))
+                if (!attacker.CharecterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
                     break;
 
                 //  Условья

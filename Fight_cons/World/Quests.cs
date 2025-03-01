@@ -5,6 +5,7 @@ using System.Linq;
 using static FightCons.Locations;
 using static FightCons.ItemChar;
 using FightCons.World.Locations;
+using System.Security.Policy;
 
 namespace FightCons
 {
@@ -49,7 +50,7 @@ namespace FightCons
                             hero.HeroQuests.Que[0] = 2;
                             hero.HeroQuests.MainQ(hero);
 
-                            Output.VictoyWarning();
+                            Output.VictoryWarning();
                             hero.Statistic.Wins++;
                         }
                     }
@@ -62,7 +63,7 @@ namespace FightCons
                 if (hero.HeroQuests.Que[0] == 2)
                 {
                     Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
-                    Console.ReadKey();
+                    Reward(hero, 500, 100);
                     //Output.Final();
                     //LocationISS.Valley(hero);
                 }
@@ -77,6 +78,64 @@ namespace FightCons
                 }
                 break;
             }            
+        }
+
+        public void MainMainQ(Hero hero)
+        {
+            switch (hero.HeroQuests.Que[7])
+            {
+                case 0:
+                    Output.TwriteLine("\nВы находите Покровителя\n", 1);
+                    Battles.MakeCurrentBattle(hero, 20);
+
+                    //  Чистка параметров
+                    hero.Condition.Clear();
+                    hero.Turn = 0;
+
+                    if (hero.TotalHP <= 0)
+                        hero.HeroDeath();
+                    else
+                    {
+                        if (!hero.Condition.LeavedBattle)
+                        {
+                            hero.HeroQuests.Que[7] = 1;
+                            hero.HeroQuests.MainQ(hero);
+
+                            Output.VictoryWarning();
+                            hero.Statistic.Wins++;
+                        }
+                    }
+                    hero.Condition.LeavedBattle = false;
+                    Battles.ListOfUnits.Clear();
+
+                    hero.HeroQuests.MainMainQ(hero);
+                    break;
+
+                case 1:
+                    //  END GAME
+                    if (hero.HeroQuests.Que[7] == 1)
+                    {
+                        Output.TwriteLine("Вы одолели Покровителя", 30);
+                        Output.TwriteLine("Вы вольный делать то что хотите", 30);
+                        Reward(hero, 5000, 1000);
+                        Output.Final();
+                        hero.HeroQuests.Que[7] = 2;
+
+                        //LocationISS.Valley(hero);
+                    }
+                    break;
+                case 2:
+                    //  END GAME
+                    if (hero.HeroQuests.Que[7] == 2)
+                    {
+                        Output.TwriteLine("Место пустует, никто более его не займет...", 30, true);
+
+                        //Output.Final();
+                        //Output.Final();
+                        //LocationISS.Valley(hero);
+                    }
+                    break;
+            }
         }
 
         #region Квесты
@@ -169,11 +228,11 @@ namespace FightCons
                     break;
 
                 case 2:
-                    Market.ShowWeaponGoods(hero);
+                    MarketMethods.ShowWeaponGoods(hero);
                     break;
 
                 case 3:
-                    Market.ShowArmorGoods(hero);
+                    MarketMethods.ShowArmorGoods(hero);
                     break;
 
                 case 4:
@@ -236,5 +295,20 @@ namespace FightCons
             }            
         }
         #endregion
+
+        public static void Reward(Hero hero, short money, short exp)
+        {
+            Output.WriteColorLine(ConsoleColor.DarkCyan, $"\nВы получили ", $"{exp}{Output.ExpSymbol} ");
+            if (money > 0)
+            {
+                Output.WriteColorLine(ConsoleColor.Yellow, "и ", $"{money}{Output.MoneySymbol}\n");
+                hero.Money += money;
+                hero.Statistic.Money += money;
+            }
+            else
+                Console.WriteLine();
+
+            hero.LevelUp(hero, exp);
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace FightCons
             {
                 Sound.LVL_MUSIC();
 
-                Console.WriteLine($"{hero.Name} достигает {Lvl}!\n", 1);
+                Console.WriteLine($"\n{hero.Name} достигает {Lvl}!\n", 1);
                 while (LTicket.LvlPoints > 0)
                 {
                     //  Поднятие уровня с возможностью отмены выбора вар 2 (усложненая версия)                               
@@ -33,10 +33,10 @@ namespace FightCons
                     ParamsLvlUp(1, LTicket.Points[1], Output.MaxMpStr, hero.MaxMp, LTicket.NextMaxMp, hero.CharecterClass.MP, false);
 
                     //  Защита
-                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenceStr, hero.Defence, LTicket.NextDefence, hero.CharecterClass.Defence, true);
+                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenceStr, hero.Defence, LTicket.NextDefense, hero.CharecterClass.Defence, true);
 
                     //  Маг защита
-                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenceStr, hero.MagicDefence, LTicket.NextMagicDefence, hero.CharecterClass.MagicDefence, true);
+                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenceStr, hero.MagicDefence, LTicket.NextMagicDefense, hero.CharecterClass.MagicDefence, true);
 
                     //  Блок
                     ParamsLvlUp(4, LTicket.Points[4], Output.BlockStr, hero.Block, LTicket.NextBlock, hero.CharecterClass.Block, true);
@@ -62,10 +62,10 @@ namespace FightCons
                             MaxMp = (short) SelectedParam(1, hero.MaxMp, LTicket.NextMaxMp, hero.CharecterClass.MaxMp);
                             break;
                         case 3:
-                            Defence = (float) SelectedParam(2, hero.Defence, LTicket.NextDefence, hero.CharecterClass.Defence);
+                            Defence = (float) SelectedParam(2, hero.Defence, LTicket.NextDefense, hero.CharecterClass.Defence);
                             break;
                         case 4:
-                            MagicDefence = (float) SelectedParam(3, hero.MagicDefence, LTicket.NextMagicDefence, hero.CharecterClass.MagicDefence);
+                            MagicDefence = (float) SelectedParam(3, hero.MagicDefence, LTicket.NextMagicDefense, hero.CharecterClass.MagicDefence);
                             break;
                         case 5:
                             Block = (float) SelectedParam(4, hero.Block, LTicket.NextBlock, hero.CharecterClass.Block);
@@ -84,7 +84,7 @@ namespace FightCons
                             break;
                     }
                 }
-                Achivments();
+                Achievements();
                 HP = MaxHp;
                 MP = MaxMp;                
             }
@@ -164,7 +164,7 @@ namespace FightCons
         }
 
         //  Система достижения
-        public void Achivments()
+        public void Achievements()
         {
             //  Здоровье
             if (MaxHp >= 500)
@@ -176,7 +176,7 @@ namespace FightCons
 
             //  Защита
             if (Defence >= 0.98)
-                AchiveName("_Бронерованный_");
+                AchiveName("_Бронированный_");
 
             //  Маг защита
             if (MagicDefence >= 0.98)
@@ -196,7 +196,7 @@ namespace FightCons
 
             //  Крит
             if (Crit >= 0.98)
-                AchiveName("_Удачлевый чорт_");
+                AchiveName("_Удачливый чорт_");
 
             //  Arcane
             if (Arcane >= 100)
@@ -207,7 +207,7 @@ namespace FightCons
         {
             MessageBox.Show("Вы получили достижение!");
             Output.WriteColorLine(ConsoleColor.DarkGreen, "\n Поздравляю вы получаете достижение: ", $"{name}");
-            Name = name;            
+            Name += $" ({name})";            
         }
     }
 
@@ -220,8 +220,8 @@ namespace FightCons
             NextArcane = 1;
         public float NextSpeed = 0.02f,
             NextCrit = 0.02f,
-            NextDefence = 0.02f,
-            NextMagicDefence = 0.02f,
+            NextDefense = 0.02f,
+            NextMagicDefense = 0.02f,
             NextBlock = 0.02f;
 
         public static bool Access(Hero hero)
@@ -246,8 +246,8 @@ namespace FightCons
             NextArcane += hero.PermanentBonus.Arcane;
             NextSpeed += hero.PermanentBonus.Speed;
             NextCrit += hero.PermanentBonus.Crit;
-            NextDefence += hero.PermanentBonus.Defence;
-            NextMagicDefence += hero.PermanentBonus.MagicDefence;
+            NextDefense += hero.PermanentBonus.Defence;
+            NextMagicDefense += hero.PermanentBonus.MagicDefence;
             NextBlock += hero.PermanentBonus.Block;
         }
 

@@ -12,6 +12,7 @@ namespace FightCons
 {
     public class EnemyFromXML
     {
+        // TODO отключен до момента появления hash проверки
         private static string Path = Application.StartupPath + "\\Units.xml";
 
         public static Unit LoudedEnemies(short id)

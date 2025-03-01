@@ -17,7 +17,7 @@ namespace FightCons
         VeryHard
     }
 
-    public partial class Arm_game : Form
+    public partial class ArmGame : Form
     {
         Timer timer = new Timer(250);
         Dispatcher dispatcher;
@@ -30,7 +30,7 @@ namespace FightCons
         public static short Cost = 20;
 
 
-        public Arm_game(Hero hero)
+        public ArmGame(Hero hero)
         {
             InitializeComponent();
 

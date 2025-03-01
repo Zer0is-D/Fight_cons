@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace FightCons.World.Locations
 {
-    internal class LocationOP
+    internal class LocationOP : FightCons.Locations
     {
         #region Данные и настроки локации
         public enum LocationName
@@ -20,7 +20,8 @@ namespace FightCons.World.Locations
             NovoiavCity = 4,
             CoralWall = 5,
             PalkinRestaurant = 6,
-            NorthIsland = 7
+            NorthIsland = 7,
+            Bazaar = 8
         }
 
         public static string[][] Descript = new string[][]
@@ -67,12 +68,6 @@ namespace FightCons.World.Locations
             },
         };
 
-        private static string Descriptions(byte i)
-        {
-            Random rand = new Random();
-            return Descript[i][rand.Next(Descript[i].Length)];
-        }
-
         //  Выход со стартовой позиции
         public static bool ExitCave;
         #endregion
@@ -88,7 +83,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Остров1\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Island1)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Island1), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -96,10 +91,11 @@ namespace FightCons.World.Locations
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
                            + "2) Плыть в город Китеж\n"
-                           + "3) Выйти из ОП";
+                           + "3) Отдохнуть\n"
+                           + "4) Выйти из ОП";
 
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+                switch (Input.ChoisInput(hero, 1, 4, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -108,6 +104,15 @@ namespace FightCons.World.Locations
                         KitegeCity(hero);
                         break;
                     case 3:
+                        if (GameFormulas.Vero(0.8))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeRandomBattle(hero, 1, 2, 3);
+                        }
+                        break;
+                    case 4:
                         LocationVN.SpilledSpace(hero);
                         break;
                 }
@@ -120,7 +125,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Китеж\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.KitegeCity)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.KitegeCity), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -129,10 +134,11 @@ namespace FightCons.World.Locations
                            + "1) Осмотреться\n"
                            + "2) Пойти в храм Переплута\n"
                            + "3) Плыть в Кронштандт\n"
-                           + "4) Вернуться на остров1";
+                           + "4) Отдохнуть\n"
+                           + "5) Вернуться на остров1";
 
 
-                switch (Input.ChoisInput(hero, 1, 4, quo))
+                switch (Input.ChoisInput(hero, 1, 5, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -144,6 +150,16 @@ namespace FightCons.World.Locations
                         Kronstandt(hero);
                         break;
                     case 4:
+                        if (GameFormulas.Vero(0.8))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeRandomBattle(hero, 1, 2, 3);
+                        }
+                        break;
+                        break;
+                    case 5:
                         Island1(hero);
                         break;
                 }
@@ -151,12 +167,13 @@ namespace FightCons.World.Locations
         }
 
         //Храм Переплута
+        //TODO возможность помолиться
         public static void PereplutTemple(Hero hero)
         {
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Храм Переплута\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.PereplutTemple)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.PereplutTemple), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -178,33 +195,141 @@ namespace FightCons.World.Locations
             }
         }
 
+        //Базар
+        public static void Bazaar(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Базар\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.Bazaar), Descript), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                Console.WriteLine("\nВаши действия?\n"
+                          + "1) Наблюдать и подслушивать\n"
+                          + "2) Купить оружие\n"
+                          + "3) Купить броню");
+                Output.PayMoneyLine("4) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
+                Output.PayMoneyLine("5) Купить зелье маны", Output.PotionMPCost, hero.Money);
+                Console.WriteLine("6) Выйти");
+
+                switch (Input.ChoisInput(hero, 1, 6))
+                {
+                    case 1:
+                        //TODO Событие прослушивание  
+                        break;
+
+                    case 2:
+                        MarketMethods.ShowWeaponGoods(hero);
+                        break;
+
+                    case 3:
+                        MarketMethods.ShowArmorGoods(hero);
+                        break;
+
+                    case 4:
+                        if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[0].Count += 1;
+                        break;
+
+                    case 5:
+                        if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[1].Count += 1;
+                        break;
+
+                    case 6:
+                        KitegeCity(hero);
+                        break;
+                }
+            }
+        }
+
         //Город-порт Кронштандт
         public static void Kronstandt(Hero hero)
         {
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город-порт Кронштандт\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Kronstandt)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Kronstandt), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
-                           + "2) Плыть в город Новоявь\n"
-                           + "3) Плыть в город Китеж";
+                           + "2) Пойти к контрабандистам\n"
+                           + "3) Плыть в город Новоявь\n"
+                           + "4) Отдохнуть\n"
+                           + "5) Плыть в город Китеж";
 
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+                switch (Input.ChoisInput(hero, 1, 5, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        NovoiavCity(hero);
+                        Contrabandist(hero);
                         break;
                     case 3:
+                        NovoiavCity(hero);
+                        break;
+                    case 4:
+                        if (GameFormulas.Vero(0.8))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeRandomBattle(hero, 1, 2, 3);
+                        }
+                        break;
+                    case 5:
                         KitegeCity(hero);
+                        break;
+                }
+            }
+        }
+
+        //Контрабандисты
+        public static void Contrabandist(Hero hero)
+        {
+            while (true)
+            {
+                hero.HPBar();
+                hero.MPBar();
+
+                Console.WriteLine("\n- Че надо?\n");
+
+                Console.WriteLine("\nВаши действия?\n"
+                          + "1) Купить оружие\n"
+                          + "2) Купить броню");
+                Output.PayMoneyLine("3) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
+                Output.PayMoneyLine("4) Купить зелье маны", Output.PotionMPCost, hero.Money);
+                Console.WriteLine("5) Уйти");
+
+                switch (Input.ChoisInput(hero, 1, 6))
+                {
+                    case 1:
+                        MarketMethods.ShowWeaponGoods(hero);
+                        break;
+
+                    case 2:
+                        MarketMethods.ShowArmorGoods(hero);
+                        break;
+
+                    case 3:
+                        if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[0].Count += 1;
+                        break;
+
+                    case 4:
+                        if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[1].Count += 1;
+                        break;
+
+                    case 5:
+                        Kronstandt(hero);
                         break;
                 }
             }
@@ -216,7 +341,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новоявь\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.NovoiavCity)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.NovoiavCity), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -226,10 +351,11 @@ namespace FightCons.World.Locations
                            + "2) Пойти к коралловой стене\n"
                            + "3) Пойти в ресторан Палкинъ\n"
                            + "4) Плыть на северные острова\n"
-                           + "5) Плыть в Кронштандт";
+                           + "5) Отдохнуть\n"
+                           + "6) Плыть в Кронштандт";
 
 
-                switch (Input.ChoisInput(hero, 1, 5, quo))
+                switch (Input.ChoisInput(hero, 1, 6, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -244,6 +370,15 @@ namespace FightCons.World.Locations
                         NorthIsland(hero);
                         break;
                     case 5:
+                        if (GameFormulas.Vero(0.8))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeRandomBattle(hero, 1, 2, 3);
+                        }
+                        break;
+                    case 6:
                         Kronstandt(hero);
                         break;
                 }
@@ -256,7 +391,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Коралловая стена\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.CoralWall)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.CoralWall), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -279,12 +414,13 @@ namespace FightCons.World.Locations
         }
 
         //Ресторан Палкинъ
+        //TODO Возможность поесть
         public static void PalkinRestaurant(Hero hero)
         {
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Ресторан Палкинъ\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.PalkinRestaurant)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.PalkinRestaurant), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -315,7 +451,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Северные острова\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.NorthIsland)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.NorthIsland), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -335,145 +471,6 @@ namespace FightCons.World.Locations
                         break;
                 }
             }
-        }
-        #endregion
-
-        /// <summary>
-        ///  Находки при исследовании локаций
-        /// </summary>
-        public static void Research(Hero hero)
-        {
-            if (hero.Statistic.CaveResearch == 20)
-            {
-                Output.Spent("Древний свиток исцеления", true);
-
-                SpellDes excision = new SpellDes(hero, "Исцеление")
-                {
-                    Spell = SpellDes.ExcisionSpell,
-                    Description = $"Исцеление (3 {Output.MPSymbol})",
-                    SpellСost = 0,
-                    SpellPower = 0,
-                };
-            }
-
-            if (hero.Statistic.CaveResearch == 30)
-            {
-                Console.WriteLine("Вы слышите в темноте как что-то огромное надвигается на вас!");
-                Battles.MakeCurrentBattle(hero, 6);
-            }
-        }
-
-        #region События на локациях
-        //  Выпить в таверне
-        public static void Drinking(Hero hero)
-        {
-            Sound.DRINK();
-            Output.TwriteLine("Вы чувствуете как холодный эль заливается в вас", 1);
-            Output.TwriteLine("Вам нравится\n", 30);
-            if (hero.DrunkCondition > hero.OverDrunk)
-            {
-                Sound.HIT();
-                Output.TwriteLine("*Звук удара головы об стол*", 1);
-                Output.WaitNext(9, "Z");
-                Output.TwriteLine("Вы проснулись", 50);
-                Output.TwriteLine("Щас бы эля холодного...", 10);
-                Console.ReadKey();
-                hero.DrunkCondition = 0;
-                hero.OverDrunk += 1;
-                //VillageOrdo(hero);
-            }
-            hero.Sneak = 0;
-            hero.DrunkCondition++;
-        }
-
-        //  Событие отдых
-        private static void RestEvent(Hero hero)
-        {
-            if (hero.ClassName != "Волшебник")
-                MakeRest(hero);
-            else
-            {
-                string quo = "Выберите вид отдыха:\n" +
-                            "1) Обычный\n" +
-                            "2) Медитация";
-
-                switch (Input.ChoisInput(hero, 1, 2, quo))
-                {
-                    case 1:
-                        MakeRest(hero);
-                        break;
-                    case 2:
-                        MakeMeditation(hero);
-                        break;
-                }
-            }
-        }
-
-        //  Отдых
-        private static void MakeRest(Hero hero)
-        {
-            sbyte usualResoredHP = 30;
-            sbyte usualResoredMP = 20;
-
-            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP);
-            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP);
-            Output.WriteColorLine(ConsoleColor.Green, "Небольшой перерыв восстановил вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, usualResoredHP)} ", $"{Output.HPSymbol} ");
-            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, usualResoredMP)} ", $"{Output.MPSymbol}\n");
-            Output.WaitNext(3, ".");
-        }
-        //  Медитация
-        private static void MakeMeditation(Hero hero)
-        {
-            //  Mage restore
-            sbyte mageResoredHP = 20;
-            sbyte mageResoredMP = 50;
-
-            hero.HP += GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP);
-            hero.MP += GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP);
-            Output.WriteColorLine(ConsoleColor.Green, "Медитация восстановила вам ", $"+{GameFormulas.GetCurrentPercent(hero.MaxHp, mageResoredHP)} ", $"{Output.HPSymbol} ");
-            Output.WriteColorLine(ConsoleColor.Blue, "и ", $"+{GameFormulas.GetCurrentPercent(hero.MaxMp, mageResoredMP)} ", $"{Output.MPSymbol}\n");
-            Output.WaitNext(3, ".");
-        }
-
-        //  Кошелек
-        public static void FindingPouchEvent(Hero hero, int minGold, int maxGold)
-        {
-            Output.TwriteLine("Вы находите кошелек!\n"
-                                         + "1) Взять его\n"
-                                         + "2) Пройти мимо\n", 40);
-
-            switch (Input.ChoisInput(hero, 1, 2))
-            {
-                case 1:
-                    if (GameFormulas.Vero(0.7))
-                    {
-                        Random rand = new Random();
-                        Output.WriteColorLine(ConsoleColor.Yellow, "Открывая кошелек вы находите ", $"{minGold = rand.Next(minGold, maxGold)}{Output.MoneySymbol} ", "монеток\n");
-                        hero.Money += minGold;
-                    }
-                    else
-                        Battles.MakeCurrentBattle(hero, 5);
-                    break;
-                case 2:
-                    Output.TwriteLine("Вы проходите мимо", 40);
-                    break;
-            }
-        }
-
-        //  Bar-game
-        public static void ArmGameEvent(Hero hero)
-        {
-            hero.Money -= Arm_game.Cost;
-
-            Arm_game form1 = new Arm_game(hero);
-            DialogResult res = form1.ShowDialog();
-            if (res == DialogResult.Yes)
-            {
-                Console.WriteLine("Поздравляю! Вот ваши деньги\n");
-                hero.Money += Arm_game.Cost * 2;
-            }
-            else
-                Console.WriteLine("Слабак...\n");
         }
         #endregion
     }

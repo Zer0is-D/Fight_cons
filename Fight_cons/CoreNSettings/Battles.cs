@@ -201,9 +201,9 @@ namespace FightCons
             {
                 if (!hero.Condition.LeavedBattle)
                 {
-                    Output.VictoyWarning();
+                    Output.VictoryWarning();
                     hero.Statistic.Wins++;
-                    Reward(hero, units);
+                    BattleReward(hero, units);
                 }
             }
             hero.Condition.LeavedBattle = false;
@@ -251,7 +251,7 @@ namespace FightCons
         /// <summary>
         /// Награда за победу
         /// </summary>
-        private static void Reward(Hero hero, List<Order> units)
+        private static void BattleReward(Hero hero, List<Order> units)
         {
             Random random = new Random();
             short money = 0;
@@ -284,6 +284,7 @@ namespace FightCons
             {
                 Output.WriteColorLine(ConsoleColor.Yellow, "и ", $"{money}{Output.MoneySymbol}\n");
                 hero.Money += money;
+                hero.Statistic.Money += money;
             }
             else
                 Console.WriteLine();
@@ -324,7 +325,7 @@ namespace FightCons
             {
                 if (units.Count() == 1)
                 {
-                    Output.WriteColorLine(Output.unitNameColor(unit.character.CharecterProfile.Role), "На вас нападает ", $"{unit.character.HP} ");
+                    Output.WriteColorLine(Output.unitNameColor(unit.character.CharecterProfile.Role), "На вас нападает ", $"{unit.character.Name} ");
                     Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.character.HP}", $" {Output.HPSymbol}]\n");
                     break;
                 }

@@ -76,6 +76,13 @@ namespace FightCons
             Score = player.Score = (int)(
                 (hero.Lvl * 10) +
                 (hero.Exp * 2) +
+                //hero.Statistic.Money +
+                hero.Statistic.Spells +
+                hero.Statistic.Attacks +
+                hero.Statistic.Wins +
+                hero.Statistic.WoodsResearch +
+                hero.Statistic.CaveResearch +
+                hero.Statistic.ArmGameWins +
                 hero.TotalMaxHP +
                 hero.PermanentBonus.MaxHp +
                 hero.TotalMaxMP +

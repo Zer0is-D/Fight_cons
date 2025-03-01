@@ -89,7 +89,7 @@ namespace FightCons
                 new Bestiaries("Ворюга", phase: 0, hpMin: 10, hpMax: 15, attMin: 3, attMax: 5, spdMin: 30, spdMax: 30, critMin: 20, critMax: 30, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 20, blkMax: 40, movMin: 4, movMax: 5, role: ChaRole.Enemy, strategy: Strategeis.Agresive) { Id = 5 },
                 //  Противники в деревне
                 /*6*/
-                new Bestiaries("Ог", phase: 4, hpMin: 40, hpMax: 60, attMin: 1, attMax: 2, spdMin: 0, spdMax: 10, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 0, blkMax: 0, movMin: 1, movMax: 2, role: ChaRole.Enemy, strategy: Strategeis.Agresive) { Id = 6 },
+                new Bestiaries("Ог", phase: 2, hpMin: 60, hpMax: 80, attMin: 4, attMax: 2, spdMin: 0, spdMax: 10, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 0, blkMax: 0, movMin: 1, movMax: 2, role: ChaRole.Enemy, strategy: Strategeis.Agresive) { Id = 6 },
                 /*7*/
                 new Bestiaries("Таотот", phase: 3, hp: 50, attack: 3, speed: 30, critChance: 20, defence: 10, magicDefence: 30, block: 0, moves: 5, noRun: true, ChaRole.Enemy) { Id = 7 },
                 /*8*/
@@ -100,6 +100,10 @@ namespace FightCons
                 new Bestiaries("Жертвенник", phase: 0, hp: 20, attack: 0, speed: 0, critChance: 0, defence: 0, magicDefence: 0, block: 0, moves: 2, noRun: true, ChaRole.Enemy, strategy: Strategeis.Healer) { Id = 10 },
                 /*11*/
                 new Bestiaries("Зверолов", phase: 0, hpMin: 10, hpMax: 25, attMin: 1, attMax: 2, spdMin: 30, spdMax: 30, critMin: 5, critMax: 10, defMin: 1, defMax: 15, mDefMin: 10, mDefMax: 50, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, role: ChaRole.Enemy, strategy: Strategeis.BeastMaster) { Id = 11 },
+                
+                
+                /*20*/
+                new Bestiaries("Покровитель", phase: 4, hp: 100, attack: 6, speed: 10, critChance: 10, defence: 30, magicDefence: 50, block: 20, moves: 2, noRun: true, ChaRole.Enemy) { Id = 20 },
 
                 //  Союзники после 99
                 /*100*/

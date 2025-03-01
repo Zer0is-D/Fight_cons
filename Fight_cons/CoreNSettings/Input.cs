@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Security.Policy;
 using System.Windows.Forms;
 using FightCons.form;
 
@@ -75,6 +76,8 @@ namespace FightCons
             KeyWords["инв"] = () => { Inventory.ShowInventory(hero); };
             KeyWords["статы"] = () => { hero.ShowHeroStats(); };
             KeyWords["stats"] = () => { hero.ShowHeroStats(); };
+            KeyWords["fstats"] = () => { Output.ShowFullHeroStats(hero); };
+            KeyWords["ach"] = () => { Output.HeroAchievements(hero); };            
             KeyWords["help"] = () => { Output.HelpCommand(); };
             KeyWords["негр"] = () => { Output.HelpCommand(); };
             KeyWords["настройки"] = () =>
@@ -92,6 +95,7 @@ namespace FightCons
 
                 short.TryParse(Console.ReadLine(), out m);
                 hero.Money += m;
+                hero.Statistic.Money += m;
             };
             KeyWords["uphp"] = () => { hero.MaxHp = 300; hero.HP = hero.MaxHp; };
             KeyWords["tavern1"] = () => { PipeMessage.TavernLocal(hero); };
@@ -111,12 +115,12 @@ namespace FightCons
                     switch (ans)
                     {
                         case 1:
-                            Market.NamOfBonuses = ChoisInput(hero, 1, 8, "Установите нужное количество (1-8)\n" +
-                                $"Сейчас: {Market.NamOfBonuses}");
+                            MarketMethods.NamOfBonuses = ChoisInput(hero, 1, 8, "Установите нужное количество (1-8)\n" +
+                                $"Сейчас: {MarketMethods.NamOfBonuses}");
                             break;
                         case 2:
-                            Market.NamOfGoods = ChoisInput(hero, 1, 100, "Установите нужное количество (1-100)\n" +
-                                $"Сейчас: {Market.NamOfGoods}");
+                            MarketMethods.NamOfGoods = ChoisInput(hero, 1, 100, "Установите нужное количество (1-100)\n" +
+                                $"Сейчас: {MarketMethods.NamOfGoods}");
                             break;
                         case 3:
                             Conditions.BleedDmg = ChoisInput(hero, 1, 100, "Установите нужное количество\n" +

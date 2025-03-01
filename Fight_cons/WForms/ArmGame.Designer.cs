@@ -1,6 +1,6 @@
 ﻿namespace FightCons
 {
-    partial class Arm_game
+    partial class ArmGame
     {
         /// <summary>
         /// Required designer variable.

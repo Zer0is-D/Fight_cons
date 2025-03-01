@@ -10,7 +10,7 @@ namespace FightCons
     class CombatSolutions
     {
         //  Боевые решения
-        private static sbyte BattleChoise; 
+        private static sbyte BattleChoice; 
         private static bool SkipTurn = false;
         private static bool QuickCommandDone = false; 
 
@@ -43,7 +43,7 @@ namespace FightCons
         private static void FightChoice(Hero hero, Charecter unit, List<Order> units = null)
         {
             AllHeroSkills.Skills(hero, unit);
-            BattleChoise = 0;
+            BattleChoice = 0;
             hero.Condition.AttackParry = false;
 
             //  Информация
@@ -70,13 +70,13 @@ namespace FightCons
                     Console.Write($"5) Убежать\n");
 
                 if (units != null)
-                    BattleChoise = BattleChoisInput(0, 6, hero, unit, units);
+                    BattleChoice = BattleChoisInput(0, 6, hero, unit, units);
                 else
-                    BattleChoise = BattleChoisInput(0, 5, hero, unit, units);
+                    BattleChoice = BattleChoisInput(0, 5, hero, unit, units);
 
                 if (!QuickCommandDone)
                 {
-                    switch (BattleChoise)
+                    switch (BattleChoice)
                     {
                         case 0:
                             if (hero.CharecterProfile.EnemyAbout)
@@ -124,27 +124,27 @@ namespace FightCons
 
         private static bool QuickBattleInput(Hero hero, Charecter unit, List<Order> units = null)
         {
-            if (BattleChoise > 10)
+            if (BattleChoice > 10)
             {
-                if (BattleChoise <= 19)
+                if (BattleChoice <= 19)
                 {
-                    BattleChoise -= 10;
-                    if (BattleChoise <= hero.AttackList.Count)
+                    BattleChoice -= 10;
+                    if (BattleChoice <= hero.AttackList.Count)
                     {
-                        hero.AttackList[BattleChoise - 1].Attack(hero, unit);
+                        hero.AttackList[BattleChoice - 1].Attack(hero, unit);
                         QuickCommandDone = true;
 
                         return true;
                     }
                 }
-                else if (BattleChoise >= 19 & BattleChoise < 30)
+                else if (BattleChoice >= 19 & BattleChoice < 30)
                 {
-                    BattleChoise -= 20;
-                    if (BattleChoise <= hero.SpellList.Count)
+                    BattleChoice -= 20;
+                    if (BattleChoice <= hero.SpellList.Count)
                     {
-                        if (GameFormulas.CheckMana(hero, hero.SpellList[BattleChoise - 1].SpellСost))
+                        if (GameFormulas.CheckMana(hero, hero.SpellList[BattleChoice - 1].SpellСost))
                         {
-                            var heroSpell = hero.SpellList[BattleChoise - 1];
+                            var heroSpell = hero.SpellList[BattleChoice - 1];
                             heroSpell.Spell(hero, (Unit)unit, heroSpell.SpellСost, heroSpell.SpellPower);
                             QuickCommandDone = true;
 
@@ -153,16 +153,16 @@ namespace FightCons
                         else
                         {
                             Output.TwriteLine("\nНедостаточно маны!\n", 1);
-                            BattleChoise += 20;
+                            BattleChoice += 20;
                         }
                     }
                 }
-                else if (BattleChoise >= 31 & BattleChoise < 40)
+                else if (BattleChoice >= 31 & BattleChoice < 40)
                 {
-                    BattleChoise -= 30;
-                    if (BattleChoise <= hero.PotionList.Count)
+                    BattleChoice -= 30;
+                    if (BattleChoice <= hero.PotionList.Count)
                     {
-                        hero.PotionList[BattleChoise - 1].Drink(hero);
+                        hero.PotionList[BattleChoice - 1].Drink(hero);
                         QuickCommandDone = true;
 
                         return true;
@@ -214,9 +214,9 @@ namespace FightCons
                       + $"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
                       + $"X) Убежать\n");
 
-            BattleChoise = Input.ChoisInput(0, (sbyte)(hero.AttackList.Count));
-            if (BattleChoise != 0)
-                hero.AttackList[BattleChoise - 1].Attack(hero, unit);
+            BattleChoice = Input.ChoisInput(0, (sbyte)(hero.AttackList.Count));
+            if (BattleChoice != 0)
+                hero.AttackList[BattleChoice - 1].Attack(hero, unit);
             else
                 FightChoice(hero, unit, units);
         }
@@ -238,12 +238,12 @@ namespace FightCons
                       + $"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
                       + $"X) Убежать\n");
 
-            BattleChoise = Input.ChoisInput(0, (sbyte)(hero.SpellList.Count));
-            if (BattleChoise != 0)
+            BattleChoice = Input.ChoisInput(0, (sbyte)(hero.SpellList.Count));
+            if (BattleChoice != 0)
             {
-                if (GameFormulas.CheckMana(hero, hero.SpellList[BattleChoise - 1].SpellСost))
+                if (GameFormulas.CheckMana(hero, hero.SpellList[BattleChoice - 1].SpellСost))
                 {
-                    var heroSpell = hero.SpellList[BattleChoise - 1];
+                    var heroSpell = hero.SpellList[BattleChoice - 1];
                     heroSpell.Spell(hero, (Unit)unit, heroSpell.SpellСost, heroSpell.SpellPower);
                 }
                 else
@@ -279,9 +279,9 @@ namespace FightCons
             //Console.Write($"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
             //          + $"X) Убежать\n");
 
-            BattleChoise = Input.ChoisInput(hero, 0, (sbyte)(hero.PotionList.Count), quo);
-            if (BattleChoise != 0 && hero.PotionList[BattleChoise - 1].Count > 0)
-                hero.PotionList[BattleChoise - 1].Drink(hero);
+            BattleChoice = Input.ChoisInput(hero, 0, (sbyte)(hero.PotionList.Count), quo);
+            if (BattleChoice != 0 && hero.PotionList[BattleChoice - 1].Count > 0)
+                hero.PotionList[BattleChoice - 1].Drink(hero);
             else
                 FightChoice(hero, unit, units);
         }
@@ -315,13 +315,15 @@ namespace FightCons
 
             Console.WriteLine($"{Output.AttackStr}: {unit.TotalAttack}\t\t{Output.ArcaneStr}: {unit.TotalArcane}\n"
                            + $"{Output.DefenceStr}: {unit.TotalDefence * 100}%\t\t{Output.MagicDefenceStr}: {unit.TotalMagicDefence * 100}%\n"
-                           + $"{Output.SpeedStr}: {unit.TotalSpeed * 100}%\t{Output.CritStr}: {unit.TotalCrit * 100}%"
+                           + $"{Output.SpeedStr}: {unit.TotalSpeed * 100}%\t{Output.CritStr}: {unit.TotalCrit * 100}%\n"
                            + $"{Output.BlockStr}: {unit.TotalBlock * 100}%\n");
 
-            Output.WriteColorLine(ConsoleColor.Cyan, "Экиперовано оружие:\n", $"{unit.CharecterWeapon.Name} ", $"| {ItemChar.ItemStats(unit.CharecterWeapon, false)}");
-            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкиперована броня:\n", $"{unit.CharecterArmor.Name} ", $"| {ItemChar.ItemStats(unit.CharecterArmor, false)}\n");
+            Output.WriteColorLine(ConsoleColor.Cyan, "Экипировано оружие:\n", $"{unit.CharecterWeapon.Name} ", $"| {ItemChar.ItemStats(unit.CharecterWeapon, false)}");
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкипирована броня:\n", $"{unit.CharecterArmor.Name} ", $"| {ItemChar.ItemStats(unit.CharecterArmor, false)}\n");
 
             Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "################################################################################", "\n");
+
+            Console.ReadKey();
         }
 
         private static void Turns()
@@ -364,7 +366,12 @@ namespace FightCons
                     if (enemy.character.CharecterProfile.Phase >= 2)
                         enemy.character.PhaseHPBar();
                     else
+                    {
+                        if (loadMP)
+                            Console.WriteLine();
                         enemy.character.HPBar(true);
+                    }
+                        
 
                     if (loadMP)
                         enemy.character.MPBar();
@@ -377,13 +384,13 @@ namespace FightCons
         {
             do
             {
-                BattleChoise = Input.SbyteInput();
+                BattleChoice = Input.SbyteInput();
                 if (QuickBattleInput(hero, unit, units))
                     break;
 
             }
-            while (!(BattleChoise > b1 - 1 && BattleChoise < b2 + 1));
-            return BattleChoise;
+            while (!(BattleChoice > b1 - 1 && BattleChoice < b2 + 1));
+            return BattleChoice;
         }
         #endregion
 

@@ -192,6 +192,8 @@ namespace FightCons
                     break;
             }
             Thread.Sleep(50);
+
+            GetItemParamFields(this);
         }
         #endregion
 
@@ -241,7 +243,7 @@ namespace FightCons
 
             if (isFloat)
             {
-                if (Settings.DetiledParamValue)
+                if (Settings.DetailedParamValue)
                 {
                     curString = $"{(parametr_2 - parametr_1) * 100}%";
                     actualValue = $"{parametr_2 * 100}%";
@@ -251,7 +253,7 @@ namespace FightCons
             }
             else
             {
-                if (Settings.DetiledParamValue)
+                if (Settings.DetailedParamValue)
                 {
                     curString = $"{parametr_2 - parametr_1}";
                     actualValue = $"{parametr_2}";
@@ -260,7 +262,7 @@ namespace FightCons
                     curString = $"{parametr_2}";
             }
 
-            if (Settings.DetiledParamValue)
+            if (Settings.DetailedParamValue)
             {
                 if (parametr_2 > parametr_1)
                     Output.WriteColorLine(ConsoleColor.Green, "", $"{curString} {text_mid} ({actualValue}) {Output.UpSymbol} {space}", $"\t|");
@@ -361,10 +363,8 @@ namespace FightCons
             {
                 case ItemTyps.Weapon:
                     return WeaponDop[rand.Next(0, WeaponDop.Length)] + WeaponNames[rand.Next(0, WeaponNames.Length)];
-                    break;
                 case ItemTyps.Armor:
                     return ArmorNames[rand.Next(0, ArmorNames.Count())];
-                    break;
             }
 
             Console.WriteLine("Ошибка наименования объекта!");

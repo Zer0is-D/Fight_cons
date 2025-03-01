@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -93,8 +94,6 @@ namespace FightCons.World.Locations
             },
 
         };
-
-
 
         //  Выход со стартовой позиции
         public static bool ExitCave;
@@ -313,7 +312,7 @@ namespace FightCons.World.Locations
                 Console.WriteLine("\nВаши действия?\n"
                            + "1) Наблюдать и подслушивать");
                 Output.PayMoneyLine("2) Выпить", Output.BeerCost, hero.Money);
-                Output.PayMoneyLine("3) Армреслинг", Arm_game.Cost, hero.Money);
+                Output.PayMoneyLine("3) Армреслинг", ArmGame.Cost, hero.Money);
                 Console.WriteLine("4) Выйти из трактира");
 
                 switch (Input.ChoisInput(hero, 1, 4))
@@ -326,7 +325,7 @@ namespace FightCons.World.Locations
                             Drinking(hero);
                         break;
                     case 3:
-                        if (Output.Spent(hero.Money, Arm_game.Cost, "", "Бесплатно не интересует\n"))
+                        if (Output.Spent(hero.Money, ArmGame.Cost, "", "Бесплатно не интересует\n"))
                             ArmGameEvent(hero);
                         break;
                     case 4:
@@ -446,11 +445,13 @@ namespace FightCons.World.Locations
                         break;
 
                     case 2:
-                        SenisusColony(hero);
+                        if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[0].Count += 1;
                         break;
 
                     case 3:
-                        SenisusColony(hero);
+                        if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[1].Count += 1;
                         break;
 
                     case 4:
@@ -572,11 +573,11 @@ namespace FightCons.World.Locations
                         break;
 
                     case 2:
-                        FightCons.Market.ShowWeaponGoods(hero);
+                        MarketMethods.ShowWeaponGoods(hero);
                         break;
 
                     case 3:
-                        FightCons.Market.ShowArmorGoods(hero);
+                        MarketMethods.ShowArmorGoods(hero);
                         break;
 
                     case 4:
@@ -706,7 +707,7 @@ namespace FightCons.World.Locations
         {
             Output.TwriteLine("Вы находите кошелек!\n"
                                          + "1) Взять его\n"
-                                         + "2) Пройти мимо\n", 40);
+                                         + "2) Пройти мимо\n", 1);
 
             switch (Input.ChoisInput(hero, 1, 2))
             {
@@ -716,12 +717,13 @@ namespace FightCons.World.Locations
                         Random rand = new Random();
                         Output.WriteColorLine(ConsoleColor.Yellow, "Открывая кошелек вы находите ", $"{minGold = rand.Next(minGold, maxGold)}{Output.MoneySymbol} ", "монеток\n");
                         hero.Money += minGold;
+                        hero.Statistic.Money += minGold;
                     }
                     else
                         Battles.MakeCurrentBattle(hero, 5);
                     break;
                 case 2:
-                    Output.TwriteLine("Вы проходите мимо", 40);
+                    Output.TwriteLine("Вы проходите мимо", 10);
                     break;
             }
         }
@@ -729,14 +731,15 @@ namespace FightCons.World.Locations
         //  Bar-game
         public static void ArmGameEvent(Hero hero)
         {
-            hero.Money -= Arm_game.Cost;
+            hero.Money -= ArmGame.Cost;
 
-            Arm_game form1 = new Arm_game(hero);
+            ArmGame form1 = new ArmGame(hero);
             DialogResult res = form1.ShowDialog();
             if (res == DialogResult.Yes)
             {
                 Console.WriteLine("Поздравляю! Вот ваши деньги\n");
-                hero.Money += Arm_game.Cost * 2;
+                hero.Money += ArmGame.Cost * 2;
+                hero.Statistic.Money += ArmGame.Cost * 2; ;
             }
             else
                 Console.WriteLine("Слабак...\n");

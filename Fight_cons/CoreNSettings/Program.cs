@@ -13,7 +13,7 @@ namespace FightCons
             Console.SetWindowSize(80, 30);
             Console.OutputEncoding = Encoding.Unicode;
 
-            Settings.RecomendedWindowSize();
+            Settings.RecommendedWindowSize();
 
             Hero hero = new Hero(25, 10);
 
@@ -23,7 +23,9 @@ namespace FightCons
 
             // TODO Доработать позже 
             //DataFromWF.ConfigData();
-            
+            Settings.DelayEffects = false;
+
+
             Hero.CreateHero(hero);
             Console.ReadKey();
         }

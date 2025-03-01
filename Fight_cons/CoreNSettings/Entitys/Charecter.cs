@@ -135,7 +135,7 @@ namespace FightCons
             sbyte phase4 = 0;
             int charsToNextBar = 0;
 
-            Console.Write($"{Output.HPSymbol}: [");
+            Console.Write($"\n{Output.HPSymbol}: [");
             while (c <= TotalMaxHP)
             {
                 if (c <= TotalHP)
