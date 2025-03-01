@@ -92,10 +92,11 @@ namespace FightCons
         //    return Discript[i][rand.Next(Discript[i].Length)];
         //}
 
-        /// <summary>
-        /// Список противников
-        /// </summary>
-        //protected static List<Order> ListOfUnits = new List<Order>();
+        protected static string Descriptions(byte i, string[][] descript)
+        {
+            Random rand = new Random();
+            return descript[i][rand.Next(descript[i].Length)];
+        }
         #endregion
 
         //ЗАГОТОВКА

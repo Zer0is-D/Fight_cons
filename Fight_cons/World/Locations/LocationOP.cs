@@ -73,11 +73,6 @@ namespace FightCons.World.Locations
             return Descript[i][rand.Next(Descript[i].Length)];
         }
 
-        /// <summary>
-        /// Список противников
-        /// </summary>
-        public static List<Order> ListOfUnits = new List<Order>();
-
         //  Выход со стартовой позиции
         public static bool ExitCave;
         #endregion
@@ -87,6 +82,9 @@ namespace FightCons.World.Locations
         //Остров1
         public static void Island1(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Остров1\n");
@@ -311,6 +309,9 @@ namespace FightCons.World.Locations
         //Северные острова
         public static void NorthIsland(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Северные острова\n");

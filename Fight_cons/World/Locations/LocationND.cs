@@ -145,11 +145,6 @@ namespace FightCons.World.Locations
             return Descript[i][rand.Next(Descript[i].Length)];
         }
 
-        /// <summary>
-        /// Список противников
-        /// </summary>
-        public static List<Order> ListOfUnits = new List<Order>();
-
         //  Выход со стартовой позиции
         public static bool ExitCave;
         #endregion
@@ -190,6 +185,9 @@ namespace FightCons.World.Locations
         //Сектор Дзета
         public static void SectorDzeta(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Дзета\n");
@@ -258,6 +256,9 @@ namespace FightCons.World.Locations
         //Сектор Этта
         public static void SectorEtta(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Этта\n");
@@ -326,6 +327,9 @@ namespace FightCons.World.Locations
         //Сектор Тета
         public static void SectorTeta(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Тета\n");
@@ -390,6 +394,9 @@ namespace FightCons.World.Locations
         //Сектор Кси
         public static void SectorCsi(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Кси\n");
@@ -458,6 +465,9 @@ namespace FightCons.World.Locations
         //Сектор Омикрон
         public static void SectorOmicron(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Омикрон\n");
@@ -562,6 +572,9 @@ namespace FightCons.World.Locations
         //Сектор Пи
         public static void SectorPi(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Пи\n");
@@ -630,6 +643,9 @@ namespace FightCons.World.Locations
         //Сектор Хи
         public static void SectorHi(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Хи\n");
@@ -697,6 +713,9 @@ namespace FightCons.World.Locations
         //Сектор Пси
         public static void SectorPsi(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Пси\n");
@@ -765,6 +784,9 @@ namespace FightCons.World.Locations
         //Сектор Омега
         public static void SectorOmega(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Сектор Омега\n");

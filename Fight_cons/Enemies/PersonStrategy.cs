@@ -18,18 +18,18 @@ namespace FightCons
                 switch (person.CharecterProfile.Role)
                 {
                     case CharecterProfiles.ChaRole.Wild:
-                        if (cha.charecter.Id != person.Id & cha.charecter.Condition.IsAlive & !cha.charecter.Condition.LeavedBattle)
-                            MyEnemies.Add(cha.charecter);
+                        if (cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
+                            MyEnemies.Add(cha.character);
                         break;
 
                     case CharecterProfiles.ChaRole.Enemy:
-                        if (cha.charecter.CharecterProfile.Role != CharecterProfiles.ChaRole.Enemy & cha.charecter.Id != person.Id & cha.charecter.Condition.IsAlive & !cha.charecter.Condition.LeavedBattle)
-                            MyEnemies.Add(cha.charecter);
+                        if (cha.character.CharecterProfile.Role != CharecterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
+                            MyEnemies.Add(cha.character);
                         break;
 
                     case CharecterProfiles.ChaRole.Ally:
-                        if (cha.charecter.CharecterProfile.Role == CharecterProfiles.ChaRole.Enemy & cha.charecter.Id != person.Id & cha.charecter.Condition.IsAlive & !cha.charecter.Condition.LeavedBattle)
-                            MyEnemies.Add(cha.charecter);
+                        if (cha.character.CharecterProfile.Role == CharecterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
+                            MyEnemies.Add(cha.character);
                         break;
                 }                    
             }
@@ -213,13 +213,13 @@ namespace FightCons
                     //  Заклинания
                     if (GameFormulas.Vero(0.9))
                     {
-                        if (GameFormulas.Vero(0.8) & units.Any(e => e.charecter.Condition.IsAlive == false))
+                        if (GameFormulas.Vero(0.8) & units.Any(e => e.character.Condition.IsAlive == false))
                         {
                             foreach (var en in units)
                             {
-                                if (en.charecter.Condition.IsAlive == false)
+                                if (en.character.Condition.IsAlive == false)
                                 {
-                                    UnitSkills.RevievSpell(attacker, en.charecter);
+                                    UnitSkills.RevievSpell(attacker, en.character);
                                     break;
                                 }
                             }

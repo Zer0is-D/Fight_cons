@@ -19,7 +19,7 @@ namespace FightCons
             SkipTurn = ConditionCheck(hero);
 
             if (units.Count == 1)
-                FightChoice(hero, units.FirstOrDefault().charecter);
+                FightChoice(hero, units.FirstOrDefault().character);
             else
             {
                 Console.WriteLine("\nВыберите противника");
@@ -30,10 +30,10 @@ namespace FightCons
                 var ch = Input.ChoisInput(0, (sbyte)units.Count());
                 foreach (var enemy in units)
                 {
-                    if (enemy.charecter.Id == ch & enemy.charecter.TotalHP > 0 & !enemy.charecter.Condition.LeavedBattle)
+                    if (enemy.character.Id == ch & enemy.character.TotalHP > 0 & !enemy.character.Condition.LeavedBattle)
                     {
                         Console.WriteLine();
-                        FightChoice(hero, enemy.charecter, units);
+                        FightChoice(hero, enemy.character, units);
                     }
                 }
             }
@@ -329,13 +329,13 @@ namespace FightCons
             Console.Write("\n\t\t\t[");
             foreach (var t in Battles.UnitTurnList)
             {
-                if (t.charecter.CharecterProfile.IsPlayer)
-                    Output.WriteColorLine(Output.unitNameColor(t.charecter.CharecterProfile.Role), "", "Вы ", $"{string.Format("{0:0.00}", t.Speed)}");
-                if (t.charecter.Condition.IsAlive & !t.charecter.CharecterProfile.IsPlayer)
+                if (t.character.CharecterProfile.IsPlayer)
+                    Output.WriteColorLine(Output.unitNameColor(t.character.CharecterProfile.Role), "", "Вы ", $"{string.Format("{0:0.00}", t.Speed)}");
+                if (t.character.Condition.IsAlive & !t.character.CharecterProfile.IsPlayer)
                 {
-                    Output.WriteColorLine(Output.unitNameColor(t.charecter.CharecterProfile.Role), "", "# ", $"{string.Format("{0:0.00}", t.Speed)}");                    
+                    Output.WriteColorLine(Output.unitNameColor(t.character.CharecterProfile.Role), "", "# ", $"{string.Format("{0:0.00}", t.Speed)}");                    
                 }
-                if (Battles.UnitTurnList.Min(x => x.Speed) != t.Speed & t.charecter.Condition.IsAlive)
+                if (Battles.UnitTurnList.Min(x => x.Speed) != t.Speed & t.character.Condition.IsAlive)
                     Console.Write(" | ");
             }
 
@@ -355,19 +355,19 @@ namespace FightCons
         {
             foreach (var enemy in enemies)
             {
-                if (enemy.charecter.TotalHP <= 0 | enemy.charecter.Condition.LeavedBattle)
-                    Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{enemy.charecter.Id}. {enemy.charecter.Name} [0/{enemy.charecter.TotalMaxHP}]\t");
+                if (enemy.character.TotalHP <= 0 | enemy.character.Condition.LeavedBattle)
+                    Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{enemy.character.Id}. {enemy.character.Name} [0/{enemy.character.TotalMaxHP}]\t");
                 else
                 {
-                    Output.WriteColorLine(Output.unitNameColor(enemy.charecter.CharecterProfile.Role), $"{enemy.charecter.Id}. ", $"{enemy.charecter.Name}", "\t");
+                    Output.WriteColorLine(Output.unitNameColor(enemy.character.CharecterProfile.Role), $"{enemy.character.Id}. ", $"{enemy.character.Name}", "\t");
 
-                    if (enemy.charecter.CharecterProfile.Phase >= 2)
-                        enemy.charecter.PhaseHPBar();
+                    if (enemy.character.CharecterProfile.Phase >= 2)
+                        enemy.character.PhaseHPBar();
                     else
-                        enemy.charecter.HPBar(true);
+                        enemy.character.HPBar(true);
 
                     if (loadMP)
-                        enemy.charecter.MPBar();
+                        enemy.character.MPBar();
                 }
                 Console.WriteLine();
             }

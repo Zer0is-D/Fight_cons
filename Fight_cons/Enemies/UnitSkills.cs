@@ -95,7 +95,7 @@ namespace FightCons
 
             foreach (var o in NewOne)
             {
-                Output.NameAndId(o.charecter);
+                Output.NameAndId(o.character);
                 Console.Write(", ");
 
             }

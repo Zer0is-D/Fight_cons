@@ -30,11 +30,6 @@ namespace FightCons.World.Locations
             return Descript[i][rand.Next(Descript[i].Length)];
         }
 
-        /// <summary>
-        /// Список противников
-        /// </summary>
-        public static List<Order> ListOfUnits = new List<Order>();
-
         //  Выход со стартовой позиции
         public static bool FindBoss;
         #endregion

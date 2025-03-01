@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace FightCons.World.Locations
 {
-    internal class LocationDJ
+    internal class LocationDJ : FightCons.Locations
     {
         #region Данные и настроки локации
         public enum LocationName
@@ -24,7 +24,7 @@ namespace FightCons.World.Locations
             MagicManHouse = 8
         }
 
-        public static string[][] Discript = new string[][]
+        public static string[][] Descript = new string[][]
         {
             //  Пещеры
             new string[]
@@ -82,19 +82,8 @@ namespace FightCons.World.Locations
             }
         };
 
-        private static string Dicscriptions(byte i)
-        {
-            Random rand = new Random();
-            return Discript[i][rand.Next(Discript[i].Length)];
-        }
-
-        /// <summary>
-        /// Список противников
-        /// </summary>
-        public static List<Order> ListOfUnits = new List<Order>();
-
         //  Выход со стартовой позиции
-        public static bool Exit_cave;
+        public static bool ExitCave;
         #endregion
 
         #region Локации ДЖ
@@ -102,10 +91,13 @@ namespace FightCons.World.Locations
         //Лес1
         public static void Woods1(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -134,10 +126,13 @@ namespace FightCons.World.Locations
         //Лес2
         public static void Woods2(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -166,10 +161,13 @@ namespace FightCons.World.Locations
         //Лес3
         public static void Woods3(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -198,10 +196,13 @@ namespace FightCons.World.Locations
         //Лес4
         public static void Woods4(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -234,7 +235,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Основной лес\n");
-                Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();

@@ -30,11 +30,6 @@ namespace FightCons.World.Locations
             Random rand = new Random();
             return Descript[i][rand.Next(Descript[i].Length)];
         }
-
-        /// <summary>
-        /// Список противников
-        /// </summary>
-        public static List<Order> ListOfUnits = new List<Order>();
         #endregion
 
         //  Хоромы

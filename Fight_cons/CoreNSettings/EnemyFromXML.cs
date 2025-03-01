@@ -16,7 +16,7 @@ namespace FightCons
 
         public static Unit LoudedEnemies(short id)
         {
-            var res = Bestiaria.GetUnit(id);
+            var res = Bestiaries.GetUnit(id);
 
             if (res != null)
                 return new Unit(res);
@@ -41,11 +41,11 @@ namespace FightCons
 
                 XElement element = currentEnemy.Element("MaxHp");
 
-                Bestiaria loadedUnit;
+                Bestiaries loadedUnit;
 
                 if (element != null)
                 {
-                    loadedUnit = new Bestiaria
+                    loadedUnit = new Bestiaries
                     (
                         name: currentEnemy.Element("Name").Value,
                         phase: sbyte.Parse(currentEnemy.Element("Phase").Value),
@@ -53,12 +53,12 @@ namespace FightCons
                         attMin: short.Parse(currentEnemy.Element("MinAttack").Value), attMax: short.Parse(currentEnemy.Element("MaxAttack").Value),
                         spdMin: sbyte.Parse(currentEnemy.Element("MinSpeed").Value), spdMax: sbyte.Parse(currentEnemy.Element("MaxSpeed").Value),
                         critMin: sbyte.Parse(currentEnemy.Element("MinCrit").Value), critMax: sbyte.Parse(currentEnemy.Element("MaxCrit").Value),
-                        defMin: sbyte.Parse(currentEnemy.Element("MinDefence").Value), defMax: sbyte.Parse(currentEnemy.Element("MaxDefence").Value),
-                        mDefMin: sbyte.Parse(currentEnemy.Element("MinMagicDefence").Value), mDefMax: sbyte.Parse(currentEnemy.Element("MaxMagicDefence").Value),
+                        defMin: sbyte.Parse(currentEnemy.Element("MinDefense").Value), defMax: sbyte.Parse(currentEnemy.Element("MaxDefense").Value),
+                        mDefMin: sbyte.Parse(currentEnemy.Element("MinMagicDefense").Value), mDefMax: sbyte.Parse(currentEnemy.Element("MaxMagicDefense").Value),
                         blkMin: sbyte.Parse(currentEnemy.Element("MinBlock").Value), blkMax: sbyte.Parse(currentEnemy.Element("MaxBlock").Value),
                         movMin: sbyte.Parse(currentEnemy.Element("MinMoves").Value), movMax: sbyte.Parse(currentEnemy.Element("MaxMoves").Value),
                         role: (ChaRole) Enum.Parse(typeof(ChaRole), currentEnemy.Element("Role").Value),
-                        strategy: (Strategeis)Enum.Parse(typeof(Strategeis), currentEnemy.Element("Strategeis").Value)
+                        strategy: (Strategeis)Enum.Parse(typeof(Strategeis), currentEnemy.Element("Strategies").Value)
                     )
                     {
                         Id = id
@@ -66,7 +66,7 @@ namespace FightCons
                 }
                 else
                 {
-                    loadedUnit = new Bestiaria
+                    loadedUnit = new Bestiaries
                     (
                         name: currentEnemy.Element("Name").Value,
                         phase: sbyte.Parse(currentEnemy.Element("Phase").Value),
@@ -74,20 +74,20 @@ namespace FightCons
                         attack: short.Parse(currentEnemy.Element("Attack").Value),
                         speed: sbyte.Parse(currentEnemy.Element("Speed").Value),
                         critChance: sbyte.Parse(currentEnemy.Element("Crit").Value),
-                        defence: sbyte.Parse(currentEnemy.Element("Defence").Value),
-                        magicDefence: sbyte.Parse(currentEnemy.Element("MagicDefence").Value),
+                        defence: sbyte.Parse(currentEnemy.Element("Defense").Value),
+                        magicDefence: sbyte.Parse(currentEnemy.Element("MagicDefense").Value),
                         block: sbyte.Parse(currentEnemy.Element("Block").Value),
                         moves: sbyte.Parse(currentEnemy.Element("Moves").Value),
                         noRun: bool.Parse(currentEnemy.Element("CantRun").Value),
                         role: (ChaRole) Enum.Parse(typeof(ChaRole), currentEnemy.Element("Role").Value),
-                        strategy: (Strategeis)Enum.Parse(typeof(Strategeis), currentEnemy.Element("Strategeis").Value)
+                        strategy: (Strategeis)Enum.Parse(typeof(Strategeis), currentEnemy.Element("Strategies").Value)
                     )
                     {
                         Id = id
                     };
                 }
 
-                Bestiaria.AddNewBestiarias(loadedUnit);
+                Bestiaries.AddNewBestiaries(loadedUnit);
                 SaveUnits();
 
                 return new Unit(loadedUnit);
@@ -98,7 +98,7 @@ namespace FightCons
         }
 
         //  если список с противниками есть, то загружаем противников из него. В ином случаи создаем список с базовыми противниками 
-        public static List<Bestiaria> LoadBestiarList()
+        public static List<Bestiaries> LoadBestiaryList()
         {
             if (File.Exists(Path))
             {
@@ -109,7 +109,7 @@ namespace FightCons
                     .Select(g => g.First())
                     .ToList();
 
-                List<Bestiaria> loaded = new List<Bestiaria>();                
+                List<Bestiaries> loaded = new List<Bestiaries>();                
 
                 foreach (var unit in uniqueUnits)
                 {
@@ -117,7 +117,7 @@ namespace FightCons
 
                     if (element != null)
                     {
-                        loaded.Add(new Bestiaria
+                        loaded.Add(new Bestiaries
                         (
                             name: unit.Element("Name")?.Value,
                             phase: sbyte.Parse(unit.Element("Phase")?.Value),
@@ -125,18 +125,18 @@ namespace FightCons
                             attMin: short.Parse(unit.Element("MinAttack")?.Value), attMax: short.Parse(unit.Element("MaxAttack")?.Value),
                             spdMin: sbyte.Parse(unit.Element("MinSpeed")?.Value), spdMax: sbyte.Parse(unit.Element("MaxSpeed")?.Value),
                             critMin: sbyte.Parse(unit.Element("MinCrit")?.Value), critMax: sbyte.Parse(unit.Element("MaxCrit")?.Value),
-                            defMin: sbyte.Parse(unit.Element("MinDefence")?.Value), defMax: sbyte.Parse(unit.Element("MaxDefence")?.Value),
-                            mDefMin: sbyte.Parse(unit.Element("MinMagicDefence")?.Value), mDefMax: sbyte.Parse(unit.Element("MaxMagicDefence")?.Value),
+                            defMin: sbyte.Parse(unit.Element("MinDefense")?.Value), defMax: sbyte.Parse(unit.Element("MaxDefense")?.Value),
+                            mDefMin: sbyte.Parse(unit.Element("MinMagicDefense")?.Value), mDefMax: sbyte.Parse(unit.Element("MaxMagicDefense")?.Value),
                             blkMin: sbyte.Parse(unit.Element("MinBlock")?.Value), blkMax: sbyte.Parse(unit.Element("MaxBlock")?.Value),
                             movMin: sbyte.Parse(unit.Element("MinMoves")?.Value), movMax: sbyte.Parse(unit.Element("MaxMoves")?.Value),
                             role: (ChaRole)Enum.Parse(typeof(ChaRole), unit.Element("Role")?.Value),
-                            strategy: (Strategeis)Enum.Parse(typeof(Strategeis), unit.Element("Strategeis")?.Value)
+                            strategy: (Strategeis)Enum.Parse(typeof(Strategeis), unit.Element("Strategies")?.Value)
                         )
                         { Id = short.Parse(unit.Element("ID")?.Value) });
                     }
                     else
                     {
-                        loaded.Add(new Bestiaria
+                        loaded.Add(new Bestiaries
                         (
                             name: unit.Element("Name").Value,
                             phase: sbyte.Parse(unit.Element("Phase").Value),
@@ -144,13 +144,13 @@ namespace FightCons
                             attack: short.Parse(unit.Element("Attack").Value),
                             speed: sbyte.Parse(unit.Element("Speed").Value),
                             critChance: sbyte.Parse(unit.Element("Crit").Value),
-                            defence: sbyte.Parse(unit.Element("Defence").Value),
-                            magicDefence: sbyte.Parse(unit.Element("MagicDefence").Value),
+                            defence: sbyte.Parse(unit.Element("Defense").Value),
+                            magicDefence: sbyte.Parse(unit.Element("MagicDefense").Value),
                             block: sbyte.Parse(unit.Element("Block").Value),
                             moves: sbyte.Parse(unit.Element("Moves").Value),
                             noRun: bool.Parse(unit.Element("CantRun").Value),
                             role: (ChaRole)Enum.Parse(typeof(ChaRole), unit.Element("Role").Value),
-                            strategy: (Strategeis)Enum.Parse(typeof(Strategeis), unit.Element("Strategeis").Value)
+                            strategy: (Strategeis)Enum.Parse(typeof(Strategeis), unit.Element("Strategies").Value)
                         )
                         { Id = short.Parse(unit.Element("ID").Value) });
                     }
@@ -158,23 +158,23 @@ namespace FightCons
 
                 if (loaded.Count > 0)
                 {
-                    Bestiaria.BestiariaList.Clear();
-                    Bestiaria.BestiariaList.AddRange(loaded);
+                    Bestiaries.BestiaryList.Clear();
+                    Bestiaries.BestiaryList.AddRange(loaded);
                     return loaded;
                 }
 
                 Console.WriteLine("Ошибка загрузки списка. Список пуст!");
-                return Bestiaria.BestiariaList;
+                return Bestiaries.BestiaryList;
             }
 
-            Bestiaria.CreateBasicBestiaria();
+            Bestiaries.CreateBasicBestiary();
 
             SaveUnits();
 
-            return Bestiaria.BestiariaList;
+            return Bestiaries.BestiaryList;
         }
 
-        public static void SaveUnits(List<Bestiaria> bestiars = null)
+        public static void SaveUnits(List<Bestiaries> bestiary = null)
         {
             if (!File.Exists(Path))
             {
@@ -186,7 +186,7 @@ namespace FightCons
 
             if (File.Exists(Path))
             {
-                foreach (var uni in Bestiaria.BestiariaList)
+                foreach (var uni in Bestiaries.BestiaryList)
                 {
                     if (uni.HpMax != 0)
                     {
@@ -199,12 +199,12 @@ namespace FightCons
                             new XElement("MinAttack", uni.AttMin), new XElement("MaxAttack", uni.AttMax),
                             new XElement("MinSpeed", uni.SpdMin), new XElement("MaxSpeed", uni.SpdMax),
                             new XElement("MinCrit", uni.CrtMin), new XElement("MaxCrit", uni.CrtMax),
-                            new XElement("MinDefence", uni.DefMin), new XElement("MaxDefence", uni.DefMax),
-                            new XElement("MinMagicDefence", uni.MDefMin), new XElement("MaxMagicDefence", uni.MDefMax),
+                            new XElement("MinDefense", uni.DefMin), new XElement("MaxDefense", uni.DefMax),
+                            new XElement("MinMagicDefense", uni.MDefMin), new XElement("MaxMagicDefense", uni.MDefMax),
                             new XElement("MinBlock", uni.BlkMin), new XElement("MaxBlock", uni.BlkMax),
                             new XElement("MinMoves", uni.MovMin), new XElement("MaxMoves", uni.MovMax),
                             new XElement("Role", uni.CharecterProfile.Role),
-                            new XElement("Strategeis", uni.CharecterProfile.Strategy));
+                            new XElement("Strategies", uni.CharecterProfile.Strategy));
 
                         document.Root.Add(xelem);
                     }
@@ -218,13 +218,13 @@ namespace FightCons
                             new XElement("Attack", uni.AttMin),
                             new XElement("Speed", uni.SpdMin),
                             new XElement("Crit", uni.CrtMin),
-                            new XElement("Defence", uni.DefMin),
-                            new XElement("MagicDefence", uni.MDefMin),
+                            new XElement("Defense", uni.DefMin),
+                            new XElement("MagicDefense", uni.MDefMin),
                             new XElement("Block", uni.BlkMin),
                             new XElement("Moves", uni.MovMin),
                             new XElement("CantRun", uni.CharecterProfile.TooBrave),
                             new XElement("Role", uni.CharecterProfile.Role),
-                            new XElement("Strategeis", uni.CharecterProfile.Strategy));
+                            new XElement("Strategies", uni.CharecterProfile.Strategy));
 
                         document.Root.Add(xelem);
                     }

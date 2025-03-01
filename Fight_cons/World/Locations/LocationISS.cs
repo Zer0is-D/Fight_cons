@@ -94,16 +94,7 @@ namespace FightCons.World.Locations
 
         };
 
-        private static string Descriptions(byte i)
-        {
-            Random rand = new Random();
-            return Descript[i][rand.Next(Descript[i].Length)];
-        }
 
-        /// <summary>
-        /// Список противников
-        /// </summary>
-        public static List<Order> ListOfUnits = new List<Order>();
 
         //  Выход со стартовой позиции
         public static bool ExitCave;
@@ -119,10 +110,10 @@ namespace FightCons.World.Locations
             while (true)
             {
                 //TODO Подгрузка однотипных данных. Подумать насчет оптимизации, но со свободой!!! 
-                //DefualtLoad(hero.HPBar, );
+                //DefaultLoad(hero.HPBar, );
 
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"???\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.CaveStart)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.CaveStart), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -171,7 +162,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Пещеры\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Caves)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Caves), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -219,7 +210,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Долина\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Valley)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Valley), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -275,7 +266,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Ордо\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.VillageOrdo)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.VillageOrdo), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -314,7 +305,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Трактир\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Inn)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Inn), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -352,7 +343,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Предгорье\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -389,7 +380,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Сенисус\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -426,7 +417,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Дом алхимии\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -436,10 +427,10 @@ namespace FightCons.World.Locations
                     Output.PayMoneyLine("1) Способность видеть", Output.VisionSkillCost, hero.Money);
                 else
                     Output.WriteColorLine(ConsoleColor.DarkGray, "", "1) Способность видеть (уже изучено)\n");
-                Console.WriteLine("2) Вернуться");
-                //TODO Перенести строчки к алхимикам
-                Output.PayMoneyLine("3) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
-                Output.PayMoneyLine("4) Купить зелье маны", Output.PotionMPCost, hero.Money);
+
+                Output.PayMoneyLine("2) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
+                Output.PayMoneyLine("3) Купить зелье маны", Output.PotionMPCost, hero.Money);
+                Console.WriteLine("4) Вернуться");
 
                 switch (Input.ChoisInput(hero, 1, 4))
                 {
@@ -453,7 +444,16 @@ namespace FightCons.World.Locations
                             }
                         }
                         break;
+
                     case 2:
+                        SenisusColony(hero);
+                        break;
+
+                    case 3:
+                        SenisusColony(hero);
+                        break;
+
+                    case 4:
                         SenisusColony(hero);
                         break;
                 }
@@ -474,7 +474,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Окрестности посления\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Neighborhood)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Neighborhood), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -511,7 +511,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Решноми\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -554,7 +554,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Рынок\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Market)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Market), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -592,7 +592,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods)), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();

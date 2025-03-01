@@ -19,7 +19,7 @@ namespace FightCons
 
             Output.GameLogo(vers: "Universa 1.0 (Преальфа)");
 
-            EnemyFromXML.LoadBestiarList();
+            EnemyFromXML.LoadBestiaryList();
 
             // TODO Доработать позже 
             //DataFromWF.ConfigData();

@@ -8,7 +8,7 @@ namespace FightCons.Enemies
     {
         public static int ExpForKill(int HP, short Attack) => (HP / 2) + (Attack / 2);
 
-        public Unit(Bestiaria bestiaria)
+        public Unit(Bestiaries bestiaria)
         {
             Random rand = new Random();
 

@@ -88,11 +88,6 @@ namespace FightCons.World.Locations
             return Descript[i][rand.Next(Descript[i].Length)];
         }
 
-        /// <summary>
-        /// Список противников
-        /// </summary>
-        public static List<Order> ListOfUnits = new List<Order>();
-
         //TODO убрать ненужную переменную
         //  Выход со стартовой позиции
         public static bool ExitCave;
@@ -103,6 +98,9 @@ namespace FightCons.World.Locations
         //Глубоколесье
         public static void Deepwoods(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Глубоколесье\n");
@@ -148,6 +146,9 @@ namespace FightCons.World.Locations
         //Восточный лес
         public static void EastWoods(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Восточный лес\n");
@@ -185,6 +186,9 @@ namespace FightCons.World.Locations
         //Северный лес
         public static void NorthWoods(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Северный лес\n");
@@ -549,6 +553,9 @@ namespace FightCons.World.Locations
         //Карьер
         public static void Quarry(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Карьер\n");

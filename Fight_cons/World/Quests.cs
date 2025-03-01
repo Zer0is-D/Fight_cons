@@ -54,7 +54,7 @@ namespace FightCons
                         }
                     }
                     hero.Condition.LeavedBattle = false;
-                    LocationISS.ListOfUnits.Clear();
+                    Battles.ListOfUnits.Clear();
                 break;
 
                 case 2:

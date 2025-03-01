@@ -86,11 +86,6 @@ namespace FightCons.World.Locations
             return Descript[i][rand.Next(Descript[i].Length)];
         }
 
-        /// <summary>
-        /// Список противников
-        /// </summary>
-        public static List<Order> ListOfUnits = new List<Order>();
-
         //  Выход со стартовой позиции
         public static bool ExitCave;
         #endregion
@@ -134,6 +129,9 @@ namespace FightCons.World.Locations
         //Зеленые земли
         public static void GreenGround(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Зеленые земли\n");
@@ -166,6 +164,9 @@ namespace FightCons.World.Locations
         //Пустыня
         public static void Desert(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Пустыня\n");
@@ -238,6 +239,9 @@ namespace FightCons.World.Locations
         //Бандитские городки
         public static void BanditTown(Hero hero)
         {
+            if (GameFormulas.Vero(0.6))
+                Battles.MakeRandomBattle(hero, 0, 1, 2);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Бандитские городки\n");
