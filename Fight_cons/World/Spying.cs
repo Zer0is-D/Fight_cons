@@ -22,7 +22,7 @@ namespace FightCons
             {
                 if (GameFormulas.Vero(0.6))
                     TavernTalks(hero);
-                if (hero.HeroQuests.Que[1] == 4)
+                if (hero.HeroQuests.Que[11] == 4)
                     Output.TwriteLine("'А вот и наш герой!' - восклицает Бегемот.\nПозади него вы видите коллекцию статуэток из дерева\n", 1);
 
                 hero.Sneak++;

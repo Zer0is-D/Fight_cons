@@ -13,74 +13,60 @@ namespace FightCons.World.Locations
         #region Данные и настроки локации
         public enum LocationName
         {
-            CaveStart = 0,
-            Caves = 1,
-            Vally = 2,
-            OrdoNeighborhood = 3,
-            VillageOrdo = 4,
-            Inn = 5,
-            Market = 6,
-            Woods = 7,
-            MagicManHouse = 8,
-            Dealer = 9,
+            Woods1 = 0,
+            Woods2 = 1,
+            Woods3 = 2,
+            Woods4 = 3,
+            MainWoods = 4,
+            Dealer = 5,
+            Egion = 6,
         }
 
         public static string[][] Descript = new string[][]
         {
-            //  Пещеры
+            //  Woods1
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Хитро-зеленый замысел виднеется невооруженным глазом в каждом дереве и удобно встреченной тропинке",
+                "Нет сомнений, вы чувствуете в этом месте себя гостем, раз деревья не стесняются перед вами 'дышать-да-жить'",
             },
-            //  Долина
+            //  Woods2
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Хитро-зеленый замысел виднеется невооруженным глазом в каждом дереве и удобно встреченной тропинке",
+                "Нет сомнений, вы чувствуете в этом месте себя гостем, раз деревья не стесняются перед вами 'дышать-да-жить'",
             },
-            //  Окрестности Ордо
+            //  Woods3
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Хитро-зеленый замысел виднеется невооруженным глазом в каждом дереве и удобно встреченной тропинке",
+                "Нет сомнений, вы чувствуете в этом месте себя гостем, раз деревья не стесняются перед вами 'дышать-да-жить'",
             },
-            //  Деревня Ордо
+            //  Woods4
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Хитро-зеленый замысел виднеется невооруженным глазом в каждом дереве и удобно встреченной тропинке",
+                "Нет сомнений, вы чувствуете в этом месте себя гостем, раз деревья не стесняются перед вами 'дышать-да-жить'",
             },
-            //  Трактир
+            //  MainWoods
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Вы дошли видимо до большой центровой поляны. Тут совсем не густой лес",
+                "Посреди пустого пространства стоит древесный колос",
             },
-            //  Рынок
+            //  Dealer
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Древоподобный гуманоид сидит на мховом камне, терпеливо наблюдая как ты к нему подходишь",
+                "За древолюдом сооружена конструкция с навесом где стоит 'позаимствованный' людской товар",
             },
-            //  Леса
+            //  Egion
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Древо древ, древесное божество не иначе.",
+                "Пред вами вздыхающий разумный гигант. Дерево которое нельзя встретить нигде. Оно хочет жить, а значит сделает для этого все",
+                "Вы ощущаете источающие хладнокровье от дерева, оно знало про ваш путь и готовилось к встрече",
             },
-            //  Храм
-            new string[]
-            {
-                "111",
-            }
         };
 
         //  Выход со стартовой позиции
@@ -242,19 +228,23 @@ namespace FightCons.World.Locations
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
-                           + "2) Пойти к торговцу\n"
-                           + "3) Вернуться назад";
+                           + "2) Подойти к Эгеону\n"
+                           + "3) Пойти к торговцу\n"
+                           + "4) Вернуться назад";
+                
 
-
-                switch (Input.ChoisInput(hero, 1, 2, quo))
+                switch (Input.ChoisInput(hero, 1, 4, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        Dealer(hero);
+                        Egion(hero);
                         break;
                     case 3:
+                        Dealer(hero);
+                        break;
+                    case 4:
                         Woods4(hero);
                         break;
                 }
@@ -310,6 +300,60 @@ namespace FightCons.World.Locations
                 }
             }
         }
+
+        //Egion
+        public static void Egion(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Эгеон\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.Egion), Descript), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                Output.TwriteLine("\nВаши действия?\n", 0);
+                Output.TwriteLine(hero.HeroQuests.Que[2] == 2 ? "1) Выйти из ДЖ\n" : "1) Искать\n", 0);
+                Output.TwriteLine("2) Отдохнуть\n"
+                                + "3) Вернуться в основной лес", 1);
+
+                switch (Input.ChoisInput(hero, 1, 2))
+                {
+                    case 1:
+                        //  Босс
+                        if (hero.HeroQuests.Que[2] == 2)
+                            LocationVN.SpilledSpace(hero);
+                        else
+                        {
+                            if (GameFormulas.Vero(0.2) & hero.HeroQuests.Que[2] == 0)
+                            {
+                                hero.HeroQuests.Que[2] = 1;
+                                hero.HeroQuests.MainDJ(hero);
+                            }
+                            else if (GameFormulas.Vero(0.6))
+                                Battles.MakeRandomBattle(hero, 4, 5);
+                            else
+                                Output.TwriteLine("Вы ничего не находите\n", 1);
+                        }
+
+                        //hero.Statistic.WoodsResearch++;
+                        //Research(hero);
+                        break;
+                    case 2:
+                        if (GameFormulas.Vero(0.9))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 5);
+                        }
+                        break;
+                    case 3:
+                        MainWoods(hero);
+                        break;
+                }
+            }
+        }        
         #endregion
     }
 }

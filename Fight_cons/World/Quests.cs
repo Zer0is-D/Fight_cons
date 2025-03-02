@@ -13,25 +13,33 @@ namespace FightCons
     {
         public Dictionary<byte, byte> Que = new Dictionary<byte, byte>
         {
-            [0] = 0,    //  Основной квест
-            [1] = 0,    //  Квест "Секреты Бегемота"
-            [2] = 0,    //  Квест "Твое имя камень!"
-            [3] = 0,    //  Квест "ДА БУДЕТ СМЕРТЬ"
-            [4] = 0,    //  Квест "Яблочный убийца"
-            [5] = 0,    //  
-            [6] = 0,    //  
+            [0] = 0,    //  Победа над Покровителем 
+            [1] = 0,    //  Победа над Тоатотом 
+            [2] = 0,    //  Победа над ... 
+            [3] = 0,    //  Победа над ... 
+            [4] = 0,    //  Победа над ... 
+            [5] = 0,    //  Победа над ... 
+            [6] = 0,    //  Победа над ... 
             [7] = 0,    //  
+            [8] = 0,    //  
+            [11] = 0,    //  Квест "Секреты Бегемота"
+            [12] = 0,    //  Квест "Твое имя камень!"
+
+            //  Квест "ДА БУДЕТ СМЕРТЬ"
+            //  Квест "Яблочный убийца"
         };
 
+        //TODO посмотреть необходимость этого метода
         public void StartQ(Hero hero, byte i)
         {
             if (hero.HeroQuests.Que[i] == 0) 
                 hero.HeroQuests.Que[i]++;
         }
 
-        public void MainQ(Hero hero)
+        //1. Основная задача в ИСС
+        public void MainISS(Hero hero)
         {
-            switch (hero.HeroQuests.Que[0])
+            switch (hero.HeroQuests.Que[1])
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
@@ -47,8 +55,8 @@ namespace FightCons
                     {
                         if (!hero.Condition.LeavedBattle)
                         {
-                            hero.HeroQuests.Que[0] = 2;
-                            hero.HeroQuests.MainQ(hero);
+                            hero.HeroQuests.Que[1] = 2;
+                            hero.HeroQuests.MainISS(hero);
 
                             Output.VictoryWarning();
                             hero.Statistic.Wins++;
@@ -60,7 +68,7 @@ namespace FightCons
 
                 case 2:
                 //  END GAME
-                if (hero.HeroQuests.Que[0] == 2)
+                if (hero.HeroQuests.Que[1] == 2)
                 {
                     Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
                     Reward(hero, 500, 100);
@@ -68,16 +76,207 @@ namespace FightCons
                     //LocationISS.Valley(hero);
                 }
                 break;
-                case 3:
-                //  END GAME
-                if (hero.HeroQuests.Que[0] == 3)
-                {
-                    Output.Final();
-                    //Output.Final();
-                    //LocationISS.Valley(hero);
-                }
-                break;
             }            
+        }
+
+        //2. Основная задача в ДЖ
+        public void MainDJ(Hero hero)
+        {
+            switch (hero.HeroQuests.Que[2])
+            {
+                case 1:
+                    Output.TwriteLine("\nВы находите Таотота\n", 1);
+                    Battles.MakeCurrentBattle(hero, 7);
+
+                    //  Чистка параметров
+                    hero.Condition.Clear();
+                    hero.Turn = 0;
+
+                    if (hero.TotalHP <= 0)
+                        hero.HeroDeath();
+                    else
+                    {
+                        if (!hero.Condition.LeavedBattle)
+                        {
+                            hero.HeroQuests.Que[2] = 2;
+                            hero.HeroQuests.MainDJ(hero);
+
+                            Output.VictoryWarning();
+                            hero.Statistic.Wins++;
+                        }
+                    }
+                    hero.Condition.LeavedBattle = false;
+                    Battles.ListOfUnits.Clear();
+                    break;
+
+                case 2:
+                    if (hero.HeroQuests.Que[2] == 2)
+                    {
+                        Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
+                        Reward(hero, 500, 100);
+                    }
+                    break;
+            }
+        }
+
+        //3. Основная задача в БТЛ
+        public void MainBTL(Hero hero)
+        {
+            switch (hero.HeroQuests.Que[3])
+            {
+                case 1:
+                    Output.TwriteLine("\nВы находите Таотота\n", 1);
+                    Battles.MakeCurrentBattle(hero, 7);
+
+                    //  Чистка параметров
+                    hero.Condition.Clear();
+                    hero.Turn = 0;
+
+                    if (hero.TotalHP <= 0)
+                        hero.HeroDeath();
+                    else
+                    {
+                        if (!hero.Condition.LeavedBattle)
+                        {
+                            hero.HeroQuests.Que[3] = 2;
+                            hero.HeroQuests.MainDJ(hero);
+
+                            Output.VictoryWarning();
+                            hero.Statistic.Wins++;
+                        }
+                    }
+                    hero.Condition.LeavedBattle = false;
+                    Battles.ListOfUnits.Clear();
+                    break;
+
+                case 2:
+                    if (hero.HeroQuests.Que[3] == 2)
+                    {
+                        Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
+                        Reward(hero, 500, 100);
+                    }
+                    break;
+            }
+        }
+
+        //4. Основная задача в ОП
+        public void MainOP(Hero hero)
+        {
+            switch (hero.HeroQuests.Que[4])
+            {
+                case 1:
+                    Output.TwriteLine("\nВы находите Таотота\n", 1);
+                    Battles.MakeCurrentBattle(hero, 7);
+
+                    //  Чистка параметров
+                    hero.Condition.Clear();
+                    hero.Turn = 0;
+
+                    if (hero.TotalHP <= 0)
+                        hero.HeroDeath();
+                    else
+                    {
+                        if (!hero.Condition.LeavedBattle)
+                        {
+                            hero.HeroQuests.Que[4] = 2;
+                            hero.HeroQuests.MainDJ(hero);
+
+                            Output.VictoryWarning();
+                            hero.Statistic.Wins++;
+                        }
+                    }
+                    hero.Condition.LeavedBattle = false;
+                    Battles.ListOfUnits.Clear();
+                    break;
+
+                case 2:
+                    if (hero.HeroQuests.Que[4] == 2)
+                    {
+                        Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
+                        Reward(hero, 500, 100);
+                    }
+                    break;
+            }
+        }
+
+        //5. Основная задача в ПП
+        public void MainPP(Hero hero)
+        {
+            switch (hero.HeroQuests.Que[5])
+            {
+                case 1:
+                    Output.TwriteLine("\nВы находите Таотота\n", 1);
+                    Battles.MakeCurrentBattle(hero, 7);
+
+                    //  Чистка параметров
+                    hero.Condition.Clear();
+                    hero.Turn = 0;
+
+                    if (hero.TotalHP <= 0)
+                        hero.HeroDeath();
+                    else
+                    {
+                        if (!hero.Condition.LeavedBattle)
+                        {
+                            hero.HeroQuests.Que[5] = 2;
+                            hero.HeroQuests.MainDJ(hero);
+
+                            Output.VictoryWarning();
+                            hero.Statistic.Wins++;
+                        }
+                    }
+                    hero.Condition.LeavedBattle = false;
+                    Battles.ListOfUnits.Clear();
+                    break;
+
+                case 2:
+                    if (hero.HeroQuests.Que[5] == 2)
+                    {
+                        Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
+                        Reward(hero, 500, 100);
+                    }
+                    break;
+            }
+        }
+
+        //6. Основная задача в НД
+        public void MainND(Hero hero)
+        {
+            switch (hero.HeroQuests.Que[6])
+            {
+                case 1:
+                    Output.TwriteLine("\nВы находите Таотота\n", 1);
+                    Battles.MakeCurrentBattle(hero, 7);
+
+                    //  Чистка параметров
+                    hero.Condition.Clear();
+                    hero.Turn = 0;
+
+                    if (hero.TotalHP <= 0)
+                        hero.HeroDeath();
+                    else
+                    {
+                        if (!hero.Condition.LeavedBattle)
+                        {
+                            hero.HeroQuests.Que[6] = 2;
+                            hero.HeroQuests.MainDJ(hero);
+
+                            Output.VictoryWarning();
+                            hero.Statistic.Wins++;
+                        }
+                    }
+                    hero.Condition.LeavedBattle = false;
+                    Battles.ListOfUnits.Clear();
+                    break;
+
+                case 2:
+                    if (hero.HeroQuests.Que[6] == 2)
+                    {
+                        Output.TwriteLine("Вы убедили Таотота в своей силе", 30);
+                        Reward(hero, 500, 100);
+                    }
+                    break;
+            }
         }
 
         public void MainMainQ(Hero hero)
@@ -99,7 +298,7 @@ namespace FightCons
                         if (!hero.Condition.LeavedBattle)
                         {
                             hero.HeroQuests.Que[7] = 1;
-                            hero.HeroQuests.MainQ(hero);
+                            hero.HeroQuests.MainISS(hero);
 
                             Output.VictoryWarning();
                             hero.Statistic.Wins++;
@@ -143,7 +342,7 @@ namespace FightCons
         public void Q_Leva_1(Hero hero)
         {
             //  Введение
-            switch (hero.HeroQuests.Que[1])
+            switch (hero.HeroQuests.Que[11])
             {
                 case 1:
                     if (GameFormulas.Vero(0.6))
@@ -160,7 +359,7 @@ namespace FightCons
                         Console.ReadKey(true);
                         Sound.VoiceLeva("- Но при условии если раздобудешь красивую деревянную статуэтку и 50 золотых\n", 10);
                         Console.ReadKey(true);
-                        hero.HeroQuests.Que[1] = 2;
+                        hero.HeroQuests.Que[11] = 2;
                     }
                     break; 
 
@@ -198,7 +397,7 @@ namespace FightCons
                                 hero.PermanentBonus.Attack += 1;
                                 break;
                         }
-                        hero.HeroQuests.Que[1] = 4;
+                        hero.HeroQuests.Que[11] = 4;
                     }
                     break;
             }                     
@@ -221,7 +420,7 @@ namespace FightCons
                     {
                         Inventory.ItemAdd(hero, "Статуэтка", true);
                         Output.TwriteLine("\nСпасибо за покупку!", 1);
-                        hero.HeroQuests.Que[1] = 3;
+                        hero.HeroQuests.Que[11] = 3;
                     }
                     else
                         Output.TwriteLine("\nВы нищеброд! Проваливайте!\n", 1);
@@ -254,7 +453,7 @@ namespace FightCons
         //  Квест "Твое имя камень!"
         public void QYourName(Hero hero)
         {
-            if (hero.HeroQuests.Que[2] == 1)
+            if (hero.HeroQuests.Que[12] == 1)
             {
                 Output.TwriteLine("Проходя вдоль переулка к вам обращается рыжеволосый мальчик.", 10);
                 Console.ReadKey(true);
@@ -291,7 +490,7 @@ namespace FightCons
                 Output.TwriteLine("- Надеюсь он вам не сильно помешал. Всего доброго. - они поспешно удалились.\n", 10);
                 Console.ReadKey(true);
 
-                hero.HeroQuests.Que[2]++;
+                hero.HeroQuests.Que[12]++;
             }            
         }
         #endregion

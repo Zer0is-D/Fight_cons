@@ -46,7 +46,7 @@ namespace FightCons.World.Locations
                 {
                     case 1:
                         //  Босс
-                        if (GameFormulas.Vero(0.2) /*& hero.HeroQuests.Que[0] == 2*/)
+                        if (GameFormulas.Vero(0.2))
                             hero.HeroQuests.MainMainQ(hero);
                         else if (GameFormulas.Vero(0.6))
                             Battles.MakeRandomBattle(hero, 4, 5);

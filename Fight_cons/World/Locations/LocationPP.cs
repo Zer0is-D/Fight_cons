@@ -24,59 +24,43 @@ namespace FightCons.World.Locations
 
         public static string[][] Descript = new string[][]
         {
-            //  Пещеры
+            //  Coast
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Охлаждающий морской бриз наступает на раскаленный океан песчинок",
             },
-            //  Долина
+            //  GreenGround
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Темные пески и нависающие черные хмурые облака. Выжженная земля",
             },
-            //  Окрестности Ордо
+            //  Desert
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Безжизненные как будто все еще тлеющие пески, окружают все в радиусе вашего взгляда",
             },
-            //  Деревня Ордо
+            //  Nomads1
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Кочевники еще из далека вас рассмотрели. Вы подошли ближе только после разрешения",
             },
-            //  Трактир
+            //  BanditTown
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Если бы преступление было местом, о вы явно его нашли",
+                "Шанс что вас не ограбит первый же встречный в городе - крайне мал",
             },
-            //  Рынок
+            //  Nomads2
             new string[]
             {
-                "...",
-                "...",
-                "...",
+                "Караван из 40 человек путешествует аккуратно и незаметно. Местные старшие разводят " +
+                "'Охладители' - водяной костер позволяющий пережить знойный день",
             },
-            //  Леса
+            //  RockValley
             new string[]
             {
-                "...",
-                "...",
-                "...",
-            },
-            //  Храм
-            new string[]
-            {
-                "111",
+                "Огромные монументальные фигуры даже будучи закопанными достигают более 80 метров в высоту",
+                "Это место и пустыня в частности, хранят множество тайн, возможно столько же сколько песчинок в округе",
             }
         };
 
@@ -98,11 +82,11 @@ namespace FightCons.World.Locations
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
                            + "2) Пойти в зеленые земли\n"
-                           + "2) Пойти в пустыню\n"
-                           + "3) Выйти из ПП";
+                           + "3) Пойти в пустыню\n"
+                           + "4) Выйти из ПП";
 
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+                switch (Input.ChoisInput(hero, 1, 4, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -297,10 +281,13 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        BanditTown(hero);
+                        if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[0].Count += 1;
                         break;
+
                     case 3:
-                        BanditTown(hero);
+                        if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
+                            hero.PotionList[1].Count += 1;
                         break;
                     case 4:
                         BanditTown(hero);
@@ -322,7 +309,8 @@ namespace FightCons.World.Locations
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
-                           + "2) Вернуться в пустыню";
+                           + "2) Идти в Горящий лес\n"
+                           + "3) Вернуться в пустыню";
 
 
                 switch (Input.ChoisInput(hero, 1, 3, quo))
@@ -330,8 +318,66 @@ namespace FightCons.World.Locations
                     case 1:
                         //TODO Событие прослушивание  
                         break;
+                        
                     case 2:
+                        BurningForest(hero);
+                        break;
+                    case 3:
                         Desert(hero);
+                        break;
+                }
+            }
+        }
+
+        //Горящий лес
+        public static void BurningForest(Hero hero)
+        {
+            while (true)
+            {
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Горящий лес\n");
+                Output.TwriteLine(Descriptions(((byte)LocationName.Desert), Descript), 1);
+
+                hero.HPBar();
+                hero.MPBar();
+
+                Output.TwriteLine("\nВаши действия?\n", 0);
+                Output.TwriteLine(hero.HeroQuests.Que[5] == 2 ? "1) Выйти из ПП\n" : "1) Искать\n", 0);
+                Output.TwriteLine("2) Отдохнуть\n"
+                                + "3) Вернуться в основной лес", 1);
+
+                switch (Input.ChoisInput(hero, 1, 3))
+                {
+                    case 1:
+                        //  Босс
+                        if (hero.HeroQuests.Que[5] == 2)
+                            LocationVN.SpilledSpace(hero);
+                        else
+                        {
+                            if (GameFormulas.Vero(0.2) & hero.HeroQuests.Que[5] == 0)
+                            {
+                                hero.HeroQuests.Que[5] = 1;
+                                hero.HeroQuests.MainPP(hero);
+                            }
+                            else if (GameFormulas.Vero(0.6))
+                                Battles.MakeRandomBattle(hero, 4, 5);
+                            else
+                                Output.TwriteLine("Вы ничего не находите\n", 1);
+                        }
+
+                        //hero.Statistic.WoodsResearch++;
+                        //Research(hero);
+                        break;
+                    case 2:
+                        if (GameFormulas.Vero(0.9))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 5);
+                        }
+                        break;
+                    case 3:
+                        RockValley(hero);
                         break;
                 }
             }
