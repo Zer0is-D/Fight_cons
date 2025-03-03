@@ -43,7 +43,7 @@ namespace FightCons
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                            Battles.MakeCurrentBattle(hero, 3);
                         }
                         break;
                     case 3:

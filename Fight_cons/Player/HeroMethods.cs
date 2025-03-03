@@ -29,9 +29,8 @@ namespace FightCons
         public static void CreateHero(Hero hero)
         {
             string HNmae;
-            sbyte ChPlace;            
+            sbyte ChPlace;
 
-            //TODO Придумать имя
             Output.TwriteLine("- Выбери себе имя которым будешь называться", 20, true);
             do
             {

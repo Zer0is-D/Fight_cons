@@ -12,7 +12,7 @@ namespace FightCons
 {
     public class EnemyFromXML
     {
-        // TODO отключен до момента появления hash проверки
+        // TODO сделать hash проверки
         private static string Path = Application.StartupPath + "\\Units.xml";
 
         public static Unit LoudedEnemies(short id)
@@ -20,7 +20,15 @@ namespace FightCons
             var res = Bestiaries.GetUnit(id);
 
             if (res != null)
-                return new Unit(res);
+            {
+                //TODO посути надо запихивать сюда готового юнита из списка тварей, но список тварей еще не сгенерен. Надом думу думать, а пока удаляем файл
+                //  Временное решение
+                //Bestiaries.CreateBasicBestiary();
+                //return new Unit(Bestiaries.BestiaryList.FirstOrDefault(x => x.Id == id));
+
+                // Иначальное решение
+                return new Unit(Bestiaries.GetUnit(id));
+            }                
             else
                 return LoadUnit(id);
         }

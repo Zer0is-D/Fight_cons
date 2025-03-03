@@ -49,6 +49,7 @@ namespace FightCons.World.Locations
             //Город-порт Кронштандт
             new string[]
             {
+                //TODO Добавить описания
                 "Главная отправная точка всех путешественников и военных. Порт отчасти несет мистический характер для военных. " +
                 "Ведь отправившись отсюда ты либо возвращаешься ветераном, либо не возвращаешься вовсе",
             },
@@ -63,16 +64,19 @@ namespace FightCons.World.Locations
             //Коралловая стена
             new string[]
             {
+                //TODO Добавить описания
                 "Самое большое естественно выращенное строение созданное по экспериментальной технологии до сих пор хранящийся под строгой тайной",
             },
             //Ресторан Палкинъ
             new string[]
             {
+                //TODO Добавить описания
                 "Известнейший ресторан в городе. Сюда приезжают люди из самых дальних уголков океана чтобы полакомиться изысканным мясом и вырезкой",
             },
             //Северные острова
             new string[]
             {
+                //TODO Добавить описания
                 "Первое о чем говорят про это место - ссылка всех заключенных. И лишь во вторую очередь как о месте проживания " +
                 "окруженного множество полуправдивых мифов народе",
             },
@@ -88,7 +92,7 @@ namespace FightCons.World.Locations
         public static void Island1(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 40, 41, 42);
 
             while (true)
             {
@@ -101,11 +105,11 @@ namespace FightCons.World.Locations
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
                            + "2) Плыть в город Китеж\n"
-                           + "3) Отдохнуть\n"
-                           + "4) Выйти из ОП";
+                           + "3) Отдохнуть\n";
+                           //+ "4) Выйти из ОП";
 
 
-                switch (Input.ChoisInput(hero, 1, 4, quo))
+                switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -119,12 +123,12 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 1, 2, 3);
+                            Battles.MakeRandomBattle(hero, 40, 41, 42);
                         }
                         break;
-                    case 4:
-                        LocationVN.SpilledSpace(hero);
-                        break;
+                    //case 4:
+                    //    LocationVN.SpilledSpace(hero);
+                    //    break;
                 }
             }
         }
@@ -164,8 +168,8 @@ namespace FightCons.World.Locations
                             RestEvent(hero);
                         else
                         {
-                            RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 1, 2, 3);
+                            RestEvent(hero);                            
+                            Battles.MakeRandomBattle(hero, 40, 41, 42);
                         }
                         break;
                         break;
@@ -290,12 +294,12 @@ namespace FightCons.World.Locations
                         TroubledWaters(hero);
                         break;
                     case 5:
-                        if (GameFormulas.Vero(0.8))
+                        if (GameFormulas.Vero(0.6))
                             RestEvent(hero);
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 1, 2, 3);
+                            Battles.MakeRandomBattle(hero, 40, 41, 42);
                         }
                         break;
                     case 6:
@@ -386,11 +390,6 @@ namespace FightCons.World.Locations
                     case 5:
                         if (GameFormulas.Vero(0.8))
                             RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 1, 2, 3);
-                        }
                         break;
                     case 6:
                         Kronstandt(hero);
@@ -460,7 +459,7 @@ namespace FightCons.World.Locations
         public static void NorthIsland(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 40, 41, 42);
 
             while (true)
             {
@@ -491,7 +490,7 @@ namespace FightCons.World.Locations
         public static void TroubledWaters(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 40, 41, 42);
 
             while (true)
             {
@@ -502,7 +501,7 @@ namespace FightCons.World.Locations
                 hero.MPBar();
 
                 Output.TwriteLine("\nВаши действия?\n", 0);
-                Output.TwriteLine(hero.HeroQuests.Que[4] == 2 ? "1) Выйти из ОП\n" : "1) Искать выход\n", 0);
+                Output.TwriteLine(hero.HeroQuests.Que[4] == 2 ? "1) Выйти из ОП" : "1) Искать выход", 0);
                 Output.TwriteLine("2) Отдохнуть\n"
                                 + "3) Вернуться в Кронштандт", 1);
 
@@ -520,7 +519,7 @@ namespace FightCons.World.Locations
                                 hero.HeroQuests.MainOP(hero);
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 4, 5);
+                                Battles.MakeRandomBattle(hero, 40, 41, 42);
                             else
                                 Output.TwriteLine("Вы ничего не находите\n", 1);
                         }
@@ -529,12 +528,12 @@ namespace FightCons.World.Locations
                         //Research(hero);  
                         break;
                     case 2:
-                        if (GameFormulas.Vero(0.9))
+                        if (GameFormulas.Vero(0.7))
                             RestEvent(hero);
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                            Battles.MakeCurrentBattle(hero, 40, 41, 42);
                         }
                         break;
                     case 3:

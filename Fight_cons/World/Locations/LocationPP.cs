@@ -27,38 +27,45 @@ namespace FightCons.World.Locations
             //  Coast
             new string[]
             {
+                //TODO Добавить описания
                 "Охлаждающий морской бриз наступает на раскаленный океан песчинок",
             },
             //  GreenGround
             new string[]
             {
+                //TODO Добавить описания
                 "Темные пески и нависающие черные хмурые облака. Выжженная земля",
             },
             //  Desert
             new string[]
             {
+                //TODO Добавить описания
                 "Безжизненные как будто все еще тлеющие пески, окружают все в радиусе вашего взгляда",
             },
             //  Nomads1
             new string[]
             {
+                //TODO Добавить описания
                 "Кочевники еще из далека вас рассмотрели. Вы подошли ближе только после разрешения",
             },
             //  BanditTown
             new string[]
             {
+                //TODO Добавить описания
                 "Если бы преступление было местом, о вы явно его нашли",
                 "Шанс что вас не ограбит первый же встречный в городе - крайне мал",
             },
             //  Nomads2
             new string[]
             {
+                //TODO Добавить описания
                 "Караван из 40 человек путешествует аккуратно и незаметно. Местные старшие разводят " +
                 "'Охладители' - водяной костер позволяющий пережить знойный день",
             },
             //  RockValley
             new string[]
             {
+                //TODO Добавить описания
                 "Огромные монументальные фигуры даже будучи закопанными достигают более 80 метров в высоту",
                 "Это место и пустыня в частности, хранят множество тайн, возможно столько же сколько песчинок в округе",
             }
@@ -82,11 +89,11 @@ namespace FightCons.World.Locations
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
                            + "2) Пойти в зеленые земли\n"
-                           + "3) Пойти в пустыню\n"
-                           + "4) Выйти из ПП";
+                           + "3) Пойти в пустыню\n";
+                           //+ "4) Выйти из ПП";
 
 
-                switch (Input.ChoisInput(hero, 1, 4, quo))
+                switch (Input.ChoisInput(hero, 1, 3, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -97,9 +104,9 @@ namespace FightCons.World.Locations
                     case 3:
                         Desert(hero);
                         break;
-                    case 4:
-                        LocationVN.SpilledSpace(hero);
-                        break;
+                    //case 4:
+                    //    LocationVN.SpilledSpace(hero);
+                    //    break;
                 }
             }
         }
@@ -108,7 +115,7 @@ namespace FightCons.World.Locations
         public static void GreenGround(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeCurrentBattle(hero, 53);
 
             while (true)
             {
@@ -143,7 +150,7 @@ namespace FightCons.World.Locations
         public static void Desert(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 50, 51, 52);
 
             while (true)
             {
@@ -225,8 +232,9 @@ namespace FightCons.World.Locations
         //Бандитские городки
         public static void BanditTown(Hero hero)
         {
-            if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+            //TODO Шанс воровства велик
+            if (GameFormulas.Vero(0.7))
+                Battles.MakeRandomBattle(hero, 50, 51, 52);
 
             while (true)
             {
@@ -341,7 +349,7 @@ namespace FightCons.World.Locations
                 hero.MPBar();
 
                 Output.TwriteLine("\nВаши действия?\n", 0);
-                Output.TwriteLine(hero.HeroQuests.Que[5] == 2 ? "1) Выйти из ПП\n" : "1) Искать\n", 0);
+                Output.TwriteLine(hero.HeroQuests.Que[5] == 2 ? "1) Выйти из ПП" : "1) Искать", 0);
                 Output.TwriteLine("2) Отдохнуть\n"
                                 + "3) Вернуться в основной лес", 1);
 
@@ -359,7 +367,7 @@ namespace FightCons.World.Locations
                                 hero.HeroQuests.MainPP(hero);
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 4, 5);
+                                Battles.MakeRandomBattle(hero, 2);
                             else
                                 Output.TwriteLine("Вы ничего не находите\n", 1);
                         }
@@ -373,7 +381,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                            Battles.MakeCurrentBattle(hero, 2);
                         }
                         break;
                     case 3:

@@ -93,10 +93,6 @@ namespace FightCons.World.Locations
                 " хуже и дешевле - местные стесняются отвечать ",
             }
         };
-
-        //TODO убрать ненужную переменную
-        //  Выход со стартовой позиции
-        public static bool ExitCave;
         #endregion
 
         #region Локации БТЛ
@@ -105,7 +101,7 @@ namespace FightCons.World.Locations
         public static void Deepwoods(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 31, 32, 33);
 
             while (true)
             {
@@ -119,10 +115,10 @@ namespace FightCons.World.Locations
                             + "1) Бродить\n"
                             + "2) Пойти в северные леса\n"
                             + "3) Пойти в восточные леса\n"
-                            + "4) Отдохнуть\n"
-                            + "5) Выйти из БТЛ";
+                            + "4) Отдохнуть";
+                            //+ "5) Выйти из БТЛ";
 
-                switch (Input.ChoisInput(hero, 1, 5, quo))
+                switch (Input.ChoisInput(hero, 1, 4, quo))
                 {
                     case 1:
                         //TODO Бродить
@@ -139,12 +135,12 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                            Battles.MakeRandomBattle(hero, 31, 32, 33);
                         }
                         break;
-                    case 5:
-                        LocationVN.SpilledSpace(hero);
-                        break;
+                    //case 5:
+                    //    LocationVN.SpilledSpace(hero);
+                    //    break;
                 }
             }
         }
@@ -153,7 +149,7 @@ namespace FightCons.World.Locations
         public static void EastWoods(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 31, 32, 33);
 
             while (true)
             {
@@ -179,7 +175,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                            Battles.MakeRandomBattle(hero, 31, 32, 33);
                         }
                         break;
                     case 3:
@@ -193,7 +189,7 @@ namespace FightCons.World.Locations
         public static void NorthWoods(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 31, 32, 33);
 
             while (true)
             {
@@ -219,7 +215,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                            Battles.MakeRandomBattle(hero, 31, 32, 33);
                         }
                         break;
                     case 3:
@@ -477,7 +473,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                             Battles.MakeRandomBattle(hero, 31, 32, 33);
                         }
                         break;
                     case 3:
@@ -514,7 +510,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                             Battles.MakeRandomBattle(hero, 31, 32, 33);
                         }
                         break;
                     case 3:
@@ -551,7 +547,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                             Battles.MakeRandomBattle(hero, 31, 32, 33);
                         }
                         break;
                     case 3:
@@ -587,7 +583,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                             Battles.MakeRandomBattle(hero, 31, 32, 33);
                         }
                         break;
                     case 3:
@@ -603,7 +599,7 @@ namespace FightCons.World.Locations
         public static void Quarry(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 31, 32, 33);
 
             while (true)
             {
@@ -637,7 +633,7 @@ namespace FightCons.World.Locations
         public static void QuarryBottom(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 1, 2, 3);
 
             while (true)
             {
@@ -648,7 +644,7 @@ namespace FightCons.World.Locations
                 hero.MPBar();
 
                 Output.TwriteLine("\nВаши действия?\n", 0);
-                Output.TwriteLine(hero.HeroQuests.Que[3] == 2? "1) Выйти из БТЛ\n" : "1) Искать\n", 0);
+                Output.TwriteLine(hero.HeroQuests.Que[3] == 2? "1) Выйти из БТЛ" : "1) Искать", 0);
                 Output.TwriteLine("2) Отдохнуть\n"
                                 + "3) Выбраться", 1);
 
@@ -666,7 +662,7 @@ namespace FightCons.World.Locations
                                 hero.HeroQuests.MainBTL(hero);
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 4, 5);
+                                Battles.MakeRandomBattle(hero, 1, 2, 3);
                             else
                                 Output.TwriteLine("Вы ничего не находите\n", 1);
                         }
@@ -680,7 +676,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                            Battles.MakeRandomBattle(hero, 1, 2, 3);
                         }
                         break;
                     case 3:

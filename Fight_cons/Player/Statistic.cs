@@ -5,6 +5,8 @@ namespace FightCons
     public class Statistic
     {
         //TODO Довести до ума статистику 
+        //  Добавить достижение прохождение всех миров
+        //  Достижение побывать во всех КУЛЬТУРНЫХ МЕСТАХ
 
         //  Имя
         public bool knowYourName = false;

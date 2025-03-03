@@ -49,7 +49,7 @@ namespace FightCons.World.Locations
                         if (GameFormulas.Vero(0.2))
                             hero.HeroQuests.MainMainQ(hero);
                         else if (GameFormulas.Vero(0.6))
-                            Battles.MakeRandomBattle(hero, 4, 5);
+                            Battles.MakeRandomBattle(hero, 2, 3);
                         else
                             Output.TwriteLine("Вы ничего не находите\n", 1);
                         break;
@@ -59,7 +59,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 0, 1);
+                            Battles.MakeRandomBattle(hero, 10, 11);
                         }
                         break;
                     case 3:

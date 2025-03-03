@@ -32,7 +32,7 @@ namespace FightCons.World.Locations
         public static void SpilledSpace(Hero hero)
         {
             if (GameFormulas.Vero(0.3))
-                Battles.MakeCurrentBattle(hero, 0, 9);
+                Battles.MakeCurrentBattle(hero, 10, 5);
 
             while (true)
             {
@@ -82,7 +82,7 @@ namespace FightCons.World.Locations
                                 FindBoss = true;
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                                Battles.MakeRandomBattle(hero, 10, 11, 12);
                         }
                         break;
                     case 2:
@@ -109,7 +109,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 4, 5);
+                            Battles.MakeRandomBattle(hero, 2, 3);
                         }
                     break;
                 }

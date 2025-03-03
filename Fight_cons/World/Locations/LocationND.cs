@@ -29,11 +29,12 @@ namespace FightCons.World.Locations
             VladichiaOrbitaCity = 13,
             SectorHi = 14,
             OldIaregaCity = 15,
-            SectorPsi = 16,
-            Cvantograd = 17,
-            SectorOmega = 18,
-            GreenVectorVillage = 19,
-            Dealer = 20,
+            Glaciers = 16,
+            SectorPsi = 17,
+            Cvantograd = 18,
+            SectorOmega = 19,
+            GreenVectorVillage = 20,
+            Dealer = 21,
         }
 
         public static string[][] Descript = new string[][]
@@ -47,8 +48,7 @@ namespace FightCons.World.Locations
             //  SectorDzeta
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" +
-                "то примыкающие к большим крупицам",
+                "Сектор где жизни идет свои ходом. Одно из немногих спокойных мест для проживания",
             },
             //  NewIaregaCity
             new string[]
@@ -59,44 +59,46 @@ namespace FightCons.World.Locations
             //  SectorEtta
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Тут располагается столица - сердце империи",
             },
             //  NewEdinstvenyCity
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Новый Единственный - город манифест заявляющий о единствен между народами и целями",
             },
             //  SectorTeta
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n"
-                + "то примыкающие к большим крупицам",
+                "Производственный центр Империи, сюда приезжают за работой! В Империи нет места лентяям",
+                "Большое количество залежей антигравия добывается и обрабатывается именно здесь",
             },
             //  GeliotopolCity
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Гелиотополь город производства. По сути колония куда ссылают работать",
+                "Не самое приятное место для жизни и работы. Однако гарантия жилья и безопасности все еще подкупает определенную прослойку населения",
             },
             //  SectorCsi
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Вечно мятежный сектор Кси. Известен своим буйным нравом и нестабильностью. Империя в попытках усмирить сектор потратила " +
+                "немыслимые суммы и огромное количество солдат",
+                "Нестабильность и преступность сектора парой играет Империи на руку - там они без особых проблем заключат 'не официальные' сделки, а отставные генералы" +
+                "продают списанные корабли"
             },
             //  HladnyPrimeCity
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Хладный Прайм - город возможностей и приключений. Сюда приезжают из соседних секторов 'покуролесить по полной'",
+                "Тут можно приобрести рабов, оружия, незаконные препараты и корабли. Главное не спрашивать откуда товар",
+                "Пластичность моральных качеств местных предпринимателей настолько поражает - что невольно считаешь себя святым",
             },
             //  SectorOmicron
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Центр мира вокруг которого вертеться все. Место обитания левиафанов и других хищников. Отсюда раз в ... происходит нападения на все сектора",
+                "Вольные государства и даже империя пыталась раз и навсегда покончить с левиафанами, но все попытки заканчивались " +
+                "провалом. Географические особенности и бури не позволяют эффективно организовывать какие либо операции в этом секторе",
             },
             //  Cosmolit
             new string[]
@@ -113,50 +115,60 @@ namespace FightCons.World.Locations
             //  SectorPi
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Сектор с размерено и спокойной жизнью. Является самым 'раскрошенным' по островам и обделенная ресурсами, " +
+                "однако именно поэтому империи на нее никогда не нападет",
+                "Сожмите печенье и киньте в стакан молока, те мелкие кусочки что всплыли будут тем множеством раздробленных жилых островков в секторе",
             },
             //  VladichiaOrbitaCity
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Мирные, семейные и религиозные - так можно охарактеризовать местных людей",
+                "Поговаривают что среди местных тайно живут отставные солдаты империи под видом беженцев",
             },
             //  SectorHi
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Младший брат сектора Омикрон - так можно сказать о секторе Хи",
+                "Местные бояться селиться из-за суеверных поверий насчет руин, империя потеряла интерес к месту после пропажи нескольких " +
+                "разведывательных кораблей, но от чего бежит разумный туда же мчит безумный. Рыскари верят что здесь можно обогатиться",
             },
             //  OldIaregaCity
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Городок который должен был закрыться и тихо умереть, но постоянный приток рыскарей поддерживает в нем жизнь",
+                "Тут можно быстро найти работу, просадить состояния в баре и заработать кучу долгов",
             },
-            //  SectorPsi
+            
+            //  Ледняки
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                //TODO Добавить описания
+                "Собачий холод и пустота"
+            },
+            //  SectorPsi   
+            new string[]
+            {
+                "Кость в горле империи. Центр вольных государств где сосредоточен объединенный флот. " +
+                "Помимо постоянных интриг и заявлений политиков в работе на империю, здесь находится второй центр бурной жизни",
             },
             //  Cvantograd
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Квантоград город умельцев и убежище противников империи",
+                "Удобное географическое положения и грамотное расстановка сил дает преимущество в защите и обороне сектора и в города в частности.",
             },
             //  SectorOmega
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Сектор Омега является спасением для вольных государств. Здесь огромное количество ресурсов и нетипичная фауна",
+                "Частные компании разных вольных государств добывают ресурсы облажены особым налогом который уходит на постройку и поддержания " +
+                "флота обеспечивающего защиту от попыток империи захватить сектор",
             },
             //  GreenVectorVillage
             new string[]
             {
-                "Кипящие пространства наполненное всюду беспорядочно крутящимися пылинками-кораблями, то резко исчезающими, \n" 
-                + "то примыкающие к большим крупицам",
+                "Поселение Зеленый Вектор - уютный городок где отдыхают после тяжелой работы мирные люди. " +
+                "Однако над этим стоят бесконечные интриги и конфликты между компаниями",
             },
         };
 
@@ -178,11 +190,11 @@ namespace FightCons.World.Locations
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
-                           + "2) Лететь в Сектор Дзета\n"
-                           + "3) Выйти из НД";
+                           + "2) Лететь в Сектор Дзета\n";
+                           //+ "3) Выйти из НД";
 
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+                switch (Input.ChoisInput(hero, 1, 2, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -190,9 +202,9 @@ namespace FightCons.World.Locations
                     case 2:
                         SectorDzeta(hero);
                         break;
-                    case 3:
-                        LocationVN.SpilledSpace(hero);
-                        break;
+                    //case 3:
+                    //    LocationVN.SpilledSpace(hero);
+                    //    break;
                 }
             }
         }
@@ -200,8 +212,8 @@ namespace FightCons.World.Locations
         //Сектор Дзета
         public static void SectorDzeta(Hero hero)
         {
-            if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+            if (GameFormulas.Vero(0.4))
+                Battles.MakeRandomBattle(hero, 60, 61, 62);
 
             while (true)
             {
@@ -216,10 +228,11 @@ namespace FightCons.World.Locations
                            + "2) Лететь в город Новая Ярега\n"
                            + "3) Лететь в сектор Этта\n"
                            + "4) Лететь в сектор Пи\n"
-                           + "5) Вернуться на остров1";
+                           + "5) Вернуться на остров1\n"
+                           + "6) Отдохнуть";
 
 
-                switch (Input.ChoisInput(hero, 1, 5, quo))
+                switch (Input.ChoisInput(hero, 1, 6, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -235,6 +248,15 @@ namespace FightCons.World.Locations
                         break;
                     case 5:
                         Island1(hero);
+                        break;
+                    case 6:
+                        if (GameFormulas.Vero(0.75))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 3);
+                        }
                         break;
                 }
             }
@@ -271,8 +293,8 @@ namespace FightCons.World.Locations
         //Сектор Этта
         public static void SectorEtta(Hero hero)
         {
-            if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+            if (GameFormulas.Vero(0.8))
+                Battles.MakeRandomBattle(hero, 60, 61, 62);
 
             while (true)
             {
@@ -287,10 +309,11 @@ namespace FightCons.World.Locations
                            + "2) Идти в Город Новый Единственный\n"
                            + "3) Лететь в сектор Тета\n"
                            + "4) Лететь в сектор Дзета\n"
-                           + "5) Лететь в сектор Омикрон";
+                           + "5) Лететь в сектор Омикрон\n"
+                           + "6) Отдохнуть";
 
 
-                switch (Input.ChoisInput(hero, 1, 5, quo))
+                switch (Input.ChoisInput(hero, 1, 6, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -306,6 +329,15 @@ namespace FightCons.World.Locations
                         break;
                     case 5:
                         SectorOmicron(hero);
+                        break;
+                    case 6:
+                        if (GameFormulas.Vero(0.5))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 60, 61);
+                        }
                         break;
                 }
             }
@@ -396,8 +428,8 @@ namespace FightCons.World.Locations
         //Сектор Тета
         public static void SectorTeta(Hero hero)
         {
-            if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+            if (GameFormulas.Vero(0.7))
+                Battles.MakeRandomBattle(hero, 60, 61, 62);
 
             while (true)
             {
@@ -411,7 +443,8 @@ namespace FightCons.World.Locations
                            + "1) Осмотреться\n"
                            + "2) Идти в Город Гелиотополь\n"
                            + "3) Лететь в сектор Этта\n"
-                           + "4) Лететь в сектор Кси";
+                           + "4) Лететь в сектор Кси\n"
+                           + "5) Отдохнуть";
 
 
                 switch (Input.ChoisInput(hero, 1, 4, quo))
@@ -428,6 +461,15 @@ namespace FightCons.World.Locations
                     case 4:
                         SectorCsi(hero);
                         break;
+                    case 5:
+                        if (GameFormulas.Vero(0.6))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 60, 61);
+                        }
+                        break;
                 }
             }
         }
@@ -437,7 +479,7 @@ namespace FightCons.World.Locations
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Гелиотополь\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.GeliotopolCity), Descript), 1);
 
                 hero.HPBar();
@@ -464,7 +506,7 @@ namespace FightCons.World.Locations
         public static void SectorCsi(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 66, 67, 68);
 
             while (true)
             {
@@ -476,19 +518,20 @@ namespace FightCons.World.Locations
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
-                           + "2) Идти в Город Новый Единственный\n"
+                           + "2) Идти в город Хладный Прайм\n"
                            + "3) Лететь в сектор Тета\n"
                            + "4) Лететь в сектор Омикрон\n"
-                           + "5) Лететь в сектор Хи";
+                           + "5) Лететь в сектор Хи\n"
+                           + "6) Отдохнуть";
 
 
-                switch (Input.ChoisInput(hero, 1, 5, quo))
+                switch (Input.ChoisInput(hero, 1, 6, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        NewEdinstvenyCity(hero);
+                        HladnyPrimeCity(hero);
                         break;
                     case 3:
                         SectorTeta(hero);
@@ -499,6 +542,15 @@ namespace FightCons.World.Locations
                     case 5:
                         SectorHi(hero);
                         break;
+                    case 6:
+                        if (GameFormulas.Vero(0.2))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 68, 68);
+                        }
+                        break;
                 }
             }
         }
@@ -508,7 +560,7 @@ namespace FightCons.World.Locations
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Хладный Прайм\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.HladnyPrimeCity), Descript), 1);
 
                 hero.HPBar();
@@ -519,7 +571,7 @@ namespace FightCons.World.Locations
                            + "2) Вернуться";
 
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+                switch (Input.ChoisInput(hero, 1, 2, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -534,8 +586,8 @@ namespace FightCons.World.Locations
         //Сектор Омикрон
         public static void SectorOmicron(Hero hero)
         {
-            if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+            if (GameFormulas.Vero(0.9))
+                Battles.MakeRandomBattle(hero, 60, 61, 62, 63, 64, 65, 66, 67, 68);
 
             while (true)
             {
@@ -552,10 +604,11 @@ namespace FightCons.World.Locations
                            + "4) Лететь в сектор Этта\n"
                            + "5) Лететь в сектор Кси\n"
                            + "6) Лететь в сектор Пи\n"
-                           + "7) Лететь в сектор Пси";
+                           + "7) Лететь в сектор Пси\n"
+                           + "8) Отдохнуть";
 
 
-                switch (Input.ChoisInput(hero, 1, 7, quo))
+                switch (Input.ChoisInput(hero, 1, 8, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -578,6 +631,15 @@ namespace FightCons.World.Locations
                     case 7:
                         SectorPsi(hero);
                         break;
+                    case 8:
+                        if (GameFormulas.Vero(0.9))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 1, 1, 1, 1);
+                        }
+                        break;
                 }
             }
         }
@@ -587,7 +649,7 @@ namespace FightCons.World.Locations
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Космолит\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Cosmolit), Descript), 1);
 
                 hero.HPBar();
@@ -598,7 +660,7 @@ namespace FightCons.World.Locations
                            + "2) Вернуться";
 
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+                switch (Input.ChoisInput(hero, 1, 2, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -615,7 +677,7 @@ namespace FightCons.World.Locations
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Темная грануляция\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.DarkGranulation), Descript), 1);
 
                 hero.HPBar();
@@ -641,8 +703,8 @@ namespace FightCons.World.Locations
         //Сектор Пи
         public static void SectorPi(Hero hero)
         {
-            if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+            if (GameFormulas.Vero(0.4))
+                Battles.MakeCurrentBattle(hero, 3);
 
             while (true)
             {
@@ -657,10 +719,11 @@ namespace FightCons.World.Locations
                            + "2) Идти в город Владычья Орбита\n"
                            + "3) Лететь в сектор Дзета\n"
                            + "4) Лететь в сектор Омикрон\n"
-                           + "5) Лететь в сектор Омега";
+                           + "5) Лететь в сектор Омега\n"
+                           + "6) Отдохнуть";
 
 
-                switch (Input.ChoisInput(hero, 1, 5, quo))
+                switch (Input.ChoisInput(hero, 1, 6, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -677,6 +740,15 @@ namespace FightCons.World.Locations
                     case 5:
                         SectorOmega(hero);
                         break;
+                    case 6:
+                        if (GameFormulas.Vero(0.9))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 3);
+                        }
+                        break;
                 }
             }
         }
@@ -686,7 +758,7 @@ namespace FightCons.World.Locations
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Владычья Орбита\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.VladichiaOrbitaCity), Descript), 1);
 
                 hero.HPBar();
@@ -712,8 +784,8 @@ namespace FightCons.World.Locations
         //Сектор Хи
         public static void SectorHi(Hero hero)
         {
-            if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+            if (GameFormulas.Vero(0.8))
+                Battles.MakeRandomBattle(hero, 66, 67, 68);
 
             while (true)
             {
@@ -727,7 +799,8 @@ namespace FightCons.World.Locations
                            + "1) Осмотреться\n"
                            + "2) Идти в город Старая Ярега\n"
                            + "3) Лететь в сектор Кси\n"
-                           + "4) Лететь в сектор Пси";
+                           + "4) Лететь в сектор Пси\n"
+                           + "5) Отдохнуть";
 
 
                 switch (Input.ChoisInput(hero, 1, 5, quo))
@@ -736,16 +809,22 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        NewEdinstvenyCity(hero);
+                        OldIaregaCity(hero);
                         break;
                     case 3:
-                        SectorTeta(hero);
+                        SectorCsi(hero);
                         break;
                     case 4:
-                        SectorOmicron(hero);
+                        SectorPsi(hero);
                         break;
                     case 5:
-                        SectorDzeta(hero);
+                        if (GameFormulas.Vero(0.7))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeRandomBattle(hero, 66, 67, 68);
+                        }
                         break;
                 }
             }
@@ -789,13 +868,13 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Ледники\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.OldIaregaCity), Descript), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Glaciers), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 Output.TwriteLine("\nВаши действия?\n", 0);
-                Output.TwriteLine(hero.HeroQuests.Que[6] == 2 ? "1) Выйти из НД\n" : "1) Искать\n", 0);
+                Output.TwriteLine(hero.HeroQuests.Que[6] == 2 ? "1) Выйти из НД" : "1) Искать", 0);
                 Output.TwriteLine("2) Отдохнуть\n"
                                 + "3) Вернуться в Старую Ярегу", 1);
 
@@ -814,7 +893,7 @@ namespace FightCons.World.Locations
                                 hero.HeroQuests.MainND(hero);
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 4, 5);
+                                Battles.MakeRandomBattle(hero, 1, 3);
                             else
                                 Output.TwriteLine("Вы ничего не находите\n", 1);
                         }
@@ -828,7 +907,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                            Battles.MakeRandomBattle(hero, 66, 67, 68);
                         }
                         break;
                     case 3:
@@ -841,8 +920,8 @@ namespace FightCons.World.Locations
         //Сектор Пси
         public static void SectorPsi(Hero hero)
         {
-            if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+            if (GameFormulas.Vero(0.8))
+                Battles.MakeRandomBattle(hero, 63, 64, 65);
 
             while (true)
             {
@@ -857,10 +936,11 @@ namespace FightCons.World.Locations
                            + "2) Идти в город Квантоград\n"
                            + "3) Лететь в сектор Омикрон\n"
                            + "4) Лететь в сектор Хи\n"
-                           + "5) Лететь в сектор Омега";
+                           + "5) Лететь в сектор Омега\n"
+                           + "6) Отдохнуть";
 
 
-                switch (Input.ChoisInput(hero, 1, 5, quo))
+                switch (Input.ChoisInput(hero, 1, 6, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -876,6 +956,15 @@ namespace FightCons.World.Locations
                         break;
                     case 5:
                         SectorOmega(hero);
+                        break;
+                    case 6:
+                        if (GameFormulas.Vero(0.8))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 3);
+                        }
                         break;
                 }
             }
@@ -897,7 +986,7 @@ namespace FightCons.World.Locations
                            + "2) Вернуться";
 
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+                switch (Input.ChoisInput(hero, 1, 2, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -913,7 +1002,7 @@ namespace FightCons.World.Locations
         public static void SectorOmega(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 63, 64, 65);
 
             while (true)
             {
@@ -927,7 +1016,8 @@ namespace FightCons.World.Locations
                            + "1) Осмотреться\n"
                            + "2) Идти в поселение Зеленый Вектор\n"
                            + "3) Лететь в сектор Пи\n"
-                           + "4) Лететь в сектор Пси";
+                           + "4) Лететь в сектор Пси\n"
+                           + "5) Отдохнуть";
 
 
                 switch (Input.ChoisInput(hero, 1, 5, quo))
@@ -944,6 +1034,15 @@ namespace FightCons.World.Locations
                     case 4:
                         SectorPsi(hero);
                         break;
+                    case 5:
+                        if (GameFormulas.Vero(0.9))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 1, 1, 7);
+                        }
+                        break;
                 }
             }
         }
@@ -953,7 +1052,7 @@ namespace FightCons.World.Locations
         {
             while (true)
             {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Город Новый Единственный\n");
+                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Зеленый Вектор\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.GreenVectorVillage), Descript), 1);
 
                 hero.HPBar();
@@ -961,7 +1060,8 @@ namespace FightCons.World.Locations
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
-                           + "2) Вернуться";
+                           + "2) Осмотреться\n"
+                           + "3) Вернуться";
 
 
                 switch (Input.ChoisInput(hero, 1, 3, quo))
@@ -970,6 +1070,15 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
+                        if (GameFormulas.Vero(0.9))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+                            Battles.MakeCurrentBattle(hero, 1);
+                        }
+                        break;
+                    case 3:
                         SectorEtta(hero);
                         break;
                 }

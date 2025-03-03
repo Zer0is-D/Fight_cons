@@ -14,6 +14,7 @@ namespace FightCons
         public static List<Order> ListOfUnits = new List<Order>();
 
         #region Генерация кол. противников 
+        //TODO пересмотреть и доработать в случае чего
         //  Можно доработать и добалвять или заменять встречающихся противников
 
         private static sbyte HeroLvlMargin = 3;

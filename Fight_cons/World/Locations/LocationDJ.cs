@@ -79,23 +79,23 @@ namespace FightCons.World.Locations
         public static void Woods1(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 20, 1);
 
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес1\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods1), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
-                           + "2) Пойти дальше\n"
-                           + "3) Выйти из ДЖ";
+                           + "2) Пойти дальше\n";
+                           //+ "3) Выйти из ДЖ";
 
 
-                switch (Input.ChoisInput(hero, 1, 3, quo))
+                switch (Input.ChoisInput(hero, 1, 2, quo))
                 {
                     case 1:
                         //TODO Событие прослушивание  
@@ -103,9 +103,9 @@ namespace FightCons.World.Locations
                     case 2:
                         Woods2(hero);
                         break;
-                    case 3:
-                        LocationVN.SpilledSpace(hero);
-                        break;
+                    //case 3:
+                    //    LocationVN.SpilledSpace(hero);
+                    //    break;
                 }
             }
         }
@@ -114,12 +114,12 @@ namespace FightCons.World.Locations
         public static void Woods2(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 20, 1);
 
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес2\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods2), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -149,12 +149,12 @@ namespace FightCons.World.Locations
         public static void Woods3(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 20, 1);
 
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес3\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods3), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -184,12 +184,12 @@ namespace FightCons.World.Locations
         public static void Woods4(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 0, 1, 2);
+                Battles.MakeRandomBattle(hero, 20, 1);
 
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Лес4\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.Woods4), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -221,7 +221,7 @@ namespace FightCons.World.Locations
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Основной лес\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Woods), Descript), 1);
+                Output.TwriteLine(Descriptions(((byte)LocationName.MainWoods), Descript), 1);
 
                 hero.HPBar();
                 hero.MPBar();
@@ -313,7 +313,7 @@ namespace FightCons.World.Locations
                 hero.MPBar();
 
                 Output.TwriteLine("\nВаши действия?\n", 0);
-                Output.TwriteLine(hero.HeroQuests.Que[2] == 2 ? "1) Выйти из ДЖ\n" : "1) Искать\n", 0);
+                Output.TwriteLine(hero.HeroQuests.Que[2] == 2 ? "1) Выйти из ДЖ" : "1) Искать", 0);
                 Output.TwriteLine("2) Отдохнуть\n"
                                 + "3) Вернуться в основной лес", 1);
 
@@ -331,7 +331,7 @@ namespace FightCons.World.Locations
                                 hero.HeroQuests.MainDJ(hero);
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 4, 5);
+                                Battles.MakeRandomBattle(hero, 21);
                             else
                                 Output.TwriteLine("Вы ничего не находите\n", 1);
                         }
@@ -345,7 +345,7 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 5);
+                            Battles.MakeCurrentBattle(hero, 3);
                         }
                         break;
                     case 3:

@@ -43,7 +43,7 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 7);
+                    Battles.MakeCurrentBattle(hero, 0);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -57,9 +57,6 @@ namespace FightCons
                         {
                             hero.HeroQuests.Que[1] = 2;
                             hero.HeroQuests.MainISS(hero);
-
-                            Output.VictoryWarning();
-                            hero.Statistic.Wins++;
                         }
                     }
                     hero.Condition.LeavedBattle = false;
@@ -86,7 +83,7 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 7);
+                    Battles.MakeCurrentBattle(hero, 0);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -100,9 +97,6 @@ namespace FightCons
                         {
                             hero.HeroQuests.Que[2] = 2;
                             hero.HeroQuests.MainDJ(hero);
-
-                            Output.VictoryWarning();
-                            hero.Statistic.Wins++;
                         }
                     }
                     hero.Condition.LeavedBattle = false;
@@ -126,7 +120,7 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 7);
+                    Battles.MakeCurrentBattle(hero, 0);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -140,9 +134,6 @@ namespace FightCons
                         {
                             hero.HeroQuests.Que[3] = 2;
                             hero.HeroQuests.MainDJ(hero);
-
-                            Output.VictoryWarning();
-                            hero.Statistic.Wins++;
                         }
                     }
                     hero.Condition.LeavedBattle = false;
@@ -165,8 +156,9 @@ namespace FightCons
             switch (hero.HeroQuests.Que[4])
             {
                 case 1:
+                    //TODO ОГРОМНЫЙ КРАБЛИН БОСС
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 7);
+                    Battles.MakeCurrentBattle(hero, 0);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -180,9 +172,6 @@ namespace FightCons
                         {
                             hero.HeroQuests.Que[4] = 2;
                             hero.HeroQuests.MainDJ(hero);
-
-                            Output.VictoryWarning();
-                            hero.Statistic.Wins++;
                         }
                     }
                     hero.Condition.LeavedBattle = false;
@@ -206,7 +195,7 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 7);
+                    Battles.MakeCurrentBattle(hero, 0);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -220,9 +209,6 @@ namespace FightCons
                         {
                             hero.HeroQuests.Que[5] = 2;
                             hero.HeroQuests.MainDJ(hero);
-
-                            Output.VictoryWarning();
-                            hero.Statistic.Wins++;
                         }
                     }
                     hero.Condition.LeavedBattle = false;
@@ -246,7 +232,7 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 7);
+                    Battles.MakeCurrentBattle(hero, 0);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -260,9 +246,6 @@ namespace FightCons
                         {
                             hero.HeroQuests.Que[6] = 2;
                             hero.HeroQuests.MainDJ(hero);
-
-                            Output.VictoryWarning();
-                            hero.Statistic.Wins++;
                         }
                     }
                     hero.Condition.LeavedBattle = false;
@@ -285,7 +268,7 @@ namespace FightCons
             {
                 case 0:
                     Output.TwriteLine("\nВы находите Покровителя\n", 1);
-                    Battles.MakeCurrentBattle(hero, 20);
+                    Battles.MakeCurrentBattle(hero, 79);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
