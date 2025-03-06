@@ -9,6 +9,7 @@ namespace FightCons
 {
     class CombatSolutions
     {
+        //TODO переделать нахуй боевку ибо полная хуйня
         //  Боевые решения
         private static sbyte BattleChoice; 
         private static bool SkipTurn = false;
