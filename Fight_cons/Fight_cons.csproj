@@ -89,7 +89,7 @@
     <Compile Include="Enemies\Bestiaria.cs" />
     <Compile Include="CoreNSettings\EnemyFromXML.cs" />
     <Compile Include="PatternUnit.cs" />
-    <Compile Include="Player\List.cs" />
+    <Compile Include="Player\SkillsNLvl\SpecialDes.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -16,7 +16,7 @@ namespace FightCons.Enemies
             CharacterProfile.Phase = bestiaria.CharacterProfile.Phase;
             Name = bestiaria.Name;
 
-            if (CharacterProfile.Role == CharecterProfiles.ChaRole.Wild)
+            if (CharacterProfile.Role == CharacterProfiles.ChaRole.Wild)
                 MaxHp = (bestiaria.HpMax == 0) ?
                     (short)(bestiaria.HpMin * rand.Next(2, 5)) : (short)(rand.Next(bestiaria.HpMin, bestiaria.HpMax) * rand.Next(2, 5));
             else

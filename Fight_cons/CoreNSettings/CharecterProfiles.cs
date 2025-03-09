@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace FightCons.CoreNSettings
 {
-    public class CharecterProfiles
+    public class CharacterProfiles
     {
         public bool IsPlayer;
-
-        //  Информация о противниках
-        public bool EnemyAbout = false;
 
         internal protected sbyte? Phase;
 
@@ -28,15 +25,15 @@ namespace FightCons.CoreNSettings
 
         internal protected bool Wild;
 
-        public enum Strategeis
+        public enum Strategies
         {
             Any = 0,
-            Agresive = 1,
+            Aggressive = 1,
             Mage = 2,
             Necromancer = 3,
             Healer = 4,
             BeastMaster = 5
         }
-        public Strategeis Strategy = new Strategeis();
+        public Strategies Strategy = new Strategies();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FightCons.CoreNSettings;
+using FightCons.Player.SkillsNLvl;
 using System;
 using System.Collections.Generic;
 
@@ -87,6 +88,14 @@ namespace FightCons
             set => _heroSpells = value; 
         }
 
+        //  Особые боевые навыки героя
+        private protected List<SpecialDes> _heroSpecials = new List<SpecialDes>();
+        internal protected List<SpecialDes> SpecialList
+        {
+            get => _heroSpecials;
+            set => _heroSpecials = value;
+        }
+
         //  Зелья героя
         private protected List<PotionDes> _heroPotions = new List<PotionDes>();
         internal protected List<PotionDes> PotionList
@@ -125,7 +134,7 @@ namespace FightCons
             Moves = 2;
             CharacterProfile.IsPlayer = true;
             Condition.IsAlive = true;
-            CharacterProfile.Role = CharecterProfiles.ChaRole.Hero;
+            CharacterProfile.Role = CharacterProfiles.ChaRole.Hero;
         }
     }
 }

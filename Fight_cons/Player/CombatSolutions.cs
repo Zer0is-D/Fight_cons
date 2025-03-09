@@ -9,7 +9,6 @@ namespace FightCons
 {
     class CombatSolutions
     {
-        //TODO Сделать вывод обороны
         //  Боевые решения
         private static sbyte BattleChoice; 
         private static bool SkipTurn;
@@ -29,7 +28,7 @@ namespace FightCons
             {
                 Console.WriteLine("\nВыберите противника");
 
-                LoadListOfUnits(units, hero.CharacterProfile.EnemyAbout);
+                LoadListOfUnits(units, hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active);
 
                 //  Выбор юнита из списка
                 var ch = Input.ChoisInput(0, (sbyte)units.Count());
@@ -51,9 +50,10 @@ namespace FightCons
 
             bool[] skillAccess = new bool[]
             {
-                hero.CharacterProfile.EnemyAbout,   //  Узнать о противнике
+                hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active,    //  Узнать о противнике
                 true,                               //  Нападение
                 true,                               //  Заклинания
+                true,                               //  Способности   /*hero.Statistic.SpecialSkills[1],*/
                 true,                               //  Выпить зелье
                 true,                               //  Обороняться
                 true,                               //  Убежать
@@ -73,35 +73,54 @@ namespace FightCons
             if (!SkipTurn)
             {
                 // Выбор боевых действий
+                sbyte av = 0;
                 Console.Write("Ваши действия?\n");
                 
                 for (short i = 0; i < AvailableSkillsStr.Length; i++)
                 {
+                    if (!skillAccess[0] && i == 0)
+                        av++;
+
                     if (AvailableSkillsStr[i] != "")
-                        Console.Write($"{i}) {AvailableSkillsStr[i]}\n");
+                    {
+                        
+                        Console.Write($"{av}) {AvailableSkillsStr[i]}\n");
+                        av++;
+                    }
+                       
                 }
 
                 //  Смена выбранного противника
                 if (units != null)
-                    Console.Write($"6) Назад\n");
+                {
+                    if (skillAccess[0])
+                        Console.Write($"{AvailableSkillsList.Count}) Назад\n");// 0 - t
+                    else
+                        Console.Write($"{AvailableSkillsList.Count + 1}) Назад\n"); // 0 - f
+                }
+
 
                 if (units == null)
-                    BattleChoice = BattleChoisInput(0, 5, hero, unit, units);                
+                    BattleChoice = BattleChoisInput(0, (sbyte)AvailableSkillsList.Count, hero, unit, units);
+                else if (!skillAccess[0])
+                    BattleChoice = BattleChoisInput(1, (sbyte)(AvailableSkillsList.Count + 1), hero, unit, units); // 0 - f
                 else
-                    BattleChoice = BattleChoisInput(0, 6, hero, unit, units);
+                    BattleChoice = BattleChoisInput(0, (sbyte)(AvailableSkillsList.Count), hero, unit, units);  // 0 - t
 
                 if (!QuickCommandDone)
                 {
                     //  Вызов соответствующей категории способностей (1-5)
-                    if (skillAccess[0] && BattleChoice <= AvailableSkillsList.Count)
+                    if (skillAccess[0] && BattleChoice < AvailableSkillsList.Count) // 0 - f <
                         AvailableSkillsList[BattleChoice](hero, unit, units);
 
-                    else if (BattleChoice <= AvailableSkillsList.Count && BattleChoice > 0)
-                        AvailableSkillsList[BattleChoice - 1](hero, unit, units);
+                    else if (!skillAccess[0] && BattleChoice <= AvailableSkillsList.Count && BattleChoice > 0)
+                        AvailableSkillsList[BattleChoice - 1](hero, unit, units);   // 0 - f
                 }                    
 
                 //  Выбрать другого противника
-                if (BattleChoice == 6)
+                if (BattleChoice == AvailableSkillsList.Count && skillAccess[0])
+                    CurrentEnemy(hero, units);
+                else if (BattleChoice == AvailableSkillsList.Count + 1 && !skillAccess[0])
                     CurrentEnemy(hero, units);
 
                 /*  Старый функ
@@ -413,13 +432,47 @@ namespace FightCons
                 FightChoice(hero, unit, units);
         }
 
+        //  Способности
+        private static void SpecialList(Hero hero, Character unit, List<Order> units = null)
+        {
+            Console.Write("Ваши действия?\n");
+            for (short i = 0; i < AvailableSkillsStr.Length; i++)
+            {
+                if (i == 4)
+                {
+                    Console.Write($"  0) Назад\n");
+                    foreach (var sk in hero.SpecialList)
+                    {
+                        Console.WriteLine($"  {sk.ID}) {sk.Description}");
+                    }
+                }
+                if (AvailableSkillsStr[i] != "")
+                    Console.Write($"X) {AvailableSkillsStr[i]}\n");
+            }
+
+            BattleChoice = Input.ChoisInput(0, (sbyte)(hero.SpecialList.Count));
+            if (BattleChoice != 0)
+                hero.SpecialList[BattleChoice - 1].Specials(hero, unit);
+            else
+                FightChoice(hero, unit, units);
+        }
+
+        //  Быстрый набор способностей
+        private static void QuickBattleSpecialInput(sbyte id, Hero hero, Character unit, List<Order> units = null)
+        {
+            if (id != 0 && id <= hero.SpecialList.Count)
+                hero.SpecialList[id - 1].Specials(hero, unit);
+            else
+                FightChoice(hero, unit, units);
+        }
+
         //  Зелья
         private static void PotionList(Hero hero, Character unit, List<Order> units = null)
         {
             Console.Write("Ваши действия?\n");
             for (short i = 0; i < AvailableSkillsStr.Length; i++)
             {
-                if (i == 4)
+                if (i == 5)
                 {
                     Console.Write($"  0) Назад\n");
                     foreach (var p in hero.PotionList)
@@ -591,9 +644,10 @@ namespace FightCons
                         $"Ваши действия?\n"
                         + "1) Нападение\n"
                         + "2) Заклинания\n"
-                        + "3) Выпить зелье\n"
-                        + $"4) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
-                        + $"5) Убежать\n");
+                        + "3) Способности\n"
+                        + "4) Выпить зелье\n"
+                        + $"5) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
+                        + $"6) Убежать\n");
                 }
                 else
                 {
@@ -633,16 +687,20 @@ namespace FightCons
             if (skillAccess[2])
                 mas.Add(SpellList);
 
-            //  Выпить зелье
+            //  Способности
             if (skillAccess[3])
+                mas.Add(SpecialList);
+
+            //  Выпить зелье
+            if (skillAccess[4])
                 mas.Add(PotionList);
 
             //  Обороняться
-            if (skillAccess[4])
+            if (skillAccess[5])
                 mas.Add(Protection);
 
             //  Убежать
-            if (skillAccess[5])
+            if (skillAccess[6])
                 mas.Add(Battles.RunFromBattle);
             
             return mas;
@@ -665,16 +723,20 @@ namespace FightCons
             if (skillAccess[2])
                 mas.Add(QuickBattleSpellInput);
 
-            //  Выпить зелье
+            //  Способности
             if (skillAccess[3])
+                mas.Add(QuickBattleSpecialInput);
+
+            //  Выпить зелье
+            if (skillAccess[4])
                 mas.Add(QuickBattlePotionInput);
 
             ////  Обороняться
-            //if (skillAccess[4])
+            //if (skillAccess[5])
             //    mas.Add(Protection);
 
             ////  Убежать
-            //if (skillAccess[5])
+            //if (skillAccess[6])
             //    mas.Add(Battles.RunFromBattle);
 
             return mas;
@@ -683,7 +745,7 @@ namespace FightCons
         //  Добавление вывода доступных способностей
         private static string[] AvailableSkillsOutput(Hero hero, bool[] skillAccess)
         {
-            string[] mas = new string[6];
+            string[] mas = new string[7];
 
             mas[0] = skillAccess[0] == true ? "Узнать о противнике" : "";
 
@@ -691,11 +753,13 @@ namespace FightCons
 
             mas[2] = skillAccess[2] == true ? "Заклинания" : "";
 
-            mas[3] = skillAccess[3] == true ? "Выпить зелье" : "";
+            mas[3] = skillAccess[3] == true ? "Способности" : "";
 
-            mas[4] = skillAccess[4] == true ? $"Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})" : "";
+            mas[4] = skillAccess[4] == true ? "Выпить зелье" : "";
 
-            mas[5] = skillAccess[5] == true ? "Убежать" : "";
+            mas[5] = skillAccess[5] == true ? $"Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})" : "";
+
+            mas[6] = skillAccess[6] == true ? "Убежать" : "";
 
             //  Временно оставить
             //for (int i = 0; i < mas.Length; i++)

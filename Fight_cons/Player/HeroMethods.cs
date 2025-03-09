@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using static FightCons.CharecterClases;
+using static FightCons.CharacterClasses;
 using static FightCons.ItemChar;
 using FightCons.World.Locations;
 using System.Numerics;
@@ -35,7 +35,7 @@ namespace FightCons
             hero.Name = "Nemo";
             //hero.HPnMPBar();
 
-            Battles.MakeCurrentBattle(hero, 12, 12);
+            Battles.MakeCurrentBattle(hero, 12);
 
             //  КОНЕЦ СЕГМЕНТА
             /////////////////////////////////////////////////////////////////////////////////////

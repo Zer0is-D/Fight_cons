@@ -5,7 +5,7 @@ using static FightCons.Character;
 namespace FightCons
 {
     //  Бонусы от класса
-    internal class CharecterClases : Characteristics
+    internal class CharacterClasses : Characteristics
     {
         internal protected new short HP
         {
@@ -20,13 +20,13 @@ namespace FightCons
         public enum ChaClass
         {
             NoMan = 0,
-            Fither = 1,
-            Wisard = 2,
+            Fighter = 1,
+            Wizard = 2,
             Rouge = 3            
         }
         public ChaClass Class;
 
-        public CharecterClases(string name, params float[] Cha)
+        public CharacterClasses(string name, params float[] Cha)
         {
             Name = name;
         }
@@ -48,11 +48,11 @@ namespace FightCons
                     hero.CharacterClass.Class = ChaClass.NoMan;
                     break;
                 case 1:
-                    hero.CharacterClass.Class = ChaClass.Fither;
+                    hero.CharacterClass.Class = ChaClass.Fighter;
                     break;
 
                 case 2:
-                    hero.CharacterClass.Class = ChaClass.Wisard;
+                    hero.CharacterClass.Class = ChaClass.Wizard;
                     break;
 
                 case 3:
@@ -60,13 +60,13 @@ namespace FightCons
                     break;
             }
 
-            ChainClassAndCharecther(hero);
+            ChainClassAndCharacter(hero);
 
             //  Выдать начальные навыки
             AllHeroSkills.Skills(hero, 1);
         }
 
-        private static void ChainClassAndCharecther(Hero hero)
+        private static void ChainClassAndCharacter(Hero hero)
         {
             switch (hero.CharacterClass.Class)
             {
@@ -74,14 +74,14 @@ namespace FightCons
                     hero.ClassName = "Свобода";                    
                     break;
 
-                case ChaClass.Fither:
+                case ChaClass.Fighter:
                     hero.ClassName = "Мощь";
                     hero.CharacterClass.MaxHp += 5;
                     hero.CharacterClass.Attack += 1;
                     hero.CharacterClass.Defense += 0.01f;
                     break;
 
-                case ChaClass.Wisard:
+                case ChaClass.Wizard:
                     hero.ClassName = "Комбинатор";
                     hero.CharacterClass.Arcane += 1;
                     hero.CharacterClass.MagicDefense += 0.01f;

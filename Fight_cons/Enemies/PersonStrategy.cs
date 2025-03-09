@@ -17,23 +17,23 @@ namespace FightCons
             {
                 switch (person.CharacterProfile.Role)
                 {
-                    case CharecterProfiles.ChaRole.Wild:
+                    case CharacterProfiles.ChaRole.Wild:
                         if (cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
                             MyEnemies.Add(cha.character);
                         break;
 
-                    case CharecterProfiles.ChaRole.Enemy:
-                        if (cha.character.CharacterProfile.Role != CharecterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
+                    case CharacterProfiles.ChaRole.Enemy:
+                        if (cha.character.CharacterProfile.Role != CharacterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
                             MyEnemies.Add(cha.character);
                         break;
 
-                    case CharecterProfiles.ChaRole.Ally:
-                        if (cha.character.CharacterProfile.Role == CharecterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
+                    case CharacterProfiles.ChaRole.Ally:
+                        if (cha.character.CharacterProfile.Role == CharacterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
                             MyEnemies.Add(cha.character);
                         break;
                 }                    
             }
-            if (person.CharacterProfile.Role != CharecterProfiles.ChaRole.Ally)
+            if (person.CharacterProfile.Role != CharacterProfiles.ChaRole.Ally)
                 MyEnemies.Add(hero);
 
             if (MyEnemies.Count() == 0)
@@ -47,7 +47,7 @@ namespace FightCons
             switch (unit.CharacterProfile.Strategy)
             {
                 //  Любая базовая стратегия поведения
-                case CharecterProfiles.Strategeis.Any:
+                case CharacterProfiles.Strategies.Any:
                     if (GameFormulas.Vero(0.5))
                         StrgATC(unit, hero, units);
                     else
@@ -55,22 +55,22 @@ namespace FightCons
                     break;
 
                 //  Атакующй стратегия
-                case CharecterProfiles.Strategeis.Agresive:
+                case CharacterProfiles.Strategies.Aggressive:
                     StrgATC(unit, hero, units);
                     break;
 
                 //  Стратегия волшебника
-                case CharecterProfiles.Strategeis.Mage:
+                case CharacterProfiles.Strategies.Mage:
                     StrgMAG(unit, hero, units);
                     break;
 
                 //  Стратегия некроманта
-                case CharecterProfiles.Strategeis.Necromancer:
+                case CharacterProfiles.Strategies.Necromancer:
                     StrgNECRO(unit, hero, units);
                     break;
 
                 //  Стратегия хилера
-                case CharecterProfiles.Strategeis.BeastMaster:
+                case CharacterProfiles.Strategies.BeastMaster:
                     StrgBeastMaster(unit, hero, units);
                     break;
 

@@ -7,6 +7,7 @@ namespace FightCons
 {
     public delegate void SkillsDele(Hero hero, Character enemy);
     public delegate void SpellDele(Hero hero, Character enemy, short cost, sbyte spellPower);
+    public delegate void SpecialDele(Hero hero, Character enemy);
 
     public abstract class Character : Characteristics
     {
@@ -64,10 +65,10 @@ namespace FightCons
         #endregion
 
         //  Баффы и дебаффы от состояний, перманентных бонусов и классовых бонусов
-        internal CharecterProfiles CharacterProfile = new CharecterProfiles();
+        internal CharacterProfiles CharacterProfile = new CharacterProfiles();
         internal Conditions Condition = new Conditions();
         internal PermanentBonuses PermanentBonus = new PermanentBonuses();
-        internal CharecterClases CharacterClass = new CharecterClases("No class", 0);
+        internal CharacterClasses CharacterClass = new CharacterClasses("No class", 0);
         internal Statistic Statistic = new Statistic();
 
         internal ItemChar CharacterWeapon = new ItemChar(name: "Без оружия", itemType: ItemTyps.Weapon,  attack: 1, speed: 0.2f, cost: 0, crit: 0, block: 0, maxMoves: 2);

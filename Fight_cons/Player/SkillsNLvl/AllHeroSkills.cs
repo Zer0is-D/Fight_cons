@@ -1,4 +1,5 @@
 ﻿using FightCons.CoreNSettings;
+using FightCons.Player.SkillsNLvl;
 using System.Linq;
 
 namespace FightCons
@@ -10,6 +11,7 @@ namespace FightCons
         {
             double finalDam = GameFormulas.CheckDefence(enemy, hero.TotalAttack);
 
+            #region Атаки
             AttackDes Attac = new AttackDes(hero, "Обычная атака")
             {
                 Attack = AttackDes.BaseAttack,
@@ -30,18 +32,20 @@ namespace FightCons
                     Attack = AttackDes.MakeBleedAttack,
                     Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
                 };
-            }
 
-            //  Способность: Парирование
-            if (hero.Statistic.Attacks >= 15)
-            {
-                AttackDes AttacParry = new AttackDes(hero, "Парировать")
-                {
-                    Attack = AttackDes.ParryAttack,
-                    Description = $"Парировать атаку ({hero.TotalSpeed * 100}% МЕТ)"//////////////////////////////////////////////////////////////
-                };
+                //  Способность: Парирование (доработать)
+                //if (hero.Statistic.Attacks >= 15)
+                //{
+                //    AttackDes AttacParry = new AttackDes(hero, "Парировать")
+                //    {
+                //        Attack = AttackDes.ParryAttack,
+                //        Description = $"Парировать атаку ({hero.TotalSpeed * 100}% МЕТ)"//////////////////////////////////////////////////////////////
+                //    };
+                //}
             }
+            #endregion
 
+            #region Заклинания
             SpellDes CleansingRay = new SpellDes(hero, "Очищающий луч")
             {
                 Spell = SpellDes.CleansingRaySpell,
@@ -60,17 +64,26 @@ namespace FightCons
                 };
                 Healing.Description = $"Малое лечение (+30% {Output.HPSymbol} | {Healing.SpellСost} {Output.MPSymbol})";
             }
+            #endregion
 
-            //  Способность: Кровотечение
-            if (hero.Statistic.Attacks >= 10)
+            #region Особенности
+            if (hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active)
             {
-                AttackDes AttacBleed = new AttackDes(hero, "Вызвать кровотечение")
+                SpecialDes SpecialBranch = new SpecialDes(hero, "Навык 'Вскрыть жестянку'")
                 {
-                    Attack = AttackDes.MakeBleedAttack,
-                    Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
+                    Specials = SpecialDes.SpecialBranch,
+                    Description = $"'Вскрывает' броню противника"
                 };
             }
 
+            #endregion
+
+
+            #region Зелья
+
+            #endregion
+
+            //  Не трогать
             ClearDuplicat(hero, enemy);
         }
 

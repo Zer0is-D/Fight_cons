@@ -43,6 +43,7 @@ namespace FightCons
         }
 
         //  Действие: Пробитие брони
+        //TODO Добавить обозначения что атака пробивающая
         public static void BreachArmorAttack(Character attacker, Character victim)
         {           
             //  Пробитие брони

@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using static FightCons.CoreNSettings.CharecterProfiles;
+using static FightCons.CoreNSettings.CharacterProfiles;
 
 namespace FightCons
 {
@@ -67,7 +67,7 @@ namespace FightCons
                         blkMin: sbyte.Parse(currentEnemy.Element("MinBlock").Value), blkMax: sbyte.Parse(currentEnemy.Element("MaxBlock").Value),
                         movMin: sbyte.Parse(currentEnemy.Element("MinMoves").Value), movMax: sbyte.Parse(currentEnemy.Element("MaxMoves").Value),
                         role: (ChaRole) Enum.Parse(typeof(ChaRole), currentEnemy.Element("Role").Value),
-                        strategy: (Strategeis)Enum.Parse(typeof(Strategeis), currentEnemy.Element("Strategies").Value)
+                        strategy: (Strategies)Enum.Parse(typeof(Strategies), currentEnemy.Element("Strategies").Value)
                     )
                     {
                         Id = id
@@ -89,7 +89,7 @@ namespace FightCons
                         moves: sbyte.Parse(currentEnemy.Element("Moves").Value),
                         noRun: bool.Parse(currentEnemy.Element("CantRun").Value),
                         role: (ChaRole) Enum.Parse(typeof(ChaRole), currentEnemy.Element("Role").Value),
-                        strategy: (Strategeis)Enum.Parse(typeof(Strategeis), currentEnemy.Element("Strategies").Value)
+                        strategy: (Strategies)Enum.Parse(typeof(Strategies), currentEnemy.Element("Strategies").Value)
                     )
                     {
                         Id = id
@@ -139,7 +139,7 @@ namespace FightCons
                             blkMin: sbyte.Parse(unit.Element("MinBlock")?.Value), blkMax: sbyte.Parse(unit.Element("MaxBlock")?.Value),
                             movMin: sbyte.Parse(unit.Element("MinMoves")?.Value), movMax: sbyte.Parse(unit.Element("MaxMoves")?.Value),
                             role: (ChaRole)Enum.Parse(typeof(ChaRole), unit.Element("Role")?.Value),
-                            strategy: (Strategeis)Enum.Parse(typeof(Strategeis), unit.Element("Strategies")?.Value)
+                            strategy: (Strategies)Enum.Parse(typeof(Strategies), unit.Element("Strategies")?.Value)
                         )
                         { Id = short.Parse(unit.Element("ID")?.Value) });
                     }
@@ -159,7 +159,7 @@ namespace FightCons
                             moves: sbyte.Parse(unit.Element("Moves").Value),
                             noRun: bool.Parse(unit.Element("CantRun").Value),
                             role: (ChaRole)Enum.Parse(typeof(ChaRole), unit.Element("Role").Value),
-                            strategy: (Strategeis)Enum.Parse(typeof(Strategeis), unit.Element("Strategies").Value)
+                            strategy: (Strategies)Enum.Parse(typeof(Strategies), unit.Element("Strategies").Value)
                         )
                         { Id = short.Parse(unit.Element("ID").Value) });
                     }

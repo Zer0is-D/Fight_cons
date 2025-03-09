@@ -95,7 +95,7 @@ namespace FightCons
             //  Скейл параметров противника
             foreach (var unit in newList)
             {
-                if (unit.character.CharacterProfile.Role == CharecterProfiles.ChaRole.Enemy)
+                if (unit.character.CharacterProfile.Role == CharacterProfiles.ChaRole.Enemy)
                     GameFormulas.DoScale(hero.Lvl, unit.character);
             }
 
@@ -139,7 +139,7 @@ namespace FightCons
             //  Скейл параметров противника
             foreach (var unit in units)
             {
-                if (unit.character.CharacterProfile.Role == CharecterProfiles.ChaRole.Enemy)
+                if (unit.character.CharacterProfile.Role == CharacterProfiles.ChaRole.Enemy)
                     GameFormulas.DoScale(hero.Lvl, unit.character);
             }
 
@@ -218,7 +218,7 @@ namespace FightCons
 
             foreach (var ch in list)
             {
-                if (ch.character.CharacterProfile.Role != CharecterProfiles.ChaRole.Ally & ch.character.CharacterProfile.Role != CharecterProfiles.ChaRole.Hero & ch.character.Condition.IsAlive & !ch.character.Condition.LeavedBattle)
+                if (ch.character.CharacterProfile.Role != CharacterProfiles.ChaRole.Ally & ch.character.CharacterProfile.Role != CharacterProfiles.ChaRole.Hero & ch.character.Condition.IsAlive & !ch.character.Condition.LeavedBattle)
                     return true;
             }
 

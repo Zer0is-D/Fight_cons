@@ -442,7 +442,7 @@ namespace FightCons.World.Locations
                 hero.HPnMPBar(true, true);
 
                 Console.Write("\nВаши действия?\n");
-                if (!hero.CharacterProfile.EnemyAbout)
+                if (!hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active)
                     Output.PayMoneyLine("1) Способность видеть", Output.VisionSkillCost, hero.Money);
                 else
                     Output.WriteColorLine(ConsoleColor.DarkGray, "", "1) Способность видеть (уже изучено)\n");
@@ -454,12 +454,12 @@ namespace FightCons.World.Locations
                 switch (Input.ChoisInput(hero, 1, 4))
                 {
                     case 1:
-                        if (!hero.CharacterProfile.EnemyAbout)
+                        if (!hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active)
                         {
                             if (Output.Spent(hero.Money, Output.VisionSkillCost, "", "Вам нахватает средств"))
                             {
                                 Console.WriteLine("Теперь вы можете видеть врагов");
-                                hero.CharacterProfile.EnemyAbout = true;
+                                hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active = true;
                             }
                         }
                         break;

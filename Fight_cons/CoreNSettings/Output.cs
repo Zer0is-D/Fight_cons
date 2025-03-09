@@ -9,7 +9,7 @@ using static FightCons.Character;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using static FightCons.CoreNSettings.CharecterProfiles;
+using static FightCons.CoreNSettings.CharacterProfiles;
 using System.Xml.Linq;
 using System.Security.Policy;
 
