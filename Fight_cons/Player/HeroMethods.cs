@@ -35,7 +35,7 @@ namespace FightCons
             hero.Name = "Nemo";
             //hero.HPnMPBar();
 
-            Battles.MakeCurrentBattle(hero, 12);
+            Battles.MakeCurrentBattle(hero, 12, 12);
 
             //  КОНЕЦ СЕГМЕНТА
             /////////////////////////////////////////////////////////////////////////////////////

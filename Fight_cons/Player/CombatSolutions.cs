@@ -100,8 +100,11 @@ namespace FightCons
                 }
 
 
-                if (units == null)
+                if (units == null && skillAccess[0])
                     BattleChoice = BattleChoisInput(0, (sbyte)AvailableSkillsList.Count, hero, unit, units);
+                else if (units == null && !skillAccess[0])
+                    BattleChoice = BattleChoisInput(1, (sbyte)AvailableSkillsList.Count, hero, unit, units);
+
                 else if (!skillAccess[0])
                     BattleChoice = BattleChoisInput(1, (sbyte)(AvailableSkillsList.Count + 1), hero, unit, units); // 0 - f
                 else
