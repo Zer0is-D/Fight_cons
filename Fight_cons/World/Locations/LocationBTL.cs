@@ -108,8 +108,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Глубоколесье\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Deepwoods), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                             + "1) Бродить\n"
@@ -156,8 +155,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Восточный лес\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.EastWoods), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                            + "1) Пойти в Гигантополь\n"
@@ -196,8 +194,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Северный лес\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.NorthWoods), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                            + "1) Пойти в Гигантополь\n"
@@ -233,8 +230,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Гигантополь\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Gigantopolis), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                            + "1) Бродить\n"
@@ -280,8 +276,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Рынок\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Market), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 Console.WriteLine("\nВаши действия?\n"
                           + "1) Наблюдать и подслушивать\n"
@@ -330,8 +325,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Рынок\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Market), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 Console.WriteLine("\nВаши действия?\n"
                           + "1) Наблюдать и подслушивать\n"
@@ -368,8 +362,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Главная площадь\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.MainSquare), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                            + "1) Войти в дворец\n"
@@ -399,8 +392,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Дворец\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Palace), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
@@ -426,8 +418,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Канцелярия\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Administration), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
@@ -606,8 +597,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Карьер\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Quarry), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                            + "1) Осмотреться\n"
@@ -640,8 +630,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Дно карьера\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Quarry), Descript), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 Output.TwriteLine("\nВаши действия?\n", 0);
                 Output.TwriteLine(hero.HeroQuests.Que[3] == 2? "1) Выйти из БТЛ" : "1) Искать", 0);

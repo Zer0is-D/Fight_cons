@@ -8,14 +8,14 @@ namespace FightCons
 {
     public class PersonStrategy 
     {
-        private static Charecter WhoToBeat(Charecter person, Hero hero, List<Order> units)
+        private static Character WhoToBeat(Character person, Hero hero, List<Order> units)
         {
             Random rand = new Random();
-            List<Charecter> MyEnemies = new List<Charecter>();
+            List<Character> MyEnemies = new List<Character>();
 
             foreach (var cha in units)
             {
-                switch (person.CharecterProfile.Role)
+                switch (person.CharacterProfile.Role)
                 {
                     case CharecterProfiles.ChaRole.Wild:
                         if (cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
@@ -23,17 +23,17 @@ namespace FightCons
                         break;
 
                     case CharecterProfiles.ChaRole.Enemy:
-                        if (cha.character.CharecterProfile.Role != CharecterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
+                        if (cha.character.CharacterProfile.Role != CharecterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
                             MyEnemies.Add(cha.character);
                         break;
 
                     case CharecterProfiles.ChaRole.Ally:
-                        if (cha.character.CharecterProfile.Role == CharecterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
+                        if (cha.character.CharacterProfile.Role == CharecterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
                             MyEnemies.Add(cha.character);
                         break;
                 }                    
             }
-            if (person.CharecterProfile.Role != CharecterProfiles.ChaRole.Ally)
+            if (person.CharacterProfile.Role != CharecterProfiles.ChaRole.Ally)
                 MyEnemies.Add(hero);
 
             if (MyEnemies.Count() == 0)
@@ -42,9 +42,9 @@ namespace FightCons
             return MyEnemies[rand.Next(0, MyEnemies.Count)];
         }
 
-        public static void UnitAction(Charecter unit, Hero hero, List<Order> units)
+        public static void UnitAction(Character unit, Hero hero, List<Order> units)
         {
-            switch (unit.CharecterProfile.Strategy)
+            switch (unit.CharacterProfile.Strategy)
             {
                 //  Любая базовая стратегия поведения
                 case CharecterProfiles.Strategeis.Any:
@@ -80,12 +80,12 @@ namespace FightCons
             }
         }
 
-        public static void StrgATC(Charecter attacker, Hero hero, List<Order> units)
+        public static void StrgATC(Character attacker, Hero hero, List<Order> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (!attacker.CharecterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
+                if (!attacker.CharacterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
                     break;
 
                 //  Условья
@@ -129,12 +129,12 @@ namespace FightCons
             attacker.Turn = 0;
         }
 
-        public static void StrgMAG(Charecter attacker, Hero hero, List<Order> units)
+        public static void StrgMAG(Character attacker, Hero hero, List<Order> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (!attacker.CharecterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
+                if (!attacker.CharacterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
                     break;
 
                 //UnitSkills.AdSpamSpellAsync(attacker);
@@ -192,12 +192,12 @@ namespace FightCons
             attacker.Turn = 0;
         }
 
-        public static void StrgNECRO(Charecter attacker, Hero hero, List<Order> units)
+        public static void StrgNECRO(Character attacker, Hero hero, List<Order> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (!attacker.CharecterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
+                if (!attacker.CharacterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
                     break;
                 if (WhoToBeat(attacker, hero, units) != null)
                 {
@@ -247,12 +247,12 @@ namespace FightCons
             attacker.Turn = 0;
         }
 
-        public static void StrgBeastMaster(Charecter attacker, Hero hero, List<Order> units)
+        public static void StrgBeastMaster(Character attacker, Hero hero, List<Order> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (!attacker.CharecterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
+                if (!attacker.CharacterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
                     break;
 
                 //  Условья
@@ -291,7 +291,7 @@ namespace FightCons
         /// <summary>
         /// Проверка побега
         /// </summary>
-        public static bool NeedToRun(Charecter person, sbyte min1, short? min2 = null)
+        public static bool NeedToRun(Character person, sbyte min1, short? min2 = null)
         {
             if (min2 == null)
             {
@@ -299,7 +299,7 @@ namespace FightCons
                 {
                     if (GameFormulas.Vero(0.8))
                     {
-                        Output.WriteColorLine(Output.unitNameColor(person.CharecterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
+                        Output.WriteColorLine(Output.unitNameColor(person.CharacterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
                         Console.ReadKey();
                         person.Condition.LeavedBattle = true;
                         return true;
@@ -312,7 +312,7 @@ namespace FightCons
                 {
                     if (GameFormulas.Vero(0.8))
                     {
-                        Output.WriteColorLine(Output.unitNameColor(person.CharecterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
+                        Output.WriteColorLine(Output.unitNameColor(person.CharacterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
                         Console.ReadKey();
                         person.Condition.LeavedBattle = true;
                         return true;

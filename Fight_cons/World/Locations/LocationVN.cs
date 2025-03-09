@@ -39,8 +39,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Разлитый космос\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.SpilledSpace), Descript), 0);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo;
 

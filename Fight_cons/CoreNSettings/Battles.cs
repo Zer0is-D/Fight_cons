@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace FightCons
 {
@@ -96,7 +95,7 @@ namespace FightCons
             //  Скейл параметров противника
             foreach (var unit in newList)
             {
-                if (unit.character.CharecterProfile.Role == CharecterProfiles.ChaRole.Enemy)
+                if (unit.character.CharacterProfile.Role == CharecterProfiles.ChaRole.Enemy)
                     GameFormulas.DoScale(hero.Lvl, unit.character);
             }
 
@@ -119,7 +118,7 @@ namespace FightCons
             sbyte i = 1;
             foreach (var unit in units)
             {
-                if (!unit.character.CharecterProfile.IsPlayer)
+                if (!unit.character.CharacterProfile.IsPlayer)
                 {
                     unit.character.Id = i;
                     i++;
@@ -140,7 +139,7 @@ namespace FightCons
             //  Скейл параметров противника
             foreach (var unit in units)
             {
-                if (unit.character.CharecterProfile.Role == CharecterProfiles.ChaRole.Enemy)
+                if (unit.character.CharacterProfile.Role == CharecterProfiles.ChaRole.Enemy)
                     GameFormulas.DoScale(hero.Lvl, unit.character);
             }
 
@@ -162,7 +161,8 @@ namespace FightCons
 
                 foreach (var unit in UnitTurnList)
                 {
-                    unit.Speed = (rand.Next(0, 100) * 0.01) + unit.character.TotalSpeed;
+                    //  Влияние вероятности на инициативу 50 или 100 
+                    unit.Speed = (rand.Next(0, 50) * 0.01) + unit.character.TotalSpeed;
                     Thread.Sleep(100);
                 }
 
@@ -172,7 +172,7 @@ namespace FightCons
                 sbyte i = 1;
                 foreach (var unit in units)
                 {
-                    if (!unit.character.CharecterProfile.IsPlayer)
+                    if (!unit.character.CharacterProfile.IsPlayer)
                     {
                         unit.character.Id = i;
                         i++;
@@ -182,7 +182,7 @@ namespace FightCons
                 //  Бой
                 foreach (var cha in UnitTurnList)
                 {
-                    if (cha.character.CharecterProfile.IsPlayer)
+                    if (cha.character.CharacterProfile.IsPlayer)
                     {
                         while (hero.Turn < hero.TotalMaxMoves & hero.TotalHP > 0 && StillStanding(UnitTurnList) && !hero.Condition.LeavedBattle)
                             CombatSolutions.CurrentEnemy(hero, units);
@@ -218,7 +218,7 @@ namespace FightCons
 
             foreach (var ch in list)
             {
-                if (ch.character.CharecterProfile.Role != CharecterProfiles.ChaRole.Ally & ch.character.CharecterProfile.Role != CharecterProfiles.ChaRole.Hero & ch.character.Condition.IsAlive & !ch.character.Condition.LeavedBattle)
+                if (ch.character.CharacterProfile.Role != CharecterProfiles.ChaRole.Ally & ch.character.CharacterProfile.Role != CharecterProfiles.ChaRole.Hero & ch.character.Condition.IsAlive & !ch.character.Condition.LeavedBattle)
                     return true;
             }
 
@@ -294,9 +294,10 @@ namespace FightCons
         }
 
         //  Проверка на побег
-        public static void RunFromBattle(Hero hero, Charecter unit)
+        //TODO Можно добавить к вероятности скорость героя
+        public static void RunFromBattle(Hero hero, Character unit, List<Order> units = null)
         {
-            if (!unit.CharecterProfile.TooBrave)
+            if (!unit.CharacterProfile.TooBrave)
             {
                 if (GameFormulas.Vero(0.5))
                 {
@@ -326,7 +327,7 @@ namespace FightCons
             {
                 if (units.Count() == 1)
                 {
-                    Output.WriteColorLine(Output.unitNameColor(unit.character.CharecterProfile.Role), "На вас нападает ", $"{unit.character.Name} ");
+                    Output.WriteColorLine(Output.unitNameColor(unit.character.CharacterProfile.Role), "На вас нападает ", $"{unit.character.Name} ");
                     Output.WriteColorLine(ConsoleColor.DarkRed, "[", $"{unit.character.HP}", $" {Output.HPSymbol}]\n");
                     break;
                 }
@@ -353,12 +354,12 @@ namespace FightCons
     //  Порядок хода
     public class Order
     {
-        public Charecter? character;
+        public Character? character;
 
         public double Speed;
 
         public byte Round;
-        public Order(Charecter cha, double speed = 0)
+        public Order(Character cha, double speed = 0)
         {
             character = cha;
             Speed = speed;

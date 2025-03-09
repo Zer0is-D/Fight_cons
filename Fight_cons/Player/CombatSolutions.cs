@@ -9,23 +9,27 @@ namespace FightCons
 {
     class CombatSolutions
     {
-        //TODO переделать нахуй боевку ибо полная хуйня
+        //TODO Сделать вывод обороны
         //  Боевые решения
         private static sbyte BattleChoice; 
-        private static bool SkipTurn = false;
-        private static bool QuickCommandDone = false; 
+        private static bool SkipTurn;
+        private static bool QuickCommandDone = false;
+
+        private static string[] AvailableSkillsStr = new string[6];
+        private static List<Action<Hero, Character, List<Order>>> AvailableSkillsList = new List<Action<Hero, Character, List<Order>>>();
+        private static List<Action<sbyte, Hero, Character, List<Order>>> AvailableQuickBattleSkillsList = new List<Action<sbyte, Hero, Character, List<Order>>>();
 
         public static void CurrentEnemy(Hero hero, List<Order> units)
         {
             SkipTurn = ConditionCheck(hero);
 
-            if (units.Count == 1)
+            if (units.Count == 1 || SkipTurn)
                 FightChoice(hero, units.FirstOrDefault().character);
             else
             {
                 Console.WriteLine("\nВыберите противника");
 
-                LoadListOfUnits(units, hero.CharecterProfile.EnemyAbout);
+                LoadListOfUnits(units, hero.CharacterProfile.EnemyAbout);
 
                 //  Выбор юнита из списка
                 var ch = Input.ChoisInput(0, (sbyte)units.Count());
@@ -41,9 +45,25 @@ namespace FightCons
         }
 
         //  Боевые решения
-        private static void FightChoice(Hero hero, Charecter unit, List<Order> units = null)
+        private static void FightChoice(Hero hero, Character unit, List<Order> units = null)
         {
             AllHeroSkills.Skills(hero, unit);
+
+            bool[] skillAccess = new bool[]
+            {
+                hero.CharacterProfile.EnemyAbout,   //  Узнать о противнике
+                true,                               //  Нападение
+                true,                               //  Заклинания
+                true,                               //  Выпить зелье
+                true,                               //  Обороняться
+                true,                               //  Убежать
+            };
+
+            AvailableSkillsStr = AvailableSkillsOutput(hero, skillAccess);
+
+            AvailableSkillsList = AvailableSkills(skillAccess);
+            AvailableQuickBattleSkillsList = AvailableQuickBattleSkills(skillAccess);
+
             BattleChoice = 0;
             hero.Condition.AttackParry = false;
 
@@ -54,66 +74,77 @@ namespace FightCons
             {
                 // Выбор боевых действий
                 Console.Write("Ваши действия?\n");
-
-                if (hero.CharecterProfile.EnemyAbout)
-                    Console.Write("0) Узнать о противнике\n");
-
-                Console.Write("1) Нападение\n"
-                            + "2) Заклинания\n"
-                            + "3) Выпить зелье\n"
-                            + $"4) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n");
-                if (units != null)
+                
+                for (short i = 0; i < AvailableSkillsStr.Length; i++)
                 {
-                    Console.Write($"5) Назад\n"
-                    + $"6) Убежать\n");
+                    if (AvailableSkillsStr[i] != "")
+                        Console.Write($"{i}) {AvailableSkillsStr[i]}\n");
                 }
-                else
-                    Console.Write($"5) Убежать\n");
 
+                //  Смена выбранного противника
                 if (units != null)
-                    BattleChoice = BattleChoisInput(0, 6, hero, unit, units);
+                    Console.Write($"6) Назад\n");
+
+                if (units == null)
+                    BattleChoice = BattleChoisInput(0, 5, hero, unit, units);                
                 else
-                    BattleChoice = BattleChoisInput(0, 5, hero, unit, units);
+                    BattleChoice = BattleChoisInput(0, 6, hero, unit, units);
 
                 if (!QuickCommandDone)
                 {
-                    switch (BattleChoice)
-                    {
-                        case 0:
-                            if (hero.CharecterProfile.EnemyAbout)
-                                InformationAboutUnit(hero, unit);
-                            else
-                                FightChoice(hero, unit, units);
-                            break;
+                    //  Вызов соответствующей категории способностей (1-5)
+                    if (skillAccess[0] && BattleChoice <= AvailableSkillsList.Count)
+                        AvailableSkillsList[BattleChoice](hero, unit, units);
 
-                        case 1:
-                            AttackList(hero, unit, units);
-                            break;
+                    else if (BattleChoice <= AvailableSkillsList.Count && BattleChoice > 0)
+                        AvailableSkillsList[BattleChoice - 1](hero, unit, units);
+                }                    
 
-                        case 2:
-                            SpellList(hero, unit, units);
-                            break;
+                //  Выбрать другого противника
+                if (BattleChoice == 6)
+                    CurrentEnemy(hero, units);
 
-                        case 3:
-                            PotionList(hero, unit, units);
-                            break;
+                /*  Старый функ
+                if (!QuickCommandDone)
+                {
+                    
+                     * switch (BattleChoice)
+                    //{
+                    //    /*  Пока не трогаем!!!
+                    //    //case 0:
+                    //    //    if (hero.CharacterProfile.EnemyAbout)
+                    //    //        InformationAboutUnit(hero, unit, units);
+                    //    //    else
+                    //    //        FightChoice(hero, unit, units);
+                    //    //    break;
+                    //    //case 1:
+                    //    //    AttackList(hero, unit, units);
+                    //    //    break;
 
-                        case 4:
-                            hero.Condition.SheeldUp = true;
-                            hero.Turn = hero.TotalMaxMoves;
-                            break;
+                    //    //case 2:
+                    //    //    SpellList(hero, unit, units);
+                    //    //    break;
 
-                        case 5:
-                            if (units != null)
-                                CurrentEnemy(hero, units);
-                            else
-                                Battles.RunFromBattle(hero, unit);
-                            break;
-                        case 6:
-                            Battles.RunFromBattle(hero, unit);
-                            break;
-                    }
-                }
+                    //    //case 3:
+                    //    //    PotionList(hero, unit, units);
+                    //    //    break;
+
+                    //    //case 4:
+                    //    //    Protection(hero, unit, units);
+                    //          break;
+
+                    //      case 5:
+                    //        Battles.RunFromBattle(hero, unit);
+                    //        break;
+
+
+                    //    case 6:
+                            
+                    //        //else
+                    //        //    Battles.RunFromBattle(hero, unit);
+                    //        break;
+                    //}
+                }*/
             }            
 
             //  Метод учета ходов и обнуление состояний
@@ -123,7 +154,9 @@ namespace FightCons
             NegativeEffectImpact(hero, unit);
         }
 
-        private static bool QuickBattleInput(Hero hero, Charecter unit, List<Order> units = null)
+        //TODO Добавить описания отмены использования зелий
+        /*  Старый метод. Временно оставить на несколько версий вперед
+        private static bool QuickBattleInput(Hero hero, Character unit, List<Order> units = null)
         {
             if (BattleChoice > 10)
             {
@@ -173,34 +206,101 @@ namespace FightCons
 
             return false;
         }
+        */
+        private static bool QuickBattleInput(Hero hero, Character unit, List<Order> units = null)
+        {
+            sbyte firstD = BattleChoice;
+            sbyte secondD = (sbyte)(BattleChoice % 10);
+
+            while (firstD >= 10)
+                firstD = (BattleChoice /= 10);
+
+            if (firstD <= AvailableQuickBattleSkillsList.Count)
+            {
+                AvailableQuickBattleSkillsList[firstD - 1](secondD, hero, unit, units);
+                QuickCommandDone = true;
+
+                return true;
+            }
+
+            Console.WriteLine("ОШИБКА! Быстрый набор команды отключен");
+            return false;
+        }
 
         #region Отображение боевоей информации
-        private static void ShowBattleInfo(Hero hero, Charecter unit, List<Order> units = null)
+        private static void ShowBattleInfo(Hero hero, Character unit, List<Order> units = null)
         {
             //  Отрисовка hp противника
-            Output.WriteColorName("\n", unit, ":");
-            if (unit.CharecterProfile.Phase >= 2)
-                unit.PhaseHPBar();
-            else
-                unit.HPBar();
+            unit.DifferentHpBar();
 
+            //TODO раскоментировать когда мп будет тратиться
             //  Отрисовка mp противника
-            //if (hero.CharecterProfile.EnemyAbout)
+            //if (hero.CharacterProfile.EnemyAbout)
             //    unit.MPBar();
-            //Console.WriteLine();
+
+            Console.WriteLine();
 
             if (units != null)
-                Turns();
+                TurnsOrderOutput();
+
+            //  Эксперементальная мера
+            //Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "| ############################################################################ |", "");
 
             //  Отрисовка негативных эффектов, hp и mp игрока 
             NegativeEffectView(hero, unit);
-            hero.HPBar();
-            hero.MPBar();
+
+            hero.HPnMPBar(true, true);
         }
 
-        //  Атаки
-        private static void AttackList(Hero hero, Charecter unit, List<Order> units = null)
+        //  Узнать о противнике
+        private static void InformationAboutUnit(Character hero, Character unit, List<Order> units = null)
         {
+            Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "##################################    Инфо    ##################################", "\n");
+            Output.WriteColorLine(ConsoleColor.DarkMagenta, "Имя: ", $"{unit.Name}", "\n");
+
+            unit.HPnMPBar(true, true);
+
+            /*  Старый сегмент
+            //if (unit.CharacterProfile.Phase >= 2)
+            //    unit.PhaseHPBar();
+            //else
+            //    unit.HPBar();
+            //unit.MPBar();
+            */
+
+            /*  Временно скрытый сегмент
+            //Console.WriteLine();
+
+            //ItemChar.Comparison(unit.TotalAttack, hero.TotalAttack, $"{Output.AttackStr}: ");
+            //ItemChar.Comparison(unit.TotalArcane, hero.TotalArcane, $"{Output.ArcaneStr}: ");
+
+            //ItemChar.Comparison(unit.TotalDefence, hero.TotalDefence, $"{Output.DefenceStr}: ", true);
+            //ItemChar.Comparison(unit.TotalMagicDefence, hero.TotalMagicDefence, $"{Output.MagicDefenceStr}: ", true);
+
+            //ItemChar.Comparison(unit.TotalMaxMoves, hero.TotalSpeed, $"{Output.SpeedStr}: ", true);
+            //ItemChar.Comparison(unit.TotalMaxMoves, hero.TotalCrit, $"{Output.CritStr}: ", true);
+
+            //ItemChar.Comparison(unit.TotalAttack, hero.TotalBlock, $"{Output.BlockStr}: ", true);
+            */
+
+            Console.WriteLine($"{Output.AttackStr}: {unit.TotalAttack}\t\t{Output.ArcaneStr}: {unit.TotalArcane}\n"
+                           + $"{Output.DefenceStr}: {unit.TotalDefence * 100}%\t\t{Output.MagicDefenceStr}: {unit.TotalMagicDefence * 100}%\n"
+                           + $"{Output.SpeedStr}: {unit.TotalSpeed * 100}%\t{Output.CritStr}: {unit.TotalCrit * 100}%\n"
+                           + $"{Output.BlockStr}: {unit.TotalBlock * 100}%\n");
+
+            Output.WriteColorLine(ConsoleColor.Cyan, "Экипировано оружие:\n", $"{unit.CharacterWeapon.Name} ", $"| {ItemChar.ItemStats(unit.CharacterWeapon, false)}");
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкипирована броня:\n", $"{unit.CharacterArmor.Name} ", $"| {ItemChar.ItemStats(unit.CharacterArmor, false)}\n");
+
+            Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "################################################################################", "\n");
+
+            Console.ReadKey();
+        }
+
+        /*  Атаки (старая версия)
+        private static void AttackList(Hero hero, Character unit, List<Order> units = null)
+        {
+
+
             Console.Write("Ваши действия?\n"
                       + $"X) Нападение\n");
 
@@ -221,23 +321,59 @@ namespace FightCons
             else
                 FightChoice(hero, unit, units);
         }
+        */
 
-        //  Заклинания
-        private static void SpellList(Hero hero, Charecter unit, List<Order> units = null)
+        //  Атаки
+        private static void AttackList(Hero hero, Character unit, List<Order> units = null)
         {
-            Console.Write("Ваши действия?\n"
-                       + $"X) Нападение\n"
-                       + $"X) Заклинания\n");
-
-            Console.Write($"  0) Назад\n");
-            foreach (var sp in hero.SpellList)
+            Console.Write("Ваши действия?\n");
+            for (short i = 0; i < AvailableSkillsStr.Length; i++)
             {
-                Console.WriteLine($"  {sp.ID}) {sp.Description}");
+                if (i == 2)
+                {
+                    Console.Write($"  0) Назад\n");
+                    foreach (var sk in hero.AttackList)
+                    {
+                        Console.WriteLine($"  {sk.ID}) {sk.Description}");
+                    }
+                }
+                if (AvailableSkillsStr[i] != "")
+                    Console.Write($"X) {AvailableSkillsStr[i]}\n");
             }
 
-            Console.Write($"X) Выпить зелье\n"
-                      + $"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
-                      + $"X) Убежать\n");
+            BattleChoice = Input.ChoisInput(0, (sbyte)(hero.AttackList.Count));
+            if (BattleChoice != 0)
+                hero.AttackList[BattleChoice - 1].Attack(hero, unit);
+            else
+                FightChoice(hero, unit, units);
+        }
+
+        //  Быстрый набор Атаки
+        private static void QuickBattleAttackInput(sbyte id, Hero hero, Character unit, List<Order> units = null)
+        {
+            if (id != 0 && id <= hero.AttackList.Count)
+                hero.AttackList[id - 1].Attack(hero, unit);
+            else
+                FightChoice(hero, unit, units);
+        }
+
+        //  Заклинания
+        private static void SpellList(Hero hero, Character unit, List<Order> units = null)
+        {
+            Console.Write("Ваши действия?\n");
+            for (short i = 0; i < AvailableSkillsStr.Length; i++)
+            {
+                if (i == 3)
+                {
+                    Console.Write($"  0) Назад\n");
+                    foreach (var sp in hero.SpellList)
+                    {
+                        Console.WriteLine($"  {sp.ID}) {sp.Description}");
+                    }
+                }
+                if (AvailableSkillsStr[i] != "")
+                    Console.Write($"X) {AvailableSkillsStr[i]}\n");
+            }
 
             BattleChoice = Input.ChoisInput(0, (sbyte)(hero.SpellList.Count));
             if (BattleChoice != 0)
@@ -257,86 +393,86 @@ namespace FightCons
                 FightChoice(hero, unit, units);
         }
 
-        //  Зелья
-        private static void PotionList(Hero hero, Charecter unit, List<Order> units = null)
+        //  Быстрый набор Заклинания
+        private static void QuickBattleSpellInput(sbyte id, Hero hero, Character unit, List<Order> units = null)
         {
-            Console.Write("Ваши действия?\n"
-                                  + $"X) Нападение\n"
-                                  + $"X) Заклинания\n"
-                                  + $"X) Выпить зелье\n");
-
-            Console.Write($"  0) Назад\n", 1);
-
-            foreach (var p in hero.PotionList)
+            if (id != 0 && id <= hero.SpellList.Count)
             {
-                if (p.Count > 0)
-                    Console.WriteLine($"  {p.ID}) {p.Description} {p.CountPotion}");
+                if (GameFormulas.CheckMana(hero, hero.SpellList[id - 1].SpellСost))
+                {
+                    var heroSpell = hero.SpellList[id - 1];
+                    heroSpell.Spell(hero, (Unit)unit, heroSpell.SpellСost, heroSpell.SpellPower);
+                }
                 else
-                    Output.WriteColorLine(ConsoleColor.DarkGray, "  ", $"{p.ID}) {p.Description} {p.CountPotion}\n");
+                {
+                    Output.TwriteLine("\nНедостаточно маны!\n", 1);
+                    FightChoice(hero, unit, units);
+                }
+            }                
+            else
+                FightChoice(hero, unit, units);
+        }
+
+        //  Зелья
+        private static void PotionList(Hero hero, Character unit, List<Order> units = null)
+        {
+            Console.Write("Ваши действия?\n");
+            for (short i = 0; i < AvailableSkillsStr.Length; i++)
+            {
+                if (i == 4)
+                {
+                    Console.Write($"  0) Назад\n");
+                    foreach (var p in hero.PotionList)
+                    {
+                        if (p.Count > 0)
+                            Console.WriteLine($"  {p.ID}) {p.Description} {p.CountPotion}");
+                        else
+                            Output.WriteColorLine(ConsoleColor.DarkGray, "  ", $"{p.ID}) {p.Description} {p.CountPotion}\n");
+                    }
+                }
+                if (AvailableSkillsStr[i] != "")
+                    Console.Write($"X) {AvailableSkillsStr[i]}\n");
             }
 
-            string quo = $"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
-                      + $"X) Убежать\n";
-            //Console.Write($"X) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
-            //          + $"X) Убежать\n");
-
-            BattleChoice = Input.ChoisInput(hero, 0, (sbyte)(hero.PotionList.Count), quo);
+            BattleChoice = Input.ChoisInput(hero, 0, (sbyte)(hero.PotionList.Count));
             if (BattleChoice != 0 && hero.PotionList[BattleChoice - 1].Count > 0)
                 hero.PotionList[BattleChoice - 1].Drink(hero);
             else
                 FightChoice(hero, unit, units);
         }
+
+        //  Быстрый набор Зелья
+        private static void QuickBattlePotionInput(sbyte id, Hero hero, Character unit, List<Order> units = null)
+        {
+            if (id != 0 && id <= hero.PotionList.Count && hero.PotionList[id - 1].Count > 0)
+                hero.PotionList[id - 1].Drink(hero);
+            else
+                FightChoice(hero, unit, units);
+        }
+
+        //  Обороняться
+        private static void Protection(Hero hero, Character unit, List<Order> units = null)
+        {
+            Output.NameAndId(hero, true);
+            Output.WriteColorLine(ConsoleColor.White, "держит ", "оборону", "\n");
+
+            hero.Condition.SheeldUp = true;
+            hero.Turn = hero.TotalMaxMoves;
+        }
         #endregion
 
         #region Отображение и методы
-        //  Узнать о противнике
-        private static void InformationAboutUnit(Charecter hero, Charecter unit)
-        {
-            Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "##################################    Инфо    ##################################", "\n");
-            Output.WriteColorLine(ConsoleColor.DarkMagenta, "Имя: ", $"{unit.Name}", "\n");
 
-            if (unit.CharecterProfile.Phase >= 2)
-                unit.PhaseHPBar();
-            else
-                unit.HPBar();
-            unit.MPBar();
-
-            //Console.WriteLine();
-
-            //ItemChar.Comparison(unit.TotalAttack, hero.TotalAttack, $"{Output.AttackStr}: ");
-            //ItemChar.Comparison(unit.TotalArcane, hero.TotalArcane, $"{Output.ArcaneStr}: ");
-
-            //ItemChar.Comparison(unit.TotalDefence, hero.TotalDefence, $"{Output.DefenceStr}: ", true);
-            //ItemChar.Comparison(unit.TotalMagicDefence, hero.TotalMagicDefence, $"{Output.MagicDefenceStr}: ", true);
-
-            //ItemChar.Comparison(unit.TotalMaxMoves, hero.TotalSpeed, $"{Output.SpeedStr}: ", true);
-            //ItemChar.Comparison(unit.TotalMaxMoves, hero.TotalCrit, $"{Output.CritStr}: ", true);
-
-            //ItemChar.Comparison(unit.TotalAttack, hero.TotalBlock, $"{Output.BlockStr}: ", true);
-
-            Console.WriteLine($"{Output.AttackStr}: {unit.TotalAttack}\t\t{Output.ArcaneStr}: {unit.TotalArcane}\n"
-                           + $"{Output.DefenceStr}: {unit.TotalDefence * 100}%\t\t{Output.MagicDefenceStr}: {unit.TotalMagicDefence * 100}%\n"
-                           + $"{Output.SpeedStr}: {unit.TotalSpeed * 100}%\t{Output.CritStr}: {unit.TotalCrit * 100}%\n"
-                           + $"{Output.BlockStr}: {unit.TotalBlock * 100}%\n");
-
-            Output.WriteColorLine(ConsoleColor.Cyan, "Экипировано оружие:\n", $"{unit.CharecterWeapon.Name} ", $"| {ItemChar.ItemStats(unit.CharecterWeapon, false)}");
-            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкипирована броня:\n", $"{unit.CharecterArmor.Name} ", $"| {ItemChar.ItemStats(unit.CharecterArmor, false)}\n");
-
-            Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "################################################################################", "\n");
-
-            Console.ReadKey();
-        }
-
-        private static void Turns()
+        private static void TurnsOrderOutput()
         {
             Console.Write("\n\t\t\t[");
             foreach (var t in Battles.UnitTurnList)
             {
-                if (t.character.CharecterProfile.IsPlayer)
-                    Output.WriteColorLine(Output.unitNameColor(t.character.CharecterProfile.Role), "", "Вы ", $"{string.Format("{0:0.00}", t.Speed)}");
-                if (t.character.Condition.IsAlive & !t.character.CharecterProfile.IsPlayer)
+                if (t.character.CharacterProfile.IsPlayer)
+                    Output.WriteColorLine(Output.unitNameColor(t.character.CharacterProfile.Role), "", "Вы ", $"{string.Format("{0:0.00}", t.Speed)}");
+                if (t.character.Condition.IsAlive & !t.character.CharacterProfile.IsPlayer)
                 {
-                    Output.WriteColorLine(Output.unitNameColor(t.character.CharecterProfile.Role), "", "# ", $"{string.Format("{0:0.00}", t.Speed)}");                    
+                    Output.WriteColorLine(Output.unitNameColor(t.character.CharacterProfile.Role), "", "# ", $"{string.Format("{0:0.00}", t.Speed)}");                    
                 }
                 if (Battles.UnitTurnList.Min(x => x.Speed) != t.Speed & t.character.Condition.IsAlive)
                     Console.Write(" | ");
@@ -345,8 +481,8 @@ namespace FightCons
             Console.Write("]\n");
         }
 
-        //  Учет ходов////////////////////////////////
-        private static void MovesTracker(Charecter hero, Charecter unit)
+        //  Учет ходов
+        private static void MovesTracker(Character hero, Character unit)
         {
             hero.Turn++;
             hero.Condition.SheeldUp = false;            
@@ -354,6 +490,7 @@ namespace FightCons
         }
 
         //  Загрузка списка врагов для выбора
+        //  Пока не меняем
         private static void LoadListOfUnits(List<Order> enemies, bool loadMP)
         {
             foreach (var enemy in enemies)
@@ -362,17 +499,18 @@ namespace FightCons
                     Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{enemy.character.Id}. {enemy.character.Name} [0/{enemy.character.TotalMaxHP}]\t");
                 else
                 {
-                    Output.WriteColorLine(Output.unitNameColor(enemy.character.CharecterProfile.Role), $"{enemy.character.Id}. ", $"{enemy.character.Name}", "\t");
+                    Output.WriteColorLine(Output.unitNameColor(enemy.character.CharacterProfile.Role), $"{enemy.character.Id}. ", $"{enemy.character.Name}", "\t");
 
-                    if (enemy.character.CharecterProfile.Phase >= 2)
+                    //enemy.character.HPnMPBar(true);
+
+                    if (enemy.character.CharacterProfile.Phase >= 2)
                         enemy.character.PhaseHPBar();
                     else
                     {
                         if (loadMP)
                             Console.WriteLine();
                         enemy.character.HPBar(true);
-                    }
-                        
+                    }                        
 
                     if (loadMP)
                         enemy.character.MPBar();
@@ -381,13 +519,14 @@ namespace FightCons
             }
         }
 
-        public static sbyte BattleChoisInput(sbyte b1, sbyte b2, Hero hero, Charecter unit, List<Order> units = null)
+        public static sbyte BattleChoisInput(sbyte b1, sbyte b2, Hero hero, Character unit, List<Order> units = null)
         {
             do
             {
                 BattleChoice = Input.SbyteInput();
-                if (QuickBattleInput(hero, unit, units))
-                    break;
+                if (BattleChoice < 100 && BattleChoice > 10)
+                    if (QuickBattleInput(hero, unit, units))
+                        break;
 
             }
             while (!(BattleChoice > b1 - 1 && BattleChoice < b2 + 1));
@@ -396,8 +535,9 @@ namespace FightCons
         #endregion
 
         #region Негативыне эффекты
+        //TODO Сделать отдельный список со всем негативными эффектами для удобного использования
         //  Отображение негативыне эффекты
-        private static void NegativeEffectView(Charecter hero, Charecter enemy)
+        private static void NegativeEffectView(Character hero, Character enemy)
         {
             if (hero.Condition.SlowRound > 0 || hero.Condition.PoisentRound > 0 || hero.Condition.FrezRound > 0)
             {
@@ -419,8 +559,9 @@ namespace FightCons
                 Console.WriteLine();
         }
 
+        //TODO Сделать отдельный список со всем негативными эффектами для удобного использования
         //  Вычитание негативыне эффекты
-        private static void NegativeEffectImpact(Hero hero, Charecter enemy)
+        private static void NegativeEffectImpact(Hero hero, Character enemy)
         {
             if (hero.Condition.SlowRound > 0 || hero.Condition.PoisentRound > 0)
             {
@@ -437,30 +578,132 @@ namespace FightCons
             }
         }
 
-        private static void FreezMenu(Hero hero)
-        {
-            Output.WriteColorLine(ConsoleColor.DarkBlue, "",
-                $"Ваши действия?\n"
-                + "1) Нападение\n"
-                + "2) Заклинания\n"
-                + "3) Выпить зелье\n"
-                + $"4) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
-                + $"5) Убежать\n");
-
-            hero.Condition.FrezRound--;
-            Thread.Sleep(400);
-        }
-
+        //  Визуализация заморозки проверка ее наличия
         private static bool ConditionCheck(Hero hero)
         {
             //  Проверка на Замарозку
             if (hero.Condition.FrezRound > 0)
             {
-                FreezMenu(hero);
+                //  На случай если список пуст
+                if (AvailableSkillsList == null)
+                {
+                    Output.WriteColorLine(ConsoleColor.DarkBlue, "",
+                        $"Ваши действия?\n"
+                        + "1) Нападение\n"
+                        + "2) Заклинания\n"
+                        + "3) Выпить зелье\n"
+                        + $"4) Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})\n"
+                        + $"5) Убежать\n");
+                }
+                else
+                {
+                    Output.WriteColorLine(ConsoleColor.DarkBlue, "\n", $"Ваши действия?\n");
+                    for (short i = 0; i < AvailableSkillsStr.Length; i++)
+                    {
+                        if (AvailableSkillsStr[i] != "")
+                            Output.WriteColorLine(ConsoleColor.DarkBlue, "", $"{i}) {AvailableSkillsStr[i]}\n");
+                    }
+                }
+
+                hero.Condition.FrezRound--;
+                Thread.Sleep(400);
+
+                Console.ReadKey();
                 return true;
             }
             return false;   
         }
+        #endregion
+
+        #region Настройки 
+        //  Добавление способностей в список доступных способностей 
+        private static List<Action<Hero, Character, List<Order>>> AvailableSkills(bool[] skillAccess)
+        {
+            List<Action<Hero, Character, List<Order>>> mas = new List<Action<Hero, Character, List<Order>>>();      
+
+            //  Узнать о противнике
+            if (skillAccess[0])
+                mas.Add(InformationAboutUnit);
+
+            //  Нападение
+            if (skillAccess[1])
+                mas.Add(AttackList);
+
+            //  Заклинания
+            if (skillAccess[2])
+                mas.Add(SpellList);
+
+            //  Выпить зелье
+            if (skillAccess[3])
+                mas.Add(PotionList);
+
+            //  Обороняться
+            if (skillAccess[4])
+                mas.Add(Protection);
+
+            //  Убежать
+            if (skillAccess[5])
+                mas.Add(Battles.RunFromBattle);
+            
+            return mas;
+        }
+
+        //  Добавление способностей быстрого набора в список доступных способностей быстрого нобора
+        private static List<Action<sbyte, Hero, Character, List<Order>>> AvailableQuickBattleSkills(bool[] skillAccess)
+        {
+            List<Action<sbyte, Hero, Character, List<Order>>> mas = new List<Action<sbyte, Hero, Character, List<Order>>>();
+
+            //  Узнать о противнике
+            //if (skillAccess[0])
+            //    mas.Add(InformationAboutUnit);
+
+            //  Нападение
+            if (skillAccess[1])
+                mas.Add(QuickBattleAttackInput);
+
+            //  Заклинания
+            if (skillAccess[2])
+                mas.Add(QuickBattleSpellInput);
+
+            //  Выпить зелье
+            if (skillAccess[3])
+                mas.Add(QuickBattlePotionInput);
+
+            ////  Обороняться
+            //if (skillAccess[4])
+            //    mas.Add(Protection);
+
+            ////  Убежать
+            //if (skillAccess[5])
+            //    mas.Add(Battles.RunFromBattle);
+
+            return mas;
+        }
+
+        //  Добавление вывода доступных способностей
+        private static string[] AvailableSkillsOutput(Hero hero, bool[] skillAccess)
+        {
+            string[] mas = new string[6];
+
+            mas[0] = skillAccess[0] == true ? "Узнать о противнике" : "";
+
+            mas[1] = skillAccess[1] == true ? "Нападение" : "";
+
+            mas[2] = skillAccess[2] == true ? "Заклинания" : "";
+
+            mas[3] = skillAccess[3] == true ? "Выпить зелье" : "";
+
+            mas[4] = skillAccess[4] == true ? $"Обороняться ({hero.TotalBlock * 100}% {Output.BlockStr})" : "";
+
+            mas[5] = skillAccess[5] == true ? "Убежать" : "";
+
+            //  Временно оставить
+            //for (int i = 0; i < mas.Length; i++)
+            //    AvailableSkillsStr[i] += mas[i];
+
+            return mas;
+        }
+
         #endregion
     }
 }

@@ -94,30 +94,30 @@ namespace FightCons.CoreNSettings
         }
 
         //  Физическая защита
-        private protected float _defence;
-        public float Defence
+        private protected float _defense;
+        public float Defense
         {
-            get => _defence;
+            get => _defense;
             set
             {
                 if (value <= 0)
-                    _defence = 0;
+                    _defense = 0;
                 if (value <= 1)
-                    _defence = value;
+                    _defense = value;
             }
         }
 
         //  Магическая защита
-        private protected float _magicDefence;
-        public float MagicDefence
+        private protected float _magicDefense;
+        public float MagicDefense
         {
-            get => _magicDefence;
+            get => _magicDefense;
             set
             {
                 if (value <= 0)
-                    _magicDefence = 0;
+                    _magicDefense = 0;
                 if (value <= 1)
-                    _magicDefence = value;
+                    _magicDefense = value;
             }
         }
 
@@ -140,42 +140,13 @@ namespace FightCons.CoreNSettings
 
         public void GetItemParamFields(Characteristics cha)
         {
-            //Output output = new Output();
-
-            //List<object> fields = new List<object>();
-            //List<string> fields2 = new List<string>();
-
-            //var s = cha.GetType().GetProperties();
-            //foreach (var a in s)
-            //    fields.Add(a.GetValue(cha));
-
-            //var sS = output.GetType().GetProperties();
-            //foreach (var a in sS)
-            //    //if (a.GetType().Name.Contains("Str"))
-            //        fields2.Add(a.Name);
-
-            //for (int i = 0; i < fields.Count();)
-            //{
-            //    ItemList.Add(new Info(fields[i], fields2[i]));
-            //    i++;
-            //}
-
-            //  Рабочие варианты
-            ////Попробовать доделать В1
-            //foreach (var property in s)
-            //{
-            //    if (property.GetType().IsPublic)
-            //        ItemList.Add(new Info(property.GetValue(cha), Output.AttackStr));
-            //}
-
-
             //  В2
             var list = new List<Info>
             {
                 new Info(cha.Attack, Output.AttackStr),
                 new Info(cha.Arcane, Output.ArcaneStr),
-                new Info(cha.Defence, Output.DefenceStr),
-                new Info(cha.MagicDefence, Output.MagicDefenceStr),
+                new Info(cha.Defense, Output.DefenceStr),
+                new Info(cha.MagicDefense, Output.MagicDefenceStr),
                 new Info(cha.MaxHp, Output.MaxHpStr),
                 new Info(cha.MaxMp, Output.MaxMpStr),
                 new Info(cha.Speed, Output.SpeedStr),

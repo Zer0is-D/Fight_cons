@@ -361,7 +361,7 @@ namespace FightCons
                         ItemChar Q_Leva_swored = new ItemChar(name: "Меч 'Бегемота Левы'", itemType: ItemTyps.Weapon, cost: 300, attack: 11, speed: 0.2f, crit: 0.2f, block: 0.2f, maxMoves: 1);
 
                         Output.WriteColorLine(ConsoleColor.White, $"\n", $"{Q_Leva_swored.Name} ", "| ");
-                        ItemStats(hero.CharecterWeapon, Q_Leva_swored);
+                        ItemStats(hero.CharacterWeapon, Q_Leva_swored);
 
                         Output.TwriteLine("\nВаши действия?\n"
                                       + "1) Взять меч\n"
@@ -370,7 +370,7 @@ namespace FightCons
                         switch (Input.ChoisInput(hero, 1, 2))
                         {
                             case 1:
-                                hero.CharecterWeapon = Q_Leva_swored;
+                                hero.CharacterWeapon = Q_Leva_swored;
                                 Sound.VoiceLeva("Будь аккуратен с ним!\n", 1);
                                 break;
                             case 2:

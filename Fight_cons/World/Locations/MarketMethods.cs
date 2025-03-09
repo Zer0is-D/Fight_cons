@@ -73,9 +73,9 @@ namespace FightCons
                 Output.WriteColorLine(ConsoleColor.White, $"\n{item.Id + 1}) ", $"{item.Name}\n");
 
                 if (itemChars[0].ItemType == ItemTyps.Weapon)
-                    ItemStats(hero.CharecterWeapon, item);
+                    ItemStats(hero.CharacterWeapon, item);
                 else
-                    ItemStats(hero.CharecterArmor, item);
+                    ItemStats(hero.CharacterArmor, item);
 
                 Output.WriteColorLine(ConsoleColor.Yellow, $"\nЦена: ", $"{item.Cost}{Output.MoneySymbol}\n");
             }
@@ -114,10 +114,10 @@ namespace FightCons
                         switch (itemChars[chois - 2].ItemType)
                         {
                             case ItemTyps.Weapon:
-                                hero.CharecterWeapon = WeaponList[chois - 2];
+                                hero.CharacterWeapon = WeaponList[chois - 2];
                                 break;
                             case ItemTyps.Armor:
-                                hero.CharecterArmor = ArmorList[chois - 2];
+                                hero.CharacterArmor = ArmorList[chois - 2];
                                 break;
                         }
 

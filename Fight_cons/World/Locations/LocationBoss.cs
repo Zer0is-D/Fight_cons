@@ -34,8 +34,7 @@ namespace FightCons.World.Locations
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Хоромы\n");
                 Output.TwriteLine(Descriptions(((byte)LocationName.Endroom), Descript), 0);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                             + "1) Бродить\n"

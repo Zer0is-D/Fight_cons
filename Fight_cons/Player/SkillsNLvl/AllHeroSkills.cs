@@ -6,7 +6,7 @@ namespace FightCons
     class AllHeroSkills
     {
         //  Фиксированные навыки
-        public static void Skills(Hero hero, Charecter enemy)
+        public static void Skills(Hero hero, Character enemy)
         {
             double finalDam = GameFormulas.CheckDefence(enemy, hero.TotalAttack);
 
@@ -75,7 +75,7 @@ namespace FightCons
         }
 
         //  Чистка от дубликатов
-        public static void ClearDuplicat(Hero hero, Charecter enemy)
+        public static void ClearDuplicat(Hero hero, Character enemy)
         {
             //  Чистка заклинаний
             //  По схожему описанию

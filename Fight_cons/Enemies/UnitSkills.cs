@@ -12,13 +12,13 @@ namespace FightCons
 
         #region Магия
         //  Magic_slow!!!
-        public static void SlowerSpell(Charecter attacker, Charecter victim)
+        public static void SlowerSpell(Character attacker, Character victim)
         {
             sbyte spellPower = 5;
 
             short damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
             victim.Condition.Moves++;
-            victim.Condition.SlowRound = 3;
+            victim.Condition.SlowRound += 3;
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.Blue, "", $"замедляет ");
@@ -33,7 +33,7 @@ namespace FightCons
         }
 
         //  Ускорение
-        public static void FasterSpell(Charecter person)
+        public static void FasterSpell(Character person)
         {
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkYellow, "", $"Ускоряет ", "себя!\n");
@@ -42,12 +42,12 @@ namespace FightCons
         }
 
         //  Заморозка
-        public static void FrezSpell(Charecter attacker, Charecter victim)
+        public static void FrezSpell(Character attacker, Character victim)
         {
             sbyte spellPower = 5;
 
             short damag = GameFormulas.MagicDamage(attacker, victim, spellPower);
-            victim.Condition.FrezRound = 2;
+            victim.Condition.FrezRound += 2;
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", $"Замораживает ");
@@ -62,9 +62,9 @@ namespace FightCons
         }
 
         //  Магический щит
-        public static void MagicSheeldSpell(Charecter person)
+        public static void MagicSheeldSpell(Character person)
         {
-            person.Condition.MagicDefence = 2.0f;
+            person.Condition.MagicDefense = 2.0f;
 
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", "Щит \n");
@@ -72,7 +72,7 @@ namespace FightCons
             person.Turn += 2;
         }
 
-        public static void RevievSpell(Charecter reviever, Charecter riser)
+        public static void RevievSpell(Character reviever, Character riser)
         {
             Output.NameAndId(reviever, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", "воскрешает ");
@@ -81,13 +81,13 @@ namespace FightCons
 
             riser.HP = GameFormulas.GetCurrentPercent(riser.MaxHp, 10);
             riser.Condition.IsAlive = true;
-            riser.CharecterProfile.TooBrave = false;
+            riser.CharacterProfile.TooBrave = false;
 
             reviever.Statistic.Spells++;
             reviever.Turn += 4;
         }
 
-        public static void SpawnSpell(Charecter person, Hero hero, List<Order> units)
+        public static void SpawnSpell(Character person, Hero hero, List<Order> units)
         {
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", "призывает ");
@@ -105,7 +105,7 @@ namespace FightCons
             person.Turn += 4;
         }
 
-        public static void AdSpamSpellAsync(Charecter person)
+        public static void AdSpamSpellAsync(Character person)
         {
             // change to messageMas
             
@@ -128,7 +128,7 @@ namespace FightCons
 
         #region Атаки
         //  Действие Атака 
-        public static void EnemyHits(Charecter attacker, Charecter victim)
+        public static void EnemyHits(Character attacker, Character victim)
         {
             attacker.Turn += 1;
 
@@ -139,7 +139,7 @@ namespace FightCons
         }
 
         //  Отравляющая атака
-        public static void PoisentAtt(Charecter attacker, Charecter victim)
+        public static void PoisentAtt(Character attacker, Character victim)
         {
             short damag = (short)(GameFormulas.Damage(attacker, victim) / 2);
 
@@ -159,7 +159,7 @@ namespace FightCons
         }
 
         //  Вамперизм
-        public static void Vamperism(Charecter attacker, Charecter victim)
+        public static void Vamperism(Character attacker, Character victim)
         {
             short damag = (short)(GameFormulas.Damage(attacker, victim) / 2);
 
@@ -176,7 +176,7 @@ namespace FightCons
         }
 
         //  Defence!!!
-        public static void HoldTheSheeld(Charecter person)
+        public static void HoldTheSheeld(Character person)
         {
             person.Condition.SheeldUp = true;
             Output.NameAndId(person, true);
@@ -186,7 +186,7 @@ namespace FightCons
         #endregion
 
         //  Log
-        internal static void BattleLog(Charecter attacker, Charecter victim, short damag)
+        internal static void BattleLog(Character attacker, Character victim, short damag)
         {
             Output.NameAndId(attacker, true);
             Console.Write("сносит ");

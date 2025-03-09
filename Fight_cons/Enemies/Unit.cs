@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FightCons.Enemies
 {
-    public class Unit : Charecter
+    public class Unit : Character
     {
         public static int ExpForKill(int HP, short Attack) => (HP / 2) + (Attack / 2);
 
@@ -12,11 +12,11 @@ namespace FightCons.Enemies
         {
             Random rand = new Random();
 
-            CharecterProfile.Role = bestiaria.CharecterProfile.Role;
-            CharecterProfile.Phase = bestiaria.CharecterProfile.Phase;
+            CharacterProfile.Role = bestiaria.CharacterProfile.Role;
+            CharacterProfile.Phase = bestiaria.CharacterProfile.Phase;
             Name = bestiaria.Name;
 
-            if (CharecterProfile.Role == CharecterProfiles.ChaRole.Wild)
+            if (CharacterProfile.Role == CharecterProfiles.ChaRole.Wild)
                 MaxHp = (bestiaria.HpMax == 0) ?
                     (short)(bestiaria.HpMin * rand.Next(2, 5)) : (short)(rand.Next(bestiaria.HpMin, bestiaria.HpMax) * rand.Next(2, 5));
             else
@@ -33,9 +33,9 @@ namespace FightCons.Enemies
 
                 Crit = bestiaria.CrtMin * 0.01f;
 
-                Defence = bestiaria.DefMin * 0.01f;
+                Defense = bestiaria.DefMin * 0.01f;
 
-                MagicDefence = bestiaria.MDefMin * 0.01f;
+                MagicDefense = bestiaria.MDefMin * 0.01f;
 
                 Block = bestiaria.BlkMin * 0.01f;
 
@@ -51,22 +51,22 @@ namespace FightCons.Enemies
 
                 Crit = (float)(rand.Next(bestiaria.CrtMin, bestiaria.CrtMax) * 0.01);
 
-                Defence = (float)(rand.Next(bestiaria.DefMin, bestiaria.DefMax) * 0.01);
+                Defense = (float)(rand.Next(bestiaria.DefMin, bestiaria.DefMax) * 0.01);
 
-                MagicDefence = (float)(rand.Next(bestiaria.MDefMin, bestiaria.MDefMax) * 0.01);
+                MagicDefense = (float)(rand.Next(bestiaria.MDefMin, bestiaria.MDefMax) * 0.01);
 
                 Block = (float)(rand.Next(bestiaria.BlkMin, bestiaria.BlkMax) * 0.01);
 
                 Moves = (sbyte)rand.Next(bestiaria.MovMin, bestiaria.MovMax);
             }
 
-            CharecterProfile.Strategy = bestiaria.CharecterProfile.Strategy;
+            CharacterProfile.Strategy = bestiaria.CharacterProfile.Strategy;
 
             KillExp = ExpForKill(HP, Attack);
         }
 
         //  Решения противника
-        public static void UnitFightChoice(Charecter unit, Hero hero, List<Order> units)
+        public static void UnitFightChoice(Character unit, Hero hero, List<Order> units)
         {
             //  Минус от эффектов
             NegativeEffectImpact(unit);
@@ -89,7 +89,7 @@ namespace FightCons.Enemies
         }
 
         //  Вычитание негативыне эффекты
-        public static void NegativeEffectImpact(Charecter unit)
+        public static void NegativeEffectImpact(Character unit)
         {
             if (unit.Condition.Moves > 0 || unit.Condition.PoisentRound > 0 || unit.Condition.BleedRound > 0)
             {

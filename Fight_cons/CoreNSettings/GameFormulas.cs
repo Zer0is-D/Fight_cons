@@ -14,7 +14,7 @@ namespace FightCons.CoreNSettings
         /// <summary>
         /// Получить 1% от MAX HP
         /// </summary>
-        public static float PercentHp(Charecter person) => ((float)person.HP / (float)person.MaxHp) * 100.0f;
+        public static float PercentHp(Character person) => ((float)person.HP / (float)person.MaxHp) * 100.0f;
 
         /// <summary>
         /// Получить n% от MAX HP
@@ -29,7 +29,7 @@ namespace FightCons.CoreNSettings
         /// <param name="throwBranch">Пробитие брони</param>
         /// <param name="parry">Парирование</param>
         /// <returns></returns>
-        public static short Damage(Charecter attacker, Charecter victim, bool throwBranch = false)
+        public static short Damage(Character attacker, Character victim, bool throwBranch = false)
         {
             float crit = CheckCrit(attacker);
             float attack;
@@ -50,7 +50,7 @@ namespace FightCons.CoreNSettings
 
         #region Проверки для урона
         //  Проверка на парирование
-        protected static bool CheckParry(Charecter attacker, Charecter victim)
+        protected static bool CheckParry(Character attacker, Character victim)
         {
             Random rand = new Random();
 
@@ -63,7 +63,7 @@ namespace FightCons.CoreNSettings
             }
         }
 
-        public static short MagicDamage(Charecter attacker, Charecter victim, short spellPower)
+        public static short MagicDamage(Character attacker, Character victim, short spellPower)
         {
             float crit = CheckCrit(attacker, true);
             float att = spellPower + attacker.TotalArcane + crit;
@@ -75,7 +75,7 @@ namespace FightCons.CoreNSettings
         }
 
         //  Проверка на крит
-        public static int CheckCrit(Charecter cha, bool magic = false)
+        public static int CheckCrit(Character cha, bool magic = false)
         {
             Random rand = new Random();
             int crit = 0;
@@ -95,7 +95,7 @@ namespace FightCons.CoreNSettings
         }
 
         //  Проверка на защиту и блок
-        public static short CheckDefence(Charecter charecter, float att)
+        public static short CheckDefence(Character charecter, float att)
         {
             if (charecter.Condition.SheeldUp)
                 att = att * (1 - charecter.TotalBlock) + (1 - charecter.TotalDefence);
@@ -106,7 +106,7 @@ namespace FightCons.CoreNSettings
         }
 
         //  Проверка на магическую защиту
-        public static short CheckMagicDefence(Charecter enemy, float att)
+        public static short CheckMagicDefence(Character enemy, float att)
         {
             att = att * (1 - enemy.TotalMagicDefence);
             return (short) att;
@@ -138,12 +138,12 @@ namespace FightCons.CoreNSettings
         }
 
         #region Формулы для юнитов
-        public static void DoScale(sbyte lvlScale, Charecter enemy)
+        public static void DoScale(sbyte lvlScale, Character enemy)
         {
             Random rand = new Random();
 
             enemy.HP = ScaleMAXHP(lvlScale, enemy.HP);
-            if (enemy.CharecterProfile.Wild)
+            if (enemy.CharacterProfile.Wild)
                 enemy.MaxHp = (short)(ScaleMAXHP(lvlScale, enemy.HP) * rand.Next(2, 3));
             else
                 enemy.MaxHp = ScaleMAXHP(lvlScale, enemy.HP);
@@ -166,36 +166,36 @@ namespace FightCons.CoreNSettings
         {
             return
                 unit1.Name == unit2.Name &&
-                unit1.CharecterProfile.Phase == unit2.CharecterProfile.Phase &&
+                unit1.CharacterProfile.Phase == unit2.CharacterProfile.Phase &&
                 unit1.HP == unit2.HP &&
                 unit1.Attack == unit2.Attack &&
                 unit1.Speed == unit2.Speed &&
                 unit1.Crit == unit2.Crit &&
-                unit1.Defence == unit2.Defence &&
-                unit1.MagicDefence == unit2.MagicDefence &&
+                unit1.Defense == unit2.Defense &&
+                unit1.MagicDefense == unit2.MagicDefense &&
                 unit1.Block == unit2.Block &&
                 unit1.Moves == unit2.Moves &&
-                unit1.CharecterProfile.TooBrave == unit2.CharecterProfile.TooBrave &&
-                unit1.CharecterProfile.Role == unit2.CharecterProfile.Role &&
-                unit1.CharecterProfile.Strategy == unit2.CharecterProfile.Strategy;
+                unit1.CharacterProfile.TooBrave == unit2.CharacterProfile.TooBrave &&
+                unit1.CharacterProfile.Role == unit2.CharacterProfile.Role &&
+                unit1.CharacterProfile.Strategy == unit2.CharacterProfile.Strategy;
         }
 
         public int GetHashCode(Unit obj)
         {
             return
                 obj.Name.GetHashCode() ^
-                obj.CharecterProfile.Phase.GetHashCode() ^
+                obj.CharacterProfile.Phase.GetHashCode() ^
                 obj.HP.GetHashCode() ^
                 obj.Attack.GetHashCode() ^
                 obj.Speed.GetHashCode() ^
                 obj.Crit.GetHashCode() ^
-                obj.Defence.GetHashCode() ^
-                obj.MagicDefence.GetHashCode() ^
+                obj.Defense.GetHashCode() ^
+                obj.MagicDefense.GetHashCode() ^
                 obj.Block.GetHashCode() ^
                 obj.Moves.GetHashCode() ^
-                obj.CharecterProfile.TooBrave.GetHashCode() ^
-                obj.CharecterProfile.Role.GetHashCode() ^
-                obj.CharecterProfile.Strategy.GetHashCode();
+                obj.CharacterProfile.TooBrave.GetHashCode() ^
+                obj.CharacterProfile.Role.GetHashCode() ^
+                obj.CharacterProfile.Strategy.GetHashCode();
         }
         #endregion
     }

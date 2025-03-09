@@ -27,60 +27,60 @@ namespace FightCons
                     Console.Write($"Повышение характеристик, у вас осталось {LTicket.LvlPoints} ячеек\n", 1);
 
                     //  Макс здоровье
-                    ParamsLvlUp(0, LTicket.Points[0], Output.MaxHpStr, hero.MaxHp, LTicket.NextMaxHp, hero.CharecterClass.HP, false);
+                    ParamsLvlUp(0, LTicket.Points[0], Output.MaxHpStr, hero.MaxHp, LTicket.NextMaxHp, hero.CharacterClass.HP, false);
 
                     //  Макс мана
-                    ParamsLvlUp(1, LTicket.Points[1], Output.MaxMpStr, hero.MaxMp, LTicket.NextMaxMp, hero.CharecterClass.MP, false);
+                    ParamsLvlUp(1, LTicket.Points[1], Output.MaxMpStr, hero.MaxMp, LTicket.NextMaxMp, hero.CharacterClass.MP, false);
 
                     //  Защита
-                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenceStr, hero.Defence, LTicket.NextDefense, hero.CharecterClass.Defence, true);
+                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenceStr, hero.Defense, LTicket.NextDefense, hero.CharacterClass.Defense, true);
 
                     //  Маг защита
-                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenceStr, hero.MagicDefence, LTicket.NextMagicDefense, hero.CharecterClass.MagicDefence, true);
+                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenceStr, hero.MagicDefense, LTicket.NextMagicDefense, hero.CharacterClass.MagicDefense, true);
 
                     //  Блок
-                    ParamsLvlUp(4, LTicket.Points[4], Output.BlockStr, hero.Block, LTicket.NextBlock, hero.CharecterClass.Block, true);
+                    ParamsLvlUp(4, LTicket.Points[4], Output.BlockStr, hero.Block, LTicket.NextBlock, hero.CharacterClass.Block, true);
 
                     //  Скорость
-                    ParamsLvlUp(5, LTicket.Points[5], Output.SpeedStr, hero.Speed, LTicket.NextSpeed, hero.CharecterClass.Speed, true);
+                    ParamsLvlUp(5, LTicket.Points[5], Output.SpeedStr, hero.Speed, LTicket.NextSpeed, hero.CharacterClass.Speed, true);
 
                     //  Атака
-                    ParamsLvlUp(6, LTicket.Points[6], Output.AttackStr, hero.Attack, LTicket.NextAttack, hero.CharecterClass.Attack, false);
+                    ParamsLvlUp(6, LTicket.Points[6], Output.AttackStr, hero.Attack, LTicket.NextAttack, hero.CharacterClass.Attack, false);
 
                     //  Arcane
-                    ParamsLvlUp(7, LTicket.Points[7], Output.ArcaneStr, hero.Arcane, LTicket.NextArcane, hero.CharecterClass.Arcane, false);
+                    ParamsLvlUp(7, LTicket.Points[7], Output.ArcaneStr, hero.Arcane, LTicket.NextArcane, hero.CharacterClass.Arcane, false);
 
                     //  Крит
-                    ParamsLvlUp(8, LTicket.Points[8], Output.CritStr, hero.Crit, LTicket.NextCrit, hero.CharecterClass.Crit, true);
+                    ParamsLvlUp(8, LTicket.Points[8], Output.CritStr, hero.Crit, LTicket.NextCrit, hero.CharacterClass.Crit, true);
 
                     switch (Input.ChoisInput(hero, 1, 9))
                     {
                         case 1:
-                            MaxHp = (short) SelectedParam(0, MaxHp, LTicket.NextMaxHp, hero.CharecterClass.MaxHp);
+                            MaxHp = (short) SelectedParam(0, MaxHp, LTicket.NextMaxHp, hero.CharacterClass.MaxHp);
                             break;
                         case 2:
-                            MaxMp = (short) SelectedParam(1, hero.MaxMp, LTicket.NextMaxMp, hero.CharecterClass.MaxMp);
+                            MaxMp = (short) SelectedParam(1, hero.MaxMp, LTicket.NextMaxMp, hero.CharacterClass.MaxMp);
                             break;
                         case 3:
-                            Defence = (float) SelectedParam(2, hero.Defence, LTicket.NextDefense, hero.CharecterClass.Defence);
+                            Defense = (float) SelectedParam(2, hero.Defense, LTicket.NextDefense, hero.CharacterClass.Defense);
                             break;
                         case 4:
-                            MagicDefence = (float) SelectedParam(3, hero.MagicDefence, LTicket.NextMagicDefense, hero.CharecterClass.MagicDefence);
+                            MagicDefense = (float) SelectedParam(3, hero.MagicDefense, LTicket.NextMagicDefense, hero.CharacterClass.MagicDefense);
                             break;
                         case 5:
-                            Block = (float) SelectedParam(4, hero.Block, LTicket.NextBlock, hero.CharecterClass.Block);
+                            Block = (float) SelectedParam(4, hero.Block, LTicket.NextBlock, hero.CharacterClass.Block);
                             break;
                         case 6:
-                            Speed = (float) SelectedParam(5, hero.Speed, LTicket.NextSpeed, hero.CharecterClass.Speed);
+                            Speed = (float) SelectedParam(5, hero.Speed, LTicket.NextSpeed, hero.CharacterClass.Speed);
                             break;
                         case 7:
-                            Attack = (short) SelectedParam(6, hero.Attack, LTicket.NextAttack, hero.CharecterClass.Attack);
+                            Attack = (short) SelectedParam(6, hero.Attack, LTicket.NextAttack, hero.CharacterClass.Attack);
                             break;
                         case 8:
-                            Arcane = (short) SelectedParam(7, hero.Arcane, LTicket.NextArcane, hero.CharecterClass.Arcane);
+                            Arcane = (short) SelectedParam(7, hero.Arcane, LTicket.NextArcane, hero.CharacterClass.Arcane);
                             break;
                         case 9:
-                            Crit = (float)SelectedParam(8, hero.Crit, LTicket.NextCrit, hero.CharecterClass.Crit);
+                            Crit = (float)SelectedParam(8, hero.Crit, LTicket.NextCrit, hero.CharacterClass.Crit);
                             break;
                     }
                 }
@@ -175,11 +175,11 @@ namespace FightCons
                 AchiveName("_Знаток_");
 
             //  Защита
-            if (Defence >= 0.98)
+            if (Defense >= 0.98)
                 AchiveName("_Бронированный_");
 
             //  Маг защита
-            if (MagicDefence >= 0.98)
+            if (MagicDefense >= 0.98)
                 AchiveName("_Бес_");
 
             //  Блок
@@ -246,8 +246,8 @@ namespace FightCons
             NextArcane += hero.PermanentBonus.Arcane;
             NextSpeed += hero.PermanentBonus.Speed;
             NextCrit += hero.PermanentBonus.Crit;
-            NextDefense += hero.PermanentBonus.Defence;
-            NextMagicDefense += hero.PermanentBonus.MagicDefence;
+            NextDefense += hero.PermanentBonus.Defense;
+            NextMagicDefense += hero.PermanentBonus.MagicDefense;
             NextBlock += hero.PermanentBonus.Block;
         }
 

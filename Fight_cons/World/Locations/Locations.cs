@@ -24,8 +24,7 @@ namespace FightCons
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Решеноми\n");
                 //Output.TwriteLine(Dicscriptions(((byte)LocationName.Woods)), 1);
 
-                hero.HPBar();
-                hero.MPBar();
+                hero.HPnMPBar(true, true);
 
                 string quo = "\nВаши действия?\n"
                            + "1) Войти в деревню\n"

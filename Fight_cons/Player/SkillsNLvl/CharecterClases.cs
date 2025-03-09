@@ -1,6 +1,6 @@
 ﻿using FightCons.CoreNSettings;
 using System;
-using static FightCons.Charecter;
+using static FightCons.Character;
 
 namespace FightCons
 {
@@ -45,18 +45,18 @@ namespace FightCons
             switch (Input.ChoisInput(hero, 0, 3, quo))
             {
                 case 0:
-                    hero.CharecterClass.Class = ChaClass.NoMan;
+                    hero.CharacterClass.Class = ChaClass.NoMan;
                     break;
                 case 1:
-                    hero.CharecterClass.Class = ChaClass.Fither;
+                    hero.CharacterClass.Class = ChaClass.Fither;
                     break;
 
                 case 2:
-                    hero.CharecterClass.Class = ChaClass.Wisard;
+                    hero.CharacterClass.Class = ChaClass.Wisard;
                     break;
 
                 case 3:
-                    hero.CharecterClass.Class = ChaClass.Rouge;
+                    hero.CharacterClass.Class = ChaClass.Rouge;
                     break;
             }
 
@@ -68,7 +68,7 @@ namespace FightCons
 
         private static void ChainClassAndCharecther(Hero hero)
         {
-            switch (hero.CharecterClass.Class)
+            switch (hero.CharacterClass.Class)
             {
                 case ChaClass.NoMan:
                     hero.ClassName = "Свобода";                    
@@ -76,23 +76,23 @@ namespace FightCons
 
                 case ChaClass.Fither:
                     hero.ClassName = "Мощь";
-                    hero.CharecterClass.MaxHp += 5;
-                    hero.CharecterClass.Attack += 1;
-                    hero.CharecterClass.Defence += 0.01f;
+                    hero.CharacterClass.MaxHp += 5;
+                    hero.CharacterClass.Attack += 1;
+                    hero.CharacterClass.Defense += 0.01f;
                     break;
 
                 case ChaClass.Wisard:
                     hero.ClassName = "Комбинатор";
-                    hero.CharecterClass.Arcane += 1;
-                    hero.CharecterClass.MagicDefence += 0.01f;
-                    hero.CharecterClass.MaxMp += 5;
+                    hero.CharacterClass.Arcane += 1;
+                    hero.CharacterClass.MagicDefense += 0.01f;
+                    hero.CharacterClass.MaxMp += 5;
                     break;
 
                 case ChaClass.Rouge:
                     hero.ClassName = "Динамика";
-                    hero.CharecterClass.Crit += 0.01f;
-                    hero.CharecterClass.Speed += 0.01f;
-                    hero.CharecterClass.Block += 0.01f;
+                    hero.CharacterClass.Crit += 0.01f;
+                    hero.CharacterClass.Speed += 0.01f;
+                    hero.CharacterClass.Block += 0.01f;
                     break;
             }
         }

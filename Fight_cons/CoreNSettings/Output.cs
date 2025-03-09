@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading;
-using static FightCons.Charecter;
+using static FightCons.Character;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -145,14 +145,14 @@ namespace FightCons
             WriteColorLine(ConsoleColor.DarkGray, "", "###############################################################################################################\n");
         }
 
-        public static void NameAndId(Charecter charecter, bool NextLine = false)
+        public static void NameAndId(Character charecter, bool NextLine = false)
         {
             if (NextLine)
                 Console.WriteLine();
 
-            if (!charecter.CharecterProfile.IsPlayer)
+            if (!charecter.CharacterProfile.IsPlayer)
                 Console.Write($"[{charecter.Id}] ");
-            else if (!charecter.CharecterProfile.IsPlayer & !NextLine)
+            else if (!charecter.CharacterProfile.IsPlayer & !NextLine)
                 Console.Write($"[{charecter.Id}] ");
 
 
@@ -221,9 +221,9 @@ namespace FightCons
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(after);
         }
-        public static void WriteColorName(string NextL, Charecter charecter, string str = null)
+        public static void WriteColorName(string NextL, Character charecter, string str = null)
         {
-            Console.ForegroundColor = unitNameColor(charecter.CharecterProfile.Role);
+            Console.ForegroundColor = unitNameColor(charecter.CharacterProfile.Role);
             Console.Write(NextL+charecter.Name);
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(str);

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FightCons
 {
-    public partial class Hero : Charecter
+    public partial class Hero : Character
     {
         public string ClassName = "???";
         public byte Sneak = 0;
@@ -123,9 +123,9 @@ namespace FightCons
             Crit = 0.05f;
             Block = 0.10f;
             Moves = 2;
-            CharecterProfile.IsPlayer = true;
+            CharacterProfile.IsPlayer = true;
             Condition.IsAlive = true;
-            CharecterProfile.Role = CharecterProfiles.ChaRole.Hero;
+            CharacterProfile.Role = CharecterProfiles.ChaRole.Hero;
         }
     }
 }

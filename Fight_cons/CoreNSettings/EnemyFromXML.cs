@@ -202,7 +202,7 @@ namespace FightCons
                         XElement xelem = new XElement($"Unit",
                             new XElement("ID", uni.Id),
                             new XElement("Name", uni.Name),
-                            new XElement("Phase", uni.CharecterProfile.Phase),
+                            new XElement("Phase", uni.CharacterProfile.Phase),
 
                             new XElement("MinHp", uni.HpMin), new XElement("MaxHp", uni.HpMax),
                             new XElement("MinAttack", uni.AttMin), new XElement("MaxAttack", uni.AttMax),
@@ -212,8 +212,8 @@ namespace FightCons
                             new XElement("MinMagicDefense", uni.MDefMin), new XElement("MaxMagicDefense", uni.MDefMax),
                             new XElement("MinBlock", uni.BlkMin), new XElement("MaxBlock", uni.BlkMax),
                             new XElement("MinMoves", uni.MovMin), new XElement("MaxMoves", uni.MovMax),
-                            new XElement("Role", uni.CharecterProfile.Role),
-                            new XElement("Strategies", uni.CharecterProfile.Strategy));
+                            new XElement("Role", uni.CharacterProfile.Role),
+                            new XElement("Strategies", uni.CharacterProfile.Strategy));
 
                         document.Root.Add(xelem);
                     }
@@ -222,7 +222,7 @@ namespace FightCons
                         XElement xelem = new XElement($"Unit",
                             new XElement("ID", uni.Id),
                             new XElement("Name", uni.Name),
-                            new XElement("Phase", uni.CharecterProfile.Phase),
+                            new XElement("Phase", uni.CharacterProfile.Phase),
                             new XElement("HP", uni.HpMin),
                             new XElement("Attack", uni.AttMin),
                             new XElement("Speed", uni.SpdMin),
@@ -231,9 +231,9 @@ namespace FightCons
                             new XElement("MagicDefense", uni.MDefMin),
                             new XElement("Block", uni.BlkMin),
                             new XElement("Moves", uni.MovMin),
-                            new XElement("CantRun", uni.CharecterProfile.TooBrave),
-                            new XElement("Role", uni.CharecterProfile.Role),
-                            new XElement("Strategies", uni.CharecterProfile.Strategy));
+                            new XElement("CantRun", uni.CharacterProfile.TooBrave),
+                            new XElement("Role", uni.CharacterProfile.Role),
+                            new XElement("Strategies", uni.CharacterProfile.Strategy));
 
                         document.Root.Add(xelem);
                     }

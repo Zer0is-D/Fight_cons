@@ -95,10 +95,10 @@ namespace FightCons
 
             Cost = cost;
             Attack = attack;
-            Defence = defence;
+            Defense = defence;
 
             Arcane = arcane;
-            MagicDefence = magDefence;
+            MagicDefense = magDefence;
             MaxHp = maxHp;
             MaxMp = maxMp;
             Speed = speed;
@@ -135,7 +135,7 @@ namespace FightCons
                     Attack = (short) rand.Next(ATT_min, ATT_max);
                     break;
                 case ItemTyps.Armor:
-                    Defence = (float) (rand.Next(DEF_min, DEF_max) * 0.01);
+                    Defense = (float) (rand.Next(DEF_min, DEF_max) * 0.01);
                     break;
             }
 
@@ -147,7 +147,7 @@ namespace FightCons
                         Arcane = (short) rand.Next(ARC_min, ARC_max);
                         break;
                     case 2:
-                        MagicDefence = (float) (rand.Next(MDEF_min, MDEF_max) * 0.01);
+                        MagicDefense = (float) (rand.Next(MDEF_min, MDEF_max) * 0.01);
                         break;
                     case 3:
                         MaxHp = (short) rand.Next(MAXHp_min, MAXHp_max);
@@ -171,7 +171,7 @@ namespace FightCons
                         Attack += (short) rand.Next(ATT_min, ATT_max);
                         break;
                     case 10:
-                        Defence += (float) (rand.Next(DEF_min, DEF_max) * 0.01);
+                        Defense += (float) (rand.Next(DEF_min, DEF_max) * 0.01);
                         break;
                 }
                 Thread.Sleep(50);
@@ -185,7 +185,7 @@ namespace FightCons
                     Cost = (short)(Attack + Spd_part + (Crit * 100) + (Block * 100) + (lvl * 10));
                     break;
                 case ItemTyps.Armor:
-                    Cost = (short)(50 + (Defence * 1000) + (lvl * 10));
+                    Cost = (short)(50 + (Defense * 1000) + (lvl * 10));
                     break;
                 case ItemTyps.Item:
                     Cost = 50;
@@ -223,8 +223,8 @@ namespace FightCons
             //if (next) Console.WriteLine();
             Comparison(item1.Attack, item2.Attack, Output.AttackStr);
             Comparison(item1.Arcane, item2.Arcane, Output.ArcaneStr);
-            Comparison(item1.Defence, item2.Defence, Output.DefenceStr, true);
-            Comparison(item1.MagicDefence, item2.MagicDefence, Output.MagicDefenceStr, true);
+            Comparison(item1.Defense, item2.Defense, Output.DefenceStr, true);
+            Comparison(item1.MagicDefense, item2.MagicDefense, Output.MagicDefenceStr, true);
             Comparison(item1.MaxHp, item2.MaxHp, Output.MaxHpStr);
             //if (next) Console.WriteLine();
             Comparison(item1.MaxMp, item2.MaxMp, Output.MaxMpStr);

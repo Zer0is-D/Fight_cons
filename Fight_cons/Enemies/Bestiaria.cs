@@ -5,7 +5,7 @@ using static FightCons.CoreNSettings.CharecterProfiles;
 
 namespace FightCons
 {
-    public class Bestiaries : Charecter
+    public class Bestiaries : Character
     {
         public static List<Bestiaries> BestiaryList = new List<Bestiaries>();
         public static List<Bestiaries> NewBestiaryList = new List<Bestiaries>();
@@ -26,8 +26,8 @@ namespace FightCons
         public Bestiaries(string name, sbyte phase, short hp, short attack, sbyte speed, sbyte critChance, sbyte defence, sbyte magicDefence, sbyte block, sbyte moves, bool noRun, ChaRole role, Strategeis strategy = 0)
         {
             Name = name;
-            CharecterProfile.Phase = phase;
-            CharecterProfile.Role = role;
+            CharacterProfile.Phase = phase;
+            CharacterProfile.Role = role;
 
             HpMin = hp;
             AttMin = attack;
@@ -38,9 +38,9 @@ namespace FightCons
             BlkMin = block;
             MovMin = moves;
 
-            CharecterProfile.TooBrave = noRun;
+            CharacterProfile.TooBrave = noRun;
 
-            CharecterProfile.Strategy = strategy;
+            CharacterProfile.Strategy = strategy;
         }
 
         public Bestiaries(string name, sbyte phase, short hpMin, short hpMax, short attMin, short attMax, sbyte spdMin, sbyte spdMax, 
@@ -48,8 +48,8 @@ namespace FightCons
             Strategeis strategy, ChaRole role)
         {
             Name = name;
-            CharecterProfile.Phase = phase;
-            CharecterProfile.Role = role;
+            CharacterProfile.Phase = phase;
+            CharacterProfile.Role = role;
 
             HpMin = hpMin; HpMax = hpMax;
             AttMin = attMin; AttMax = attMax;
@@ -61,7 +61,7 @@ namespace FightCons
             BlkMin = blkMin; BlkMax = blkMax;
             MovMin = movMin; MovMax = movMax;
 
-            CharecterProfile.Strategy = strategy;
+            CharacterProfile.Strategy = strategy;
         }
         
         //  Создание листа противников если он пустой
@@ -126,7 +126,7 @@ namespace FightCons
                 new Bestiaries("Нечто Бронированное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 20, defMax: 70, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 1, movMax: 2, role: ChaRole.Enemy, strategy: Strategeis.Any) 
                 { Id = 11 },
                 /*12*/
-                new Bestiaries("Нечто Магическое", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 45, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 30, mDefMax: 70, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, role: ChaRole.Enemy, strategy: Strategeis.Any) 
+                new Bestiaries("Нечто Магическое", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 90, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 30, mDefMax: 70, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, role: ChaRole.Enemy, strategy: Strategeis.Any) 
                 { Id = 12 },
 
                 //13-17 19

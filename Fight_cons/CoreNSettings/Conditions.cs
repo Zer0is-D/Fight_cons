@@ -33,8 +33,8 @@ namespace FightCons
             Arcane = 0;
             Speed = 0;
             Crit = 0;
-            Defence = 0;
-            MagicDefence = 0;
+            Defense = 0;
+            MagicDefense = 0;
             Block = 0;
             Moves = 0;
 
@@ -48,7 +48,7 @@ namespace FightCons
         //  Обнуление любого объекта
         internal protected static void Clear(object x) => x = 0;
 
-        internal protected void RandomDebuff(Charecter attacker, Charecter victim)
+        internal protected void RandomDebuff(Character attacker, Character victim)
         {
             if (GameFormulas.Vero(0.7))
                 AttackDes.ActParryAtt(victim, attacker);

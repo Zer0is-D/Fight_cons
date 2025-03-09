@@ -1,76 +1,77 @@
 ﻿using FightCons.CoreNSettings;
+using FightCons.Enemies;
 using System;
 using static FightCons.ItemChar;
 
 namespace FightCons
 {
-    public delegate void SkillsDele(Hero hero, Charecter enemy);
-    public delegate void SpellDele(Hero hero, Charecter enemy, short cost, sbyte spellPower);
+    public delegate void SkillsDele(Hero hero, Character enemy);
+    public delegate void SpellDele(Hero hero, Character enemy, short cost, sbyte spellPower);
 
-    public abstract class Charecter : Characteristics
+    public abstract class Character : Characteristics
     {
         internal protected short Id;
 
         #region Окончательные характеристики 
         internal protected short TotalHP
         {
-            get => (short)(HP + CharecterWeapon.HP + CharecterArmor.HP + Condition.HP + PermanentBonus.HP);
+            get => (short)(HP + CharacterWeapon.HP + CharacterArmor.HP + Condition.HP + PermanentBonus.HP);
         }
         internal protected short TotalMaxHP
         {
-            get => (short)(MaxHp + CharecterWeapon.MaxHp + CharecterArmor.MaxHp + Condition.MaxHp + PermanentBonus.MaxHp);
+            get => (short)(MaxHp + CharacterWeapon.MaxHp + CharacterArmor.MaxHp + Condition.MaxHp + PermanentBonus.MaxHp);
         }
         internal protected short TotalMP
         {
-            get => (short)(MP + CharecterWeapon.MP + CharecterArmor.MP + Condition.MP + PermanentBonus.MP);
+            get => (short)(MP + CharacterWeapon.MP + CharacterArmor.MP + Condition.MP + PermanentBonus.MP);
         }
         internal protected short TotalMaxMP
         {
-            get => (short)(MaxMp + CharecterWeapon.MaxMp + CharecterArmor.MaxMp + Condition.MaxMp + PermanentBonus.MaxMp);
+            get => (short)(MaxMp + CharacterWeapon.MaxMp + CharacterArmor.MaxMp + Condition.MaxMp + PermanentBonus.MaxMp);
         }
         internal protected short TotalAttack
         {
-            get => (short)(Attack + CharecterWeapon.Attack + CharecterArmor.Attack + Condition.Attack + PermanentBonus.Attack);
+            get => (short)(Attack + CharacterWeapon.Attack + CharacterArmor.Attack + Condition.Attack + PermanentBonus.Attack);
         }
         internal protected short TotalArcane
         {
-            get => (short)(Arcane + CharecterWeapon.Arcane + CharecterArmor.Arcane + Condition.Arcane + PermanentBonus.Arcane);
+            get => (short)(Arcane + CharacterWeapon.Arcane + CharacterArmor.Arcane + Condition.Arcane + PermanentBonus.Arcane);
         }
         internal protected float TotalSpeed
         {
-            get => Speed + CharecterWeapon.Speed + CharecterArmor.Speed + Condition.Speed + PermanentBonus.Speed;
+            get => Speed + CharacterWeapon.Speed + CharacterArmor.Speed + Condition.Speed + PermanentBonus.Speed;
         }
         internal protected float TotalCrit
         {
-            get => Crit + CharecterWeapon.Crit + CharecterArmor.Crit + Condition.Crit + PermanentBonus.Crit;
+            get => Crit + CharacterWeapon.Crit + CharacterArmor.Crit + Condition.Crit + PermanentBonus.Crit;
         }
         internal protected float TotalDefence
         {
-            get => Defence + CharecterWeapon.Defence + CharecterArmor.Defence + Condition.Defence + PermanentBonus.Defence;
+            get => Defense + CharacterWeapon.Defense + CharacterArmor.Defense + Condition.Defense + PermanentBonus.Defense;
         }
         internal protected float TotalMagicDefence
         {
-            get => MagicDefence + CharecterWeapon.MagicDefence + CharecterArmor.MagicDefence + Condition.MagicDefence + PermanentBonus.MagicDefence;
+            get => MagicDefense + CharacterWeapon.MagicDefense + CharacterArmor.MagicDefense + Condition.MagicDefense + PermanentBonus.MagicDefense;
         }
         internal protected float TotalBlock
         {
-            get => Block + CharecterWeapon.Block + CharecterArmor.Block + Condition.Block + PermanentBonus.Block;
+            get => Block + CharacterWeapon.Block + CharacterArmor.Block + Condition.Block + PermanentBonus.Block;
         }
         internal protected sbyte TotalMaxMoves
         {
-            get => (sbyte)(Moves + CharecterWeapon.Moves + CharecterArmor.Moves + Condition.Moves + PermanentBonus.Moves);
+            get => (sbyte)(Moves + CharacterWeapon.Moves + CharacterArmor.Moves + Condition.Moves + PermanentBonus.Moves);
         }
         #endregion
 
         //  Баффы и дебаффы от состояний, перманентных бонусов и классовых бонусов
-        internal CharecterProfiles CharecterProfile = new CharecterProfiles();
+        internal CharecterProfiles CharacterProfile = new CharecterProfiles();
         internal Conditions Condition = new Conditions();
         internal PermanentBonuses PermanentBonus = new PermanentBonuses();
-        internal CharecterClases CharecterClass = new CharecterClases("No class", 0);
+        internal CharecterClases CharacterClass = new CharecterClases("No class", 0);
         internal Statistic Statistic = new Statistic();
 
-        internal ItemChar CharecterWeapon = new ItemChar(name: "Без оружия", itemType: ItemTyps.Weapon,  attack: 1, speed: 0.2f, cost: 0, crit: 0, block: 0, maxMoves: 2);
-        internal ItemChar CharecterArmor = new ItemChar("Без брони", itemType: ItemTyps.Armor, 0, 0);        
+        internal ItemChar CharacterWeapon = new ItemChar(name: "Без оружия", itemType: ItemTyps.Weapon,  attack: 1, speed: 0.2f, cost: 0, crit: 0, block: 0, maxMoves: 2);
+        internal ItemChar CharacterArmor = new ItemChar("Без брони", itemType: ItemTyps.Armor, 0, 0);        
 
         //  Текущий ход
         internal protected int Turn;
@@ -90,7 +91,7 @@ namespace FightCons
             while (c <= TotalMaxHP)
             {
                 if (c <= TotalHP)
-                    Output.WriteColorLine(Output.unitHPColor(CharecterProfile.Role), "", "#");
+                    Output.WriteColorLine(Output.unitHPColor(CharacterProfile.Role), "", "#");
                 else
                     Output.WriteColorLine(ConsoleColor.Black, "", "#");
                 c += part;
@@ -126,6 +127,17 @@ namespace FightCons
                 Output.WriteColorLine(ConsoleColor.Blue, $"\n{Output.MPSymbol}: [", " нет маны ", "]\n");
         }
 
+        //  Выбор отрисовки
+        public void DifferentHpBar()
+        {
+            //Output.WriteColorName("\n", this, ":");
+            if (CharacterProfile.Phase >= 2)
+                PhaseHPBar();
+            else
+                HPBar();
+        }
+
+        //  Шкала с фазами
         public void PhaseHPBar()
         {
             double part = TotalMaxHP / 20.0;
@@ -140,12 +152,12 @@ namespace FightCons
             {
                 if (c <= TotalHP)
                 {
-                    if (CharecterProfile.Phase == 2 && charsToNextBar == 10) // Для фазы 2
+                    if (CharacterProfile.Phase == 2 && charsToNextBar == 10) // Для фазы 2
                     {
                         Output.WriteColorLine(ConsoleColor.Yellow, "", "|");
                         charsToNextBar = 0;
                     }
-                    else if (CharecterProfile.Phase == 3 && charsToNextBar == 7) // Для фазы 3
+                    else if (CharacterProfile.Phase == 3 && charsToNextBar == 7) // Для фазы 3
                     {
                         Output.WriteColorLine(ConsoleColor.Yellow, "", "|");
                         charsToNextBar = 0;
@@ -154,7 +166,7 @@ namespace FightCons
                     {
                         if (phase4 == 3)
                             eng = true;
-                        if (CharecterProfile.Phase == 4 && charsToNextBar == 5) // Для фазы 4
+                        if (CharacterProfile.Phase == 4 && charsToNextBar == 5) // Для фазы 4
                         {
                             Output.WriteColorLine(ConsoleColor.Yellow, "", "|");
                             charsToNextBar = 0;
@@ -162,7 +174,7 @@ namespace FightCons
                         }
                     }
 
-                    Output.WriteColorLine(Output.unitHPColor(CharecterProfile.Role), "", "#", "");
+                    Output.WriteColorLine(Output.unitHPColor(CharacterProfile.Role), "", "#", "");
                     charsToNextBar++;
                 }
                 else
@@ -176,6 +188,24 @@ namespace FightCons
 
             Console.Write("]    ");
             Console.Write($"{Output.HPSymbol}: {TotalHP}/{TotalMaxHP}");
+        }
+
+        //TODO механика скрыть от пользователя HP или MP
+        //  Отобразить HP и MP (MP опционально)
+        public void HPnMPBar(bool hp = false, bool mp = false)
+        {
+            if (hp || mp)
+            {
+                if (hp)
+                    DifferentHpBar();
+                if (mp)
+                    MPBar();
+            }
+            else
+            {
+                Output.WriteColorLine(ConsoleColor.DarkGray, $"\n{Output.HPSymbol}: [", "НЕИЗВЕСТНО", "]");
+                Output.WriteColorLine(ConsoleColor.DarkGray, $"\n{Output.MPSymbol}: [", "НЕИЗВЕСТНО", "]\n");
+            }
         }
     }
 }

@@ -33,7 +33,7 @@ namespace FightCons
 
         #region Заклинания
         //  Действие: Очищающий луч
-        public static void CleansingRaySpell(Hero hero, Charecter victim, short cost, sbyte spellPower)
+        public static void CleansingRaySpell(Hero hero, Character victim, short cost, sbyte spellPower)
         {
             Random rand = new Random();
 
@@ -62,7 +62,7 @@ namespace FightCons
         }
 
         //  Малое лечение
-        public static void HealSpell(Hero hero, Charecter enemy, short cost, sbyte spellPower)
+        public static void HealSpell(Hero hero, Character enemy, short cost, sbyte spellPower)
         {
             float crit = GameFormulas.CheckCrit(hero, true);
             float Heal = (float)((hero.MaxHp / 100.0 * 30.0) + crit);
@@ -78,7 +78,7 @@ namespace FightCons
         }
 
         //  Замедление
-        public static void SlowDownSpell(Hero hero, Charecter enemy, short cost, sbyte spellPower)
+        public static void SlowDownSpell(Hero hero, Character enemy, short cost, sbyte spellPower)
         {
             enemy.Condition.Speed = -0.2f;
             Console.WriteLine("Вы замедлили противника!");
@@ -87,7 +87,7 @@ namespace FightCons
         }
 
         //  Исцеление
-        public static void ExcisionSpell(Hero hero, Charecter enemy, short cost, sbyte spellPower)
+        public static void ExcisionSpell(Hero hero, Character enemy, short cost, sbyte spellPower)
         {
             Console.WriteLine("\nВы избавились от всех негатив. эффектов\n");
             hero.Condition.Clear();

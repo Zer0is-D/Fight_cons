@@ -21,8 +21,8 @@ namespace FightCons
                             + $"{Output.SpeedStr}: {TotalSpeed * 100}%\t{Output.CritStr}: {TotalCrit * 100}%\n"
                             + $"{Output.BlockStr}: {TotalBlock * 100}%\n");
             Output.WriteColorLine(ConsoleColor.Yellow, $"Money: {Money}", $"{Output.MoneySymbol}\n");
-            Output.WriteColorLine(ConsoleColor.Cyan, "Экипировано оружие:\n", $"{CharecterWeapon.Name} ", $"| {ItemStats(CharecterWeapon, false)}");
-            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкипирована броня:\n", $"{CharecterArmor.Name} ", $"| {ItemStats(CharecterArmor, false)}\n");
+            Output.WriteColorLine(ConsoleColor.Cyan, "Экипировано оружие:\n", $"{CharacterWeapon.Name} ", $"| {ItemStats(CharacterWeapon, false)}");
+            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкипирована броня:\n", $"{CharacterArmor.Name} ", $"| {ItemStats(CharacterArmor, false)}\n");
         }
 
         //  Начало начал
@@ -30,6 +30,15 @@ namespace FightCons
         {
             string HNmae;
             sbyte ChPlace;
+
+            //  Проверочный сегмент //////////////////////////////////////////////////////////////
+            hero.Name = "Nemo";
+            //hero.HPnMPBar();
+
+            Battles.MakeCurrentBattle(hero, 12, 12);
+
+            //  КОНЕЦ СЕГМЕНТА
+            /////////////////////////////////////////////////////////////////////////////////////
 
             Output.TwriteLine("- Выбери себе имя которым будешь называться", 20, true);
             do
@@ -54,7 +63,7 @@ namespace FightCons
             Output.Twrite("- что ты выберешь?\n", 20, false);
             GiveHeroClass(hero);
 
-            if (hero.CharecterClass.Class == ChaClass.NoMan)
+            if (hero.CharacterClass.Class == ChaClass.NoMan)
                 Output.TwriteLine("\n- Интересно...\n", 20, true);
             else
             {
@@ -140,19 +149,19 @@ namespace FightCons
             switch (Input.ChoisInput(hero, 0, 4, quo))
             {
                 case 1:
-                    hero.CharecterWeapon = Sword_N_sheeld;
+                    hero.CharacterWeapon = Sword_N_sheeld;
                     break;
 
                 case 2:
-                    hero.CharecterWeapon = Twohand_sword;
+                    hero.CharacterWeapon = Twohand_sword;
                     break;
 
                 case 3:
-                    hero.CharecterWeapon = Two_knifes;
+                    hero.CharacterWeapon = Two_knifes;
                     break;
 
                 case 4:
-                    hero.CharecterWeapon = Bow;
+                    hero.CharacterWeapon = Bow;
                     break;
             }
         }

@@ -32,76 +32,76 @@ namespace FightCons
 
         #region Атаки
         //  Действие: базовая Атака
-        public static void BaseAttack(Charecter attacker, Charecter victim)
+        public static void BaseAttack(Character attacker, Character victim)
         {
-            short damag = GameFormulas.Damage(attacker, victim);
+            short damage = GameFormulas.Damage(attacker, victim);
 
             attacker.Statistic.Attacks++;
             attacker.Statistic.ChaActions.Add(10);
 
-            UnitSkills.BattleLog(attacker, victim, damag);
+            UnitSkills.BattleLog(attacker, victim, damage);
         }
 
         //  Действие: Пробитие брони
-        public static void BreachArmorAttack(Charecter attacker, Charecter victim)
+        public static void BreachArmorAttack(Character attacker, Character victim)
         {           
             //  Пробитие брони
-            short damag = GameFormulas.Damage(attacker, victim, true);
+            short damage = GameFormulas.Damage(attacker, victim, true);
 
             Output.NameAndId(attacker, true);
-            Output.WriteColorLine(ConsoleColor.Yellow, "наносит ", $"{damag} ", "урона у ");
+            Output.WriteColorLine(ConsoleColor.Yellow, "наносит ", $"{damage} ", "урона у ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", $"{Output.HPSymbol}\n");
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damage} ", $"{Output.HPSymbol}\n");
 
-            victim.HP -= damag;
+            victim.HP -= damage;
 
             attacker.Statistic.Attacks++;
             attacker.Statistic.ChaActions.Add(11);
         }
 
         //  Действие: Кровотечение
-        public static void MakeBleedAttack(Charecter attacker, Charecter victim)
+        public static void MakeBleedAttack(Character attacker, Character victim)
         {
-            short damag = GameFormulas.Damage(attacker, victim);
+            short damage = GameFormulas.Damage(attacker, victim);
 
             victim.Condition.BleedRound = 3;
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkRed, "накладывает ", $"Кровотечение ");
-            Output.WriteColorLine(ConsoleColor.Yellow, "и наносит ", $"{damag} ", "урона у ");
+            Output.WriteColorLine(ConsoleColor.Yellow, "и наносит ", $"{damage} ", "урона у ");
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim.HP - damag} ", $"{Output.HPSymbol}\n");
+            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim.HP - damage} ", $"{Output.HPSymbol}\n");
 
-            victim.HP -= damag;
+            victim.HP -= damage;
 
             attacker.Statistic.Attacks++;
             attacker.Statistic.ChaActions.Add(12);
         }
         
         //  Действие: Парирование
-        public static void ParryAttack(Charecter person, Charecter victim)
+        public static void ParryAttack(Character person, Character victim)
         {
             person.Condition.AttackParry = true;
             person.Turn = person.TotalMaxMoves;
         }
 
         //  Действие: Атака из-за парирования
-        public static void ActParryAtt(Charecter attacker, Charecter victim)
+        public static void ActParryAtt(Character attacker, Character victim)
         {
-            short damag = GameFormulas.Damage(attacker, victim);
+            short damage = GameFormulas.Damage(attacker, victim);
 
             Output.NameAndId(attacker, true);
             Console.Write("парирует атаку ");
             Output.NameAndId(victim);
 
-            if (damag > attacker.TotalAttack)
-                Output.WriteColorLine(ConsoleColor.Yellow, "и наносит критические ", $"{damag} ", "урона!\n У ");
+            if (damage > attacker.TotalAttack)
+                Output.WriteColorLine(ConsoleColor.Yellow, "и наносит критические ", $"{damage} ", "урона!\n У ");
             else
-                Output.WriteColorLine(ConsoleColor.Yellow, "и наносит ", $"{damag} ", "урона у ");
+                Output.WriteColorLine(ConsoleColor.Yellow, "и наносит ", $"{damage} ", "урона у ");
 
             Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim.HP - damag} ", $"{Output.HPSymbol}\n");
-            victim.HP -= damag;
+            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim.HP - damage} ", $"{Output.HPSymbol}\n");
+            victim.HP -= damage;
 
             if (attacker is Hero hero)
                 hero.Statistic.Attacks++;
