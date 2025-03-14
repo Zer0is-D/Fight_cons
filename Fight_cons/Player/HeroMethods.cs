@@ -4,6 +4,8 @@ using static FightCons.CharacterClasses;
 using static FightCons.ItemChar;
 using FightCons.World.Locations;
 using System.Numerics;
+using System.Windows.Documents;
+using System.Collections.Generic;
 
 namespace FightCons
 {
@@ -34,8 +36,10 @@ namespace FightCons
             //  Проверочный сегмент //////////////////////////////////////////////////////////////
             hero.Name = "Nemo";
             //hero.HPnMPBar();
+            
 
-            Battles.MakeCurrentBattle(hero, 12, 12);
+
+            //Battles.MakeCurrentBattle(hero, 12, 12);
 
             //  КОНЕЦ СЕГМЕНТА
             /////////////////////////////////////////////////////////////////////////////////////
@@ -135,10 +139,10 @@ namespace FightCons
 
         public static void GiveHeroWeapon(Hero hero)
         {
-            ItemChar Sword_N_sheeld = new ItemChar("Меч и щит", ItemTyps.Weapon, attack: 4, speed: 0, cost: 10, crit: 0, block: 0.25f, maxMoves: -1);
-            ItemChar Twohand_sword = new ItemChar("Двуручник", ItemTyps.Weapon, attack: 8, speed: -0.2f, cost: 10, crit: 0.1f, block: 0, maxMoves: -1);
-            ItemChar Two_knifes = new ItemChar("Два клинка", ItemTyps.Weapon, attack: 3, speed: 0.2f, cost: 10, crit: 0.3f, block: 0, maxMoves: 0);
-            ItemChar Bow = new ItemChar("Лук", ItemTyps.Weapon, attack: 5, speed: 0, cost: 10, crit: 0.1f, block: 0, maxMoves: 1);
+            ItemChar Sword_N_sheeld = new ItemChar("Меч и щит", ItemTypes.Weapon, attack: 4, speed: 0, cost: 10, crit: 0, block: 0.25f, maxMoves: -1);
+            ItemChar Twohand_sword = new ItemChar("Двуручник", ItemTypes.Weapon, attack: 8, speed: -0.2f, cost: 10, crit: 0.1f, block: 0, maxMoves: -1);
+            ItemChar Two_knifes = new ItemChar("Два клинка", ItemTypes.Weapon, attack: 3, speed: 0.2f, cost: 10, crit: 0.3f, block: 0, maxMoves: 0);
+            ItemChar Bow = new ItemChar("Лук", ItemTypes.Weapon, attack: 5, speed: 0, cost: 10, crit: 0.1f, block: 0, maxMoves: 1);
 
             string quo = "Выбери оружие?\n"
                           + $"1) {ItemStats(Sword_N_sheeld)}\n"

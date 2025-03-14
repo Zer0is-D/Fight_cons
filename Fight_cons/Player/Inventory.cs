@@ -28,7 +28,7 @@ namespace FightCons
 
         internal static void ItemAdd(Hero hero, string name, bool MustHave = false)
         {
-            ItemChar item = new ItemChar(name, ItemTyps.Item);
+            ItemChar item = new ItemChar(name, ItemTypes.Item);
             item.Name = name;
             if (MustHave)
             {

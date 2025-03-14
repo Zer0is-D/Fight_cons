@@ -358,7 +358,7 @@ namespace FightCons
                         Console.ReadKey(true);
                         Sound.VoiceLeva("- Ты можешь взять один мой огненный меч! ", 1);
                         Console.ReadKey(true);
-                        ItemChar Q_Leva_swored = new ItemChar(name: "Меч 'Бегемота Левы'", itemType: ItemTyps.Weapon, cost: 300, attack: 11, speed: 0.2f, crit: 0.2f, block: 0.2f, maxMoves: 1);
+                        ItemChar Q_Leva_swored = new ItemChar(name: "Меч 'Бегемота Левы'", itemType: ItemTypes.Weapon, cost: 300, attack: 11, speed: 0.2f, crit: 0.2f, block: 0.2f, maxMoves: 1);
 
                         Output.WriteColorLine(ConsoleColor.White, $"\n", $"{Q_Leva_swored.Name} ", "| ");
                         ItemStats(hero.CharacterWeapon, Q_Leva_swored);

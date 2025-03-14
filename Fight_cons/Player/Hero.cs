@@ -106,6 +106,7 @@ namespace FightCons
 
         #endregion
 
+        //TODO Доделать
         internal List<ItemChar> HeroInventory = new List<ItemChar>();
 
         #region Второстепенные свойства и поля
@@ -115,6 +116,7 @@ namespace FightCons
         //  Внимательность/шпионаж
         public Spying HeroSpying = new Spying();
 
+        //TODO Вообще переместить
         //  Опьянение
         public byte DrunkCondition = 0;
         public byte OverDrunk = 3;

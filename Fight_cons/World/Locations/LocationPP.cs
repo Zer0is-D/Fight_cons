@@ -71,8 +71,54 @@ namespace FightCons.World.Locations
             }
         };
 
-        //  Выход со стартовой позиции
-        public static bool ExitCave;
+        #region Настройки магазина
+        //  Настройки для магазина
+        static sbyte GoodsNum = 2;
+        static sbyte BonusesNum = 2; //  1-8
+
+        //TODO Придумать реест с общим
+        static List<Material> Materials = new List<Material>
+        {
+            new Material("дерево", 0.5, 3),
+            new Material("смешенное", 0.3, 6),
+            new Material("железо", 0.1, 9),
+            new Material("сплав", 0.1, 12),
+        };
+        static Dictionary<string, List<string>> WeaponsByMaterial = new Dictionary<string, List<string>>()
+        {
+            { "дерево", new List<string> { "Деревянный меч", "Деревянная пика", "Деревянный топор", } },
+            { "смешенное", new List<string> { "Смешанный меч", "Смешанная пика", "Смешанный топор", "Большой топор", "Секира", "Топорище", "Арбалет", "Серп", "Молот", } },
+            { "железо", new List<string> { "Железный меч", "Железная пика", "Железный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", "Клинок", } },
+            { "сплав", new List<string> { "Сплавленный меч", "Сплавленная пика", "Сплавленный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", } },
+        };
+        static Dictionary<string, List<string>> ArmorByMaterial = new Dictionary<string, List<string>>()
+        {
+            { "дерево", new List<string> { "Деревянная броня", "Деревянная кираса", "Деревянный жилет", } },
+            { "смешенное", new List<string> { "Смешанная броня", "Смешанная кираса", "Смешанный жилет", "Кожаная броня" } },
+            { "железо", new List<string> { "Железная броня", "Железная кираса", "Железный жилет", } },
+            { "сплав", new List<string> { "Сплавленная броня", "Сплавленная кираса", "Сплавленный жилет", } },
+        };
+
+        /*  Общий список
+        static string[] mas = new string[]
+        {
+            "Копье",
+            "Меч",
+            "Нож",
+        };
+
+        foreach (var ma in mas)
+        {
+            WeaponsByMaterial["дерево"].Add(ma);
+            WeaponsByMaterial["смешенное"].Add(ma);
+            WeaponsByMaterial["железо"].Add(ma);
+            WeaponsByMaterial["сплав"].Add(ma);
+        }*/
+
+
+        //  Рынок в поселение Решеноми
+        private static Store NormanMarket = new Store(51, GoodsNum, BonusesNum, Materials, WeaponsByMaterial, ArmorByMaterial);
+        #endregion
         #endregion
 
         //Побережье
@@ -213,10 +259,10 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        MarketMethods.ShowWeaponGoods(hero);
+                        NormanMarket.ShowWeaponGoods(hero);
                         break;
                     case 3:
-                        MarketMethods.ShowArmorGoods(hero);
+                        NormanMarket.ShowArmorGoods(hero);
                         break;
                     case 4:
                         Desert(hero);

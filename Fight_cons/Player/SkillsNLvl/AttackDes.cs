@@ -43,14 +43,13 @@ namespace FightCons
         }
 
         //  Действие: Пробитие брони
-        //TODO Добавить обозначения что атака пробивающая
         public static void BreachArmorAttack(Character attacker, Character victim)
         {           
             //  Пробитие брони
             short damage = GameFormulas.Damage(attacker, victim, true);
 
             Output.NameAndId(attacker, true);
-            Output.WriteColorLine(ConsoleColor.Yellow, "наносит ", $"{damage} ", "урона у ");
+            Output.WriteColorLine(ConsoleColor.Yellow, "пробивают броню и наносит ", $"{damage} ", "урона у ");
             Output.NameAndId(victim);
             Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damage} ", $"{Output.HPSymbol}\n");
 

@@ -7,7 +7,7 @@ namespace FightCons.CoreNSettings
 {
     public class Characteristics
     {
-        //  Место для хранения информации о себе
+        //  Место для хранения информации о характеристиках
         public List<Info> ItemList = new List<Info>();
 
         //  Свойства
@@ -138,6 +138,8 @@ namespace FightCons.CoreNSettings
         //  Макс. ходов
         public sbyte Moves;
 
+        //  Сведенье о характеристиках предмета
+        //TODO разобраться и понять где применяется 
         public void GetItemParamFields(Characteristics cha)
         {
             //  В2
@@ -155,6 +157,19 @@ namespace FightCons.CoreNSettings
                 new Info(cha.Moves, Output.MaxMovesStr)
             };
             ItemList.AddRange(list);
+        }
+    }
+    public class Info
+    {
+        public double ParamValue { get; set; }
+        public string ParamName { get; set; }
+
+        public Info(object a, object b)
+        {
+            string check = a.ToString();
+
+            ParamValue = double.Parse(check);
+            ParamName = (string)b;
         }
     }
 }

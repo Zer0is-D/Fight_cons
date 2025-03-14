@@ -69,7 +69,7 @@ namespace FightCons
             #region Особенности
             if (hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active)
             {
-                SpecialDes SpecialBranch = new SpecialDes(hero, "Навык 'Вскрыть жестянку'")
+                SpecialDes SpecialBranch = new SpecialDes(hero, "Навык 'Штопор'")
                 {
                     Specials = SpecialDes.SpecialBranch,
                     Description = $"'Вскрывает' броню противника"

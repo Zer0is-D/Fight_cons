@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreNSettings\CharecterProfiles.cs" />
+    <Compile Include="CoreNSettings\Entitys\TagSystem.cs" />
     <Compile Include="Enemies\Bestiaria.cs" />
     <Compile Include="CoreNSettings\EnemyFromXML.cs" />
     <Compile Include="PatternUnit.cs" />
@@ -102,7 +103,6 @@
     </Compile>
     <Compile Include="PipeMessage.cs" />
     <Compile Include="CoreNSettings\GameFormulas.cs" />
-    <Compile Include="CoreNSettings\Info.cs" />
     <Compile Include="CoreNSettings\Entitys\ItemChar.cs" />
     <Compile Include="CoreNSettings\Conditions.cs" />
     <Compile Include="CoreNSettings\Entitys\Characteristics.cs" />

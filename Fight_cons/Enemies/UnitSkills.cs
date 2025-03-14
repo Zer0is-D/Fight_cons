@@ -89,9 +89,12 @@ namespace FightCons
 
         public static void SpawnSpell(Character person, Hero hero, List<Order> units)
         {
+            Random random = new Random();
+
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", "призывает ");
-            var NewOne = Battles.AddNewUnit(hero, units, 3, 3, 3);
+
+            var NewOne = Battles.AddNewUnit(hero, units, 1, 1, 1);
 
             foreach (var o in NewOne)
             {

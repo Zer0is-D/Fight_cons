@@ -71,8 +71,8 @@ namespace FightCons
         internal CharacterClasses CharacterClass = new CharacterClasses("No class", 0);
         internal Statistic Statistic = new Statistic();
 
-        internal ItemChar CharacterWeapon = new ItemChar(name: "Без оружия", itemType: ItemTyps.Weapon,  attack: 1, speed: 0.2f, cost: 0, crit: 0, block: 0, maxMoves: 2);
-        internal ItemChar CharacterArmor = new ItemChar("Без брони", itemType: ItemTyps.Armor, 0, 0);        
+        internal ItemChar CharacterWeapon = new ItemChar(name: "Без оружия", itemType: ItemTypes.Weapon,  attack: 1, speed: 0.2f, cost: 0, crit: 0, block: 0, maxMoves: 2);
+        internal ItemChar CharacterArmor = new ItemChar("Без брони", itemType: ItemTypes.Armor, 0, 0);        
 
         //  Текущий ход
         internal protected int Turn;
