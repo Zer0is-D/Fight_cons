@@ -95,9 +95,9 @@ namespace FightCons
                 hero.PermanentBonus.Speed +
                 hero.TotalCrit +
                 hero.PermanentBonus.Crit +
-                hero.TotalDefence +
+                hero.TotalDefense +
                 hero.PermanentBonus.Defense +
-                hero.TotalMagicDefence +
+                hero.TotalMagicDefense +
                 hero.PermanentBonus.MagicDefense +
                 hero.TotalBlock +
                 hero.PermanentBonus.Block +

@@ -9,19 +9,19 @@ namespace FightCons
 
         //  Состояния
         public bool AttackParry = false;
-        public bool SheeldUp = false;
+        public bool ShieldUp = false;
 
         //  Сбежать с боя
         public bool LeavedBattle = false;
 
         //  Debuffs
-        internal protected sbyte FrezRound;
+        internal protected sbyte FreesRound;
         internal protected sbyte SlowRound;
-        internal protected sbyte PoisentRound;
+        internal protected sbyte PoisingRound;
         internal protected sbyte BleedRound;
 
         //  Базовый урон от эффектов
-        internal protected sbyte PoisentDmg = 3;
+        internal protected sbyte PoisingDmg = 3;
         public static sbyte BleedDmg = 3;
 
         internal protected void Clear()
@@ -39,9 +39,9 @@ namespace FightCons
             Moves = 0;
 
             //  Обнуление ходов
-            FrezRound = 0;
+            FreesRound = 0;
             SlowRound = 0;
-            PoisentRound = 0;
+            PoisingRound = 0;
             BleedRound = 0;
         }
 

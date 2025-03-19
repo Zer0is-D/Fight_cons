@@ -48,7 +48,17 @@ namespace FightCons.World.Locations
                         if (GameFormulas.Vero(0.2))
                             hero.HeroQuests.MainMainQ(hero);
                         else if (GameFormulas.Vero(0.6))
-                            Battles.MakeRandomBattle(hero, 2, 3);
+                        {
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(2, Character.ChaRole.Enemy),
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+
+                            Battles.MakeRandomBattle(hero, battleList);
+                        }
+
+                            
                         else
                             Output.TwriteLine("Вы ничего не находите\n", 1);
                         break;
@@ -58,7 +68,13 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 10, 11);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(10, Character.ChaRole.Enemy),
+                                new Order(11, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
                         }
                         break;
                     case 3:

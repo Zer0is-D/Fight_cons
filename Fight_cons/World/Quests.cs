@@ -6,6 +6,7 @@ using static FightCons.Locations;
 using static FightCons.ItemChar;
 using FightCons.World.Locations;
 using System.Security.Policy;
+using static FightCons.Character;
 
 namespace FightCons
 {
@@ -29,6 +30,8 @@ namespace FightCons
             //  Квест "Яблочный убийца"
         };
 
+        private static sbyte FinalBossWords = 0;
+
         //TODO посмотреть необходимость этого метода
         public void StartQ(Hero hero, byte i)
         {
@@ -43,7 +46,12 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 0);
+
+                    List<Order> battleList = new List<Order>()
+                    {
+                        new Order(0, Character.ChaRole.Enemy),
+                    };
+                    Battles.MakeCurrentBattle(hero, battleList);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -83,7 +91,12 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 0);
+
+                    List<Order> battleList = new List<Order>()
+                    {
+                        new Order(0, Character.ChaRole.Enemy),
+                    };
+                    Battles.MakeCurrentBattle(hero, battleList);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -120,7 +133,11 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 0);
+                    List<Order> battleList = new List<Order>()
+                    {
+                        new Order(0, Character.ChaRole.Enemy),
+                    };
+                    Battles.MakeCurrentBattle(hero, battleList);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -158,7 +175,11 @@ namespace FightCons
                 case 1:
                     //TODO ОГРОМНЫЙ КРАБЛИН БОСС
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 0);
+                    List<Order> battleList = new List<Order>()
+                    {
+                        new Order(0, ChaRole.Enemy),
+                    };
+                    Battles.MakeCurrentBattle(hero, battleList);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -195,7 +216,11 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 0);
+                    List<Order> battleList = new List<Order>()
+                    {
+                        new Order(0, Character.ChaRole.Enemy),
+                    };
+                    Battles.MakeCurrentBattle(hero, battleList);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -232,7 +257,11 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    Battles.MakeCurrentBattle(hero, 0);
+                    List<Order> battleList = new List<Order>()
+                    {
+                        new Order(0, Character.ChaRole.Enemy),
+                    };
+                    Battles.MakeCurrentBattle(hero, battleList);
 
                     //  Чистка параметров
                     hero.Condition.Clear();
@@ -267,8 +296,90 @@ namespace FightCons
             switch (hero.HeroQuests.Que[7])
             {
                 case 0:
-                    Output.TwriteLine("\nВы находите Покровителя\n", 1);
-                    Battles.MakeCurrentBattle(hero, 79);
+                    Output.TwriteLine("Перед входом в дверь вы встречаете трех людей", 1, true);
+                    Output.TwriteLine("- Ты же не думал что в одиночку будешь сражаться с ним? - сказал первый", 40, true);
+                    Output.TwriteLine("- Его смерть докажет нашу свободу! - быстро и уверено произнес второй", 20, true);
+                    Output.TwriteLine("- Кто-то должен будет его заменить и не допустить повторения его судьбы... - наконец констатировал третий", 60, true);
+
+                    Output.TwriteLine("\nПосле небольшой перекидки слов вы пришли к согласию", 20);
+                    Output.WriteColorLine(ConsoleColor.Yellow , "\nВы открываете дверь и встречаете ", "Покровителя\n");
+                    Console.ReadKey();
+                    //Output.TwriteLine("\nВы находите Покровителя\n", 1);
+
+                    List<Order> EnemyList = new List<Order>()
+                    {
+                        new Order(79, ChaRole.Enemy),
+                        //new Order(80, ChaRole.Ally),
+                        //new Order(81, ChaRole.Ally),
+                        //new Order(82, ChaRole.Ally),
+                        //new Order(83, ChaRole.Ally),
+                        //new Order(84, ChaRole.Ally),
+                        //new Order(85, ChaRole.Ally),
+                    };
+
+                    Random random = new Random();
+
+                    sbyte[] mas = { 80, 81, 82, 83, 84, 85 };
+
+                    for (sbyte t = 0; t < 3;)
+                    {
+                        sbyte num = (sbyte)random.Next(80, 86);
+
+                        if (!EnemyList.Any(c => c.UnitID == num))
+                        {
+                            EnemyList.Add(new Order(num, ChaRole.Ally));
+                            t++;
+                        }
+                    }
+
+                    List<BattleScenarioEvent> battleScenarioEvents = new List<BattleScenarioEvent>
+                    {
+                        new BattleScenarioEvent
+                        (
+                            (hero, EnemyList, turn) =>
+                            {
+                                var conditions = new List<bool>
+                                {
+                                    //  Каждый 10-й ход
+                                    turn % 10 == 0,
+
+                                };
+                                return conditions.Any(c => c);
+                            },
+                            
+                            
+                            (hero, EnemyList) =>
+                            {
+                                string[] mas = new string[]
+                                {
+                                    "- ВАМ КОНЕЦ",
+                                    "- Жалкие попытки борьбы со мной приведут вас к разочарованию. Еще не поздно одуматься",
+                                    "- Нужно было подготовиться к тому что вы столкнетесь с ней",
+                                    "- Вы были мне как дети, нет, вы ими для меня и были...",
+                                    "- Я горжусь вами...",
+                                };                               
+
+                                if (FinalBossWords < mas.Length)
+                                {
+                                    Output.TwriteLine("\n" + mas[FinalBossWords], 30, true);
+                                    FinalBossWords++;
+                                }                                    
+                            }, 
+                            true
+                        ),
+
+                        //new BattleScenarioEvent(
+                        //    (hero, EnemyList, turn) => turn == 0,
+                        //    (hero, EnemyList) =>
+                        //    {
+                        //        Console.WriteLine("СПАВН СОЮЗНИКА");
+
+                        //    }
+                        //    ),
+
+                    };
+
+                    Battles.MakeCurrentBattle(hero, EnemyList, battleScenarioEvents);
 
                     //  Чистка параметров
                     hero.Condition.Clear();

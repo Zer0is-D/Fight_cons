@@ -32,7 +32,15 @@ namespace FightCons.World.Locations
         public static void SpilledSpace(Hero hero)
         {
             if (GameFormulas.Vero(0.3))
-                Battles.MakeCurrentBattle(hero, 10, 5);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(10, Character.ChaRole.Enemy),
+                    new Order(5, Character.ChaRole.Enemy),
+                };
+                Battles.MakeCurrentBattle(hero, battleList);
+            }
+                
 
             while (true)
             {
@@ -81,7 +89,15 @@ namespace FightCons.World.Locations
                                 FindBoss = true;
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 10, 11, 12);
+                            {
+                                List<Order> battleList = new List<Order>()
+                                {
+                                    new Order(10, Character.ChaRole.Enemy),
+                                    new Order(11, Character.ChaRole.Enemy),
+                                    new Order(12, Character.ChaRole.Enemy),
+                                };
+                                Battles.MakeRandomBattle(hero, battleList);
+                            }                                
                         }
                         break;
                     case 2:
@@ -108,7 +124,12 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 2, 3);
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(2, Character.ChaRole.Enemy),
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
                         }
                     break;
                 }

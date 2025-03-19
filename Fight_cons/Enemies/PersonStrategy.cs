@@ -8,6 +8,7 @@ namespace FightCons
 {
     public class PersonStrategy 
     {
+        //TODO Добавить проверку первого удара и лагеря. Союзник до конца или до первого удара
         private static Character WhoToBeat(Character person, Hero hero, List<Order> units)
         {
             Random rand = new Random();
@@ -15,25 +16,25 @@ namespace FightCons
 
             foreach (var cha in units)
             {
-                switch (person.CharacterProfile.Role)
+                switch (person.Role)
                 {
-                    case CharacterProfiles.ChaRole.Wild:
+                    case Character.ChaRole.Wild:
                         if (cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
                             MyEnemies.Add(cha.character);
                         break;
 
-                    case CharacterProfiles.ChaRole.Enemy:
-                        if (cha.character.CharacterProfile.Role != CharacterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
+                    case Character.ChaRole.Enemy:
+                        if (cha.character.Role != Character.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
                             MyEnemies.Add(cha.character);
                         break;
 
-                    case CharacterProfiles.ChaRole.Ally:
-                        if (cha.character.CharacterProfile.Role == CharacterProfiles.ChaRole.Enemy & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
+                    case Character.ChaRole.Ally:
+                        if (cha.character.Role != Character.ChaRole.Ally & cha.character.Role != Character.ChaRole.Hero & cha.character.Id != person.Id & cha.character.Condition.IsAlive & !cha.character.Condition.LeavedBattle)
                             MyEnemies.Add(cha.character);
                         break;
                 }                    
             }
-            if (person.CharacterProfile.Role != CharacterProfiles.ChaRole.Ally)
+            if (person.Role != Character.ChaRole.Ally)
                 MyEnemies.Add(hero);
 
             if (MyEnemies.Count() == 0)
@@ -44,33 +45,33 @@ namespace FightCons
 
         public static void UnitAction(Character unit, Hero hero, List<Order> units)
         {
-            switch (unit.CharacterProfile.Strategy)
+            switch (unit.Strategy)
             {
                 //  Любая базовая стратегия поведения
-                case CharacterProfiles.Strategies.Any:
+                case Character.Strategies.Any:
                     if (GameFormulas.Vero(0.5))
                         StrgATC(unit, hero, units);
                     else
                         StrgMAG(unit, hero, units);
                     break;
 
-                //  Атакующй стратегия
-                case CharacterProfiles.Strategies.Aggressive:
+                //  Атакующей стратегия
+                case Character.Strategies.Aggressive:
                     StrgATC(unit, hero, units);
                     break;
 
                 //  Стратегия волшебника
-                case CharacterProfiles.Strategies.Mage:
+                case Character.Strategies.Mage:
                     StrgMAG(unit, hero, units);
                     break;
 
                 //  Стратегия некроманта
-                case CharacterProfiles.Strategies.Necromancer:
+                case Character.Strategies.Necromancer:
                     StrgNECRO(unit, hero, units);
                     break;
 
                 //  Стратегия хилера
-                case CharacterProfiles.Strategies.BeastMaster:
+                case Character.Strategies.BeastMaster:
                     StrgBeastMaster(unit, hero, units);
                     break;
 
@@ -85,7 +86,8 @@ namespace FightCons
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (!attacker.CharacterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
+                var run = attacker.CantRunBattle ? false : NeedToRun(attacker, min1: 10, min2: 20);
+                if (run)
                     break;
 
                 //  Условья
@@ -99,7 +101,7 @@ namespace FightCons
                     }                              
                     else
                     {
-                        UnitSkills.HoldTheSheeld(attacker);
+                        UnitSkills.HoldTheShield(attacker);
                         break;
                     }
                 }
@@ -111,18 +113,18 @@ namespace FightCons
                         break;
                     }
                     //  Отравляющая атака                
-                    if (hero.Condition.PoisentRound == 0)
+                    if (hero.Condition.PoisingRound == 0)
                     {
                         if (GameFormulas.Vero(0.5))
                         {
-                            UnitSkills.PoisentAtt(attacker, WhoToBeat(attacker, hero, units));
+                            UnitSkills.PoisingAtt(attacker, WhoToBeat(attacker, hero, units));
                             break;
                         }
                     }
                 }                
                 else
                 {
-                    UnitSkills.HoldTheSheeld(attacker);
+                    UnitSkills.HoldTheShield(attacker);
                     break;
                 }
             }
@@ -134,7 +136,8 @@ namespace FightCons
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (!attacker.CharacterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
+                var run = attacker.CantRunBattle ? false : NeedToRun(attacker, min1: 10, min2: 20);
+                if (run)
                     break;
 
                 //UnitSkills.AdSpamSpellAsync(attacker);
@@ -145,7 +148,7 @@ namespace FightCons
                     {
                         if (GameFormulas.Vero(0.5))
                         {
-                            UnitSkills.Vamperism(attacker, WhoToBeat(attacker, hero, units));
+                            UnitSkills.Vampirisms(attacker, WhoToBeat(attacker, hero, units));
                             break;
                         }
                     }
@@ -156,7 +159,7 @@ namespace FightCons
                         //  Заклинание заморозки
                         if (GameFormulas.Vero(0.1))
                         {
-                            UnitSkills.FrezSpell(attacker, WhoToBeat(attacker, hero, units));
+                            UnitSkills.FreesSpell(attacker, WhoToBeat(attacker, hero, units));
                             break;
                         }
 
@@ -173,7 +176,7 @@ namespace FightCons
                         //  Заклинание вампиризм
                         else if (GameFormulas.Vero(0.5))
                         {
-                            UnitSkills.Vamperism(attacker, WhoToBeat(attacker, hero, units));
+                            UnitSkills.Vampirisms(attacker, WhoToBeat(attacker, hero, units));
                             break;
                         }
                     }
@@ -185,7 +188,7 @@ namespace FightCons
                 }                
                 else
                 {
-                    UnitSkills.HoldTheSheeld(attacker);
+                    UnitSkills.HoldTheShield(attacker);
                     break;
                 }
             }
@@ -197,15 +200,17 @@ namespace FightCons
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (!attacker.CharacterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
+                var run = attacker.CantRunBattle ? false : NeedToRun(attacker, min1: 10, min2: 20);
+                if (run)
                     break;
+
                 if (WhoToBeat(attacker, hero, units) != null)
                 {
                     if (GameFormulas.PercentHp(attacker) < 60)
                     {
                         if (GameFormulas.Vero(0.5))
                         {
-                            UnitSkills.Vamperism(attacker, WhoToBeat(attacker, hero, units));
+                            UnitSkills.Vampirisms(attacker, WhoToBeat(attacker, hero, units));
                             break;
                         }
                     }
@@ -219,7 +224,7 @@ namespace FightCons
                             {
                                 if (en.character.Condition.IsAlive == false)
                                 {
-                                    UnitSkills.RevievSpell(attacker, en.character);
+                                    UnitSkills.ReviveSpell(attacker, en.character);
                                     break;
                                 }
                             }
@@ -228,7 +233,7 @@ namespace FightCons
                         //  Заклинание вампиризм
                         else if (GameFormulas.Vero(0.5))
                         {
-                            UnitSkills.Vamperism(attacker, WhoToBeat(attacker, hero, units));
+                            UnitSkills.Vampirisms(attacker, WhoToBeat(attacker, hero, units));
                             break;
                         }
                     }
@@ -240,7 +245,7 @@ namespace FightCons
                 }               
                 else
                 {
-                    UnitSkills.HoldTheSheeld(attacker);
+                    UnitSkills.HoldTheShield(attacker);
                     break;
                 }
             }
@@ -252,7 +257,8 @@ namespace FightCons
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
                 //  Если здоровье меньше 10-20% то сбегаем
-                if (!attacker.CharacterProfile.TooBrave && NeedToRun(attacker, min1: 10, min2: 20))
+                var run = attacker.CantRunBattle ? false : NeedToRun(attacker, min1: 10, min2: 20);
+                if (run)
                     break;
 
                 //  Условья
@@ -281,7 +287,7 @@ namespace FightCons
                 else
                 {
                     UnitSkills.SpawnSpell(attacker, hero, units);//////////////////////////////////////////////////////////
-                    UnitSkills.HoldTheSheeld(attacker);
+                    UnitSkills.HoldTheShield(attacker);
                     break;
                 }
             }
@@ -299,7 +305,7 @@ namespace FightCons
                 {
                     if (GameFormulas.Vero(0.8))
                     {
-                        Output.WriteColorLine(Output.unitNameColor(person.CharacterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
+                        Output.WriteColorLine(Output.unitNameColor(person.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
                         Console.ReadKey();
                         person.Condition.LeavedBattle = true;
                         return true;
@@ -312,7 +318,7 @@ namespace FightCons
                 {
                     if (GameFormulas.Vero(0.8))
                     {
-                        Output.WriteColorLine(Output.unitNameColor(person.CharacterProfile.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
+                        Output.WriteColorLine(Output.unitNameColor(person.Role), $"\n[{person.Id}] ", $"{person.Name} ", "сбегает\n");
                         Console.ReadKey();
                         person.Condition.LeavedBattle = true;
                         return true;

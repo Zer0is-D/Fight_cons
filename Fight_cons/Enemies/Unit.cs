@@ -1,6 +1,7 @@
-﻿using FightCons.CoreNSettings;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using static FightCons.Character;
 
 namespace FightCons.Enemies
 {
@@ -8,66 +9,73 @@ namespace FightCons.Enemies
     {
         public static int ExpForKill(int HP, short Attack) => (HP / 2) + (Attack / 2);
 
-        public Unit(Bestiaries bestiaria)
+        public Unit(Bestiaries bestiaries, ChaRole role)
         {
             Random rand = new Random();
 
-            CharacterProfile.Role = bestiaria.CharacterProfile.Role;
-            CharacterProfile.Phase = bestiaria.CharacterProfile.Phase;
-            Name = bestiaria.Name;
+            Role = role;
+            //Role = bestiaries.Role;
+            Phase = bestiaries.Phase;
+            Name = bestiaries.Name;
 
-            if (CharacterProfile.Role == CharacterProfiles.ChaRole.Wild)
-                MaxHp = (bestiaria.HpMax == 0) ?
-                    (short)(bestiaria.HpMin * rand.Next(2, 5)) : (short)(rand.Next(bestiaria.HpMin, bestiaria.HpMax) * rand.Next(2, 5));
-            else
-                MaxHp = (bestiaria.HpMax == 0) ?
-                    bestiaria.HpMin : (short)rand.Next(bestiaria.HpMin, bestiaria.HpMax);
+            //TODO решить судьбу метода
+            //if (Role == ChaRole.Wild)
+            //    MaxHp = (bestiaries.HpMax == 0) ?
+            //        (short)(bestiaries.HpMin * rand.Next(2, 5)) : (short)(rand.Next(bestiaries.HpMin, bestiaries.HpMax) * rand.Next(2, 5));
+            //else
+                MaxHp = (bestiaries.HpMax == 0) ?
+                    bestiaries.HpMin : (short)rand.Next(bestiaries.HpMin, bestiaries.HpMax);
 
-            if (bestiaria.HpMax == 0)
+            if (bestiaries.HpMax == 0)
             {
-                HP = bestiaria.HpMin;
+                HP = bestiaries.HpMin;
 
-                Attack = bestiaria.AttMin;
+                Attack = bestiaries.AttMin;
 
-                Speed = bestiaria.SpdMin * 0.01f;
+                Speed = bestiaries.SpdMin * 0.01f;
 
-                Crit = bestiaria.CrtMin * 0.01f;
+                Crit = bestiaries.CrtMin * 0.01f;
 
-                Defense = bestiaria.DefMin * 0.01f;
+                Defense = bestiaries.DefMin * 0.01f;
 
-                MagicDefense = bestiaria.MDefMin * 0.01f;
+                MagicDefense = bestiaries.MDefMin * 0.01f;
 
-                Block = bestiaria.BlkMin * 0.01f;
+                Block = bestiaries.BlkMin * 0.01f;
 
-                Moves = bestiaria.MovMin;
+                Moves = bestiaries.MovMin;
             }
             else
             {
-                HP = (short)rand.Next(bestiaria.HpMin, bestiaria.HpMax);
+                HP = (short)rand.Next(bestiaries.HpMin, bestiaries.HpMax);
 
-                Attack = (short)rand.Next(bestiaria.AttMin, bestiaria.AttMax);
+                Attack = (short)rand.Next(bestiaries.AttMin, bestiaries.AttMax);
 
-                Speed = (float)(rand.Next(bestiaria.SpdMin, bestiaria.SpdMax) * 0.01);
+                Speed = (float)(rand.Next(bestiaries.SpdMin, bestiaries.SpdMax) * 0.01);
 
-                Crit = (float)(rand.Next(bestiaria.CrtMin, bestiaria.CrtMax) * 0.01);
+                Crit = (float)(rand.Next(bestiaries.CrtMin, bestiaries.CrtMax) * 0.01);
 
-                Defense = (float)(rand.Next(bestiaria.DefMin, bestiaria.DefMax) * 0.01);
+                Defense = (float)(rand.Next(bestiaries.DefMin, bestiaries.DefMax) * 0.01);
 
-                MagicDefense = (float)(rand.Next(bestiaria.MDefMin, bestiaria.MDefMax) * 0.01);
+                MagicDefense = (float)(rand.Next(bestiaries.MDefMin, bestiaries.MDefMax) * 0.01);
 
-                Block = (float)(rand.Next(bestiaria.BlkMin, bestiaria.BlkMax) * 0.01);
+                Block = (float)(rand.Next(bestiaries.BlkMin, bestiaries.BlkMax) * 0.01);
 
-                Moves = (sbyte)rand.Next(bestiaria.MovMin, bestiaria.MovMax);
+                Moves = (sbyte)rand.Next(bestiaries.MovMin, bestiaries.MovMax);
             }
 
-            CharacterProfile.Strategy = bestiaria.CharacterProfile.Strategy;
+            CantRunBattle = bestiaries.CantRunBattle;
+
+            Strategy = bestiaries.Strategy;
 
             KillExp = ExpForKill(HP, Attack);
         }
 
         //  Решения противника
-        public static void UnitFightChoice(Character unit, Hero hero, List<Order> units)
+        public static void UnitFightChoice(Character unit, Hero hero, List<Order> units, List<BattleScenarioEvent> scenario = null)
         {
+            Thread.Sleep(50);
+            BattleScenarioEvent.CheckBattleScenarios(hero, units, scenario);
+
             //  Минус от эффектов
             NegativeEffectImpact(unit);
 
@@ -75,7 +83,7 @@ namespace FightCons.Enemies
             {
                 hero.Turn = 0;
 
-                unit.Condition.SheeldUp = false;
+                unit.Condition.ShieldUp = false;
 
                 PersonStrategy.UnitAction(unit, hero, units);                
             }
@@ -83,15 +91,13 @@ namespace FightCons.Enemies
             {
                 unit.Condition.Clear();
                 unit.Condition.IsAlive = false;
-            }
-
-                
+            }                
         }
 
-        //  Вычитание негативыне эффекты
+        //  Вычитание негативные эффекты
         public static void NegativeEffectImpact(Character unit)
         {
-            if (unit.Condition.Moves > 0 || unit.Condition.PoisentRound > 0 || unit.Condition.BleedRound > 0)
+            if (unit.Condition.Moves > 0 || unit.Condition.PoisingRound > 0 || unit.Condition.BleedRound > 0)
             {
                 //  Кровотечение
                 if (unit.Condition.BleedRound > 0)
@@ -107,12 +113,24 @@ namespace FightCons.Enemies
                     unit.Condition.SlowRound--;
 
                 //  Отравление
-                if (unit.Condition.PoisentRound > 0)
+                if (unit.Condition.PoisingRound > 0)
                 {
-                    unit.Condition.PoisentRound--;
-                    unit.HP -= unit.Condition.PoisentDmg;
+                    unit.Condition.PoisingRound--;
+                    unit.HP -= unit.Condition.PoisingDmg;
                 }
             }
         }
     }
+    //  Убрать позже
+    //public class UnitList
+    //{
+    //    public sbyte UnitID { get; set; }
+    //    public ChaRole ChaRole { get; set; }
+
+    //    public UnitList(sbyte unitID, ChaRole chaRole)
+    //    {
+    //        UnitID = unitID;
+    //        ChaRole = chaRole;
+    //    }
+    //}
 }

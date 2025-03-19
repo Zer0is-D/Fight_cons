@@ -85,11 +85,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreNSettings\CharecterProfiles.cs" />
     <Compile Include="CoreNSettings\Entitys\TagSystem.cs" />
     <Compile Include="Enemies\Bestiaria.cs" />
     <Compile Include="CoreNSettings\EnemyFromXML.cs" />
     <Compile Include="PatternUnit.cs" />
+    <Compile Include="Player\CombatSolutionsParty.cs" />
     <Compile Include="Player\SkillsNLvl\SpecialDes.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -1,17 +1,6 @@
-﻿using FightCons.CoreNSettings;
-using System;
-using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Net;
-using System.Text;
+﻿using System;
 using System.Threading;
 using static FightCons.Character;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using static FightCons.CoreNSettings.CharacterProfiles;
-using System.Xml.Linq;
-using System.Security.Policy;
 
 namespace FightCons
 {
@@ -145,18 +134,18 @@ namespace FightCons
             WriteColorLine(ConsoleColor.DarkGray, "", "###############################################################################################################\n");
         }
 
-        public static void NameAndId(Character charecter, bool NextLine = false)
+        public static void NameAndId(Character character, bool NextLine = false)
         {
             if (NextLine)
                 Console.WriteLine();
 
-            if (!charecter.CharacterProfile.IsPlayer)
-                Console.Write($"[{charecter.Id}] ");
-            else if (!charecter.CharacterProfile.IsPlayer & !NextLine)
-                Console.Write($"[{charecter.Id}] ");
+            if (!character.IsPlayer)
+                Console.Write($"[{character.Id}] ");
+            else if (!character.IsPlayer & !NextLine)
+                Console.Write($"[{character.Id}] ");
 
 
-            WriteColorName("", charecter, " ");
+            WriteColorName("", character, " ");
         }
 
         //  Определение цвета юнита
@@ -223,7 +212,7 @@ namespace FightCons
         }
         public static void WriteColorName(string NextL, Character charecter, string str = null)
         {
-            Console.ForegroundColor = unitNameColor(charecter.CharacterProfile.Role);
+            Console.ForegroundColor = unitNameColor(charecter.Role);
             Console.Write(NextL+charecter.Name);
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.Write(str);
@@ -400,6 +389,8 @@ namespace FightCons
                 Console.Write("Congratulations! ");
                 Thread.Sleep(50);
             }
+
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.ReadKey();
         }
     }

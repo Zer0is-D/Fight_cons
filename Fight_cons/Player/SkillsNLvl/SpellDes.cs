@@ -7,6 +7,7 @@ namespace FightCons
     public class SpellDes
     {
         public SpellDele Spell { get; set; }
+        public SpellDeleParty SpellParty { get; set; }
 
         public int ID { get; set; }
         public string Name { get; set; }
@@ -28,6 +29,23 @@ namespace FightCons
                 int index = hero.SpellList.IndexOf(rep);
                 this.ID = rep.ID;
                 hero.SpellList[index] = this;
+            }
+        }
+        //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
+        public SpellDes(Character character, string name)
+        {
+            Name = name;
+            SpellDes rep = character.SpellList.Where(x => x.Name == this.Name).FirstOrDefault();
+            if (rep == null)
+            {
+                character.SpellList.Add(this);
+                ID = character.SpellList.Count;
+            }
+            else
+            {
+                int index = character.SpellList.IndexOf(rep);
+                this.ID = rep.ID;
+                character.SpellList[index] = this;
             }
         }
 
@@ -53,6 +71,34 @@ namespace FightCons
                 victim.HP -= damag;
 
                 hero.Statistic.Spells++;
+            }
+            else
+            {
+                Output.NameAndId(victim, true);
+                Console.Write("уворачивается\n");
+            }
+        }
+        //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
+        public static void CleansingRaySpell(Character character, Character victim, short cost, sbyte spellPower)
+        {
+            Random rand = new Random();
+
+            short damag = GameFormulas.MagicDamage(character, victim, spellPower);
+
+            if (rand.NextDouble() <= 1 - victim.TotalSpeed)
+            {
+                Output.NameAndId(character, true);
+
+                if (damag > character.TotalArcane + spellPower)
+                    Output.WriteColorLine(ConsoleColor.DarkBlue, "наносит заклинанием критические ", $"{damag} ", "урона! У");
+                else
+                    Output.WriteColorLine(ConsoleColor.DarkBlue, "наносит заклинанием ", $"{damag} ", "урона у ");
+
+                Output.NameAndId(victim);
+                Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", $"{Output.HPSymbol}\n");
+                victim.HP -= damag;
+
+                character.Statistic.Spells++;
             }
             else
             {

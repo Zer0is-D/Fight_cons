@@ -1,8 +1,6 @@
 ﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Windows.Input;
 
 namespace FightCons
 {
@@ -42,7 +40,11 @@ namespace FightCons
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 3);
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                     case 3:

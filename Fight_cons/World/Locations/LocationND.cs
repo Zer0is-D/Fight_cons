@@ -258,7 +258,15 @@ namespace FightCons.World.Locations
         public static void SectorDzeta(Hero hero)
         {
             if (GameFormulas.Vero(0.4))
-                Battles.MakeRandomBattle(hero, 60, 61, 62);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(60, Character.ChaRole.Enemy),
+                    new Order(61, Character.ChaRole.Enemy),
+                    new Order(62, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }                
 
             while (true)
             {
@@ -299,7 +307,12 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 3);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                 }
@@ -337,7 +350,15 @@ namespace FightCons.World.Locations
         public static void SectorEtta(Hero hero)
         {
             if (GameFormulas.Vero(0.8))
-                Battles.MakeRandomBattle(hero, 60, 61, 62);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(60, Character.ChaRole.Enemy),
+                    new Order(61, Character.ChaRole.Enemy),
+                    new Order(62, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -378,7 +399,13 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 60, 61);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(60, Character.ChaRole.Enemy),
+                                new Order(61, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                 }
@@ -469,7 +496,15 @@ namespace FightCons.World.Locations
         public static void SectorTeta(Hero hero)
         {
             if (GameFormulas.Vero(0.7))
-                Battles.MakeRandomBattle(hero, 60, 61, 62);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(60, Character.ChaRole.Enemy),
+                    new Order(61, Character.ChaRole.Enemy),
+                    new Order(62, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -506,7 +541,13 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 60, 61);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(60, Character.ChaRole.Enemy),
+                                new Order(61, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                 }
@@ -544,7 +585,15 @@ namespace FightCons.World.Locations
         public static void SectorCsi(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 66, 67, 68);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(66, Character.ChaRole.Enemy),
+                    new Order(67, Character.ChaRole.Enemy),
+                    new Order(68, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -585,7 +634,13 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 68, 68);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(68, Character.ChaRole.Enemy),
+                                new Order(68, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                 }
@@ -623,7 +678,22 @@ namespace FightCons.World.Locations
         public static void SectorOmicron(Hero hero)
         {
             if (GameFormulas.Vero(0.9))
-                Battles.MakeRandomBattle(hero, 60, 61, 62, 63, 64, 65, 66, 67, 68);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(60, Character.ChaRole.Enemy),
+                    new Order(61, Character.ChaRole.Enemy),
+                    new Order(62, Character.ChaRole.Enemy),
+                    new Order(63, Character.ChaRole.Enemy),
+                    new Order(64, Character.ChaRole.Enemy),
+                    new Order(65, Character.ChaRole.Enemy),
+                    new Order(66, Character.ChaRole.Enemy),
+                    new Order(67, Character.ChaRole.Enemy),
+                    new Order(68, Character.ChaRole.Enemy),
+
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -672,7 +742,15 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 1, 1, 1, 1);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(1, Character.ChaRole.Enemy),
+                                new Order(1, Character.ChaRole.Enemy),
+                                new Order(1, Character.ChaRole.Enemy),
+                                new Order(1, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                 }
@@ -737,7 +815,13 @@ namespace FightCons.World.Locations
         public static void SectorPi(Hero hero)
         {
             if (GameFormulas.Vero(0.4))
-                Battles.MakeCurrentBattle(hero, 3);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(3, Character.ChaRole.Enemy),
+                };
+                Battles.MakeCurrentBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -778,7 +862,12 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 3);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                 }
@@ -816,7 +905,15 @@ namespace FightCons.World.Locations
         public static void SectorHi(Hero hero)
         {
             if (GameFormulas.Vero(0.8))
-                Battles.MakeRandomBattle(hero, 66, 67, 68);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(66, Character.ChaRole.Enemy),
+                    new Order(67, Character.ChaRole.Enemy),
+                    new Order(68, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -853,7 +950,13 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 66, 67, 68);
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(66, Character.ChaRole.Enemy),
+                                new Order(67, Character.ChaRole.Enemy),
+                                new Order(68, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
                         }
                         break;
                 }
@@ -921,7 +1024,14 @@ namespace FightCons.World.Locations
                                 hero.HeroQuests.MainND(hero);
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 1, 3);
+                            {
+                                List<Order> battleList = new List<Order>()
+                                {
+                                    new Order(1, Character.ChaRole.Wild),
+                                    new Order(3, Character.ChaRole.Enemy),
+                                };
+                                Battles.MakeRandomBattle(hero, battleList);
+                            }
                             else
                                 Output.TwriteLine("Вы ничего не находите\n", 1);
                         }
@@ -935,7 +1045,14 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 66, 67, 68);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(66, Character.ChaRole.Enemy),
+                                new Order(67, Character.ChaRole.Enemy),
+                                new Order(68, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
                         }
                         break;
                     case 3:
@@ -949,7 +1066,15 @@ namespace FightCons.World.Locations
         public static void SectorPsi(Hero hero)
         {
             if (GameFormulas.Vero(0.8))
-                Battles.MakeRandomBattle(hero, 63, 64, 65);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(63, Character.ChaRole.Enemy),
+                    new Order(64, Character.ChaRole.Enemy),
+                    new Order(65, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -990,7 +1115,12 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 3);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                 }
@@ -1028,7 +1158,15 @@ namespace FightCons.World.Locations
         public static void SectorOmega(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 63, 64, 65);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(63, Character.ChaRole.Enemy),
+                    new Order(64, Character.ChaRole.Enemy),
+                    new Order(65, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -1065,7 +1203,14 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 1, 1, 7);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(1, Character.ChaRole.Wild),
+                                new Order(1, Character.ChaRole.Wild),
+                                new Order(7, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                 }
@@ -1099,7 +1244,12 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 1);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(1, Character.ChaRole.Wild),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                     case 3:

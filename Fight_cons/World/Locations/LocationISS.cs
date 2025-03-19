@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FightCons.World.Locations
@@ -181,7 +178,15 @@ namespace FightCons.World.Locations
         public static void CavesStart(Hero hero)
         {
             if (GameFormulas.Vero(0.3))
-                Battles.MakeCurrentBattle(hero, 10, 5);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(10, Character.ChaRole.Enemy),
+                    new Order(5, Character.ChaRole.Enemy),
+                };
+                Battles.MakeCurrentBattle(hero, battleList);
+            }
+                
 
             while (true)
             {
@@ -209,7 +214,15 @@ namespace FightCons.World.Locations
                                 ExitCave = true;
                             }
                         if (GameFormulas.Vero(0.6))
-                            Battles.MakeRandomBattle(hero, 10, 11, 12);
+                        {
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(10, Character.ChaRole.Enemy),
+                                new Order(11, Character.ChaRole.Enemy),
+                                new Order(12, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
+                        }                            
 
                         hero.Statistic.CaveResearch++;
                         Research(hero);
@@ -220,7 +233,14 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 10, 11, 12);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(10, Character.ChaRole.Enemy),
+                                new Order(11, Character.ChaRole.Enemy),
+                                new Order(12, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
                         }
                         break;
                     case 3:
@@ -250,7 +270,15 @@ namespace FightCons.World.Locations
                 {
                     case 1:
                         if (GameFormulas.Vero(0.7))
-                            Battles.MakeRandomBattle(hero, 10, 11, 12);
+                        {
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(10, Character.ChaRole.Enemy),
+                                new Order(11, Character.ChaRole.Enemy),
+                                new Order(12, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
+                        }
 
                         hero.Statistic.CaveResearch++;
                         Research(hero);
@@ -261,7 +289,14 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 10, 11, 12);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(10, Character.ChaRole.Enemy),
+                                new Order(11, Character.ChaRole.Enemy),
+                                new Order(12, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
                         }
                         break;
                     case 3:
@@ -275,9 +310,23 @@ namespace FightCons.World.Locations
         public static void Valley(Hero hero)
         {
             if (GameFormulas.Vero(0.2))
-                Battles.MakeCurrentBattle(hero, 7);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(7, Character.ChaRole.Enemy),
+                };
+                Battles.MakeCurrentBattle(hero, battleList);
+            }
+                
             if (GameFormulas.Vero(0.4))
-                Battles.MakeRandomBattle(hero, 1);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(1, Character.ChaRole.Wild),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
+                
             if (GameFormulas.Vero(0.01))
                 FindingPouchEvent(hero, 1, 7);
 
@@ -318,7 +367,12 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 1);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(1, Character.ChaRole.Wild),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
                         }
                         break;
                     case 6:
@@ -334,8 +388,14 @@ namespace FightCons.World.Locations
             if (GameFormulas.Vero(0.15))
                 FindingPouchEvent(hero, 3, 10);
             if (GameFormulas.Vero(0.05))
-                Battles.MakeCurrentBattle(hero, 3);
-
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(3, Character.ChaRole.Enemy),
+                };
+                Battles.MakeCurrentBattle(hero, battleList);
+            }
+             
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Поселение Ордо\n");
@@ -434,7 +494,11 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 3);
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                     case 3:
@@ -539,7 +603,13 @@ namespace FightCons.World.Locations
             if (GameFormulas.Vero(0.3))
                 FindingPouchEvent(hero, 0, 5);
             if (GameFormulas.Vero(0.1))
-                Battles.MakeCurrentBattle(hero, 2);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(2, Character.ChaRole.Enemy),
+                };
+                Battles.MakeCurrentBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -564,7 +634,11 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 3);
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                     case 3:
@@ -684,7 +758,14 @@ namespace FightCons.World.Locations
                                 hero.HeroQuests.MainISS(hero);
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 2, 3);
+                            {
+                                List<Order> battleList = new List<Order>()
+                                {
+                                    new Order(2, Character.ChaRole.Enemy),
+                                    new Order(3, Character.ChaRole.Enemy),
+                                };
+                                Battles.MakeRandomBattle(hero, battleList);
+                            }                                
                             else
                                 Output.TwriteLine("Вы ничего не находите\n", 1);
                         }                        
@@ -698,7 +779,13 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeRandomBattle(hero, 2, 3);
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(2, Character.ChaRole.Enemy),
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
                         }
                         break;
                     case 3:
@@ -730,7 +817,12 @@ namespace FightCons.World.Locations
             if (hero.Statistic.CaveResearch == 30)
             {
                 Console.WriteLine("Вы слышите в темноте как что-то огромное надвигается на вас!");
-                Battles.MakeCurrentBattle(hero, 18);
+
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(18, Character.ChaRole.Enemy),
+                };
+                Battles.MakeCurrentBattle(hero, battleList);
             }
         }
 
@@ -775,7 +867,13 @@ namespace FightCons.World.Locations
                         hero.Statistic.Money += minGold;
                     }
                     else
-                        Battles.MakeCurrentBattle(hero, 3);
+                    {
+                        List<Order> battleList = new List<Order>()
+                        {
+                            new Order(3, Character.ChaRole.Enemy),
+                        };
+                        Battles.MakeCurrentBattle(hero, battleList);
+                    }                        
                     break;
                 case 2:
                     Output.TwriteLine("Вы проходите мимо", 10);

@@ -1,6 +1,8 @@
 ﻿using FightCons.CoreNSettings;
-using FightCons.Enemies;
+using FightCons.Player.SkillsNLvl;
 using System;
+using System.Collections.Generic;
+using System.Reflection.Emit;
 using static FightCons.ItemChar;
 
 namespace FightCons
@@ -9,8 +11,14 @@ namespace FightCons
     public delegate void SpellDele(Hero hero, Character enemy, short cost, sbyte spellPower);
     public delegate void SpecialDele(Hero hero, Character enemy);
 
+    //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
+    public delegate void SkillsDeleParty(Character сharacter, Character enemy);
+    public delegate void SpellDeleParty(Character сharacter, Character enemy, short cost, sbyte spellPower);
+    public delegate void SpecialDeleParty(Character сharacter, Character enemy);
+
     public abstract class Character : Characteristics
     {
+        public bool IsPlayer { get; set; }
         internal protected short Id;
 
         #region Окончательные характеристики 
@@ -46,11 +54,11 @@ namespace FightCons
         {
             get => Crit + CharacterWeapon.Crit + CharacterArmor.Crit + Condition.Crit + PermanentBonus.Crit;
         }
-        internal protected float TotalDefence
+        internal protected float TotalDefense
         {
             get => Defense + CharacterWeapon.Defense + CharacterArmor.Defense + Condition.Defense + PermanentBonus.Defense;
         }
-        internal protected float TotalMagicDefence
+        internal protected float TotalMagicDefense
         {
             get => MagicDefense + CharacterWeapon.MagicDefense + CharacterArmor.MagicDefense + Condition.MagicDefense + PermanentBonus.MagicDefense;
         }
@@ -64,11 +72,67 @@ namespace FightCons
         }
         #endregion
 
+        //  Боевые навыки героя
+        private protected List<AttackDes> _characterSkills = new List<AttackDes>();
+        internal protected List<AttackDes> AttackList
+        {
+            get => _characterSkills;
+            set => _characterSkills = value;
+        }
+
+        //  Заклинания героя
+        private protected List<SpellDes> _characterSpells = new List<SpellDes>();
+        internal protected List<SpellDes> SpellList
+        {
+            get => _characterSpells;
+            set => _characterSpells = value;
+        }
+
+        //  Особые боевые навыки героя
+        private protected List<SpecialDes> _characterSpecials = new List<SpecialDes>();
+        internal protected List<SpecialDes> SpecialList
+        {
+            get => _characterSpecials;
+            set => _characterSpecials = value;
+        }
+
+        //  Зелья героя
+        private protected List<PotionDes> _characterPotions = new List<PotionDes>();
+        internal protected List<PotionDes> PotionList
+        {
+            get => _characterPotions;
+            set => _characterPotions = value;
+        }
+
+        internal protected sbyte? Phase;
+
+        internal protected bool CantRunBattle { get; set; }
+
+        internal protected bool Wild;
+
+        public enum ChaRole
+        {
+            Hero = 0,
+            Ally = 1,
+            Enemy = 2,
+            Wild = 3
+        }
+        public ChaRole Role;
+
+        public enum Strategies
+        {
+            Any = 0,
+            Aggressive = 1,
+            Mage = 2,
+            Necromancer = 3,
+            Healer = 4,
+            BeastMaster = 5
+        }
+        public Strategies Strategy = new Strategies();
+
         //  Баффы и дебаффы от состояний, перманентных бонусов и классовых бонусов
-        internal CharacterProfiles CharacterProfile = new CharacterProfiles();
-        internal Conditions Condition = new Conditions();
         internal PermanentBonuses PermanentBonus = new PermanentBonuses();
-        internal CharacterClasses CharacterClass = new CharacterClasses("No class", 0);
+        internal Conditions Condition = new Conditions();
         internal Statistic Statistic = new Statistic();
 
         internal ItemChar CharacterWeapon = new ItemChar(name: "Без оружия", itemType: ItemTypes.Weapon,  attack: 1, speed: 0.2f, cost: 0, crit: 0, block: 0, maxMoves: 2);
@@ -92,7 +156,7 @@ namespace FightCons
             while (c <= TotalMaxHP)
             {
                 if (c <= TotalHP)
-                    Output.WriteColorLine(Output.unitHPColor(CharacterProfile.Role), "", "#");
+                    Output.WriteColorLine(Output.unitHPColor(Role), "", "#");
                 else
                     Output.WriteColorLine(ConsoleColor.Black, "", "#");
                 c += part;
@@ -132,7 +196,7 @@ namespace FightCons
         public void DifferentHpBar()
         {
             //Output.WriteColorName("\n", this, ":");
-            if (CharacterProfile.Phase >= 2)
+            if (Phase >= 2)
                 PhaseHPBar();
             else
                 HPBar();
@@ -153,12 +217,12 @@ namespace FightCons
             {
                 if (c <= TotalHP)
                 {
-                    if (CharacterProfile.Phase == 2 && charsToNextBar == 10) // Для фазы 2
+                    if (Phase == 2 && charsToNextBar == 10) // Для фазы 2
                     {
                         Output.WriteColorLine(ConsoleColor.Yellow, "", "|");
                         charsToNextBar = 0;
                     }
-                    else if (CharacterProfile.Phase == 3 && charsToNextBar == 7) // Для фазы 3
+                    else if (Phase == 3 && charsToNextBar == 7) // Для фазы 3
                     {
                         Output.WriteColorLine(ConsoleColor.Yellow, "", "|");
                         charsToNextBar = 0;
@@ -167,7 +231,7 @@ namespace FightCons
                     {
                         if (phase4 == 3)
                             eng = true;
-                        if (CharacterProfile.Phase == 4 && charsToNextBar == 5) // Для фазы 4
+                        if (Phase == 4 && charsToNextBar == 5) // Для фазы 4
                         {
                             Output.WriteColorLine(ConsoleColor.Yellow, "", "|");
                             charsToNextBar = 0;
@@ -175,7 +239,7 @@ namespace FightCons
                         }
                     }
 
-                    Output.WriteColorLine(Output.unitHPColor(CharacterProfile.Role), "", "#", "");
+                    Output.WriteColorLine(Output.unitHPColor(Role), "", "#", "");
                     charsToNextBar++;
                 }
                 else

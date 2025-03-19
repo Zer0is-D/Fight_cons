@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using static FightCons.CoreNSettings.CharacterProfiles;
+using static FightCons.Character;
 
 namespace FightCons
 {
@@ -15,7 +15,7 @@ namespace FightCons
         // TODO сделать hash проверки
         private static string Path = Application.StartupPath + "\\Units.xml";
 
-        public static Unit LoudedEnemies(short id)
+        public static Unit LaudedEnemies(short id, ChaRole role)
         {
             var res = Bestiaries.GetUnit(id);
 
@@ -27,13 +27,13 @@ namespace FightCons
                 //return new Unit(Bestiaries.BestiaryList.FirstOrDefault(x => x.Id == id));
 
                 // Иначальное решение
-                return new Unit(Bestiaries.GetUnit(id));
+                return new Unit(Bestiaries.GetUnit(id), role);
             }                
             else
-                return LoadUnit(id);
+                return LoadUnit(id, role);
         }
 
-        static Unit LoadUnit(short id)
+        static Unit LoadUnit(short id, ChaRole role)
         {
             if (File.Exists(Path))
             {
@@ -66,7 +66,7 @@ namespace FightCons
                         mDefMin: sbyte.Parse(currentEnemy.Element("MinMagicDefense").Value), mDefMax: sbyte.Parse(currentEnemy.Element("MaxMagicDefense").Value),
                         blkMin: sbyte.Parse(currentEnemy.Element("MinBlock").Value), blkMax: sbyte.Parse(currentEnemy.Element("MaxBlock").Value),
                         movMin: sbyte.Parse(currentEnemy.Element("MinMoves").Value), movMax: sbyte.Parse(currentEnemy.Element("MaxMoves").Value),
-                        role: (ChaRole) Enum.Parse(typeof(ChaRole), currentEnemy.Element("Role").Value),
+                        //role:  (ChaRole) Enum.Parse(typeof(ChaRole), currentEnemy.Element("Role").Value),
                         strategy: (Strategies)Enum.Parse(typeof(Strategies), currentEnemy.Element("Strategies").Value)
                     )
                     {
@@ -83,12 +83,12 @@ namespace FightCons
                         attack: short.Parse(currentEnemy.Element("Attack").Value),
                         speed: sbyte.Parse(currentEnemy.Element("Speed").Value),
                         critChance: sbyte.Parse(currentEnemy.Element("Crit").Value),
-                        defence: sbyte.Parse(currentEnemy.Element("Defense").Value),
-                        magicDefence: sbyte.Parse(currentEnemy.Element("MagicDefense").Value),
+                        defense: sbyte.Parse(currentEnemy.Element("Defense").Value),
+                        magicDefense: sbyte.Parse(currentEnemy.Element("MagicDefense").Value),
                         block: sbyte.Parse(currentEnemy.Element("Block").Value),
                         moves: sbyte.Parse(currentEnemy.Element("Moves").Value),
                         noRun: bool.Parse(currentEnemy.Element("CantRun").Value),
-                        role: (ChaRole) Enum.Parse(typeof(ChaRole), currentEnemy.Element("Role").Value),
+                        //role: (ChaRole) Enum.Parse(typeof(ChaRole), currentEnemy.Element("Role").Value),
                         strategy: (Strategies)Enum.Parse(typeof(Strategies), currentEnemy.Element("Strategies").Value)
                     )
                     {
@@ -99,7 +99,7 @@ namespace FightCons
                 Bestiaries.AddNewBestiaries(loadedUnit);
                 SaveUnits();
 
-                return new Unit(loadedUnit);
+                return new Unit(loadedUnit, role);
             }
 
             SaveUnits();            
@@ -138,7 +138,7 @@ namespace FightCons
                             mDefMin: sbyte.Parse(unit.Element("MinMagicDefense")?.Value), mDefMax: sbyte.Parse(unit.Element("MaxMagicDefense")?.Value),
                             blkMin: sbyte.Parse(unit.Element("MinBlock")?.Value), blkMax: sbyte.Parse(unit.Element("MaxBlock")?.Value),
                             movMin: sbyte.Parse(unit.Element("MinMoves")?.Value), movMax: sbyte.Parse(unit.Element("MaxMoves")?.Value),
-                            role: (ChaRole)Enum.Parse(typeof(ChaRole), unit.Element("Role")?.Value),
+                            //role: (ChaRole)Enum.Parse(typeof(ChaRole), unit.Element("Role")?.Value),
                             strategy: (Strategies)Enum.Parse(typeof(Strategies), unit.Element("Strategies")?.Value)
                         )
                         { Id = short.Parse(unit.Element("ID")?.Value) });
@@ -153,12 +153,12 @@ namespace FightCons
                             attack: short.Parse(unit.Element("Attack").Value),
                             speed: sbyte.Parse(unit.Element("Speed").Value),
                             critChance: sbyte.Parse(unit.Element("Crit").Value),
-                            defence: sbyte.Parse(unit.Element("Defense").Value),
-                            magicDefence: sbyte.Parse(unit.Element("MagicDefense").Value),
+                            defense: sbyte.Parse(unit.Element("Defense").Value),
+                            magicDefense: sbyte.Parse(unit.Element("MagicDefense").Value),
                             block: sbyte.Parse(unit.Element("Block").Value),
                             moves: sbyte.Parse(unit.Element("Moves").Value),
                             noRun: bool.Parse(unit.Element("CantRun").Value),
-                            role: (ChaRole)Enum.Parse(typeof(ChaRole), unit.Element("Role").Value),
+                            //role: (ChaRole)Enum.Parse(typeof(ChaRole), unit.Element("Role").Value),
                             strategy: (Strategies)Enum.Parse(typeof(Strategies), unit.Element("Strategies").Value)
                         )
                         { Id = short.Parse(unit.Element("ID").Value) });
@@ -202,7 +202,7 @@ namespace FightCons
                         XElement xelem = new XElement($"Unit",
                             new XElement("ID", uni.Id),
                             new XElement("Name", uni.Name),
-                            new XElement("Phase", uni.CharacterProfile.Phase),
+                            new XElement("Phase", uni.Phase),
 
                             new XElement("MinHp", uni.HpMin), new XElement("MaxHp", uni.HpMax),
                             new XElement("MinAttack", uni.AttMin), new XElement("MaxAttack", uni.AttMax),
@@ -212,8 +212,8 @@ namespace FightCons
                             new XElement("MinMagicDefense", uni.MDefMin), new XElement("MaxMagicDefense", uni.MDefMax),
                             new XElement("MinBlock", uni.BlkMin), new XElement("MaxBlock", uni.BlkMax),
                             new XElement("MinMoves", uni.MovMin), new XElement("MaxMoves", uni.MovMax),
-                            new XElement("Role", uni.CharacterProfile.Role),
-                            new XElement("Strategies", uni.CharacterProfile.Strategy));
+                            new XElement("Role", uni.Role),
+                            new XElement("Strategies", uni.Strategy));
 
                         document.Root.Add(xelem);
                     }
@@ -222,7 +222,7 @@ namespace FightCons
                         XElement xelem = new XElement($"Unit",
                             new XElement("ID", uni.Id),
                             new XElement("Name", uni.Name),
-                            new XElement("Phase", uni.CharacterProfile.Phase),
+                            new XElement("Phase", uni.Phase),
                             new XElement("HP", uni.HpMin),
                             new XElement("Attack", uni.AttMin),
                             new XElement("Speed", uni.SpdMin),
@@ -231,9 +231,9 @@ namespace FightCons
                             new XElement("MagicDefense", uni.MDefMin),
                             new XElement("Block", uni.BlkMin),
                             new XElement("Moves", uni.MovMin),
-                            new XElement("CantRun", uni.CharacterProfile.TooBrave),
-                            new XElement("Role", uni.CharacterProfile.Role),
-                            new XElement("Strategies", uni.CharacterProfile.Strategy));
+                            new XElement("CantRun", uni.CantRunBattle),
+                            new XElement("Role", uni.Role),
+                            new XElement("Strategies", uni.Strategy));
 
                         document.Root.Add(xelem);
                     }

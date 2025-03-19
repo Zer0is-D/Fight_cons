@@ -160,7 +160,14 @@ namespace FightCons.World.Locations
         public static void GreenGround(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeCurrentBattle(hero, 53);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(53, Character.ChaRole.Enemy),
+                };
+                Battles.MakeCurrentBattle(hero, battleList);
+            }
+                
 
             while (true)
             {
@@ -194,7 +201,15 @@ namespace FightCons.World.Locations
         public static void Desert(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 50, 51, 52);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(50, Character.ChaRole.Enemy),
+                    new Order(51, Character.ChaRole.Enemy),
+                    new Order(52, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -276,7 +291,15 @@ namespace FightCons.World.Locations
         {
             //TODO Шанс воровства велик
             if (GameFormulas.Vero(0.7))
-                Battles.MakeRandomBattle(hero, 50, 51, 52);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(50, Character.ChaRole.Enemy),
+                    new Order(51, Character.ChaRole.Enemy),
+                    new Order(52, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -405,7 +428,13 @@ namespace FightCons.World.Locations
                                 hero.HeroQuests.MainPP(hero);
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 2);
+                            {
+                                List<Order> battleList = new List<Order>()
+                                {
+                                    new Order(2, Character.ChaRole.Enemy),
+                                };
+                                Battles.MakeRandomBattle(hero, battleList);
+                            }
                             else
                                 Output.TwriteLine("Вы ничего не находите\n", 1);
                         }
@@ -419,7 +448,11 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 2);
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(2, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                     case 3:

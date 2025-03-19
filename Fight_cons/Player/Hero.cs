@@ -8,9 +8,11 @@ namespace FightCons
     public partial class Hero : Character
     {
         public string ClassName = "???";
+        //TODO что это???
         public byte Sneak = 0;
 
         //  Здоровье
+        //TODO точно ли нужно это?
         internal new protected short MaxHp
         {
             get => _maxHp;
@@ -28,6 +30,7 @@ namespace FightCons
             }
         }
 
+        //TODO пересмотреть
         #region Левл и опыт
         internal protected int NextLvlExp = 10;
 
@@ -73,6 +76,7 @@ namespace FightCons
         #region Умения героя
 
         //  Боевые навыки героя
+        /*
         private protected List<AttackDes> _heroSkills = new List<AttackDes>();
         internal protected List<AttackDes> AttackList
         { 
@@ -103,8 +107,10 @@ namespace FightCons
             get => _heroPotions; 
             set => _heroPotions = value;
         }
-
+        */
         #endregion
+
+        internal CharacterClasses CharacterClass = new CharacterClasses("No class", 0);
 
         //TODO Доделать
         internal List<ItemChar> HeroInventory = new List<ItemChar>();
@@ -113,6 +119,7 @@ namespace FightCons
         //  Квесты
         public Quests HeroQuests = new Quests();
 
+        //TODO подумать о том чтобы скрестить с квестами
         //  Внимательность/шпионаж
         public Spying HeroSpying = new Spying();
 
@@ -134,9 +141,9 @@ namespace FightCons
             Crit = 0.05f;
             Block = 0.10f;
             Moves = 2;
-            CharacterProfile.IsPlayer = true;
+            IsPlayer = true;
             Condition.IsAlive = true;
-            CharacterProfile.Role = CharacterProfiles.ChaRole.Hero;
+            //Role = ChaRole.Hero;
         }
     }
 }

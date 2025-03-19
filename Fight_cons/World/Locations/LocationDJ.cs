@@ -128,7 +128,14 @@ namespace FightCons.World.Locations
         public static void Woods1(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 20, 1);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(1, Character.ChaRole.Wild),
+                    new Order(20, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -162,7 +169,14 @@ namespace FightCons.World.Locations
         public static void Woods2(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 20, 1);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(1, Character.ChaRole.Wild),
+                    new Order(20, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -196,7 +210,14 @@ namespace FightCons.World.Locations
         public static void Woods3(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 20, 1);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(1, Character.ChaRole.Wild),
+                    new Order(20, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -230,7 +251,14 @@ namespace FightCons.World.Locations
         public static void Woods4(Hero hero)
         {
             if (GameFormulas.Vero(0.6))
-                Battles.MakeRandomBattle(hero, 20, 1);
+            {
+                List<Order> battleList = new List<Order>()
+                {
+                    new Order(1, Character.ChaRole.Wild),
+                    new Order(20, Character.ChaRole.Enemy),
+                };
+                Battles.MakeRandomBattle(hero, battleList);
+            }
 
             while (true)
             {
@@ -373,7 +401,13 @@ namespace FightCons.World.Locations
                                 hero.HeroQuests.MainDJ(hero);
                             }
                             else if (GameFormulas.Vero(0.6))
-                                Battles.MakeRandomBattle(hero, 21);
+                            {
+                                List<Order> battleList = new List<Order>()
+                                {
+                                    new Order(21, Character.ChaRole.Enemy),
+                                };
+                                Battles.MakeRandomBattle(hero, battleList);
+                            }
                             else
                                 Output.TwriteLine("Вы ничего не находите\n", 1);
                         }
@@ -387,7 +421,11 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            Battles.MakeCurrentBattle(hero, 3);
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
                         }
                         break;
                     case 3:

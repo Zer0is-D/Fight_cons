@@ -3,9 +3,6 @@ using System.Threading;
 using static FightCons.CharacterClasses;
 using static FightCons.ItemChar;
 using FightCons.World.Locations;
-using System.Numerics;
-using System.Windows.Documents;
-using System.Collections.Generic;
 
 namespace FightCons
 {
@@ -19,7 +16,7 @@ namespace FightCons
                             $"Lvl: {Lvl}\t\tExp: {Exp}/{NextLvlExp} \n"
                             + $"{Output.HPSymbol}: {TotalHP}/{TotalMaxHP} \t{Output.MPSymbol}: {MP}/{TotalMaxMP}\n"
                             + $"{Output.AttackStr}: {TotalAttack}\t\t{Output.ArcaneStr}: {TotalArcane}\n"
-                            + $"{Output.DefenceStr}: {TotalDefence * 100}%\t\t{Output.MagicDefenceStr}: {TotalMagicDefence * 100}%\n"
+                            + $"{Output.DefenceStr}: {TotalDefense * 100}%\t\t{Output.MagicDefenceStr}: {TotalMagicDefense * 100}%\n"
                             + $"{Output.SpeedStr}: {TotalSpeed * 100}%\t{Output.CritStr}: {TotalCrit * 100}%\n"
                             + $"{Output.BlockStr}: {TotalBlock * 100}%\n");
             Output.WriteColorLine(ConsoleColor.Yellow, $"Money: {Money}", $"{Output.MoneySymbol}\n");
@@ -36,10 +33,9 @@ namespace FightCons
             //  Проверочный сегмент //////////////////////////////////////////////////////////////
             hero.Name = "Nemo";
             //hero.HPnMPBar();
-            
+            hero.Lvl = 10;
 
-
-            //Battles.MakeCurrentBattle(hero, 12, 12);
+            hero.HeroQuests.MainMainQ(hero);
 
             //  КОНЕЦ СЕГМЕНТА
             /////////////////////////////////////////////////////////////////////////////////////
@@ -113,6 +109,15 @@ namespace FightCons
 
             Output.TwriteLine("Проходя рукой по пространству вокруг себя вы находите деревянную палку с чем-то мягким.\n"
                           + "Догадка была верна, это оказался факел, что освятил пространство.\nНо ответить на вопрос где вы, пока не удается.\n", 1, true);
+
+            //  Проверочный сегмент //////////////////////////////////////////////////////////////
+            hero.Name = "Nemo";
+            //hero.HPnMPBar();
+
+           
+
+            //  КОНЕЦ СЕГМЕНТА
+            /////////////////////////////////////////////////////////////////////////////////////
 
             switch (ChPlace)
             {

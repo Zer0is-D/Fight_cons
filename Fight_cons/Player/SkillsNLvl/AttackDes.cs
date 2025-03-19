@@ -7,6 +7,7 @@ namespace FightCons
     public class AttackDes
     {
         internal SkillsDele Attack { get; set; }
+        internal SkillsDeleParty AttackParty { get; set; }
 
         internal int ID { get; set; }
         internal string Name { get; set; }
@@ -27,6 +28,23 @@ namespace FightCons
                 int index = hero.AttackList.IndexOf(repeat);
                 this.ID = repeat.ID;
                 hero.AttackList[index] = this;
+            }
+        }
+        //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
+        public AttackDes(Character character, string name)
+        {
+            Name = name;
+            AttackDes repeat = character.AttackList.Where(x => x.Name == this.Name).FirstOrDefault();
+            if (repeat == null)
+            {
+                character.AttackList.Add(this);
+                ID = character.AttackList.Count;
+            }
+            else
+            {
+                int index = character.AttackList.IndexOf(repeat);
+                this.ID = repeat.ID;
+                character.AttackList[index] = this;
             }
         }
 
