@@ -40,51 +40,21 @@ namespace FightCons
         public static string HPSymbol = "HP";
         public static string MPSymbol = "MP";
 
-        public static string MaxHpStr
-        {
-            get => "vHP";
-        }
-        public static string MaxMpStr
-        {
-            get => "vMP";
-        }
+        public static string MaxHpStr { get => "vHP"; }
+        public static string MaxMpStr { get => "vMP"; }
 
-        public static string AttackStr
-        {
-            get => "ATT";
-        }
-        public static string ArcaneStr
-        {
-            get => "ARC";
-        }
-        public static string DefenceStr
-        {
-            get => "DEF";
-        }
-        public static string MagicDefenceStr
-        {
-            get => "MDEF";
-        }       
-       
-        public static string SpeedStr
-        {
-            get => "SPD";
-        }
-        public static string CritStr
-        {
-            get => "CRT";
-        }
-        public static string BlockStr
-        {
-            get => "BLK";
-        }
-        public static string MaxMovesStr
-        {
-            get => "vMOV";
-        }
+        public static string AttackStr { get => "ATT"; }
+        public static string ArcaneStr { get => "ARC"; }
+        public static string DefenceStr { get => "DEF"; }
+        public static string MagicDefenceStr { get => "MDEF"; }
 
-        public static string DmgSymbol = "DMG";
-        public static string EffMovSymbol = "MOV";
+        public static string SpeedStr { get => "SPD"; }
+        public static string CritStr { get => "CRT"; }
+        public static string BlockStr { get => "BLK"; }
+        public static string MaxMovesStr { get => "vMOV"; }
+
+        public static string DmgSymbol { get => "DMG"; }
+        public static string EffMovSymbol { get => "MOV"; }
         //  Добавить меткость на англ
         #endregion
 

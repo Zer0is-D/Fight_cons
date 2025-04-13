@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace FightCons
 {
@@ -11,14 +13,38 @@ namespace FightCons
         public static bool SoundEffects = false;
         public static bool DetailedParamValue = false;
 
-        //  Настройка окна
-        //public static void Console_window()
-        //{
-        //    //Console.SetWindowSize(12, 20);
-        //}
+        #region Фиксированное окно
+        const int MF_BYCOMMAND = 0x00000000;
+        const int SC_SIZE = 0xF000;
+        const int SC_MAXIMIZE = 0xF030;
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+        [DllImport("user32.dll")]
+        static extern bool DeleteMenu(IntPtr hMenu, uint uPosition, uint uFlags);
+
+        [DllImport("kernel32.dll", ExactSpelling = true)]
+        static extern IntPtr GetConsoleWindow();
+        #endregion
 
         public static void RecommendedWindowSize()
         {
+            IntPtr consoleWindow = GetConsoleWindow();
+            IntPtr systemMenu = GetSystemMenu(consoleWindow, false);
+
+            if (consoleWindow != IntPtr.Zero)
+            {
+                // Отключаем возможность изменения размера окна
+                DeleteMenu(systemMenu, SC_SIZE, MF_BYCOMMAND);
+                // Отключаем кнопку максимизации
+                DeleteMenu(systemMenu, SC_MAXIMIZE, MF_BYCOMMAND);
+            }
+
+            Console.SetWindowSize(80, 30);
+            Console.SetBufferSize(80, Console.BufferHeight);
+            Console.OutputEncoding = Encoding.Unicode;
+
             Console.WriteLine("\nПеред тем чтобы продолжить отрегулируйте ширину консоли так чтобы нижняя линия была прямая и впритык к правой стенке");
             Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "################################################################################", "\n");
             Output.WriteColorLine(ConsoleColor.Cyan, "\nНажмите ", "Любую кнопку", " чтобы продолжить...\n");

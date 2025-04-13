@@ -32,10 +32,33 @@ namespace FightCons
 
             //  Проверочный сегмент //////////////////////////////////////////////////////////////
             hero.Name = "Nemo";
-            //hero.HPnMPBar();
-            hero.Lvl = 10;
 
-            hero.HeroQuests.MainMainQ(hero);
+            //hero.HeroCoordinates = Map.transit.CavesToValley;
+            LocationISS.Valley(hero);
+            hero.HPnMPBar();
+
+            //List<Order> battleList = new List<Order>()
+            //{
+            //    new Order(31, ChaRole.Enemy),
+            //    new Order(31, ChaRole.Wild),
+            //    new Order(31, ChaRole.Wild),
+            //    new Order(31, ChaRole.Enemy),
+            //    new Order(31, ChaRole.Enemy),
+            //    new Order(31, ChaRole.Enemy),
+            //    new Order(31, ChaRole.Enemy),
+            //    //new Order(31, ChaRole.Wild),
+            //    new Order(11, ChaRole.Ally),
+            //    new Order(11, ChaRole.Ally),
+            //    new Order(11, ChaRole.Ally),
+            //};
+            //Battles.MakeCurrentBattle(hero, battleList);
+
+
+
+            //hero.Lvl = 10;
+
+            //hero.HeroQuests.Que[4] = 1;
+            //hero.HeroQuests.MainOP(hero);
 
             //  КОНЕЦ СЕГМЕНТА
             /////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +134,7 @@ namespace FightCons
                           + "Догадка была верна, это оказался факел, что освятил пространство.\nНо ответить на вопрос где вы, пока не удается.\n", 1, true);
 
             //  Проверочный сегмент //////////////////////////////////////////////////////////////
-            hero.Name = "Nemo";
+            //hero.Name = "Nemo";
             //hero.HPnMPBar();
 
            

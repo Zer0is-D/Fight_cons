@@ -1,5 +1,7 @@
 ﻿using FightCons.Enemies;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FightCons.CoreNSettings
 {
@@ -203,6 +205,27 @@ namespace FightCons.CoreNSettings
                 obj.CantRunBattle.GetHashCode() ^
                 obj.Role.GetHashCode() ^
                 obj.Strategy.GetHashCode();
+        }
+        #endregion
+
+        #region Проверки для карты
+        public static bool CurrentCoordinate(int x, int y) => Map.playerX == x && Map.playerY == y;
+
+        public static bool CurrentCoordinates(params (int,int)[] coordinates)
+        {
+            foreach (var cor in coordinates)
+            {
+                if (CurrentCoordinate(cor.Item1, cor.Item2))
+                    return true;
+            }
+            return false;
+
+            //var conditions = new List<bool>
+            //{
+            //    (playerX == 4 && playerY == 4),
+            //    (playerX == 5 && playerY == 5)
+            //};
+            //return conditions.Any(c => c);
         }
         #endregion
     }

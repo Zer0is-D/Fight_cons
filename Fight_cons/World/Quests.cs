@@ -135,7 +135,7 @@ namespace FightCons
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
                     List<Order> battleList = new List<Order>()
                     {
-                        new Order(0, Character.ChaRole.Enemy),
+                        new Order(0, ChaRole.Enemy),
                     };
                     Battles.MakeCurrentBattle(hero, battleList);
 
@@ -173,11 +173,14 @@ namespace FightCons
             switch (hero.HeroQuests.Que[4])
             {
                 case 1:
-                    //TODO ОГРОМНЫЙ КРАБЛИН БОСС
-                    Output.TwriteLine("\nВы находите Таотота\n", 1);
+                    Output.TwriteLine("\nВы наблюдаете огромное белое пятно всплывающие из глубин морской пучины", 30, true);
+                    Output.TwriteLine("\nМерзкая и неестественная фигура медленно выступает из под пены", 30, true);
+
+                    Output.TwriteLine("\nВас находит Гигантский краблин\n", 1);
                     List<Order> battleList = new List<Order>()
                     {
-                        new Order(0, ChaRole.Enemy),
+                        new Order(49, ChaRole.Enemy),
+                        new Order(0, ChaRole.Hero)
                     };
                     Battles.MakeCurrentBattle(hero, battleList);
 

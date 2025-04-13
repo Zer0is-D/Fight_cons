@@ -2,16 +2,15 @@
 using System;
 using System.Text;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace FightCons
 {
     class Program
-    {
+    {        
         static void Main(string[] args)
         {
             Console.Title = "Game";
-            Console.SetWindowSize(80, 30);
-            Console.OutputEncoding = Encoding.Unicode;
 
             Settings.RecommendedWindowSize();
 

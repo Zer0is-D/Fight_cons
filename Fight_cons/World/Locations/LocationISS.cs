@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using static FightCons.CoreNSettings.Map;
 
 namespace FightCons.World.Locations
 {
@@ -171,6 +172,161 @@ namespace FightCons.World.Locations
         //  Рынок в поселение Решеноми
         private static Store ReshinomyMarket = new Store(11, GoodsNum, BonusesNum, Materials, WeaponsByMaterial, ArmorByMaterial);
         #endregion
+
+        #region Настройки карт
+
+        //TODO ПОНЯТЬ КАК СПАВНИТЬ ИГРОКА В РАЗНЫЕ МЕСТА В ЗАВИСИМОСТИ ОТ ПОЗИЦИИ В СЛЕД ЛОКАЦИИ
+        static List<Map> maps = new List<Map>()
+        {
+            #region Valley 
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','O','.','.','#', },
+                    { '#','.','O','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','O','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','⌂','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','⌂','.','.','X','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+                    // Добавляем интерактивные объекты:
+                    // Сундук на второй строке: координаты (14,1)
+                    //{(14, 1), () => Map.ShowMessage("Вы нашли сундук с сокровищами!") },
+                    // Сундук на девятой строке: координаты (12,8)
+                    //{(12, 8), () => Map.ShowMessage("Вы нашли сундук с сокровищами!") },
+                    // Точка выхода ('O') не добавляется в интерактивные объекты – для её активации нужно встать на нее
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                    // Добавляем невидимые триггеры (например, ловушка)
+                    //{   
+                    //    new List<(int, int)>  
+                    //    { 
+                    //        (2, 3) 
+                    //    },
+                    //    () => maps[0].ShowMessage("Осторожно! Вы попали в ловушку!") 
+                    //}
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(16, 1), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.ValleyToFoothills;
+                            Foothills(hero);
+                        }
+                    },//+ "2) Пойти в предгорье\n"
+                    {(2, 2), Caves }, //+ "6) Вернуться в пещеры";
+                    {(18, 4), Woods },//+ "4) Пойти в лес\n"
+                    {(12, 6), OrdoColony },//  "1) Пойти в поселение Ордо\n"
+                    {(9, 8), Neighborhood }//+ "3) Пойти в окрестности\n" // появления инфы позже
+                },                
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<Order> battleList = new List<Order>()
+                    {
+                        new Order(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                }, 
+                0.8)
+            ),
+            #endregion
+
+            #region Foothills
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','#','#','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    { '#','#','.','O','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#', },
+                    { '#','#','#','#','#','#','#','#','#','O','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+                    // Добавляем интерактивные объекты:
+                    // Сундук на второй строке: координаты (14,1)
+                    //{(14, 1), () => Map.ShowMessage("Вы нашли сундук с сокровищами!") },
+                    // Сундук на девятой строке: координаты (12,8)
+                    //{(12, 8), () => Map.ShowMessage("Вы нашли сундук с сокровищами!") },
+                    // Точка выхода ('O') не добавляется в интерактивные объекты – для её активации нужно встать на нее
+                },
+                //  Тригер события
+                new Dictionary<(int, int), Action>
+                {
+
+                    // Добавляем невидимые триггеры (например, ловушка)
+                    {(5, 5), () => maps[1].TriggerTrap() }
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(3, 3), ReshinomiColony },
+                    {(9, 8), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.FoothillsToValley;
+                            Valley(hero);
+                        } 
+                    }
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+                    List<Order> battleList = new List<Order>()
+                    {
+                        new Order(3, Character.ChaRole.Enemy),
+                    };
+                    Battles.MakeCurrentBattle(hero, battleList);
+                },
+                0.9)
+            )
+            #endregion
+        };
+
+        static Dictionary<Enum, (int, int)> SpawnPoints = new Dictionary<Enum, (int, int)>
+        {
+            //  Valley
+            { transit.CavesToValley, (3,2) },
+            { transit.FoothillsToValley, (16,2) },
+            { transit.WoodsToValley, (17,4) },
+            { transit.OrdoToValley, (11,6) },
+            { transit.NeighborhoodToValley, (9,7) },
+
+            //  Foothills
+            { transit.ValleyToFoothills, (9,7) },
+            { transit.SenisusColonyToFoothills, (4,3) },
+        };
+
+        #endregion
         #endregion
 
         #region Локации ИСС
@@ -185,8 +341,7 @@ namespace FightCons.World.Locations
                     new Order(5, Character.ChaRole.Enemy),
                 };
                 Battles.MakeCurrentBattle(hero, battleList);
-            }
-                
+            }                
 
             while (true)
             {
@@ -210,7 +365,10 @@ namespace FightCons.World.Locations
                         if (GameFormulas.Vero(0.25))
                             if (!ExitCave)
                             {
-                                Output.TwriteLine("\nВы находите выход\n", 1);
+                                Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "###########################################################################################################");
+                                Output.WriteColorLine(ConsoleColor.White, "", "    Вы находите выход!    ");
+                                Output.WriteColorLine(ConsoleColor.DarkGray, "", "###########################################################################################################\n");
+                                Console.ReadLine();
                                 ExitCave = true;
                             }
                         if (GameFormulas.Vero(0.6))
@@ -245,7 +403,10 @@ namespace FightCons.World.Locations
                         break;
                     case 3:
                         if (ExitCave)
+                        {
+                            hero.HeroCoordinates = transit.CavesToValley;
                             Valley(hero);
+                        }
                         break;
                 }
             }
@@ -300,35 +461,77 @@ namespace FightCons.World.Locations
                         }
                         break;
                     case 3:
+                        hero.HeroCoordinates = transit.CavesToValley;
                         Valley(hero);
                         break;
                 }
             }
         }
 
-        //  Долина
+        //Долина
         public static void Valley(Hero hero)
         {
-            if (GameFormulas.Vero(0.2))
+            List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
             {
-                List<Order> battleList = new List<Order>()
-                {
-                    new Order(7, Character.ChaRole.Enemy),
-                };
-                Battles.MakeCurrentBattle(hero, battleList);
-            }
-                
-            if (GameFormulas.Vero(0.4))
-            {
-                List<Order> battleList = new List<Order>()
-                {
-                    new Order(1, Character.ChaRole.Wild),
-                };
-                Battles.MakeRandomBattle(hero, battleList);
-            }
-                
-            if (GameFormulas.Vero(0.01))
-                FindingPouchEvent(hero, 1, 7);
+                #region События на карте
+                new LocationScenarioEvent
+                (
+                    0.2,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            GameFormulas.CurrentCoordinates((3, 5), (4, 5), (5, 5)),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(7, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
+                    },
+                    true
+                ),
+                new LocationScenarioEvent
+                (
+                    (hero, turn) => true,
+                    (hero) =>
+                    {
+                        if (GameFormulas.Vero(0.8))
+                            RestEvent(hero);
+                        else
+                        {
+                            RestEvent(hero);
+
+                            rendering = false;
+                            //mapStartLine = -1;
+                            //Console.CursorVisible = true;
+
+                            List<Order> battleList = new List<Order>()
+                            {
+                                new Order(1, Character.ChaRole.Wild),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList);
+                        }
+                    },
+                    true
+                )
+
+                #endregion
+            };
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Долина";
+            locInfo[1] = Descriptions(((byte)LocationName.Valley), Descript);
+
+            maps[0].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo, scenario);
+
+            while (true)
+                maps[0].Transition(hero, (playerX, playerY), locInfo, scenario);
 
             while (true)
             {
@@ -338,7 +541,7 @@ namespace FightCons.World.Locations
                 hero.HPnMPBar(true, true);
 
                 //TODO Появления наименования мест посто того как узнал
-                //TODO Сделать нумерацию возможных действий через массив строк 
+                //TODO Сделать нумерацию возможных действий через массив строк
                 string quo = "\nВаши действия?\n"
                             + "1) Пойти в поселение Ордо\n"
                             + "2) Пойти в предгорье\n"
@@ -362,18 +565,7 @@ namespace FightCons.World.Locations
                         Woods(hero);
                         break;
                     case 5:
-                        if (GameFormulas.Vero(0.8))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
 
-                            List<Order> battleList = new List<Order>()
-                            {
-                                new Order(1, Character.ChaRole.Wild),
-                            };
-                            Battles.MakeRandomBattle(hero, battleList);
-                        }
                         break;
                     case 6:
                         Caves(hero);
@@ -420,11 +612,15 @@ namespace FightCons.World.Locations
                         break;
                     case 2:
                         if (hero.Lvl > hero.Statistic.HeroLvlKickOff)
+                        {
+                            hero.HeroCoordinates = transit.WoodsToValley;
                             Inn(hero);
+                        }
                         else
                             OrdoColony(hero);
                         break;
                     case 3:
+                        hero.HeroCoordinates = transit.OrdoToValley;
                         Valley(hero);
                         break;
                 }
@@ -471,6 +667,17 @@ namespace FightCons.World.Locations
         //Предгорье
         public static void Foothills(Hero hero)
         {
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Предгорье";
+            locInfo[1] = Descriptions(((byte)LocationName.Foothills), Descript);
+
+            maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
+
+            while (true)
+                maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Предгорье\n");
@@ -502,6 +709,7 @@ namespace FightCons.World.Locations
                         }
                         break;
                     case 3:
+                        hero.HeroCoordinates = transit.FoothillsToValley;
                         Valley(hero);
                         break;
                 }
@@ -642,6 +850,7 @@ namespace FightCons.World.Locations
                         }
                         break;
                     case 3:
+                        hero.HeroCoordinates = transit.NeighborhoodToValley;
                         Valley(hero);
                         break;
                 }
@@ -789,6 +998,7 @@ namespace FightCons.World.Locations
                         }
                         break;
                     case 3:
+                        hero.HeroCoordinates = transit.WoodsToValley;
                         Valley(hero);
                         break;
                 }

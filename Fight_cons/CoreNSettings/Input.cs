@@ -80,7 +80,7 @@ namespace FightCons
         }
 
         //  Проверка c ключевыми словами
-        public static sbyte SbyteInput(Hero hero)
+        public static sbyte SbyteInput(Hero hero, bool noAns = false)
         {
             Dictionary<string, Action> KeyWords = new Dictionary<string, Action>();
             #region Ключевые слова
@@ -159,7 +159,14 @@ namespace FightCons
             {
                 str = Console.ReadLine();
                 if (KeyWords.ContainsKey(str.ToLower()))
+                {
                     KeyWords[str.ToLower()].Invoke();
+                    if (noAns)
+                        return 1;
+                }
+                else if (noAns)
+                    return 0;
+
             }
             while (!sbyte.TryParse(str, out x));
 

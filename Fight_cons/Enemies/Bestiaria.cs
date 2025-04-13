@@ -198,6 +198,10 @@ namespace FightCons
                 new Bestiaries("Коралитовый страж", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 60, defMax: 80, mDefMin: 40, mDefMax: 70, blkMin: 10, blkMax: 30, movMin: 1, movMax: 2, /*role: ChaRole.Enemy,*/ strategy: Strategies.Aggressive)
                 { Id = 43 },
 
+                //  49 Гигантский краблин
+                new Bestiaries("Гигантский краблин", 2, 70, 12, 30, 50, 50, 20, 10, 1, true, Strategies.Aggressive)
+                { Id = 49 },
+
                 //44-49
                 #endregion
 

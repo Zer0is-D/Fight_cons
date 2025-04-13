@@ -1,6 +1,9 @@
 ﻿using FightCons.CoreNSettings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using static FightCons.CharacterClasses;
 
 namespace FightCons
 {
@@ -55,13 +58,13 @@ namespace FightCons
         }
 
         //  Событие отдых
-        protected static void RestEvent(Hero hero)
+        public static void RestEvent(Hero hero)
         {
-            if (hero.ClassName != "Волшебник")
+            if (hero.CharacterClass.Class != ChaClass.Wizard)
                 MakeRest(hero);
             else
             {
-                string quo = "Выберите вид отдыха:\n" +
+                string quo = "\nВыберите вид отдыха:\n" +
                             "1) Обычный\n" +
                             "2) Медитация";
 

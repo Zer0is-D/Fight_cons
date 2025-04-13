@@ -379,7 +379,8 @@ namespace FightCons
 
             //  Чистка параметров
             hero.Condition.Clear();
-            scenario.Clear();
+            if (scenario != null)
+                scenario.Clear();
             hero.Turn = 0;
 
             if (hero.TotalHP <= 0)
@@ -560,6 +561,393 @@ namespace FightCons
                 }
             }
         }
+
+        struct UnitPosition
+        {
+            public Character character;
+            public int x, y; // Позиция противника
+            public bool hasCover; // Установлено ли укрытие
+
+            public UnitPosition(Character character, int x, int y)
+            {
+                this.character = character;
+                this.x = x;
+                this.y = y;
+            }
+        }
+
+        public static void BattleMap(Character character, List<Order> units = null)
+        {
+            /* Старый вариант
+            //WriteColorLine(ConsoleColor.DarkGray, "", "┌──────────────────────────────────────────────────────────────────────────────┐");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ │");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ │");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ │");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ │");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ |");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ---------------------------------------------------------------------------- |");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ |");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ |");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ |");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ |");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "| ############################################################################ |");
+            //WriteColorLine(ConsoleColor.DarkGray, "", "└──────────────────────────────────────────────────────────────────────────────┘");*/
+
+            // 2
+            //Output.WriteColorLine(ConsoleColor.DarkGray, "\t\t\t", "| ########### ###### ########### |", "\t\n");
+            //Output.WriteColorLine(ConsoleColor.DarkGray, "\t\t\t", "| ########## ☺ #### ☺ ########## |", "\t\n");
+            //Output.WriteColorLine(ConsoleColor.DarkGray, "\t\t\t", "| ########### ###### ########### |", "\t\n");
+
+            List<Order> enemySide = new List<Order>();
+            List<Order> allySide = new List<Order>();
+
+            string[] masHeadNFoot =
+            {
+                "\t\t\t| ############### ############## |\t",
+                "\t\t\t| ########### ###### ########### |\t",
+                "\t\t\t| ######## ###### ###### ####### |\t",
+                "\t\t\t| #### ###### ###### ###### #### |\t",
+            };
+
+            sbyte enemyNum = 0;
+            sbyte allytNum = 0;
+
+            foreach (var u in units)
+            {
+                if (u.Role == ChaRole.Enemy || u.Role == ChaRole.Wild)
+                {
+                    enemySide.Add(u);
+                    enemyNum++;
+                }
+                else
+                {
+                    allySide.Add(u);
+                    allytNum++;
+                }                    
+            }
+            allytNum++; //hero
+            allySide.Add(new Order(character, ChaRole.Hero));
+            
+            //  Не трогаем 
+            Console.WriteLine("\n\t\t\t┌────────────────────────────────┐\t");
+            Console.WriteLine("\t\t\t| ############################## │\t");
+
+            #region Сторона противника
+            //Console.Write("\t\t\t| ");
+            //if (enemySide.Count >= 2)
+            //    Console.Write("########### ###### ########### |");
+            //else
+            //    Console.Write("############### ############## |");
+
+            Console.Write(masHeadNFoot[enemySide.Count > 4 ? masHeadNFoot.Length - 1 : enemySide.Count - 1] + "\n\t\t\t| ");
+            Tes(enemySide, character);
+            #endregion
+
+            #region Centre
+            //if (enemySide.Count >= 2)
+            //    Console.Write("\t\t\t| ########### ###### ########### |\t\n");
+            //else
+            //    Console.Write("\t\t\t| ############### ############## |\t\n");
+            Console.Write(masHeadNFoot[enemySide.Count > 4 ? masHeadNFoot.Length - 1 : enemySide.Count - 1]);
+
+            Console.Write("\t\t\t\t| ############################## |\t");
+            Console.Write("\t\t\t\t| ------------------------------ |\t");
+            Console.Write("\t\t\t\t| ############################## |\t\n");
+
+            //if (allySide.Count >= 2)
+            //    Console.Write("\t\t\t| ########### ###### ########### |\t\n");
+            //else
+            //    Console.Write("\t\t\t| ############### ############## |\t\n");
+            Console.Write(masHeadNFoot[allySide.Count > 4 ? masHeadNFoot.Length - 1 : allySide.Count - 1] + "\n\t\t\t| ");
+            #endregion
+
+            #region Сторона союзника
+            Tes(allySide, character);
+
+            //if (allySide.Count >= 2)
+            //    Console.Write("\t\t\t| ########### ###### ########### |\t\n");
+            //else
+            //    Console.Write("\t\t\t| ############### ############## |\t\n");
+            Console.Write(masHeadNFoot[allySide.Count > 4 ? masHeadNFoot.Length - 1 : allySide.Count - 1]);
+            #endregion
+
+            //  Не трогаем 
+            Console.Write("\t\t\t\t| ############################## |\t");
+            Console.Write("\t\t\t\t└────────────────────────────────┘\t\n");
+            
+
+            /*Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t",
+            //                                units.Count >= 2 ? "| ########### ###### ########### |" : "| ############### ############## |", "\t\n");
+
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t",
+
+
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t",
+            //                                units.Count >= 2 ? "| ########### ###### ########### |" : "| ############### ############## |", "\t\n");
+
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t", "| ############################## |", "\t\n");
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t", "| ------------------------------ |", "\t\n");
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t", "| ############################## |", "\t\n");
+
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t",
+            //                                 units.Count > 2 ? "| ########### ###### ########### |" : "| ############### ############## |", "\t\n");
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t",
+            //                                 units.Count > 2 ? "| ########## ☻ #### ☻ ########## |" : "| ############## ☻ ############# │", "\t\n");
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t",
+            //                                 units.Count > 2 ? "| ########### ###### ########### |" : "| ############### ############## |", "\t\n");
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t", "| ############################## |", "\t\n");
+            //Output.WriteColorLine(ConsoleColor.Gray, "\t\t\t", "└────────────────────────────────┘", "\t\n");
+
+            //Console.BackgroundColor = ConsoleColor.DarkGray;*/
+        }
+
+        public static void Tes(List<Order> unit, Character character, bool good = false)
+        {
+            string simbol = good ? " ☻ " : " ☺ ";
+
+            string[] masFirst =
+            {
+                "##############",
+                "##########",
+                "#######",
+                "###",
+            };
+
+            string[] masEnd =
+            {
+                "############# |\t\n",
+                "########## |\t\n",
+                "###### |\t\n",
+                "### |\t\n",
+            };
+            string space = "####";
+
+            Console.Write(masFirst[unit.Count > 4 ? masFirst.Length - 1 : unit.Count - 1]);
+
+            if (BasicCheck(unit[0].character, character))
+                Output.WriteColorLine(Output.unitNameColor(unit[0].Role), "", simbol);
+            else
+                Output.WriteColorLine(ConsoleColor.DarkGray, "", simbol);
+
+            for (int i = 1; i < unit.Count; i++)
+            {
+                if (i == 4)
+                    break;
+                if (BasicCheck(unit[i].character, character))
+                    Output.WriteColorLine(Output.unitNameColor(unit[i].Role), space, simbol);
+                else
+                    Output.WriteColorLine(ConsoleColor.DarkGray, space, simbol);
+            }
+
+            Console.Write(masEnd[unit.Count > 4 ? masEnd.Length - 1 : unit.Count - 1]);
+        }
+
+        
+        /*public static void BattleMap(Character character, List<Order> units = null)
+        {
+            List<Order> enemySide = new List<Order>();
+            List<Order> allySide = new List<Order>();
+
+            sbyte enemyNum = 0;
+            sbyte allytNum = 0;
+
+            foreach (var u in units)
+            {
+                if (u.Role == ChaRole.Enemy || u.Role == ChaRole.Wild)
+                {
+                    enemySide.Add(u);
+                    enemyNum++;
+                }
+                else
+                {
+                    allySide.Add(u);
+                    allytNum++;
+                }
+            }
+            allySide.Add(new Order(character, character.Role));
+            allytNum++; //hero
+
+            BattleMapEn(enemySide, enemyNum);
+            BattleMapAl(allySide, allytNum);
+        }
+
+        public static void BattleMapEn(List<Order> enemySide, sbyte enemyNum)
+        {
+            int width = 30;
+            int height = 4;
+
+            //allySide.Add(new UnitPosition(character));
+
+            UnitPosition[] enemyPositions = new UnitPosition[enemyNum];
+
+            int startX = 15; // Начальная позиция по X для размещения
+            int startY = 1;  //height - 2; // Начальная позиция по Y для размещения
+
+            for (int i = 0; i < enemyNum; i++)
+            {
+                if (enemyNum == 1)
+                {
+                    enemyPositions[0] = new UnitPosition(enemySide[i].character, startX, startY);
+                }
+                else if (enemyNum == 2)
+                {
+                    enemyPositions[0] = new UnitPosition(enemySide[i].character, startX - 3, startY);
+                    enemyPositions[1] = new UnitPosition(enemySide[i].character, startX + 2, startY);
+
+                }
+                else if (enemyNum == 3)
+                {
+                    enemyPositions[0] = new UnitPosition(enemySide[i].character, startX - 7, startY);
+                    enemyPositions[1] = new UnitPosition(enemySide[i].character, startX, startY);
+                    enemyPositions[2] = new UnitPosition(enemySide[i].character, startX + 7, startY);
+                }
+                else if (enemyNum >= 4 && enemyNum <= 6)
+                {
+                    int rows = 2;
+                    int columns = (enemyNum + 1) / rows;
+
+                    for (int j = 0; j < enemyNum; j++)
+                    {
+                        enemyPositions[j] = new UnitPosition(enemySide[i].character, startX + (columns - 1) + (i % columns) * 2, startY + (i / columns));
+                    }
+                }
+                else if (enemyNum >= 7 && enemyNum <= 9)
+                {
+                    sbyte level = 0;
+                    for (int j = 0; j < enemyNum; j++)
+                    {
+                        enemyPositions[j] = new UnitPosition(enemySide[i].character, startX + (i - level) * 2, startY - level);
+
+                        if (j == (level + 1) * 2 - 1)
+                            level++;
+                    }
+                }
+            }
+
+            Console.WriteLine();
+
+            string[,] gameMap = new string[height, width];
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    gameMap[i, j] = " ";
+                }
+            }
+
+
+            for (int i = 0; i < enemyNum; i++)
+            {
+                gameMap[enemyPositions[i].y, enemyPositions[i].x] = enemyPositions[i].character.TotalHP > 0 ? "A" : "D";
+
+                // Укрытие перед противником
+                if (enemyPositions[i].y > 0 && !enemyPositions[i].hasCover)
+                {
+                    gameMap[enemyPositions[i].y + 1, enemyPositions[i].x] = "@";
+                    enemyPositions[i].hasCover = true;
+                }
+            }
+
+            // Печать карты
+            PrintMap(gameMap, width, height);
+        }
+        public static void BattleMapAl(List<Order> allySide, sbyte allytNum)
+        {
+            int width = 30;
+            int height = 4;
+
+            UnitPosition[] allyPositions = new UnitPosition[allytNum];
+
+            int startX = 15; // Начальная позиция по X для размещения
+            int startY = 1;  //height - 2; // Начальная позиция по Y для размещения
+
+            for (int i = 0; i < allytNum; i++)
+            {
+                if (allytNum == 1)
+                {
+                    allyPositions[0] = new UnitPosition(allySide[i].character, startX, startY);
+                }
+                else if (allytNum == 2)
+                {
+                    allyPositions[0] = new UnitPosition(allySide[i].character, startX, startY);
+                    allyPositions[1] = new UnitPosition(allySide[i].character, startX + 5, startY);
+
+                }
+                else if (allytNum == 3)
+                {
+                    allyPositions[0] = new UnitPosition(allySide[i].character, startX, startY);
+                    allyPositions[1] = new UnitPosition(allySide[i].character, startX + 2, startY);
+                    allyPositions[2] = new UnitPosition(allySide[i].character, startX + 2, startY);
+                }
+                else if (allytNum >= 4 && allytNum <= 6)
+                {
+                    sbyte rows = 2;
+                    sbyte columns = (sbyte)(allytNum / rows);
+
+                    for (int j = 0; j < allytNum; j++)
+                    {
+                        allyPositions[j] = new UnitPosition(allySide[i].character, startX + (i % columns) * 2, startY - (i / columns));
+                    }
+                }
+                else if (allytNum >= 7 && allytNum <= 9)
+                {
+                    sbyte level = 0;
+                    for (int j = 0; j < allytNum; j++)
+                    {
+                        allyPositions[j] = new UnitPosition(allySide[i].character, startX + (i - level) * 2, startY - level);
+
+                        if (j == (level + 1) * 2 - 1)
+                            level++;
+                    }
+                }
+            }
+
+            Console.WriteLine();
+
+            string[,] gameMap = new string[height, width];
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    gameMap[i, j] = " ";
+                }
+            }
+
+
+            for (int i = 0; i < allytNum; i++)
+            {
+                gameMap[allyPositions[i].y, allyPositions[i].x] = allyPositions[i].character.TotalHP > 0 ? "A" : "D";
+
+                // Укрытие перед противником
+                if (allyPositions[i].y > 0 && !allyPositions[i].hasCover)
+                {
+                    gameMap[allyPositions[i].y - 1, allyPositions[i].x] = "@";
+                    allyPositions[i].hasCover = true;
+                }
+            }
+
+            // Печать карты
+            PrintMap(gameMap, width, height);
+        }*/
+
+        private static bool BasicCheck(Character en, Character al) => en.TotalHP > 0 & !en.Condition.LeavedBattle & !al.Condition.LeavedBattle;
+
+        static void PrintMap(string[,] map, int width, int height)
+        {
+            Console.WriteLine("\t\t\t┌" + new string('─', width) + "┐\t");
+            for (int i = 0; i < height; i++)
+            {
+                Console.Write("\t\t\t│");
+                for (int j = 0; j < width; j++)
+                {
+                    Console.Write(map[i, j]);
+                }
+                Console.WriteLine("│");
+            }
+            Console.WriteLine("\t\t\t└" + new string('─', width) + "┘\t\n");
+        }
     }
 
     //  Порядок хода
@@ -574,6 +962,10 @@ namespace FightCons
         public static byte Round { get; set; }
 
         public ChaRole Role { get; set; }
+
+        public sbyte x;
+        public sbyte y;
+        public bool hasCover;
 
         //public Character.ChaRole Role { get; set; }
 

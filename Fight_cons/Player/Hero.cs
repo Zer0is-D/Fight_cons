@@ -123,6 +123,8 @@ namespace FightCons
         //  Внимательность/шпионаж
         public Spying HeroSpying = new Spying();
 
+        public Map.transit HeroCoordinates { get; set; }
+
         //TODO Вообще переместить
         //  Опьянение
         public byte DrunkCondition = 0;

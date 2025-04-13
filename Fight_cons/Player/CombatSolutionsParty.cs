@@ -20,6 +20,8 @@ namespace FightCons
 
         public static void CurrentEnemy(Character character, List<Order> units, List<BattleScenarioEvent> scenario = null)
         {
+            Battles.BattleMap(character, units);
+
             SkipTurn = ConditionCheck(character);
 
             if (units.Count == 1 || SkipTurn)
