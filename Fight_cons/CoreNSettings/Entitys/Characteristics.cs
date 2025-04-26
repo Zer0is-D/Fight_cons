@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Collections.Generic;
 
 namespace FightCons.CoreNSettings
 {
@@ -147,8 +144,8 @@ namespace FightCons.CoreNSettings
             {
                 new Info(cha.Attack, Output.AttackStr),
                 new Info(cha.Arcane, Output.ArcaneStr),
-                new Info(cha.Defense, Output.DefenceStr),
-                new Info(cha.MagicDefense, Output.MagicDefenceStr),
+                new Info(cha.Defense, Output.DefenseStr),
+                new Info(cha.MagicDefense, Output.MagicDefenseStr),
                 new Info(cha.MaxHp, Output.MaxHpStr),
                 new Info(cha.MaxMp, Output.MaxMpStr),
                 new Info(cha.Speed, Output.SpeedStr),

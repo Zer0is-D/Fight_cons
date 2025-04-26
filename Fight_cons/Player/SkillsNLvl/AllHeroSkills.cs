@@ -14,14 +14,14 @@ namespace FightCons
             #region Атаки
             AttackDes Attac = new AttackDes(hero, "Обычная атака")
             {
-                Attack = AttackDes.BaseAttack,
+                AttackParty = AttackDes.BaseAttack,
                 Description = $"Атаковать ({(int)finalDam} {Output.AttackStr} | {Output.CritStr}: {hero.TotalCrit * 100}%)"
             };
 
             AttackDes AttacBreanch = new AttackDes(hero, "Пробитие")
             {
-                Attack = AttackDes.BreachArmorAttack,
-                Description = $"Пробитие брони и защиты ({(int)(hero.TotalAttack / 1.5)} {Output.AttackStr})"
+                AttackParty = AttackDes.BreachArmorAttack,
+                Description = $"Пробитие брони и защиты ({(short)((float)hero.TotalAttack / GameFormulas.ArmorFine)} {Output.AttackStr})"
             };
 
             //  Способность: Кровотечение
@@ -29,7 +29,7 @@ namespace FightCons
             {
                 AttackDes AttacBleed = new AttackDes(hero, "Вызвать кровотечение")
                 {
-                    Attack = AttackDes.MakeBleedAttack,
+                    AttackParty = AttackDes.MakeBleedAttack,
                     Description = $"Вызвать кровотечение ({hero.TotalAttack / 2} {Output.AttackStr} | {Conditions.BleedDmg} {Output.DmgSymbol}/3 ХОДА)"
                 };
 
@@ -48,7 +48,7 @@ namespace FightCons
             #region Заклинания
             SpellDes CleansingRay = new SpellDes(hero, "Очищающий луч")
             {
-                Spell = SpellDes.CleansingRaySpell,
+                SpellParty = SpellDes.CleansingRaySpell,
                 SpellСost = 5,
                 SpellPower = 10
             };
@@ -59,7 +59,7 @@ namespace FightCons
             {
                 SpellDes Healing = new SpellDes(hero, "Малое лечение")
                 {
-                    Spell = SpellDes.HealSpell,
+                    SpellParty = SpellDes.HealSpell,
                     SpellСost = 3
                 };
                 Healing.Description = $"Малое лечение (+30% {Output.HPSymbol} | {Healing.SpellСost} {Output.MPSymbol})";
@@ -71,7 +71,7 @@ namespace FightCons
             {
                 SpecialDes SpecialBranch = new SpecialDes(hero, "Навык 'Штопор'")
                 {
-                    Specials = SpecialDes.SpecialBranch,
+                    SpecialsParty = SpecialDes.SpecialBranch,
                     Description = $"'Вскрывает' броню противника"
                 };
             }
@@ -152,7 +152,7 @@ namespace FightCons
             {
                 SpecialDes SpecialBranch = new SpecialDes(character, "Навык 'Штопор'")
                 {
-                    Specials = SpecialDes.SpecialBranch,
+                    SpecialsParty = SpecialDes.SpecialBranch,
                     Description = $"'Вскрывает' броню противника"
                 };
             }
@@ -207,50 +207,50 @@ namespace FightCons
             {
                 AttackDes Attac = new AttackDes(character, "Обычная атака")
                 {
-                    Attack = AttackDes.BaseAttack,
+                    AttackParty = AttackDes.BaseAttack,
                     Description = $"Атаковать ({character.TotalAttack} {Output.AttackStr} | {Output.CritStr}: {character.TotalCrit * 100}%)"
                 };
 
                 AttackDes AttacBreanch = new AttackDes(character, "Пробитие")
                 {
-                    Attack = AttackDes.BreachArmorAttack,
+                    AttackParty = AttackDes.BreachArmorAttack,
                     Description = $"Пробитие брони и защиты ({character.TotalAttack} {Output.AttackStr})"
                 };
 
-                PotionDes HealPotion = new PotionDes(character)
-                {
-                    Name = "Зелье лечения",
-                    Potion = PotionDes.HealPotion,
-                    Description = "Зелье лечения",
-                };
-                HealPotion.Count = 1;
+                //PotionDes HealPotion = new PotionDes(character)
+                //{
+                //    Name = "Зелье лечения",
+                //    Potion = PotionDes.HealPotion,
+                //    Description = "Зелье лечения",
+                //};
+                //HealPotion.Count = 1;
 
-                PotionDes ManaPotion = new PotionDes(character)
-                {
-                    Name = "Зелье маны",
-                    Potion = PotionDes.ManaPotion,
-                    Description = "Зелье маны",
-                };
-                ManaPotion.Count = 1;
+                //PotionDes ManaPotion = new PotionDes(character)
+                //{
+                //    Name = "Зелье маны",
+                //    Potion = PotionDes.ManaPotion,
+                //    Description = "Зелье маны",
+                //};
+                //ManaPotion.Count = 1;
 
-                PotionDes AntiPotion = new PotionDes(character)
-                {
-                    Name = "Противоядие",
-                    Potion = PotionDes.ManaPotion,
-                    Description = "Противоядие"
-                };
+                //PotionDes AntiPotion = new PotionDes(character)
+                //{
+                //    Name = "Противоядие",
+                //    Potion = PotionDes.ManaPotion,
+                //    Description = "Противоядие"
+                //};
 
-                PotionDes PowerPotion = new PotionDes(character)
-                {
-                    Name = "Зелье силы",
-                    Potion = PotionDes.PowerPotion,
-                    Description = "Зелье силы"
-                };
-                PowerPotion.Count = 1;
+                //PotionDes PowerPotion = new PotionDes(character)
+                //{
+                //    Name = "Зелье силы",
+                //    Potion = PotionDes.PowerPotion,
+                //    Description = "Зелье силы"
+                //};
+                //PowerPotion.Count = 1;
             }
 
             character.AttackList = character.AttackList.GroupBy(x => x.Description).Select(x => x.First()).Distinct().ToList();
-            character.PotionList = character.PotionList.GroupBy(x => x.Description).Select(x => x.First()).Distinct().ToList();
+            //character.PotionList = character.PotionList.GroupBy(x => x.Description).Select(x => x.First()).Distinct().ToList();
         }
     }
 }

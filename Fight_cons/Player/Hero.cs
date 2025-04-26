@@ -112,9 +112,6 @@ namespace FightCons
 
         internal CharacterClasses CharacterClass = new CharacterClasses("No class", 0);
 
-        //TODO Доделать
-        internal List<ItemChar> HeroInventory = new List<ItemChar>();
-
         #region Второстепенные свойства и поля
         //  Квесты
         public Quests HeroQuests = new Quests();

@@ -73,6 +73,20 @@ namespace FightCons.World.Locations
         public static bool ExitCave;
 
         #region Настройки магазина
+
+        //  Наименование объектов
+        private static InventoryItem healPotionItem = new InventoryItem()
+        {
+            Name = "Чистая роса",
+            Description = "(Восстанавливает здоровье)",
+        };
+
+        private static InventoryItem manaPotionItem = new InventoryItem()
+        {
+            Name = "Мудрая роса",
+            Description = "(Восстанавливает ману)",
+        };
+
         //  Настройки для магазина
         static sbyte GoodsNum = 1;
         static sbyte BonusesNum = 8; //  1-8
@@ -129,10 +143,10 @@ namespace FightCons.World.Locations
         {
             if (GameFormulas.Vero(0.6))
             {
-                List<Order> battleList = new List<Order>()
+                List<BattleSession> battleList = new List<BattleSession>()
                 {
-                    new Order(1, Character.ChaRole.Wild),
-                    new Order(20, Character.ChaRole.Enemy),
+                    new BattleSession(1, Character.ChaRole.Wild),
+                    new BattleSession(20, Character.ChaRole.Enemy),
                 };
                 Battles.MakeRandomBattle(hero, battleList);
             }
@@ -170,10 +184,10 @@ namespace FightCons.World.Locations
         {
             if (GameFormulas.Vero(0.6))
             {
-                List<Order> battleList = new List<Order>()
+                List<BattleSession> battleList = new List<BattleSession>()
                 {
-                    new Order(1, Character.ChaRole.Wild),
-                    new Order(20, Character.ChaRole.Enemy),
+                    new BattleSession(1, Character.ChaRole.Wild),
+                    new BattleSession(20, Character.ChaRole.Enemy),
                 };
                 Battles.MakeRandomBattle(hero, battleList);
             }
@@ -211,10 +225,10 @@ namespace FightCons.World.Locations
         {
             if (GameFormulas.Vero(0.6))
             {
-                List<Order> battleList = new List<Order>()
+                List<BattleSession> battleList = new List<BattleSession>()
                 {
-                    new Order(1, Character.ChaRole.Wild),
-                    new Order(20, Character.ChaRole.Enemy),
+                    new BattleSession(1, Character.ChaRole.Wild),
+                    new BattleSession(20, Character.ChaRole.Enemy),
                 };
                 Battles.MakeRandomBattle(hero, battleList);
             }
@@ -252,10 +266,10 @@ namespace FightCons.World.Locations
         {
             if (GameFormulas.Vero(0.6))
             {
-                List<Order> battleList = new List<Order>()
+                List<BattleSession> battleList = new List<BattleSession>()
                 {
-                    new Order(1, Character.ChaRole.Wild),
-                    new Order(20, Character.ChaRole.Enemy),
+                    new BattleSession(1, Character.ChaRole.Wild),
+                    new BattleSession(20, Character.ChaRole.Enemy),
                 };
                 Battles.MakeRandomBattle(hero, battleList);
             }
@@ -337,8 +351,8 @@ namespace FightCons.World.Locations
                           + "1) Наблюдать и подслушивать\n"
                           + "2) Купить оружие\n"
                           + "3) Купить броню");
-                Output.PayMoneyLine("4) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
-                Output.PayMoneyLine("5) Купить зелье маны", Output.PotionMPCost, hero.Money);
+                Output.PayMoneyLine($"4) Купить {healPotionItem.Name}", 50, hero.Money);
+                Output.PayMoneyLine($"5) Купить {manaPotionItem.Name}", 100, hero.Money);
                 Console.WriteLine("6) Выйти");
 
                 switch (Input.ChoisInput(hero, 1, 6))
@@ -356,13 +370,21 @@ namespace FightCons.World.Locations
                         break;
 
                     case 4:
-                        if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
-                            hero.PotionList[0].Count += 1;
+                        if (Output.Spent(hero.Money, 50, healPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
+                        {
+                            healPotionItem.UseItem = healPotionItem.HealPotion;
+
+                            Inventory.ItemAdd(hero, healPotionItem);
+                        }
                         break;
 
                     case 5:
-                        if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
-                            hero.PotionList[1].Count += 1;
+                        if (Output.Spent(hero.Money, 100, manaPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
+                        {
+                            manaPotionItem.UseItem = manaPotionItem.ManaPotion;
+
+                            Inventory.ItemAdd(hero, manaPotionItem);
+                        }
                         break;
 
                     case 6:
@@ -402,9 +424,9 @@ namespace FightCons.World.Locations
                             }
                             else if (GameFormulas.Vero(0.6))
                             {
-                                List<Order> battleList = new List<Order>()
+                                List<BattleSession> battleList = new List<BattleSession>()
                                 {
-                                    new Order(21, Character.ChaRole.Enemy),
+                                    new BattleSession(21, Character.ChaRole.Enemy),
                                 };
                                 Battles.MakeRandomBattle(hero, battleList);
                             }
@@ -421,9 +443,9 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(3, Character.ChaRole.Enemy),
+                                new BattleSession(3, Character.ChaRole.Enemy),
                             };
                             Battles.MakeCurrentBattle(hero, battleList);
                         }

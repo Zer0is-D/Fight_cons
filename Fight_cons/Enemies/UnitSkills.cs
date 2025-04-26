@@ -86,19 +86,18 @@ namespace FightCons
             reviver.Turn += 4;
         }
 
-        public static void SpawnSpell(Character person, Hero hero, List<Order> units)
+        public static void SpawnSpell(Character person, Hero hero, List<BattleSession> units)
         {
             //Random random = new Random();
 
             Output.NameAndId(person, true);
             Output.WriteColorLine(ConsoleColor.DarkBlue, "", "призывает ");
 
-            List<Order> NewEnemyList = new List<Order>()
+            List<BattleSession> NewEnemyList = new List<BattleSession>()
             {
-                new Order(1, ChaRole.Wild),
-                new Order(1, ChaRole.Wild),
-                new Order(1, ChaRole.Wild),
-
+                new BattleSession(1, ChaRole.Wild),
+                new BattleSession(1, ChaRole.Wild),
+                new BattleSession(1, ChaRole.Wild),
             };
 
             //var NewOne = Battles.AddNewUnit(hero, units, 1, 1, 1);

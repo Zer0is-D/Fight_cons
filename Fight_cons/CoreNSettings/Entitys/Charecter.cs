@@ -2,7 +2,6 @@
 using FightCons.Player.SkillsNLvl;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using static FightCons.ItemChar;
 
 namespace FightCons
@@ -12,9 +11,10 @@ namespace FightCons
     public delegate void SpecialDele(Hero hero, Character enemy);
 
     //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
-    public delegate void SkillsDeleParty(Character сharacter, Character enemy);
-    public delegate void SpellDeleParty(Character сharacter, Character enemy, short cost, sbyte spellPower);
-    public delegate void SpecialDeleParty(Character сharacter, Character enemy);
+    public delegate void SkillsDeleParty(Character character, List<BattleSession> battle);
+    public delegate void SpellDeleParty(Character character, List<BattleSession> battle, short cost, sbyte spellPower);
+    public delegate void SpecialDeleParty(Character character, List<BattleSession> battle);
+    public delegate void ItemsDele(Character character, List<BattleSession> battle);
 
     public abstract class Character : Characteristics
     {
@@ -97,11 +97,19 @@ namespace FightCons
         }
 
         //  Зелья героя
-        private protected List<PotionDes> _characterPotions = new List<PotionDes>();
-        internal protected List<PotionDes> PotionList
+        //private protected List<PotionDes> _characterPotions = new List<PotionDes>();
+        //internal protected List<PotionDes> PotionList
+        //{
+        //    get => _characterPotions;
+        //    set => _characterPotions = value;
+        //}
+
+        //TODO Доделать
+        private protected List<InventoryItem> _characterInventory = new List<InventoryItem>();
+        internal protected List<InventoryItem> CharacterInventory
         {
-            get => _characterPotions;
-            set => _characterPotions = value;
+            get => _characterInventory;
+            set => _characterInventory = value;
         }
 
         internal protected sbyte? Phase;
@@ -151,6 +159,8 @@ namespace FightCons
 
             if (!next)
                 Console.Write("\n");
+            else
+                Console.Write("\t");
 
             Console.Write($"{Output.HPSymbol}: [");
             while (c <= TotalMaxHP)
@@ -167,13 +177,14 @@ namespace FightCons
         }
 
         //  Шкала маны
-        public void MPBar()
+        public void MPBar(bool next = false)
         {
             if (TotalMaxMP > 0)
             {
                 double part = TotalMaxMP / 10.0, c = 0;
 
                 Console.Write($"\n{Output.MPSymbol}: [");
+                //Console.Write($"\n{Output.MPSymbol}: [");
                 while (c <= TotalMaxMP)
                 {
                     if (TotalMP == 0)
@@ -189,7 +200,14 @@ namespace FightCons
                 Console.Write($"{Output.MPSymbol}: {MP}/{TotalMaxMP}\n");
             }
             else
-                Output.WriteColorLine(ConsoleColor.Blue, $"\n{Output.MPSymbol}: [", " нет маны ", "]\n");
+            {
+                if (next)
+                    Output.WriteColorLine(ConsoleColor.Blue, $"\n{Output.MPSymbol}: [", " нет маны ", "]\n");
+                else
+                    Output.WriteColorLine(ConsoleColor.Blue, $"\n\t{Output.MPSymbol}: [", " нет маны ", "]\n");
+                //Output.WriteColorLine(ConsoleColor.Blue, $"\n{Output.MPSymbol}: [", " нет маны ", "]\n");
+            }
+                
         }
 
         //  Выбор отрисовки

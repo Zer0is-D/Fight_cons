@@ -47,9 +47,9 @@ namespace FightCons
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
 
-                    List<Order> battleList = new List<Order>()
+                    List<BattleSession> battleList = new List<BattleSession>()
                     {
-                        new Order(0, Character.ChaRole.Enemy),
+                        new BattleSession(0, Character.ChaRole.Enemy),
                     };
                     Battles.MakeCurrentBattle(hero, battleList);
 
@@ -92,9 +92,9 @@ namespace FightCons
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
 
-                    List<Order> battleList = new List<Order>()
+                    List<BattleSession> battleList = new List<BattleSession>()
                     {
-                        new Order(0, Character.ChaRole.Enemy),
+                        new BattleSession(0, Character.ChaRole.Enemy),
                     };
                     Battles.MakeCurrentBattle(hero, battleList);
 
@@ -133,9 +133,9 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    List<Order> battleList = new List<Order>()
+                    List<BattleSession> battleList = new List<BattleSession>()
                     {
-                        new Order(0, ChaRole.Enemy),
+                        new BattleSession(0, ChaRole.Enemy),
                     };
                     Battles.MakeCurrentBattle(hero, battleList);
 
@@ -177,10 +177,10 @@ namespace FightCons
                     Output.TwriteLine("\nМерзкая и неестественная фигура медленно выступает из под пены", 30, true);
 
                     Output.TwriteLine("\nВас находит Гигантский краблин\n", 1);
-                    List<Order> battleList = new List<Order>()
+                    List<BattleSession> battleList = new List<BattleSession>()
                     {
-                        new Order(49, ChaRole.Enemy),
-                        new Order(0, ChaRole.Hero)
+                        new BattleSession(49, ChaRole.Enemy),
+                        new BattleSession(0, ChaRole.Hero)
                     };
                     Battles.MakeCurrentBattle(hero, battleList);
 
@@ -219,9 +219,9 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    List<Order> battleList = new List<Order>()
+                    List<BattleSession> battleList = new List<BattleSession>()
                     {
-                        new Order(0, Character.ChaRole.Enemy),
+                        new BattleSession(0, Character.ChaRole.Enemy),
                     };
                     Battles.MakeCurrentBattle(hero, battleList);
 
@@ -260,9 +260,9 @@ namespace FightCons
             {
                 case 1:
                     Output.TwriteLine("\nВы находите Таотота\n", 1);
-                    List<Order> battleList = new List<Order>()
+                    List<BattleSession> battleList = new List<BattleSession>()
                     {
-                        new Order(0, Character.ChaRole.Enemy),
+                        new BattleSession(0, Character.ChaRole.Enemy),
                     };
                     Battles.MakeCurrentBattle(hero, battleList);
 
@@ -309,9 +309,9 @@ namespace FightCons
                     Console.ReadKey();
                     //Output.TwriteLine("\nВы находите Покровителя\n", 1);
 
-                    List<Order> EnemyList = new List<Order>()
+                    List<BattleSession> EnemyList = new List<BattleSession>()
                     {
-                        new Order(79, ChaRole.Enemy),
+                        new BattleSession(79, ChaRole.Enemy),
                         //new Order(80, ChaRole.Ally),
                         //new Order(81, ChaRole.Ally),
                         //new Order(82, ChaRole.Ally),
@@ -330,7 +330,7 @@ namespace FightCons
 
                         if (!EnemyList.Any(c => c.UnitID == num))
                         {
-                            EnemyList.Add(new Order(num, ChaRole.Ally));
+                            EnemyList.Add(new BattleSession(num, ChaRole.Ally));
                             t++;
                         }
                     }
@@ -465,8 +465,8 @@ namespace FightCons
                     if (hero.Money >= 50)
                     {
                         hero.Money -= 50;
-                        var item = hero.HeroInventory.FirstOrDefault(x => x.Name.Contains("Статуэтка"));
-                        hero.HeroInventory.Remove(item);
+                        var item = hero.CharacterInventory.FirstOrDefault(x => x.Name.Contains("Статуэтка"));
+                        hero.CharacterInventory.Remove(item);
 
                         Sound.VoiceLeva("- Вот она статуэтка!", 1);
                         Console.ReadKey(true);
@@ -506,8 +506,8 @@ namespace FightCons
             Output.WriteColorLine(ConsoleColor.Yellow, "1) Купить статуэтку (", $"30{Output.MoneySymbol}", ")\n");
             Console.WriteLine("2) Купить оружие\n"
                             + "3) Купить броню");
-            Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", $"{Output.PotionHPCost}{Output.MoneySymbol}", ")\n");
-            Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", $"{Output.PotionMPCost}{Output.MoneySymbol}", ")\n");
+            Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", $"50{Output.MoneySymbol}", ")\n");
+            Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", $"100{Output.MoneySymbol}", ")\n");
             Console.WriteLine("6) Выйти");
 
             switch (Input.ChoisInput(hero, 1, 6))
@@ -515,7 +515,12 @@ namespace FightCons
                 case 1:
                     if (Output.Spent(hero.Money, Output.QStatueCost))
                     {
-                        Inventory.ItemAdd(hero, "Статуэтка", true);
+                        InventoryItem QStatueItem = new InventoryItem()
+                        {
+                            Name = "Статуэтка"
+                        };
+
+                        Inventory.ItemAdd(hero, QStatueItem, 1, true);
                         Output.TwriteLine("\nСпасибо за покупку!", 1);
                         hero.HeroQuests.Que[11] = 3;
                     }
@@ -532,13 +537,31 @@ namespace FightCons
                     break;
 
                 case 4:
-                    if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
-                        hero.PotionList[0].Count += 1;
+                    if (Output.Spent(hero.Money, 50, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
+                    {
+                        InventoryItem potionHeal = new InventoryItem()
+                        {
+                            Name = "Зелье здоровья",
+                            Description = "(Восстанавливает здоровье)",
+                        };
+                        potionHeal.UseItem = potionHeal.HealPotion;
+
+                        Inventory.ItemAdd(hero, potionHeal);
+                    }
                     break;
 
                 case 5:
-                    if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
-                        hero.PotionList[1].Count += 1;
+                    if (Output.Spent(hero.Money, 100, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
+                    {
+                        InventoryItem potionMana = new InventoryItem()
+                        {
+                            Name = "Зелье маны",
+                            Description = "(Восстанавливает ману)",
+                        };
+                        potionMana.UseItem = potionMana.ManaPotion;
+
+                        Inventory.ItemAdd(hero, potionMana);
+                    }
                     break;
 
                 case 6:

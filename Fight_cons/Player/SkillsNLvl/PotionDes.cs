@@ -2,6 +2,7 @@
 
 namespace FightCons
 {
+    //  Убрать позже
     //public delegate void PotionUse(Hero hero);
     public delegate void PotionUse(Character character);
 
@@ -27,17 +28,17 @@ namespace FightCons
             }
         }
 
-        public PotionDes(Hero hero)
-        {
-            hero.PotionList.Add(this);
-            ID = hero.PotionList.Count;
-        }
+        //public PotionDes(Hero hero)
+        //{
+        //    hero.PotionList.Add(this);
+        //    ID = hero.PotionList.Count;
+        //}
         //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
-        public PotionDes(Character character)
-        {
-            character.PotionList.Add(this);
-            ID = character.PotionList.Count;
-        }
+        //public PotionDes(Character character)
+        //{
+        //    character.PotionList.Add(this);
+        //    ID = character.PotionList.Count;
+        //}
 
         public void Drink(Character character)
         {

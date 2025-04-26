@@ -33,10 +33,10 @@ namespace FightCons.World.Locations
         {
             if (GameFormulas.Vero(0.3))
             {
-                List<Order> battleList = new List<Order>()
+                List<BattleSession> battleList = new List<BattleSession>()
                 {
-                    new Order(10, Character.ChaRole.Enemy),
-                    new Order(5, Character.ChaRole.Enemy),
+                    new BattleSession(10, Character.ChaRole.Enemy),
+                    new BattleSession(5, Character.ChaRole.Enemy),
                 };
                 Battles.MakeCurrentBattle(hero, battleList);
             }
@@ -90,11 +90,11 @@ namespace FightCons.World.Locations
                             }
                             else if (GameFormulas.Vero(0.6))
                             {
-                                List<Order> battleList = new List<Order>()
+                                List<BattleSession> battleList = new List<BattleSession>()
                                 {
-                                    new Order(10, Character.ChaRole.Enemy),
-                                    new Order(11, Character.ChaRole.Enemy),
-                                    new Order(12, Character.ChaRole.Enemy),
+                                    new BattleSession(10, Character.ChaRole.Enemy),
+                                    new BattleSession(11, Character.ChaRole.Enemy),
+                                    new BattleSession(12, Character.ChaRole.Enemy),
                                 };
                                 Battles.MakeRandomBattle(hero, battleList);
                             }                                
@@ -124,10 +124,10 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(2, Character.ChaRole.Enemy),
-                                new Order(3, Character.ChaRole.Enemy),
+                                new BattleSession(2, Character.ChaRole.Enemy),
+                                new BattleSession(3, Character.ChaRole.Enemy),
                             };
                             Battles.MakeRandomBattle(hero, battleList);
                         }

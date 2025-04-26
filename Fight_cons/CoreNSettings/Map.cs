@@ -100,58 +100,58 @@ namespace FightCons.CoreNSettings
             MapMethod(hero, locInfo, scenario);
         }
 
-        public void MapMethod(Hero hero, Dictionary<Enum, (int, int)> spawnPoints, transit transit, List<LocationScenarioEvent> scenario = null)
-        {
-            playerX = spawnPoints[transit].Item1;
-            playerY = spawnPoints[transit].Item2;
+        //public void MapMethod(Hero hero, Dictionary<Enum, (int, int)> spawnPoints, transit transit, List<LocationScenarioEvent> scenario = null)
+        //{
+        //    playerX = spawnPoints[transit].Item1;
+        //    playerY = spawnPoints[transit].Item2;
 
-            //if (x != 0 && y != 0)
-            //{
-            //    playerX = x;
-            //    playerY = y;
-            //}
+        //    //if (x != 0 && y != 0)
+        //    //{
+        //    //    playerX = x;
+        //    //    playerY = y;
+        //    //}
 
-            mapStartLine = -1;
+        //    mapStartLine = -1;
 
-            rendering = true;
+        //    rendering = true;
 
-            Console.CursorVisible = false;
+        //    Console.CursorVisible = false;
 
-            //Console.WriteLine("История событий: игра началась...");
-            Console.WriteLine("\nИспользуйте стрелки для передвижения"
-                            + "\nR - отдых"
-                            + "\nQ - ввод команды.");
+        //    //Console.WriteLine("История событий: игра началась...");
+        //    Console.WriteLine("\nИспользуйте стрелки для передвижения"
+        //                    + "\nR - отдых"
+        //                    + "\nQ - ввод команды.");
 
-            // Открываем сразу все сундуки (чтобы клетки с 'X' были видны)
-            //RevealTreasures();
+        //    // Открываем сразу все сундуки (чтобы клетки с 'X' были видны)
+        //    //RevealTreasures();
 
-            //DrawMap();
+        //    //DrawMap();
 
-            while (rendering)
-            {
+        //    while (rendering)
+        //    {
 
-                /*
-                // Обновляем противника только если прошло достаточно времени
-                //if ((DateTime.Now - lastEnemyUpdate).TotalMilliseconds >= enemyUpdateDelay)
-                //{
-                //    UpdateEnemy();
-                //    lastEnemyUpdate = DateTime.Now;
-                //}*/
+        //        /*
+        //        // Обновляем противника только если прошло достаточно времени
+        //        //if ((DateTime.Now - lastEnemyUpdate).TotalMilliseconds >= enemyUpdateDelay)
+        //        //{
+        //        //    UpdateEnemy();
+        //        //    lastEnemyUpdate = DateTime.Now;
+        //        //}*/
 
-                DrawMap();
-                DrawPosition();
+        //        DrawMap();
+        //        DrawPosition();
 
-                if (Console.KeyAvailable)
-                {
-                    ConsoleKeyInfo key = Console.ReadKey(true);
-                    ProcessInput(key, hero);
+        //        if (Console.KeyAvailable)
+        //        {
+        //            ConsoleKeyInfo key = Console.ReadKey(true);
+        //            ProcessInput(key, hero);
 
-                    TriggerCheck(hero, scenario);
-                }
+        //            TriggerCheck(hero, scenario);
+        //        }
 
-                Thread.Sleep(50);
-            }
-        }
+        //        Thread.Sleep(300);
+        //    }
+        //}
 
         public void MapMethod(Hero hero, string[] locInfo, List<LocationScenarioEvent> scenario = null)
         {
@@ -193,7 +193,6 @@ namespace FightCons.CoreNSettings
                 //    UpdateEnemy();
                 //    lastEnemyUpdate = DateTime.Now;
                 //}*/
-
                 DrawMap();
                 DrawPosition();
 
@@ -205,7 +204,10 @@ namespace FightCons.CoreNSettings
                     TriggerCheck(hero, scenario);
                 }
 
-                Thread.Sleep(50);
+                if (MapHeight >= 17)
+                    Thread.Sleep(35 * MapHeight);
+                else
+                    Thread.Sleep(10 * (MapHeight / 2));
             }
 
         }
@@ -561,7 +563,7 @@ namespace FightCons.CoreNSettings
 
         public static void CheckSingleScenario(Hero hero, Dictionary<List<(int, int)>, Action> triggers, List<LocationScenarioEvent> scenario = null)
         {
-            foreach (var bEvent in scenario.Where(x => x.Condition(hero, Order.Round)).ToList())
+            foreach (var bEvent in scenario.Where(x => x.Condition(hero, BattleSession.Round)).ToList())
             {
                 if (triggers.Any(c => c.Key.Any(h => h == (Map.playerY, Map.playerX))))
                 {
@@ -575,7 +577,7 @@ namespace FightCons.CoreNSettings
 
         public static void CheckMultiScenario(Hero hero, Dictionary<List<(int, int)>, Action> triggers, List<LocationScenarioEvent> scenario = null)
         {
-            foreach (var bEvent in scenario.Where(x => x.Condition(hero, Order.Round)).ToList())
+            foreach (var bEvent in scenario.Where(x => x.Condition(hero, BattleSession.Round)).ToList())
             {
                 //if (triggers.Any(c => c.Key.Any(h => h == (Map.playerY, Map.playerX))))
                 if (GameFormulas.Vero(bEvent.Vero))

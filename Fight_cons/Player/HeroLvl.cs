@@ -33,10 +33,10 @@ namespace FightCons
                     ParamsLvlUp(1, LTicket.Points[1], Output.MaxMpStr, hero.MaxMp, LTicket.NextMaxMp, hero.CharacterClass.MP, false);
 
                     //  Защита
-                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenceStr, hero.Defense, LTicket.NextDefense, hero.CharacterClass.Defense, true);
+                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenseStr, hero.Defense, LTicket.NextDefense, hero.CharacterClass.Defense, true);
 
                     //  Маг защита
-                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenceStr, hero.MagicDefense, LTicket.NextMagicDefense, hero.CharacterClass.MagicDefense, true);
+                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenseStr, hero.MagicDefense, LTicket.NextMagicDefense, hero.CharacterClass.MagicDefense, true);
 
                     //  Блок
                     ParamsLvlUp(4, LTicket.Points[4], Output.BlockStr, hero.Block, LTicket.NextBlock, hero.CharacterClass.Block, true);

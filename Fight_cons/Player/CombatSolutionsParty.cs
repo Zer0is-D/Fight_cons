@@ -15,10 +15,10 @@ namespace FightCons
         private static bool QuickCommandDone = false;
 
         private static string[] AvailableSkillsStr = new string[6];
-        private static List<Action<Character, Character, List<Order>>> AvailableSkillsList = new List<Action<Character, Character, List<Order>>>();
-        private static List<Action<sbyte, Character, Character, List<Order>>> AvailableQuickBattleSkillsList = new List<Action<sbyte, Character, Character, List<Order>>>();
+        private static List<Action<Character, Character, List<BattleSession>>> AvailableSkillsList = new List<Action<Character, Character, List<BattleSession>>>();
+        private static List<Action<sbyte, Character, Character, List<BattleSession>>> AvailableQuickBattleSkillsList = new List<Action<sbyte, Character, Character, List<BattleSession>>>();
 
-        public static void CurrentEnemy(Character character, List<Order> units, List<BattleScenarioEvent> scenario = null)
+        public static void CurrentEnemy(Character character, List<BattleSession> units, List<BattleScenarioEvent> scenario = null)
         {
             Battles.BattleMap(character, units);
 
@@ -39,6 +39,7 @@ namespace FightCons
                     if (enemy.character.Id == ch & enemy.character.TotalHP > 0 & !enemy.character.Condition.LeavedBattle)
                     {
                         Console.WriteLine();
+                        BattleSession.SelectedUnit = (short)(enemy.character.Id - 1);
                         FightChoice(character, enemy.character, units);
                     }
                 }
@@ -46,7 +47,7 @@ namespace FightCons
         }
 
         //  Боевые решения
-        private static void FightChoice(Character character, Character unit, List<Order> units = null, List<BattleScenarioEvent> scenario = null)
+        private static void FightChoice(Character character, Character unit, List<BattleSession> units = null, List<BattleScenarioEvent> scenario = null)
         {
             AllHeroSkills.Skills(character, unit);
 
@@ -56,7 +57,8 @@ namespace FightCons
                 true,                               //  Нападение
                 true,                               //  Заклинания
                 true,                               //  Способности   /*hero.Statistic.SpecialSkills[1],*/
-                true,                               //  Выпить зелье
+                //true,                               //  Выпить зелье
+                true,                               //  Использовать предмет
                 true,                               //  Обороняться
                 true,                               //  Убежать
             };
@@ -234,7 +236,7 @@ namespace FightCons
             return false;
         }
         */
-        private static bool QuickBattleInput(Character character, Character unit, List<Order> units = null)
+        private static bool QuickBattleInput(Character character, Character unit, List<BattleSession> units = null)
         {
             sbyte firstD = BattleChoice;
             sbyte secondD = (sbyte)(BattleChoice % 10);
@@ -255,7 +257,7 @@ namespace FightCons
         }
 
         #region Отображение боевоей информации
-        private static void ShowBattleInfo(Character сharacter, Character unit, List<Order> units = null)
+        private static void ShowBattleInfo(Character сharacter, Character unit, List<BattleSession> units = null)
         {
             //  Отрисовка hp противника
             unit.DifferentHpBar();
@@ -280,12 +282,13 @@ namespace FightCons
         }
 
         //  Узнать о противнике
-        private static void InformationAboutUnit(Character character, Character unit, List<Order> units = null)
+        private static void InformationAboutUnit(Character character, Character unit, List<BattleSession> units = null)
         {
             Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "##################################    Инфо    ##################################", "\n");
             Output.WriteColorLine(ConsoleColor.DarkMagenta, "Имя: ", $"{unit.Name}", "\n");
 
-            unit.HPnMPBar(true, true);
+            unit.HPnMPBar(true);
+            unit.MPBar(true);
 
             /*  Старый сегмент
             //if (unit.CharacterProfile.Phase >= 2)
@@ -310,13 +313,13 @@ namespace FightCons
             //ItemChar.Comparison(unit.TotalAttack, hero.TotalBlock, $"{Output.BlockStr}: ", true);
             */
 
-            Console.WriteLine($"{Output.AttackStr}: {unit.TotalAttack}\t\t{Output.ArcaneStr}: {unit.TotalArcane}\n"
-                           + $"{Output.DefenceStr}: {unit.TotalDefense * 100}%\t\t{Output.MagicDefenceStr}: {unit.TotalMagicDefense * 100}%\n"
+            Console.WriteLine($"\n{Output.AttackStr}: {unit.TotalAttack}\t\t{Output.ArcaneStr}: {unit.TotalArcane}\n"
+                           + $"{Output.DefenseStr}: {unit.TotalDefense * 100}%\t\t{Output.MagicDefenseStr}: {unit.TotalMagicDefense * 100}%\n"
                            + $"{Output.SpeedStr}: {unit.TotalSpeed * 100}%\t{Output.CritStr}: {unit.TotalCrit * 100}%\n"
-                           + $"{Output.BlockStr}: {unit.TotalBlock * 100}%\n");
+                           + $"{Output.BlockStr}: {unit.TotalBlock * 100}%");
 
-            Output.WriteColorLine(ConsoleColor.Cyan, "Экипировано оружие:\n", $"{unit.CharacterWeapon.Name} ", $"| {ItemChar.ItemStats(unit.CharacterWeapon, false)}");
-            Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкипирована броня:\n", $"{unit.CharacterArmor.Name} ", $"| {ItemChar.ItemStats(unit.CharacterArmor, false)}\n");
+            //Output.WriteColorLine(ConsoleColor.Cyan, "Экипировано оружие:\n", $"{unit.CharacterWeapon.Name} ", $"| {ItemChar.ItemStats(unit.CharacterWeapon, false)}");
+            //Output.WriteColorLine(ConsoleColor.Cyan, "\nЭкипирована броня:\n", $"{unit.CharacterArmor.Name} ", $"| {ItemChar.ItemStats(unit.CharacterArmor, false)}\n");
 
             Output.WriteColorLine(ConsoleColor.DarkGray, "\n", "################################################################################", "\n");
 
@@ -351,7 +354,7 @@ namespace FightCons
         */
 
         //  Атаки
-        private static void AttackList(Character character, Character unit, List<Order> units = null)
+        private static void AttackList(Character character, Character unit, List<BattleSession> units = null)
         {
             Console.Write("Ваши действия?\n");
             for (short i = 0; i < AvailableSkillsStr.Length; i++)
@@ -370,22 +373,22 @@ namespace FightCons
 
             BattleChoice = Input.ChoisInput(0, (sbyte)(character.AttackList.Count));
             if (BattleChoice != 0)
-                character.AttackList[BattleChoice - 1].AttackParty(character, unit);
+                character.AttackList[BattleChoice - 1].AttackParty(character, units);
             else
                 FightChoice(character, unit, units);
         }
 
         //  Быстрый набор Атаки
-        private static void QuickBattleAttackInput(sbyte id, Character character, Character unit, List<Order> units = null)
+        private static void QuickBattleAttackInput(sbyte id, Character character, Character unit, List<BattleSession> units = null)
         {
             if (id != 0 && id <= character.AttackList.Count)
-                character.AttackList[id - 1].AttackParty(character, unit);
+                character.AttackList[id - 1].AttackParty(character, units);
             else
                 FightChoice(character, unit, units);
         }
 
         //  Заклинания
-        private static void SpellList(Character character, Character unit, List<Order> units = null)
+        private static void SpellList(Character character, Character unit, List<BattleSession> units = null)
         {
             Console.Write("Ваши действия?\n");
             for (short i = 0; i < AvailableSkillsStr.Length; i++)
@@ -408,7 +411,7 @@ namespace FightCons
                 if (GameFormulas.CheckMana(character, character.SpellList[BattleChoice - 1].SpellСost))
                 {
                     var heroSpell = character.SpellList[BattleChoice - 1];
-                    heroSpell.SpellParty(character, (Unit)unit, heroSpell.SpellСost, heroSpell.SpellPower);
+                    heroSpell.SpellParty(character, units, heroSpell.SpellСost, heroSpell.SpellPower);
                 }
                 else
                 {
@@ -421,14 +424,14 @@ namespace FightCons
         }
 
         //  Быстрый набор Заклинания
-        private static void QuickBattleSpellInput(sbyte id, Character character, Character unit, List<Order> units = null)
+        private static void QuickBattleSpellInput(sbyte id, Character character, Character unit, List<BattleSession> units = null)
         {
             if (id != 0 && id <= character.SpellList.Count)
             {
                 if (GameFormulas.CheckMana(character, character.SpellList[id - 1].SpellСost))
                 {
                     var heroSpell = character.SpellList[id - 1];
-                    heroSpell.SpellParty(character, (Unit)unit, heroSpell.SpellСost, heroSpell.SpellPower);
+                    heroSpell.SpellParty(character, units, heroSpell.SpellСost, heroSpell.SpellPower);
                 }
                 else
                 {
@@ -441,7 +444,7 @@ namespace FightCons
         }
 
         //  Способности
-        private static void SpecialList(Character character, Character unit, List<Order> units = null)
+        private static void SpecialList(Character character, Character unit, List<BattleSession> units = null)
         {
             Console.Write("Ваши действия?\n");
             for (short i = 0; i < AvailableSkillsStr.Length; i++)
@@ -460,59 +463,87 @@ namespace FightCons
 
             BattleChoice = Input.ChoisInput(0, (sbyte)(character.SpecialList.Count));
             if (BattleChoice != 0)
-                character.SpecialList[BattleChoice - 1].SpecialsParty(character, unit);
+                character.SpecialList[BattleChoice - 1].SpecialsParty(character, units);
             else
                 FightChoice(character, unit, units);
         }
 
         //  Быстрый набор способностей
-        private static void QuickBattleSpecialInput(sbyte id, Character character, Character unit, List<Order> units = null)
+        private static void QuickBattleSpecialInput(sbyte id, Character character, Character unit, List<BattleSession> units = null)
         {
             if (id != 0 && id <= character.SpecialList.Count)
-                character.SpecialList[id - 1].SpecialsParty(character, unit);
+                character.SpecialList[id - 1].SpecialsParty(character, units);
             else
                 FightChoice(character, unit, units);
         }
 
         //  Зелья
-        private static void PotionList(Character character, Character unit, List<Order> units = null)
+        //private static void PotionList(Character character, Character unit, List<Order> units = null)
+        //{
+        //    Console.Write("Ваши действия?\n");
+        //    for (short i = 0; i < AvailableSkillsStr.Length; i++)
+        //    {
+        //        if (i == 5)
+        //        {
+        //            Console.Write($"  0) Назад\n");
+        //            foreach (var p in character.PotionList)
+        //            {
+        //                if (p.Count > 0)
+        //                    Console.WriteLine($"  {p.ID}) {p.Description} {p.CountPotion}");
+        //                else
+        //                    Output.WriteColorLine(ConsoleColor.DarkGray, "  ", $"{p.ID}) {p.Description} {p.CountPotion}\n");
+        //            }
+        //        }
+        //        if (AvailableSkillsStr[i] != "")
+        //            Console.Write($"X) {AvailableSkillsStr[i]}\n");
+        //    }
+
+        //    BattleChoice = Input.ChoisInput(character, 0, (sbyte)(character.PotionList.Count));
+        //    if (BattleChoice != 0 && character.PotionList[BattleChoice - 1].Count > 0)
+        //        character.PotionList[BattleChoice - 1].Drink(character);
+        //    else
+        //        FightChoice(character, unit, units);
+        //}
+
+        //  Предметы
+        private static void ItemList(Character character, Character unit, List<BattleSession> units = null)
         {
             Console.Write("Ваши действия?\n");
             for (short i = 0; i < AvailableSkillsStr.Length; i++)
             {
-                if (i == 5)
+                if (i == 6)
                 {
                     Console.Write($"  0) Назад\n");
-                    foreach (var p in character.PotionList)
+                    foreach (var p in character.CharacterInventory)
                     {
-                        if (p.Count > 0)
-                            Console.WriteLine($"  {p.ID}) {p.Description} {p.CountPotion}");
-                        else
-                            Output.WriteColorLine(ConsoleColor.DarkGray, "  ", $"{p.ID}) {p.Description} {p.CountPotion}\n");
+                        if (p.Count > 0 && p.UseItem != null)
+                            Console.WriteLine($"  {p.ID}) {p.Name} {p.Description} {p.CountItems}");
+                        //else
+                        //    Output.WriteColorLine(ConsoleColor.DarkGray, "  ", $"{p.ID}) {p.Description} {p.CountItems}\n");
                     }
                 }
                 if (AvailableSkillsStr[i] != "")
                     Console.Write($"X) {AvailableSkillsStr[i]}\n");
             }
 
-            BattleChoice = Input.ChoisInput(character, 0, (sbyte)(character.PotionList.Count));
-            if (BattleChoice != 0 && character.PotionList[BattleChoice - 1].Count > 0)
-                character.PotionList[BattleChoice - 1].Drink(character);
+            BattleChoice = Input.ChoisInput(character, 0, (sbyte)(character.CharacterInventory.Count));
+            if (BattleChoice != 0 && character.CharacterInventory[BattleChoice - 1].Count > 0)
+                character.CharacterInventory[BattleChoice - 1].ActivateItem(character, units);
             else
                 FightChoice(character, unit, units);
         }
 
         //  Быстрый набор Зелья
-        private static void QuickBattlePotionInput(sbyte id, Character character, Character unit, List<Order> units = null)
-        {
-            if (id != 0 && id <= character.PotionList.Count && character.PotionList[id - 1].Count > 0)
-                character.PotionList[id - 1].Drink(character);
-            else
-                FightChoice(character, unit, units);
-        }
+        //private static void QuickBattlePotionInput(sbyte id, Character character, Character unit, List<Order> units = null)
+        //{
+        //    if (id != 0 && id <= character.PotionList.Count && character.PotionList[id - 1].Count > 0)
+        //        character.PotionList[id - 1].Drink(character);
+        //    else
+        //        FightChoice(character, unit, units);
+        //}
 
         //  Обороняться
-        private static void Protection(Character character, Character unit, List<Order> units = null)
+        private static void Protection(Character character, Character unit, List<BattleSession> units = null)
         {
             Output.NameAndId(character, true);
             Output.WriteColorLine(ConsoleColor.White, "держит ", "оборону", "\n");
@@ -552,7 +583,7 @@ namespace FightCons
 
         //  Загрузка списка врагов для выбора
         //  Пока не меняем
-        private static void LoadListOfUnits(List<Order> enemies, bool loadMP)
+        private static void LoadListOfUnits(List<BattleSession> enemies, bool loadMP)
         {
             foreach (var enemy in enemies)
             {
@@ -580,7 +611,7 @@ namespace FightCons
             }
         }
 
-        public static sbyte BattleChoiceInput(sbyte b1, sbyte b2, Character character, Character unit, List<Order> units = null)
+        public static sbyte BattleChoiceInput(sbyte b1, sbyte b2, Character character, Character unit, List<BattleSession> units = null)
         {
             do
             {
@@ -653,9 +684,9 @@ namespace FightCons
                         + "1) Нападение\n"
                         + "2) Заклинания\n"
                         + "3) Способности\n"
-                        + "4) Выпить зелье\n"
-                        + $"5) Обороняться ({character.TotalBlock * 100}% {Output.BlockStr})\n"
-                        + $"6) Убежать\n");
+                        //+ "4) Выпить зелье\n"
+                        + $"4) Обороняться ({character.TotalBlock * 100}% {Output.BlockStr})\n"
+                        + $"5) Убежать\n");
                 }
                 else
                 {
@@ -679,9 +710,9 @@ namespace FightCons
 
         #region Настройки 
         //  Добавление способностей в список доступных способностей 
-        private static List<Action<Character, Character, List<Order>>> AvailableSkills(bool[] skillAccess)
+        private static List<Action<Character, Character, List<BattleSession>>> AvailableSkills(bool[] skillAccess)
         {
-            List<Action<Character, Character, List<Order>>> mas = new List<Action<Character, Character, List<Order>>>();
+            List<Action<Character, Character, List<BattleSession>>> mas = new List<Action<Character, Character, List<BattleSession>>>();
 
             //  Узнать о противнике
             if (skillAccess[0])
@@ -700,8 +731,12 @@ namespace FightCons
                 mas.Add(SpecialList);
 
             //  Выпить зелье
+            //if (skillAccess[4])
+            //    mas.Add(PotionList);
+
+            //  Использовать предмет
             if (skillAccess[4])
-                mas.Add(PotionList);
+                mas.Add(ItemList);
 
             //  Обороняться
             if (skillAccess[5])
@@ -715,9 +750,9 @@ namespace FightCons
         }
 
         //  Добавление способностей быстрого набора в список доступных способностей быстрого нобора
-        private static List<Action<sbyte, Character, Character, List<Order>>> AvailableQuickBattleSkills(bool[] skillAccess)
+        private static List<Action<sbyte, Character, Character, List<BattleSession>>> AvailableQuickBattleSkills(bool[] skillAccess)
         {
-            List<Action<sbyte, Character, Character, List<Order>>> mas = new List<Action<sbyte, Character, Character, List<Order>>>();
+            List<Action<sbyte, Character, Character, List<BattleSession>>> mas = new List<Action<sbyte, Character, Character, List<BattleSession>>>();
 
             //  Узнать о противнике
             //if (skillAccess[0])
@@ -736,8 +771,8 @@ namespace FightCons
                 mas.Add(QuickBattleSpecialInput);
 
             //  Выпить зелье
-            if (skillAccess[4])
-                mas.Add(QuickBattlePotionInput);
+            //if (skillAccess[4])
+            //    mas.Add(QuickBattlePotionInput);
 
             ////  Обороняться
             //if (skillAccess[5])
@@ -763,7 +798,9 @@ namespace FightCons
 
             mas[3] = skillAccess[3] == true ? "Способности" : "";
 
-            mas[4] = skillAccess[4] == true ? "Выпить зелье" : "";
+            //mas[4] = skillAccess[4] == true ? "Выпить зелье" : "";
+
+            mas[4] = skillAccess[4] == true ? "Использовать предмет" : "";
 
             mas[5] = skillAccess[5] == true ? $"Обороняться ({character.TotalBlock * 100}% {Output.BlockStr})" : "";
 

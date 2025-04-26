@@ -87,7 +87,6 @@
   <ItemGroup>
     <Compile Include="CoreNSettings\Entitys\TagSystem.cs" />
     <Compile Include="CoreNSettings\Map.cs" />
-    <Compile Include="CoreNSettings\MapFlyoutMenuItem.cs" />
     <Compile Include="Enemies\Bestiaria.cs" />
     <Compile Include="CoreNSettings\EnemyFromXML.cs" />
     <Compile Include="PatternUnit.cs" />
@@ -143,7 +142,7 @@
     <Compile Include="Player\Hero.cs" />
     <Compile Include="CoreNSettings\Entitys\Charecter.cs" />
     <Compile Include="CoreNSettings\Input.cs" />
-    <Compile Include="Player\Inventory.cs" />
+    <Compile Include="Player\SkillsNLvl\Inventory.cs" />
     <Compile Include="World\Locations\Locations.cs" />
     <Compile Include="World\Locations\MarketMethods.cs" />
     <Compile Include="Player\SkillsNLvl\CharecterClases.cs" />

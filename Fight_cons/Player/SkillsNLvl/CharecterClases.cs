@@ -36,8 +36,8 @@ namespace FightCons
             //HeroClass heroClass = new HeroClass("Воин", hero.ClassBonuses.MaxHp += 1, );
 
             string quo = "Выберите класс:\n"
-              + $"1) Мощь (Упор на {Output.HPSymbol}, {Output.AttackStr}, {Output.DefenceStr})\n"
-              + $"2) Комбинаторика (Упор на {Output.ArcaneStr}, {Output.MagicDefenceStr}, {Output.MPSymbol})\n"
+              + $"1) Мощь (Упор на {Output.HPSymbol}, {Output.AttackStr}, {Output.DefenseStr})\n"
+              + $"2) Комбинаторика (Упор на {Output.ArcaneStr}, {Output.MagicDefenseStr}, {Output.MPSymbol})\n"
               + $"3) Динамика (Упор на {Output.CritStr}, {Output.SpeedStr}, {Output.BlockStr})\n"
               + $"0) Свобода\n";
 

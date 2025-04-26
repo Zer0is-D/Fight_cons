@@ -3,6 +3,8 @@ using System.Threading;
 using static FightCons.CharacterClasses;
 using static FightCons.ItemChar;
 using FightCons.World.Locations;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FightCons
 {
@@ -16,7 +18,7 @@ namespace FightCons
                             $"Lvl: {Lvl}\t\tExp: {Exp}/{NextLvlExp} \n"
                             + $"{Output.HPSymbol}: {TotalHP}/{TotalMaxHP} \t{Output.MPSymbol}: {MP}/{TotalMaxMP}\n"
                             + $"{Output.AttackStr}: {TotalAttack}\t\t{Output.ArcaneStr}: {TotalArcane}\n"
-                            + $"{Output.DefenceStr}: {TotalDefense * 100}%\t\t{Output.MagicDefenceStr}: {TotalMagicDefense * 100}%\n"
+                            + $"{Output.DefenseStr}: {TotalDefense * 100}%\t\t{Output.MagicDefenseStr}: {TotalMagicDefense * 100}%\n"
                             + $"{Output.SpeedStr}: {TotalSpeed * 100}%\t{Output.CritStr}: {TotalCrit * 100}%\n"
                             + $"{Output.BlockStr}: {TotalBlock * 100}%\n");
             Output.WriteColorLine(ConsoleColor.Yellow, $"Money: {Money}", $"{Output.MoneySymbol}\n");
@@ -33,25 +35,39 @@ namespace FightCons
             //  Проверочный сегмент //////////////////////////////////////////////////////////////
             hero.Name = "Nemo";
 
-            //hero.HeroCoordinates = Map.transit.CavesToValley;
-            LocationISS.Valley(hero);
-            hero.HPnMPBar();
+            InventoryItem item = new InventoryItem()
+            {
+                Name = "Бомба",
+                Description = "(Наносит урон всем противникам)",
+            };
+            item.UseItem = item.Bomb;
 
-            //List<Order> battleList = new List<Order>()
-            //{
-            //    new Order(31, ChaRole.Enemy),
-            //    new Order(31, ChaRole.Wild),
-            //    new Order(31, ChaRole.Wild),
-            //    new Order(31, ChaRole.Enemy),
-            //    new Order(31, ChaRole.Enemy),
-            //    new Order(31, ChaRole.Enemy),
-            //    new Order(31, ChaRole.Enemy),
-            //    //new Order(31, ChaRole.Wild),
-            //    new Order(11, ChaRole.Ally),
-            //    new Order(11, ChaRole.Ally),
-            //    new Order(11, ChaRole.Ally),
-            //};
+            Inventory.ItemAdd(hero, item, 2);
+
+            //hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active = true;
+            //Inventory.ItemAdd(hero, item, 5);
+
+
+            List<BattleSession> battleList = new List<BattleSession>()
+            {
+                new BattleSession(11, ChaRole.Enemy),
+                new BattleSession(11, ChaRole.Wild),
+                new BattleSession(10, ChaRole.Enemy),
+                new BattleSession(10, ChaRole.Enemy),
+                new BattleSession(10, ChaRole.Ally),
+                new BattleSession(12, ChaRole.Enemy),
+            };
+            Battles.MakeCurrentBattle(hero, battleList);
+
+            //Inventory.ItemAdd(hero, item, 5);
+
             //Battles.MakeCurrentBattle(hero, battleList);
+
+            ////hero.HeroCoordinates = Map.transit.CavesToValley;
+            //LocationISS.Foothills(hero);
+            //hero.HPnMPBar();
+
+
 
 
 

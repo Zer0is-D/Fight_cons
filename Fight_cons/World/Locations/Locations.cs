@@ -9,12 +9,25 @@ namespace FightCons
 {
     public class Locations
     {
+        //зелья
+        //Перстова вода/Варево/Пойло/Брага/Сыта/Взвар 
+        // ИСС - отвар/Варево
+        // ДЖ - роса /Живица 
+        // БТЛ - бальзам - сделано
+        // ОП - настойки
+        // ПП - зелье
+        // НД - наливки
+        // ВБ
+
+
+
         #region Данные и настроки локации
         protected static string Descriptions(byte i, string[][] descript)
         {
             Random rand = new Random();
             return descript[i][rand.Next(descript[i].Length)];
         }
+
         #endregion
 
         //ЗАГОТОВКА
@@ -43,9 +56,9 @@ namespace FightCons
                         else
                         {
                             RestEvent(hero);
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(3, Character.ChaRole.Enemy),
+                                new BattleSession(3, Character.ChaRole.Enemy),
                             };
                             Battles.MakeCurrentBattle(hero, battleList);
                         }

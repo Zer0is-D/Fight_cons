@@ -1,5 +1,6 @@
 ﻿using FightCons.CoreNSettings;
 using System;
+using System.Collections.Generic;
 
 namespace FightCons
 {
@@ -51,7 +52,7 @@ namespace FightCons
         internal protected void RandomDebuff(Character attacker, Character victim)
         {
             if (GameFormulas.Vero(0.7))
-                AttackDes.ActParryAtt(victim, attacker);
+                AttackDes.ActParryAtt(attacker, victim);
             else
             {
                 Output.WriteColorLine(ConsoleColor.DarkMagenta, "\n", $"{attacker.Name} ", "пропускает ход\n");
@@ -61,3 +62,4 @@ namespace FightCons
         }
     }
 }
+    

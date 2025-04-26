@@ -7,74 +7,7 @@ using System.Threading;
 
 namespace FightCons
 {
-    //TODO разобраться что за сегмент
-    class ParamScaleTicket
-    {
-        //  дописать модуль для ореинтирования конкретных классов
-        public short
-        ATTMin = 0, ATTMax = 10,
-        ARCMin = 0, ARCMax = 10,
-        MAXHpMin = -20, MAXHpMax = 50,
-        MAXMp_min = -30, MAXMpMax = 50;
-
-        public sbyte
-        DEFMin = -30, DEFMax = 50,
-        MDEFMin = -30, MDEFMax = 50,        
-        SPDMin = -50, SPDMax = 50,
-        CRITMin = -50, CRITMax = 50,
-        BLKMin = -20, BLKMax = 30,
-        MaxTurnMin = -2, MaxTurnMax = 4;
-
-        //TODO разобраться что это
-        protected ParamScaleTicket(sbyte lvl)
-        {
-            ATTMin += lvl; ATTMax += lvl;
-            ARCMin += lvl; ARCMax += lvl;
-            DEFMin += lvl; DEFMax += lvl;
-            MDEFMin += lvl; MDEFMax += lvl;
-            MAXHpMin += lvl; MAXHpMax += lvl;
-            MAXMp_min += lvl; MAXMpMax += lvl;
-            SPDMin += lvl; SPDMax += lvl;
-            CRITMin += lvl; CRITMax += lvl;
-            BLKMin += lvl; BLKMax += lvl;
-        }
-    }
-
-    class WeaponScaleTicket(sbyte lvl) : ParamScaleTicket(lvl)
-    {
-        public new short
-        ATTMin = 0, ATTMax = 10,
-        ARCMin = 0, ARCMax = 10,
-        MAXHpMin = -10, MAXHpMax = 10,
-        MAXMp_min = -10, MAXMpMax = 10;
-        
-        public new sbyte
-        DEFMin = -10, DEFMax = 10,
-        MDEFMin = -10, MDEFMax = 10,
-        SPDMin = -20, SPDMax = 10,
-        CRITMin = -20, CRITMax = 40,
-        BLKMin = -20, BLKMax = 30,
-        MaxTurnMin = -2, MaxTurnMax = 4;
-    }
-
-    class ArmorScaleTicket(sbyte lvl) : ParamScaleTicket(lvl)
-    {
-        public new short
-        ATTMin = 0, ATTMax = 2,
-        ARCMin = 0, ARCMax = 2,
-        MAXHpMin = -20, MAXHpMax = 50,
-        MAXMp_min = -30, MAXMpMax = 50;
-        
-        public new sbyte
-        DEFMin = -30, DEFMax = 50,
-        MDEFMin = -30, MDEFMax = 50,
-        SPDMin = -40, SPDMax = 40,
-        CRITMin = -10, CRITMax = 10,
-        BLKMin = -5, BLKMax = 5,
-        MaxTurnMin = -2, MaxTurnMax = 4;
-    }
-
-    class ItemChar : Characteristics
+    public class ItemChar : Characteristics
     {
         public byte Id { get; set; }
 
@@ -267,8 +200,8 @@ namespace FightCons
             //if (next) Console.WriteLine();
             Comparison(item1.Attack, item2.Attack, Output.AttackStr);
             Comparison(item1.Arcane, item2.Arcane, Output.ArcaneStr);
-            Comparison(item1.Defense, item2.Defense, Output.DefenceStr, true);
-            Comparison(item1.MagicDefense, item2.MagicDefense, Output.MagicDefenceStr, true);
+            Comparison(item1.Defense, item2.Defense, Output.DefenseStr, true);
+            Comparison(item1.MagicDefense, item2.MagicDefense, Output.MagicDefenseStr, true);
             Comparison(item1.MaxHp, item2.MaxHp, Output.MaxHpStr);
             //if (next) Console.WriteLine();
             Comparison(item1.MaxMp, item2.MaxMp, Output.MaxMpStr);
@@ -466,13 +399,12 @@ namespace FightCons
         //    return "";
         //}
     }
-
-    class Material
+    public class Material
     {
         public string Name { get; }
         public double Probability { get; }
         public sbyte Power { get; }
-        
+
         public Material(string name, double probability, sbyte power)
         {
             Name = name;
@@ -480,4 +412,74 @@ namespace FightCons
             Power = power;
         }
     }
+
+    //TODO разобраться что за сегмент
+    #region Что-то с прокачкой скейл
+    class ParamScaleTicket
+    {
+        //  дописать модуль для ореинтирования конкретных классов
+        public short
+        ATTMin = 0, ATTMax = 10,
+        ARCMin = 0, ARCMax = 10,
+        MAXHpMin = -20, MAXHpMax = 50,
+        MAXMp_min = -30, MAXMpMax = 50;
+
+        public sbyte
+        DEFMin = -30, DEFMax = 50,
+        MDEFMin = -30, MDEFMax = 50,
+        SPDMin = -50, SPDMax = 50,
+        CRITMin = -50, CRITMax = 50,
+        BLKMin = -20, BLKMax = 30,
+        MaxTurnMin = -2, MaxTurnMax = 4;
+
+        //TODO разобраться что это
+        protected ParamScaleTicket(sbyte lvl)
+        {
+            ATTMin += lvl; ATTMax += lvl;
+            ARCMin += lvl; ARCMax += lvl;
+            DEFMin += lvl; DEFMax += lvl;
+            MDEFMin += lvl; MDEFMax += lvl;
+            MAXHpMin += lvl; MAXHpMax += lvl;
+            MAXMp_min += lvl; MAXMpMax += lvl;
+            SPDMin += lvl; SPDMax += lvl;
+            CRITMin += lvl; CRITMax += lvl;
+            BLKMin += lvl; BLKMax += lvl;
+        }
+    }
+
+    class WeaponScaleTicket(sbyte lvl) : ParamScaleTicket(lvl)
+    {
+        public new short
+        ATTMin = 0, ATTMax = 10,
+        ARCMin = 0, ARCMax = 10,
+        MAXHpMin = -10, MAXHpMax = 10,
+        MAXMp_min = -10, MAXMpMax = 10;
+
+        public new sbyte
+        DEFMin = -10, DEFMax = 10,
+        MDEFMin = -10, MDEFMax = 10,
+        SPDMin = -20, SPDMax = 10,
+        CRITMin = -20, CRITMax = 40,
+        BLKMin = -20, BLKMax = 30,
+        MaxTurnMin = -2, MaxTurnMax = 4;
+    }
+
+    class ArmorScaleTicket(sbyte lvl) : ParamScaleTicket(lvl)
+    {
+        public new short
+        ATTMin = 0, ATTMax = 2,
+        ARCMin = 0, ARCMax = 2,
+        MAXHpMin = -20, MAXHpMax = 50,
+        MAXMp_min = -30, MAXMpMax = 50;
+
+        public new sbyte
+        DEFMin = -30, DEFMax = 50,
+        MDEFMin = -30, MDEFMax = 50,
+        SPDMin = -40, SPDMax = 40,
+        CRITMin = -10, CRITMax = 10,
+        BLKMin = -5, BLKMax = 5,
+        MaxTurnMin = -2, MaxTurnMax = 4;
+    }
+    #endregion
 }
+

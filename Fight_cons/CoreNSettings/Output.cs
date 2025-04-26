@@ -45,8 +45,8 @@ namespace FightCons
 
         public static string AttackStr { get => "ATT"; }
         public static string ArcaneStr { get => "ARC"; }
-        public static string DefenceStr { get => "DEF"; }
-        public static string MagicDefenceStr { get => "MDEF"; }
+        public static string DefenseStr { get => "DEF"; }
+        public static string MagicDefenseStr { get => "MDEF"; }
 
         public static string SpeedStr { get => "SPD"; }
         public static string CritStr { get => "CRT"; }
@@ -61,8 +61,8 @@ namespace FightCons
         #region Цены (общие)
         public static sbyte BeerCost = 5;
 
-        public static sbyte PotionHPCost = 20;
-        public static sbyte PotionMPCost = 30;
+        //public static sbyte PotionHPCost = 20;
+        //public static sbyte PotionMPCost = 30;
         public static sbyte QStatueCost = 30;
 
         public static sbyte ShowNewItemsCost = 10;

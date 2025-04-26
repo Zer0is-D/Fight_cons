@@ -12,7 +12,7 @@ namespace FightCons
         public static async void MusicPlayer() => await Task.Run(() => LongFanfaresPlay());
 
         #region Звуковые эффекты
-        public static async void HIT()
+        public static  void HIT()
         {
             if (Settings.SoundEffects)
             {
@@ -39,7 +39,7 @@ namespace FightCons
             }
         }
 
-        public static async void DRINK()
+        public static void DRINK()
         {
             if (Settings.SoundEffects)
             {
@@ -49,39 +49,39 @@ namespace FightCons
             }
         }
 
-        public static async void DEAD()
-        {
-            if (Settings.SoundEffects)
-            {
-                Console.Beep(2093, 240);
-                Console.Beep(1568, 240);
-                Console.Beep(1046, 240);
-                Console.Beep(622, 480);
-                Console.Beep(523, 480);
-            }
-        }
+        //public static async void DEAD()
+        //{
+        //    if (Settings.SoundEffects)
+        //    {
+        //        Console.Beep(2093, 240);
+        //        Console.Beep(1568, 240);
+        //        Console.Beep(1046, 240);
+        //        Console.Beep(622, 480);
+        //        Console.Beep(523, 480);
+        //    }
+        //}
 
-        public static async void WOW()
-        {
-            if (Settings.SoundEffects)
-            {
-                Console.Beep(1046, 240);
-                Console.Beep(1975, 240);
-                Console.Beep(1864, 480);
-            }
-        }
+        //public static async void WOW()
+        //{
+        //    if (Settings.SoundEffects)
+        //    {
+        //        Console.Beep(1046, 240);
+        //        Console.Beep(1975, 240);
+        //        Console.Beep(1864, 480);
+        //    }
+        //}
 
-        public static void Horse_Play()
-        {
-            Console.Beep(150, 60);
-            Console.Beep(100, 60);
-            Thread.Sleep(250);
-            Console.Beep(150, 60);
-            Console.Beep(100, 60);
-            Thread.Sleep(250);
-            Console.Beep(150, 60);
-            Console.Beep(100, 60);
-        }
+        //public static void Horse_Play()
+        //{
+        //    Console.Beep(150, 60);
+        //    Console.Beep(100, 60);
+        //    Thread.Sleep(250);
+        //    Console.Beep(150, 60);
+        //    Console.Beep(100, 60);
+        //    Thread.Sleep(250);
+        //    Console.Beep(150, 60);
+        //    Console.Beep(100, 60);
+        //}
         #endregion
 
         #region Музыка

@@ -113,7 +113,7 @@ namespace FightCons
                 hero.Statistic.Money += m;
             };
             KeyWords["uphp"] = () => { hero.MaxHp = 300; hero.HP = hero.MaxHp; };
-            KeyWords["tavern1"] = () => { PipeMessage.TavernLocal(hero); };
+            //KeyWords["tavern1"] = () => { PipeMessage.TavernLocal(hero); };
             KeyWords["gsettings"] = () =>
             {
                 sbyte ans;

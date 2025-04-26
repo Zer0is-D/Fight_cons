@@ -70,7 +70,7 @@ namespace FightCons.Enemies
         }
 
         //  Решения противника
-        public static void UnitFightChoice(Character unit, Hero hero, List<Order> units, List<BattleScenarioEvent> scenario = null)
+        public static void UnitFightChoice(Character unit, Hero hero, List<BattleSession> units, List<BattleScenarioEvent> scenario = null)
         {
             Thread.Sleep(50);
             BattleScenarioEvent.CheckBattleScenarios(hero, units, scenario);

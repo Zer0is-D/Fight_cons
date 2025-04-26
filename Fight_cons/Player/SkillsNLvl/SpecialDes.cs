@@ -55,18 +55,18 @@ namespace FightCons.Player.SkillsNLvl
         }
 
         //  Действие: базовая Атака
-        public static void SpecialBranch(Character attacker, Character victim)
+        public static void SpecialBranch(Character attacker, List<BattleSession> victim)
         {
             //  Пробитие брони
             //short damage = GameFormulas.Damage(attacker, victim, true);
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.Yellow, "", $"разносит ", "броню у ");
-            Output.NameAndId(victim);
+            Output.NameAndId(victim[BattleSession.SelectedUnit].character);
 
-            victim.Defense = 0;
-            victim.CharacterArmor.Defense = 0;
-            victim.CharacterWeapon.Defense = 0;
+            victim[BattleSession.SelectedUnit].character.Defense = 0;
+            victim[BattleSession.SelectedUnit].character.CharacterArmor.Defense = 0;
+            victim[BattleSession.SelectedUnit].character.CharacterWeapon.Defense = 0;
 
             attacker.Statistic.Attacks++;
             attacker.Statistic.ChaActions.Add(31);

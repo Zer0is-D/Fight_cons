@@ -9,7 +9,7 @@ namespace FightCons
     public class PersonStrategy 
     {
         //TODO Добавить проверку первого удара и лагеря. Союзник до конца или до первого удара
-        private static Character WhoToBeat(Character person, Hero hero, List<Order> units)
+        private static Character WhoToBeat(Character person, Hero hero, List<BattleSession> units)
         {
             Random rand = new Random();
             List<Character> MyEnemies = new List<Character>();
@@ -43,7 +43,7 @@ namespace FightCons
             return MyEnemies[rand.Next(0, MyEnemies.Count)];
         }
 
-        public static void UnitAction(Character unit, Hero hero, List<Order> units)
+        public static void UnitAction(Character unit, Hero hero, List<BattleSession> units)
         {
             switch (unit.Strategy)
             {
@@ -81,7 +81,7 @@ namespace FightCons
             }
         }
 
-        public static void StrgATC(Character attacker, Hero hero, List<Order> units)
+        public static void StrgATC(Character attacker, Hero hero, List<BattleSession> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
@@ -131,7 +131,7 @@ namespace FightCons
             attacker.Turn = 0;
         }
 
-        public static void StrgMAG(Character attacker, Hero hero, List<Order> units)
+        public static void StrgMAG(Character attacker, Hero hero, List<BattleSession> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
@@ -195,7 +195,7 @@ namespace FightCons
             attacker.Turn = 0;
         }
 
-        public static void StrgNECRO(Character attacker, Hero hero, List<Order> units)
+        public static void StrgNECRO(Character attacker, Hero hero, List<BattleSession> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {
@@ -252,7 +252,7 @@ namespace FightCons
             attacker.Turn = 0;
         }
 
-        public static void StrgBeastMaster(Character attacker, Hero hero, List<Order> units)
+        public static void StrgBeastMaster(Character attacker, Hero hero, List<BattleSession> units)
         {
             while (attacker.Turn < attacker.TotalMaxMoves)
             {

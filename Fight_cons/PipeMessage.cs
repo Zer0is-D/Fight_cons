@@ -27,7 +27,7 @@ namespace FightCons
         };
         private static Process process = new Process { StartInfo = startInfo };
 
-        public static async Task TavernLocal(Hero hero)
+        public static void TavernLocal(Hero hero)
         {
             string MyPipe = "MyPipe";
             using (NamedPipeServerStream pipeServer = new NamedPipeServerStream(MyPipe, PipeDirection.Out))
@@ -54,7 +54,7 @@ namespace FightCons
                     pipeServer.Close();
                 }
             }
-        }        
+        }
 
         public static async Task<bool> AdSpellAsync(string[] messageMas)
         {
@@ -85,9 +85,9 @@ namespace FightCons
                 {
                     process.Start();
 
-                    sbyte d = 0;
+                    //sbyte d = 0;
 
-                    CheckAndWaitConnectionAsync(pipeServer);
+                    //CheckAndWaitConnectionAsync(pipeServer);
 
                     SendMessage(pipeServer, messageMas);
 
@@ -190,7 +190,7 @@ namespace FightCons
                     break;
                 }
 
-                pipeServer.WaitForConnectionAsync();
+                //pipeServer.WaitForConnectionAsync();
                 await Task.Delay(100);
                 d++;
             }

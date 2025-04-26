@@ -49,10 +49,10 @@ namespace FightCons.World.Locations
                             hero.HeroQuests.MainMainQ(hero);
                         else if (GameFormulas.Vero(0.6))
                         {
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(2, Character.ChaRole.Enemy),
-                                new Order(3, Character.ChaRole.Enemy),
+                                new BattleSession(2, Character.ChaRole.Enemy),
+                                new BattleSession(3, Character.ChaRole.Enemy),
                             };
 
                             Battles.MakeRandomBattle(hero, battleList);
@@ -69,10 +69,10 @@ namespace FightCons.World.Locations
                         {
                             RestEvent(hero);
 
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(10, Character.ChaRole.Enemy),
-                                new Order(11, Character.ChaRole.Enemy),
+                                new BattleSession(10, Character.ChaRole.Enemy),
+                                new BattleSession(11, Character.ChaRole.Enemy),
                             };
                             Battles.MakeRandomBattle(hero, battleList);
                         }

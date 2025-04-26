@@ -10,7 +10,7 @@ namespace FightCons
 {
     public class Battles
     {
-        public static List<Order> ListOfUnits = new List<Order>();
+        public static List<BattleSession> ListOfUnits = new List<BattleSession>();
 
         #region Генерация кол. противников 
         //TODO пересмотреть и доработать в случае чего
@@ -56,7 +56,7 @@ namespace FightCons
         }*/
 
         //  Битва со случайном противником/отрядом из заданного диапазона 
-        public static void MakeRandomBattle(Hero hero, List<Order> unitLists, List<BattleScenarioEvent> scenario = null)
+        public static void MakeRandomBattle(Hero hero, List<BattleSession> unitLists, List<BattleScenarioEvent> scenario = null)
         {
             Random random = new Random();
 
@@ -72,7 +72,7 @@ namespace FightCons
             sbyte groupSize = (sbyte)random.Next(MinGroupSize, MaxGroupSize + 1);
 
             sbyte[] hostiles = new sbyte[groupSize];
-            List<Order> randomList = new List<Order>();
+            List<BattleSession> randomList = new List<BattleSession>();
 
             //  Запись рандомного диапазона ID
             for (sbyte i = 0; i < groupSize;)
@@ -90,7 +90,7 @@ namespace FightCons
         }
         #endregion
 
-        public static List<Order> UnitTurnList;
+        public static List<BattleSession> UnitTurnList;
 
         //  Создание списка противников/союзников и вызов боя
         /*public static void MakeCurrentBattle(Hero hero, List<BattleScenarioEvent> scenario = null, params sbyte[] unitId)
@@ -113,11 +113,11 @@ namespace FightCons
 
         //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
         //  Создание списка противников/союзников и вызов боя
-        public static void MakeCurrentBattle(Hero hero, List<Order> unitLists, List<BattleScenarioEvent> scenario = null)
+        public static void MakeCurrentBattle(Hero hero, List<BattleSession> unitLists, List<BattleScenarioEvent> scenario = null)
         {
             foreach (var enemy in unitLists)
             {
-                var u = new Order(EnemyFromXML.LaudedEnemies(enemy.UnitID, enemy.Role), enemy.Role);
+                var u = new BattleSession(EnemyFromXML.LaudedEnemies(enemy.UnitID, enemy.Role), enemy.Role);
 
                 if (u.character != null)
                     ListOfUnits.Add(u);
@@ -188,14 +188,14 @@ namespace FightCons
                 return null;
         }*/
 
-        public static List<Order> AddNewUnit(Hero hero, List<Order> units, List<Order> newUnits)
+        public static List<BattleSession> AddNewUnit(Hero hero, List<BattleSession> units, List<BattleSession> newUnits)
         {
-            List<Order> newList = new List<Order>();
+            List<BattleSession> newList = new List<BattleSession>();
 
 
             foreach (var enemy in newUnits)
             {
-                var u = new Order(EnemyFromXML.LaudedEnemies(enemy.UnitID, enemy.Role), enemy.Role);
+                var u = new BattleSession(EnemyFromXML.LaudedEnemies(enemy.UnitID, enemy.Role), enemy.Role);
 
                 if (u.character != null)
                 {
@@ -247,15 +247,15 @@ namespace FightCons
         }
 
         //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
-        public static List<Order> AddNewUnit(Character character, List<Order> units, List<Order> newUnits)
+        public static List<BattleSession> AddNewUnit(Character character, List<BattleSession> units, List<BattleSession> newUnits)
         {
             Hero heroChare = units.FirstOrDefault(x => x.character.IsPlayer).character as Hero;
-            List<Order> newList = new List<Order>();
+            List<BattleSession> newList = new List<BattleSession>();
 
 
             foreach (var enemy in newUnits)
             {
-                var u = new Order(EnemyFromXML.LaudedEnemies(enemy.UnitID, enemy.Role), enemy.Role);
+                var u = new BattleSession(EnemyFromXML.LaudedEnemies(enemy.UnitID, enemy.Role), enemy.Role);
 
                 if (u.character != null)
                 {
@@ -307,10 +307,10 @@ namespace FightCons
         }
 
         //  Битва
-        public static void Battle(Hero hero, List<Order> units, List<BattleScenarioEvent> scenario = null)
+        public static void Battle(Hero hero, List<BattleSession> units, List<BattleScenarioEvent> scenario = null)
         {
             UnitTurnList = null;
-            Order.Round = 0;
+            BattleSession.Round = 0;
 
             //  Скейл параметров противника
             foreach (var unit in units)
@@ -373,7 +373,7 @@ namespace FightCons
                     }
                     else
                         Unit.UnitFightChoice(cha.character, hero, units, scenario);
-                    Order.Round++;
+                    BattleSession.Round++;
                 }
             }
 
@@ -399,7 +399,7 @@ namespace FightCons
         }
 
         //  Различные проверки        
-        private static bool StillStanding(List<Order> list)
+        private static bool StillStanding(List<BattleSession> list)
         {
             CheckForCrops();
 
@@ -424,14 +424,14 @@ namespace FightCons
             }
         }
 
-        private static List<Order> BattleMemberList(Character hero, List<Order> units)
+        private static List<BattleSession> BattleMemberList(Character hero, List<BattleSession> units)
         {
-            List<Order> UnitTurnList = new List<Order>();
+            List<BattleSession> UnitTurnList = new List<BattleSession>();
 
             foreach (var unit in units)
-                UnitTurnList.Add(new Order(unit.character, unit.Role));
+                UnitTurnList.Add(new BattleSession(unit.character, unit.Role));
 
-            UnitTurnList.Add(new Order(hero, 0));
+            UnitTurnList.Add(new BattleSession(hero, 0));
 
             return UnitTurnList;
         }      
@@ -439,7 +439,7 @@ namespace FightCons
         /// <summary>
         /// Награда за победу
         /// </summary>
-        private static void BattleReward(Hero hero, List<Order> units)
+        private static void BattleReward(Hero hero, List<BattleSession> units)
         {
             Random random = new Random();
             short money = 0;
@@ -482,7 +482,7 @@ namespace FightCons
 
         //  Проверка на побег
         //TODO Можно добавить к вероятности скорость героя
-        public static void RunFromBattle(Hero hero, Character unit, List<Order> units = null)
+        public static void RunFromBattle(Hero hero, Character unit, List<BattleSession> units = null)
         {
             if (!unit.CantRunBattle)
             {
@@ -507,7 +507,7 @@ namespace FightCons
         }
 
         //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
-        public static void RunFromBattle(Character character, Character unit, List<Order> units = null)
+        public static void RunFromBattle(Character character, Character unit, List<BattleSession> units = null)
         {
             if (!unit.CantRunBattle)
             {
@@ -531,7 +531,7 @@ namespace FightCons
                 Output.TwriteLine("Вы не можете убежать\n", 1);
         }
 
-        private static void ShowAttackersNames(List<Order> units)
+        private static void ShowAttackersNames(List<BattleSession> units)
         {
             bool FirstUnit = true;
 
@@ -562,21 +562,21 @@ namespace FightCons
             }
         }
 
-        struct UnitPosition
-        {
-            public Character character;
-            public int x, y; // Позиция противника
-            public bool hasCover; // Установлено ли укрытие
+        //struct UnitPosition
+        //{
+        //    public Character character;
+        //    public int x, y; // Позиция противника
+        //    public bool hasCover; // Установлено ли укрытие
 
-            public UnitPosition(Character character, int x, int y)
-            {
-                this.character = character;
-                this.x = x;
-                this.y = y;
-            }
-        }
+        //    public UnitPosition(Character character, int x, int y)
+        //    {
+        //        this.character = character;
+        //        this.x = x;
+        //        this.y = y;
+        //    }
+        //}
 
-        public static void BattleMap(Character character, List<Order> units = null)
+        public static void BattleMap(Character character, List<BattleSession> units = null)
         {
             /* Старый вариант
             //WriteColorLine(ConsoleColor.DarkGray, "", "┌──────────────────────────────────────────────────────────────────────────────┐");
@@ -598,8 +598,8 @@ namespace FightCons
             //Output.WriteColorLine(ConsoleColor.DarkGray, "\t\t\t", "| ########## ☺ #### ☺ ########## |", "\t\n");
             //Output.WriteColorLine(ConsoleColor.DarkGray, "\t\t\t", "| ########### ###### ########### |", "\t\n");
 
-            List<Order> enemySide = new List<Order>();
-            List<Order> allySide = new List<Order>();
+            List<BattleSession> enemySide = new List<BattleSession>();
+            List<BattleSession> allySide = new List<BattleSession>();
 
             string[] masHeadNFoot =
             {
@@ -626,7 +626,7 @@ namespace FightCons
                 }                    
             }
             allytNum++; //hero
-            allySide.Add(new Order(character, ChaRole.Hero));
+            allySide.Add(new BattleSession(character, ChaRole.Hero));
             
             //  Не трогаем 
             Console.WriteLine("\n\t\t\t┌────────────────────────────────┐\t");
@@ -701,7 +701,7 @@ namespace FightCons
             //Console.BackgroundColor = ConsoleColor.DarkGray;*/
         }
 
-        public static void Tes(List<Order> unit, Character character, bool good = false)
+        public static void Tes(List<BattleSession> unit, Character character, bool good = false)
         {
             string simbol = good ? " ☻ " : " ☺ ";
 
@@ -951,7 +951,7 @@ namespace FightCons
     }
 
     //  Порядок хода
-    public class Order
+    public class BattleSession
     {
         public sbyte UnitID { get; set; }
 
@@ -963,19 +963,15 @@ namespace FightCons
 
         public ChaRole Role { get; set; }
 
-        public sbyte x;
-        public sbyte y;
-        public bool hasCover;
+        public static short SelectedUnit { get; set; }
 
-        //public Character.ChaRole Role { get; set; }
-
-        public Order(sbyte unitID, ChaRole chaRole)
+        public BattleSession(sbyte unitID, ChaRole chaRole)
         {
             UnitID = unitID;
             Role = chaRole;
         }
 
-        public Order(Character cha, ChaRole role)
+        public BattleSession(Character cha, ChaRole role)
         {
             character = cha;
             Speed = 0;
@@ -986,19 +982,19 @@ namespace FightCons
 
     public class BattleScenarioEvent
     {
-        public Func<Hero, List<Order>, byte, bool> Condition { get; }
-        public Action<Hero, List<Order>> Action { get; }
+        public Func<Hero, List<BattleSession>, byte, bool> Condition { get; }
+        public Action<Hero, List<BattleSession>> Action { get; }
 
         public static bool MultiTrigger = false;
 
-        public BattleScenarioEvent(Func<Hero, List<Order>, byte, bool> condition, Action<Hero, List<Order>> action, bool multiTrigger = false)
+        public BattleScenarioEvent(Func<Hero, List<BattleSession>, byte, bool> condition, Action<Hero, List<BattleSession>> action, bool multiTrigger = false)
         {
             Condition = condition;
             Action = action;
             MultiTrigger = multiTrigger;
         }
 
-        public static void CheckBattleScenarios(Hero hero, List<Order> units, List<BattleScenarioEvent> scenario = null)
+        public static void CheckBattleScenarios(Hero hero, List<BattleSession> units, List<BattleScenarioEvent> scenario = null)
         {
             if (scenario != null)
             {
@@ -1009,11 +1005,11 @@ namespace FightCons
             }
         }
 
-        public static void CheckSingleBattleScenario(Hero hero, List<Order> units, List<BattleScenarioEvent> scenario = null)
+        public static void CheckSingleBattleScenario(Hero hero, List<BattleSession> units, List<BattleScenarioEvent> scenario = null)
         {
             if (scenario != null)
             {
-                foreach (var bEvent in scenario.Where(x => x.Condition(hero, units, Order.Round)).ToList())
+                foreach (var bEvent in scenario.Where(x => x.Condition(hero, units, BattleSession.Round)).ToList())
                 {
                     bEvent.Action(hero, units);
                     scenario.Remove(bEvent);
@@ -1021,11 +1017,11 @@ namespace FightCons
             }
         }
 
-        public static void CheckMultiBattleScenario(Hero hero, List<Order> units, List<BattleScenarioEvent> scenario = null)
+        public static void CheckMultiBattleScenario(Hero hero, List<BattleSession> units, List<BattleScenarioEvent> scenario = null)
         {
             if (scenario != null)
             {
-                foreach (var bEvent in scenario.Where(x => x.Condition(hero, units, Order.Round)).ToList())
+                foreach (var bEvent in scenario.Where(x => x.Condition(hero, units, BattleSession.Round)).ToList())
                 {
                     bEvent.Action(hero, units);
                 }

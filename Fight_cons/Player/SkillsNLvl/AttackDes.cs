@@ -1,12 +1,13 @@
 ﻿using FightCons.CoreNSettings;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FightCons
 {
     public class AttackDes
     {
-        internal SkillsDele Attack { get; set; }
+        //internal SkillsDele Attack { get; set; }
         internal SkillsDeleParty AttackParty { get; set; }
 
         internal int ID { get; set; }
@@ -50,54 +51,54 @@ namespace FightCons
 
         #region Атаки
         //  Действие: базовая Атака
-        public static void BaseAttack(Character attacker, Character victim)
+        public static void BaseAttack(Character attacker, List<BattleSession> victim)
         {
-            short damage = GameFormulas.Damage(attacker, victim);
+            short damage = GameFormulas.Damage(attacker, victim[BattleSession.SelectedUnit].character);
 
             attacker.Statistic.Attacks++;
             attacker.Statistic.ChaActions.Add(10);
 
-            UnitSkills.BattleLog(attacker, victim, damage);
+            UnitSkills.BattleLog(attacker, victim[BattleSession.SelectedUnit].character, damage);
         }
 
         //  Действие: Пробитие брони
-        public static void BreachArmorAttack(Character attacker, Character victim)
+        public static void BreachArmorAttack(Character attacker, List<BattleSession> victim)
         {           
             //  Пробитие брони
-            short damage = GameFormulas.Damage(attacker, victim, true);
+            short damage = GameFormulas.Damage(attacker, victim[BattleSession.SelectedUnit].character, true);
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.Yellow, "пробивают броню и наносит ", $"{damage} ", "урона у ");
-            Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damage} ", $"{Output.HPSymbol}\n");
+            Output.NameAndId(victim[BattleSession.SelectedUnit].character);
+            Output.WriteColorLine(ConsoleColor.Red, "", $"{victim[BattleSession.SelectedUnit].character.HP - damage} ", $"{Output.HPSymbol}\n");
 
-            victim.HP -= damage;
+            victim[BattleSession.SelectedUnit].character.HP -= damage;
 
             attacker.Statistic.Attacks++;
             attacker.Statistic.ChaActions.Add(11);
         }
 
         //  Действие: Кровотечение
-        public static void MakeBleedAttack(Character attacker, Character victim)
+        public static void MakeBleedAttack(Character attacker, List<BattleSession> victim)
         {
-            short damage = GameFormulas.Damage(attacker, victim);
+            short damage = GameFormulas.Damage(attacker, victim[BattleSession.SelectedUnit].character);
 
-            victim.Condition.BleedRound = 3;
+            victim[BattleSession.SelectedUnit].character.Condition.BleedRound = 3;
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkRed, "накладывает ", $"Кровотечение ");
             Output.WriteColorLine(ConsoleColor.Yellow, "и наносит ", $"{damage} ", "урона у ");
-            Output.NameAndId(victim);
-            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim.HP - damage} ", $"{Output.HPSymbol}\n");
+            Output.NameAndId(victim[BattleSession.SelectedUnit].character);
+            Output.WriteColorLine(ConsoleColor.Red, " ", $"{victim[BattleSession.SelectedUnit].character.HP - damage} ", $"{Output.HPSymbol}\n");
 
-            victim.HP -= damage;
+            victim[BattleSession.SelectedUnit].character.HP -= damage;
 
             attacker.Statistic.Attacks++;
             attacker.Statistic.ChaActions.Add(12);
         }
         
         //  Действие: Парирование
-        public static void ParryAttack(Character person, Character victim)
+        public static void ParryAttack(Character person, List<BattleSession> victim)
         {
             person.Condition.AttackParry = true;
             person.Turn = person.TotalMaxMoves;

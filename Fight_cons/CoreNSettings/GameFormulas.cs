@@ -8,9 +8,10 @@ namespace FightCons.CoreNSettings
     internal class GameFormulas
     {
         //  Для формул
-        private const float ArmorFine = 1.5f;
+        public const float ArmorFine = 1.5f;
         private const sbyte MinCritChance = 15;
         private const sbyte MaxCritChance = 20;
+
 
         /// <summary>
         /// Получить 1% от MAX HP
@@ -38,15 +39,26 @@ namespace FightCons.CoreNSettings
             if (!throwBranch)
                 attack = attacker.TotalAttack + crit;
             else
-                attack = attacker.TotalAttack + crit / ArmorFine;
+                attack = attacker.TotalAttack / ArmorFine;
 
             if (victim.Condition.AttackParry)
                 if (CheckParry(attacker, victim))
                     victim.Condition.RandomDebuff(attacker, victim);
 
-            short damage = CheckDefence(victim, attack);
+            return (short)(throwBranch == true ? attack : CheckDefence(victim, attack));            
+        }
 
-            return damage;
+        public static short Damage(int baseAttack, Character victim, bool throwBranch = false)
+        {
+            //float crit = CheckCrit(attacker);
+            float attack;
+
+            if (!throwBranch)
+                attack = baseAttack;
+            else
+                attack = baseAttack / ArmorFine;
+
+            return (short)(throwBranch == true ? attack : CheckDefence(victim, attack));
         }
 
         #region Проверки для урона

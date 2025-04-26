@@ -125,6 +125,20 @@ namespace FightCons.World.Locations
         public static bool ExitCave;
 
         #region Настройки магазина
+        //  Наименование объектов
+        private static InventoryItem healPotionItem = new InventoryItem()
+        {
+            Name = "Живица",
+            Description = "(Восстанавливает здоровье)",
+        };
+
+        private static InventoryItem manaPotionItem = new InventoryItem()
+        {
+            Name = "Коренья",
+            Description = "(Восстанавливает ману)",
+        };
+
+
         //  Настройки для магазина
         static sbyte GoodsNum = 3;
         static sbyte BonusesNum = 2; //  1-8
@@ -239,9 +253,9 @@ namespace FightCons.World.Locations
                 {
                     RestEvent(hero);
 
-                    List<Order> battleList = new List<Order>()
+                    List<BattleSession> battleList = new List<BattleSession>()
                     {
-                        new Order(1, Character.ChaRole.Wild),
+                        new BattleSession(1, Character.ChaRole.Wild),
                     };
                     Battles.MakeRandomBattle(hero, battleList);
                 }, 
@@ -253,21 +267,61 @@ namespace FightCons.World.Locations
             new Map
             (
                 //  Размеры
-                20, 10,
+                //20, 10,
+                //41, 19,
+                42, 16,
 
                 //  Карта
                 new char[,]
                 {
-                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
-                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','#','#','#', },
-                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
-                    { '#','#','.','O','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
-                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
-                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
-                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
-                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#', },
-                    { '#','#','#','#','#','#','#','#','#','O','#','#','#','#','#','#','#','#','#','#', },
-                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','#','#','#', },
+                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    //{ '#','#','.','O','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#', },
+                    //{ '#','#','#','#','#','#','#','#','#','O','#','#','#','#','#','#','#','#','#','#', },
+                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+
+                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    //{ '#','.','.','.','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','.','#', },
+                    //{ '#','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','#','#','#','#','.','.','#','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','#', },
+                    //{ '0','.','.','.','.','#','#','#','#','.','.','.','.','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','.','0', },
+                    //{ '#','.','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#', },
+                    //{ '#','#','.','.','.','.','.','#','#','.','.','.','.','.','.','.','#','#','#','#','.','.','.','.','.','#','.','.','.','.','.','.','.','#','#','#','.','.','.','.','#', },
+                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','.','.','.','.','.','.','.','.','.','#','#','#','.','.','#','#','.','.','.','#','.','#', },
+                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','.','.','.','.','.','.','.','.','.','#','#','#','#','.','.','#','#','.','.','#','#','.','#', },
+                    //{ '#','#','#','.','.','.','.','.','.','.','.','.','#','#','.','.','.','#','.','.','.','.','.','.','.','.','.','#','#','#','#','.','.','.','#','.','.','#','#','.','#', },
+                    //{ '#','#','#','#','.','.','.','.','.','.','#','.','#','#','#','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','.','#', },
+                    //{ '#','#','#','#','.','.','.','.','.','.','#','.','#','#','#','#','.','.','.','.','#','#','#','#','.','.','.','.','#','#','#','#','.','.','.','.','#','#','#','.','#', },
+                    //{ '#','#','#','#','.','.','.','.','#','#','#','.','#','#','#','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','#', },
+                    //{ '#','#','#','#','.','.','.','.','#','#','#','.','#','#','#','#','.','.','#','#','#','#','#','#','.','.','.','.','#','#','.','.','.','.','.','.','#','#','#','.','#', },
+                    //{ '#','#','#','#','.','.','#','#','#','#','#','.','#','#','#','#','#','#','#','#','#','#','#','#','.','.','.','.','.','#','.','.','.','.','.','.','.','#','#','.','#', },
+                    //{ '#','#','#','.','.','#','#','#','#','#','#','.','#','#','#','#','#','#','#','#','#','#','#','.','.','.','.','.','.','.','.','.','.','.','#','.','.','#','#','.','#', },
+                    //{ '#','#','#','.','.','#','#','#','#','#','#','.','#','#','#','#','#','#','#','#','#','#','.','.','.','.','.','.','.','.','.','.','.','#','#','.','.','#','#','.','#', },
+                    //{ '#','#','#','.','.','#','#','#','#','#','#','.','.','#','#','#','#','#','#','#','#','#','.','.','.','#','.','.','.','.','.','.','.','#','#','#','.','.','#','.','#', },
+                    //{ '#','#','#','#','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','#','.','.','.','#','#','.','.','.','.','.','.','#','#','#','#','.','.','.','#', },
+                    //{ '#','#','#','#','#','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','.','.','#', },
+                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','#','#','.','.','#','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','.','.','.','#', },
+                    { '0','.','.','.','.','#','#','#','#','.','.','.','.','.','#','#','#','#','.','.','.','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','.','.','.','.','O', },
+                    { '#','.','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','.','.','.','#', },
+                    { '#','#','.','.','.','.','.','#','#','.','.','.','.','.','.','.','#','#','.','.','.','.','.','#','.','.','.','.','.','.','.','#','#','#','.','.','.','.','.','.','.','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.','#','#','#','.','.','#','#','.','.','.','#','.','.','.','.','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#','.','.','#','#','.','.','#','#','.','.','.','.','#', },
+                    { '#','#','#','.','.','.','.','.','.','.','.','.','#','#','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#','.','.','.','#','.','.','#','#','.','.','.','.','#', },
+                    { '#','#','#','#','.','.','.','.','.','.','#','.','#','#','#','.','.','.','.','.','.','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','.','.','.','.','#', },
+                    { '#','#','#','#','.','.','.','.','#','#','#','.','#','#','#','.','#','#','#','#','#','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#', },
+                    { '#','#','#','#','.','.','.','.','#','#','#','.','#','#','#','#','#','#','#','#','#','#','.','.','.','.','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#', },
+                    { '#','#','#','#','.','.','#','#','#','#','#','.','#','#','#','#','#','#','#','#','#','#','.','.','.','.','.','#','.','.','.','.','.','.','.','#','#','.','.','.','.','#', },
+                    { '#','#','#','.','.','#','#','#','#','#','#','.','#','#','#','#','#','#','#','#','#','.','.','.','.','.','.','.','.','.','.','.','#','.','.','#','#','.','.','.','.','#', },
+                    { '#','#','#','#','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','.','.','.','#','#','.','.','.','.','.','.','#','#','#','#','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                 },
                 //  Интерактивные объекты
                 new Dictionary<(int, int), Action>
@@ -301,9 +355,9 @@ namespace FightCons.World.Locations
                 (Hero hero) =>
                 {
                     RestEvent(hero);
-                    List<Order> battleList = new List<Order>()
+                    List<BattleSession> battleList = new List<BattleSession>()
                     {
-                        new Order(3, Character.ChaRole.Enemy),
+                        new BattleSession(3, Character.ChaRole.Enemy),
                     };
                     Battles.MakeCurrentBattle(hero, battleList);
                 },
@@ -335,10 +389,10 @@ namespace FightCons.World.Locations
         {
             if (GameFormulas.Vero(0.3))
             {
-                List<Order> battleList = new List<Order>()
+                List<BattleSession> battleList = new List<BattleSession>()
                 {
-                    new Order(10, Character.ChaRole.Enemy),
-                    new Order(5, Character.ChaRole.Enemy),
+                    new BattleSession(10, Character.ChaRole.Enemy),
+                    new BattleSession(5, Character.ChaRole.Enemy),
                 };
                 Battles.MakeCurrentBattle(hero, battleList);
             }                
@@ -373,11 +427,11 @@ namespace FightCons.World.Locations
                             }
                         if (GameFormulas.Vero(0.6))
                         {
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(10, Character.ChaRole.Enemy),
-                                new Order(11, Character.ChaRole.Enemy),
-                                new Order(12, Character.ChaRole.Enemy),
+                                new BattleSession(10, Character.ChaRole.Enemy),
+                                new BattleSession(11, Character.ChaRole.Enemy),
+                                new BattleSession(12, Character.ChaRole.Enemy),
                             };
                             Battles.MakeRandomBattle(hero, battleList);
                         }                            
@@ -392,11 +446,11 @@ namespace FightCons.World.Locations
                         {
                             RestEvent(hero);
 
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(10, Character.ChaRole.Enemy),
-                                new Order(11, Character.ChaRole.Enemy),
-                                new Order(12, Character.ChaRole.Enemy),
+                                new BattleSession(10, Character.ChaRole.Enemy),
+                                new BattleSession(11, Character.ChaRole.Enemy),
+                                new BattleSession(12, Character.ChaRole.Enemy),
                             };
                             Battles.MakeRandomBattle(hero, battleList);
                         }
@@ -432,11 +486,11 @@ namespace FightCons.World.Locations
                     case 1:
                         if (GameFormulas.Vero(0.7))
                         {
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(10, Character.ChaRole.Enemy),
-                                new Order(11, Character.ChaRole.Enemy),
-                                new Order(12, Character.ChaRole.Enemy),
+                                new BattleSession(10, Character.ChaRole.Enemy),
+                                new BattleSession(11, Character.ChaRole.Enemy),
+                                new BattleSession(12, Character.ChaRole.Enemy),
                             };
                             Battles.MakeRandomBattle(hero, battleList);
                         }
@@ -451,11 +505,11 @@ namespace FightCons.World.Locations
                         {
                             RestEvent(hero);
 
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(10, Character.ChaRole.Enemy),
-                                new Order(11, Character.ChaRole.Enemy),
-                                new Order(12, Character.ChaRole.Enemy),
+                                new BattleSession(10, Character.ChaRole.Enemy),
+                                new BattleSession(11, Character.ChaRole.Enemy),
+                                new BattleSession(12, Character.ChaRole.Enemy),
                             };
                             Battles.MakeRandomBattle(hero, battleList);
                         }
@@ -487,9 +541,9 @@ namespace FightCons.World.Locations
                     },
                     (hero) =>
                     {
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(7, Character.ChaRole.Enemy),
+                                new BattleSession(7, Character.ChaRole.Enemy),
                             };
                             Battles.MakeCurrentBattle(hero, battleList);
                     },
@@ -510,9 +564,9 @@ namespace FightCons.World.Locations
                             //mapStartLine = -1;
                             //Console.CursorVisible = true;
 
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(1, Character.ChaRole.Wild),
+                                new BattleSession(1, Character.ChaRole.Wild),
                             };
                             Battles.MakeRandomBattle(hero, battleList);
                         }
@@ -533,45 +587,45 @@ namespace FightCons.World.Locations
             while (true)
                 maps[0].Transition(hero, (playerX, playerY), locInfo, scenario);
 
-            while (true)
-            {
-                Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Долина\n");
-                Output.TwriteLine(Descriptions(((byte)LocationName.Valley), Descript), 1);
+            /*while (true)
+            //{
+            //    Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Долина\n");
+            //    Output.TwriteLine(Descriptions(((byte)LocationName.Valley), Descript), 1);
 
-                hero.HPnMPBar(true, true);
+            //    hero.HPnMPBar(true, true);
 
-                //TODO Появления наименования мест посто того как узнал
-                //TODO Сделать нумерацию возможных действий через массив строк
-                string quo = "\nВаши действия?\n"
-                            + "1) Пойти в поселение Ордо\n"
-                            + "2) Пойти в предгорье\n"
-                            + "3) Пойти в окрестности\n" // появления инфы позже
-                            + "4) Пойти в лес\n"
-                            + "5) Передохнуть\n"
-                            + "6) Вернуться в пещеры";
+            //    //TODO Появления наименования мест посто того как узнал
+            //    //TODO Сделать нумерацию возможных действий через массив строк
+            //    string quo = "\nВаши действия?\n"
+            //                + "1) Пойти в поселение Ордо\n"
+            //                + "2) Пойти в предгорье\n"
+            //                + "3) Пойти в окрестности\n" // появления инфы позже
+            //                + "4) Пойти в лес\n"
+            //                + "5) Передохнуть\n"
+            //                + "6) Вернуться в пещеры";
 
-                switch (Input.ChoisInput(hero, 1, 6, quo))
-                {
-                    case 1:
-                        OrdoColony(hero);
-                        break;
-                    case 2:
-                        Foothills(hero);
-                        break;
-                    case 3:
-                        Neighborhood(hero);
-                        break;
-                    case 4:
-                        Woods(hero);
-                        break;
-                    case 5:
-
-                        break;
-                    case 6:
-                        Caves(hero);
-                        break;
-                }
-            }
+            //    switch (Input.ChoisInput(hero, 1, 6, quo))
+            //    {
+            //        case 1:
+            //            OrdoColony(hero);
+            //            break;
+            //        case 2:
+            //            Foothills(hero);
+            //            break;
+            //        case 3:
+            //            Neighborhood(hero);
+            //            break;
+            //        case 4:
+            //            Woods(hero);
+            //            break;
+            //        case 5:
+            //            RestEvent(hero);
+            //            break;
+            //        case 6:
+            //            Caves(hero);
+            //            break;
+            //    }
+            //}*/
         }
 
         //  Поселение Ордо
@@ -581,9 +635,9 @@ namespace FightCons.World.Locations
                 FindingPouchEvent(hero, 3, 10);
             if (GameFormulas.Vero(0.05))
             {
-                List<Order> battleList = new List<Order>()
+                List<BattleSession> battleList = new List<BattleSession>()
                 {
-                    new Order(3, Character.ChaRole.Enemy),
+                    new BattleSession(3, Character.ChaRole.Enemy),
                 };
                 Battles.MakeCurrentBattle(hero, battleList);
             }
@@ -673,10 +727,10 @@ namespace FightCons.World.Locations
             locInfo[0] = "Предгорье";
             locInfo[1] = Descriptions(((byte)LocationName.Foothills), Descript);
 
-            maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
+            //maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
 
-            while (true)
-                maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
+            //while (true)
+            //    maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
 
             while (true)
             {
@@ -701,9 +755,9 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(3, Character.ChaRole.Enemy),
+                                new BattleSession(3, Character.ChaRole.Enemy),
                             };
                             Battles.MakeCurrentBattle(hero, battleList);
                         }
@@ -768,8 +822,8 @@ namespace FightCons.World.Locations
                 else
                     Output.WriteColorLine(ConsoleColor.DarkGray, "", "1) Способность видеть (уже изучено)\n");
 
-                Output.PayMoneyLine("2) Купить зелье здоровья", Output.PotionHPCost, hero.Money);
-                Output.PayMoneyLine("3) Купить зелье маны", Output.PotionMPCost, hero.Money);
+                Output.PayMoneyLine($"2) Купить {healPotionItem.Name}", 50, hero.Money);
+                Output.PayMoneyLine($"3) Купить {manaPotionItem.Name}", 100, hero.Money);
                 Console.WriteLine("4) Вернуться");
 
                 switch (Input.ChoisInput(hero, 1, 4))
@@ -786,13 +840,21 @@ namespace FightCons.World.Locations
                         break;
 
                     case 2:
-                        if (Output.Spent(hero.Money, Output.PotionHPCost, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
-                            hero.PotionList[0].Count += 1;
+                        if (Output.Spent(hero.Money, 50, healPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
+                        {
+                            //TODO оптимизировать процесс. Не надо создавать сто раз один и тот же объект. 
+
+                            healPotionItem.UseItem = healPotionItem.HealPotion;
+                            Inventory.ItemAdd(hero, healPotionItem);
+                        }
                         break;
 
                     case 3:
-                        if (Output.Spent(hero.Money, Output.PotionMPCost, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
-                            hero.PotionList[1].Count += 1;
+                        if (Output.Spent(hero.Money, 100, manaPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
+                        {
+                            manaPotionItem.UseItem = manaPotionItem.ManaPotion;
+                            Inventory.ItemAdd(hero, manaPotionItem);
+                        }
                         break;
 
                     case 4:
@@ -812,9 +874,9 @@ namespace FightCons.World.Locations
                 FindingPouchEvent(hero, 0, 5);
             if (GameFormulas.Vero(0.1))
             {
-                List<Order> battleList = new List<Order>()
+                List<BattleSession> battleList = new List<BattleSession>()
                 {
-                    new Order(2, Character.ChaRole.Enemy),
+                    new BattleSession(2, Character.ChaRole.Enemy),
                 };
                 Battles.MakeCurrentBattle(hero, battleList);
             }
@@ -842,9 +904,9 @@ namespace FightCons.World.Locations
                         else
                         {
                             RestEvent(hero);
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(3, Character.ChaRole.Enemy),
+                                new BattleSession(3, Character.ChaRole.Enemy),
                             };
                             Battles.MakeCurrentBattle(hero, battleList);
                         }
@@ -968,10 +1030,10 @@ namespace FightCons.World.Locations
                             }
                             else if (GameFormulas.Vero(0.6))
                             {
-                                List<Order> battleList = new List<Order>()
+                                List<BattleSession> battleList = new List<BattleSession>()
                                 {
-                                    new Order(2, Character.ChaRole.Enemy),
-                                    new Order(3, Character.ChaRole.Enemy),
+                                    new BattleSession(2, Character.ChaRole.Enemy),
+                                    new BattleSession(3, Character.ChaRole.Enemy),
                                 };
                                 Battles.MakeRandomBattle(hero, battleList);
                             }                                
@@ -989,10 +1051,10 @@ namespace FightCons.World.Locations
                         {
                             RestEvent(hero);
 
-                            List<Order> battleList = new List<Order>()
+                            List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new Order(2, Character.ChaRole.Enemy),
-                                new Order(3, Character.ChaRole.Enemy),
+                                new BattleSession(2, Character.ChaRole.Enemy),
+                                new BattleSession(3, Character.ChaRole.Enemy),
                             };
                             Battles.MakeRandomBattle(hero, battleList);
                         }
@@ -1017,7 +1079,7 @@ namespace FightCons.World.Locations
 
                 SpellDes excision = new SpellDes(hero, "Исцеление")
                 {
-                    Spell = SpellDes.ExcisionSpell,
+                    SpellParty = SpellDes.ExcisionSpell,
                     Description = $"Исцеление (3 {Output.MPSymbol})",
                     SpellСost = 0,
                     SpellPower = 0,
@@ -1028,9 +1090,9 @@ namespace FightCons.World.Locations
             {
                 Console.WriteLine("Вы слышите в темноте как что-то огромное надвигается на вас!");
 
-                List<Order> battleList = new List<Order>()
+                List<BattleSession> battleList = new List<BattleSession>()
                 {
-                    new Order(18, Character.ChaRole.Enemy),
+                    new BattleSession(18, Character.ChaRole.Enemy),
                 };
                 Battles.MakeCurrentBattle(hero, battleList);
             }
@@ -1078,9 +1140,9 @@ namespace FightCons.World.Locations
                     }
                     else
                     {
-                        List<Order> battleList = new List<Order>()
+                        List<BattleSession> battleList = new List<BattleSession>()
                         {
-                            new Order(3, Character.ChaRole.Enemy),
+                            new BattleSession(3, Character.ChaRole.Enemy),
                         };
                         Battles.MakeCurrentBattle(hero, battleList);
                     }                        

@@ -1,5 +1,6 @@
 ﻿using FightCons.CoreNSettings;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FightCons
@@ -51,13 +52,13 @@ namespace FightCons
 
         #region Заклинания
         //  Действие: Очищающий луч
-        public static void CleansingRaySpell(Hero hero, Character victim, short cost, sbyte spellPower)
+        public static void CleansingRaySpell(Hero hero, List<BattleSession> victim, short cost, sbyte spellPower)
         {
             Random rand = new Random();
 
-            short damag = GameFormulas.MagicDamage(hero, victim, spellPower);
+            short damag = GameFormulas.MagicDamage(hero, victim[BattleSession.SelectedUnit].character, spellPower);
 
-            if (rand.NextDouble() <= 1 - victim.TotalSpeed)
+            if (rand.NextDouble() <= 1 - victim[BattleSession.SelectedUnit].character.TotalSpeed)
             {
                 Output.NameAndId(hero, true);
 
@@ -66,26 +67,26 @@ namespace FightCons
                 else
                     Output.WriteColorLine(ConsoleColor.DarkBlue, "наносит заклинанием ", $"{damag} ", "урона у ");
 
-                Output.NameAndId(victim);
-                Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", $"{Output.HPSymbol}\n");                
-                victim.HP -= damag;
+                Output.NameAndId(victim[BattleSession.SelectedUnit].character);
+                Output.WriteColorLine(ConsoleColor.Red, "", $"{victim[BattleSession.SelectedUnit].character.HP - damag} ", $"{Output.HPSymbol}\n");
+                victim[BattleSession.SelectedUnit].character.HP -= damag;
 
                 hero.Statistic.Spells++;
             }
             else
             {
-                Output.NameAndId(victim, true);
+                Output.NameAndId(victim[BattleSession.SelectedUnit].character, true);
                 Console.Write("уворачивается\n");
             }
         }
         //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
-        public static void CleansingRaySpell(Character character, Character victim, short cost, sbyte spellPower)
+        public static void CleansingRaySpell(Character character, List<BattleSession> victim, short cost, sbyte spellPower)
         {
             Random rand = new Random();
 
-            short damag = GameFormulas.MagicDamage(character, victim, spellPower);
+            short damag = GameFormulas.MagicDamage(character, victim[BattleSession.SelectedUnit].character, spellPower);
 
-            if (rand.NextDouble() <= 1 - victim.TotalSpeed)
+            if (rand.NextDouble() <= 1 - victim[BattleSession.SelectedUnit].character.TotalSpeed)
             {
                 Output.NameAndId(character, true);
 
@@ -94,51 +95,51 @@ namespace FightCons
                 else
                     Output.WriteColorLine(ConsoleColor.DarkBlue, "наносит заклинанием ", $"{damag} ", "урона у ");
 
-                Output.NameAndId(victim);
-                Output.WriteColorLine(ConsoleColor.Red, "", $"{victim.HP - damag} ", $"{Output.HPSymbol}\n");
-                victim.HP -= damag;
+                Output.NameAndId(victim[BattleSession.SelectedUnit].character);
+                Output.WriteColorLine(ConsoleColor.Red, "", $"{victim[BattleSession.SelectedUnit].character.HP - damag} ", $"{Output.HPSymbol}\n");
+                victim[BattleSession.SelectedUnit].character.HP -= damag;
 
                 character.Statistic.Spells++;
             }
             else
             {
-                Output.NameAndId(victim, true);
+                Output.NameAndId(victim[BattleSession.SelectedUnit].character, true);
                 Console.Write("уворачивается\n");
             }
         }
-
+        
         //  Малое лечение
-        public static void HealSpell(Hero hero, Character enemy, short cost, sbyte spellPower)
+        public static void HealSpell(Character character, List<BattleSession> enemy, short cost, sbyte spellPower)
         {
-            float crit = GameFormulas.CheckCrit(hero, true);
-            float Heal = (float)((hero.MaxHp / 100.0 * 30.0) + crit);
+            float crit = GameFormulas.CheckCrit(character, true);
+            float Heal = (float)((character.MaxHp / 100.0 * 30.0) + crit);
 
             if (crit > 1)
                 Output.WriteColorLine(ConsoleColor.Green, "\nВы критически восстановили себе ", $"+{(int)Heal} ", $"{Output.HPSymbol}\n");
             else
                 Output.WriteColorLine(ConsoleColor.Green, "\nВы восстановили себе ", $"+{(int)Heal} ", $"{Output.HPSymbol}\n");
 
-            hero.HP += (short) Heal;
+            character.HP += (short) Heal;
 
-            hero.Statistic.Spells++;
+            character.Statistic.Spells++;
         }
 
         //  Замедление
-        public static void SlowDownSpell(Hero hero, Character enemy, short cost, sbyte spellPower)
+        public static void SlowDownSpell(Character character, List<BattleSession> enemy, short cost, sbyte spellPower)
         {
-            enemy.Condition.Speed = -0.2f;
+            enemy[BattleSession.SelectedUnit].character.Condition.Speed = -0.2f;
             Console.WriteLine("Вы замедлили противника!");
 
-            hero.Statistic.Spells++;
+            character.Statistic.Spells++;
         }
 
         //  Исцеление
-        public static void ExcisionSpell(Hero hero, Character enemy, short cost, sbyte spellPower)
+        public static void ExcisionSpell(Character character, List<BattleSession> enemy, short cost, sbyte spellPower)
         {
             Console.WriteLine("\nВы избавились от всех негатив. эффектов\n");
-            hero.Condition.Clear();
+            character.Condition.Clear();
 
-            hero.Statistic.Spells++;
+            character.Statistic.Spells++;
         }
         #endregion
     }
