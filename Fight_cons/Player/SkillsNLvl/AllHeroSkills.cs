@@ -49,10 +49,10 @@ namespace FightCons
             SpellDes CleansingRay = new SpellDes(hero, "Очищающий луч")
             {
                 SpellParty = SpellDes.CleansingRaySpell,
-                SpellСost = 5,
+                SpellCost = 5,
                 SpellPower = 10
             };
-            CleansingRay.Description = $"Очищающий луч ({CleansingRay.SpellPower + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {CleansingRay.SpellСost} {Output.MPSymbol})";
+            CleansingRay.Description = $"Очищающий луч ({CleansingRay.SpellPower + hero.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {CleansingRay.SpellCost} {Output.MPSymbol})";
 
             //  Способность: Малое лечение
             if (hero.Statistic.Spells >= 5)
@@ -60,9 +60,9 @@ namespace FightCons
                 SpellDes Healing = new SpellDes(hero, "Малое лечение")
                 {
                     SpellParty = SpellDes.HealSpell,
-                    SpellСost = 3
+                    SpellCost = 3
                 };
-                Healing.Description = $"Малое лечение (+30% {Output.HPSymbol} | {Healing.SpellСost} {Output.MPSymbol})";
+                Healing.Description = $"Малое лечение (+30% {Output.HPSymbol} | {Healing.SpellCost} {Output.MPSymbol})";
             }
             #endregion
 
@@ -130,10 +130,10 @@ namespace FightCons
             SpellDes CleansingRay = new SpellDes(character, "Очищающий луч")
             {
                 SpellParty = SpellDes.CleansingRaySpell,
-                SpellСost = 5,
+                SpellCost = 5,
                 SpellPower = 10
             };
-            CleansingRay.Description = $"Очищающий луч ({CleansingRay.SpellPower + character.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {CleansingRay.SpellСost} {Output.MPSymbol})";
+            CleansingRay.Description = $"Очищающий луч ({CleansingRay.SpellPower + character.TotalArcane} {Output.AttackStr} | МЕТ {(enemy.TotalSpeed - 1) * 100}% | {CleansingRay.SpellCost} {Output.MPSymbol})";
 
             ////  Способность: Малое лечение
             //if (character.Statistic.Spells >= 5)

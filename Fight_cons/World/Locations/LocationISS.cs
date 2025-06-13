@@ -146,24 +146,24 @@ namespace FightCons.World.Locations
         //TODO Придумать реест с общим
         static List<Material> Materials = new List<Material>
         {
-            new Material("дерево", 0.7, 3),
-            new Material("смешенное", 0.2, 6),
-            new Material("железо", 0.05, 9),
-            new Material("сплав", 0.05, 12),
+            new Material(WoodMat, 0.7, 3),
+            new Material(MixedMat, 0.2, 6),
+            new Material(IronMat, 0.05, 9),
+            new Material(AlloyMat, 0.05, 12),
         };
         static Dictionary<string, List<string>> WeaponsByMaterial = new Dictionary<string, List<string>>()
         {
-            { "дерево", new List<string> { "Деревянный меч", "Деревянная пика", "Деревянный топор", } },
-            { "смешенное", new List<string> { "Смешанный меч", "Смешанная пика", "Смешанный топор", "Большой топор", "Секира", "Топорище", "Арбалет", "Серп", "Молот", } },
-            { "железо", new List<string> { "Железный меч", "Железная пика", "Железный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", "Клинок", } },
-            { "сплав", new List<string> { "Сплавленный меч", "Сплавленная пика", "Сплавленный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", } },
+            { WoodMat, new List<string> { "Деревянный меч", "Деревянная пика", "Деревянный топор", } },
+            { MixedMat, new List<string> { "Смешанный меч", "Смешанная пика", "Смешанный топор", "Большой топор", "Секира", "Топорище", "Арбалет", "Серп", "Молот", } },
+            { IronMat, new List<string> { "Железный меч", "Железная пика", "Железный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", "Клинок", } },
+            { AlloyMat, new List<string> { "Сплавленный меч", "Сплавленная пика", "Сплавленный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", } },
         };
         static Dictionary<string, List<string>> ArmorByMaterial = new Dictionary<string, List<string>>()
         {
-            { "дерево", new List<string> { "Деревянная броня", "Деревянная кираса", "Деревянный жилет", } },
-            { "смешенное", new List<string> { "Смешанная броня", "Смешанная кираса", "Смешанный жилет", "Кожаная броня" } },
-            { "железо", new List<string> { "Железная броня", "Железная кираса", "Железный жилет", } },
-            { "сплав", new List<string> { "Сплавленная броня", "Сплавленная кираса", "Сплавленный жилет", } },
+            { WoodMat, new List<string> { "Деревянная броня", "Деревянная кираса", "Деревянный жилет", } },
+            { MixedMat, new List<string> { "Смешанная броня", "Смешанная кираса", "Смешанный жилет", "Кожаная броня" } },
+            { IronMat, new List<string> { "Железная броня", "Железная кираса", "Железный жилет", } },
+            { AlloyMat, new List<string> { "Сплавленная броня", "Сплавленная кираса", "Сплавленный жилет", } },
         };
 
         /*  Общий список
@@ -234,7 +234,7 @@ namespace FightCons.World.Locations
                     //    () => maps[0].ShowMessage("Осторожно! Вы попали в ловушку!") 
                     //}
                 },
-                //  Точки выхода
+                //  Точки входа
                 new Dictionary<(int, int), Action<Hero>>
                 {
                     {(16, 1), (Hero hero) =>
@@ -247,18 +247,18 @@ namespace FightCons.World.Locations
                     {(18, 4), Woods },//+ "4) Пойти в лес\n"
                     {(12, 6), OrdoColony },//  "1) Пойти в поселение Ордо\n"
                     {(9, 8), Neighborhood }//+ "3) Пойти в окрестности\n" // появления инфы позже
-                },                
+                },
                 (RestEvent,
                 (Hero hero) =>
                 {
                     RestEvent(hero);
-
+                    
                     List<BattleSession> battleList = new List<BattleSession>()
                     {
                         new BattleSession(1, Character.ChaRole.Wild),
                     };
                     Battles.MakeRandomBattle(hero, battleList);
-                }, 
+                },
                 0.8)
             ),
             #endregion
@@ -267,25 +267,25 @@ namespace FightCons.World.Locations
             new Map
             (
                 //  Размеры
-                //20, 10,
+                20, 10,
                 //41, 19,
-                42, 16,
+                //42, 16,
 
                 //  Карта
                 new char[,]
                 {
-                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
-                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','#','#','#', },
-                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
-                    //{ '#','#','.','O','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
-                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
-                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
-                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
-                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#', },
-                    //{ '#','#','#','#','#','#','#','#','#','O','#','#','#','#','#','#','#','#','#','#', },
-                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','#','#','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    { '#','#','.','⌂','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#', },
+                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#', },
+                    { '#','#','#','#','#','#','#','#','#','O','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
 
-                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    /*{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
                     //{ '#','.','.','.','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','.','#', },
                     //{ '#','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','#','#','#','#','.','.','#','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','#', },
                     //{ '0','.','.','.','.','#','#','#','#','.','.','.','.','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','.','0', },
@@ -305,23 +305,25 @@ namespace FightCons.World.Locations
                     //{ '#','#','#','#','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','#','.','.','.','#','#','.','.','.','.','.','.','#','#','#','#','.','.','.','#', },
                     //{ '#','#','#','#','#','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','.','.','#', },
                     //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    */
 
-                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
-                    { '#','.','.','.','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','.','.','.','.','#', },
-                    { '#','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','#','#','.','.','#','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','.','.','.','#', },
-                    { '0','.','.','.','.','#','#','#','#','.','.','.','.','.','#','#','#','#','.','.','.','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','.','.','.','.','O', },
-                    { '#','.','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','.','.','.','#', },
-                    { '#','#','.','.','.','.','.','#','#','.','.','.','.','.','.','.','#','#','.','.','.','.','.','#','.','.','.','.','.','.','.','#','#','#','.','.','.','.','.','.','.','#', },
-                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.','#','#','#','.','.','#','#','.','.','.','#','.','.','.','.','#', },
-                    { '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#','.','.','#','#','.','.','#','#','.','.','.','.','#', },
-                    { '#','#','#','.','.','.','.','.','.','.','.','.','#','#','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#','.','.','.','#','.','.','#','#','.','.','.','.','#', },
-                    { '#','#','#','#','.','.','.','.','.','.','#','.','#','#','#','.','.','.','.','.','.','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','.','.','.','.','#', },
-                    { '#','#','#','#','.','.','.','.','#','#','#','.','#','#','#','.','#','#','#','#','#','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#', },
-                    { '#','#','#','#','.','.','.','.','#','#','#','.','#','#','#','#','#','#','#','#','#','#','.','.','.','.','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#', },
-                    { '#','#','#','#','.','.','#','#','#','#','#','.','#','#','#','#','#','#','#','#','#','#','.','.','.','.','.','#','.','.','.','.','.','.','.','#','#','.','.','.','.','#', },
-                    { '#','#','#','.','.','#','#','#','#','#','#','.','#','#','#','#','#','#','#','#','#','.','.','.','.','.','.','.','.','.','.','.','#','.','.','#','#','.','.','.','.','#', },
-                    { '#','#','#','#','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','.','.','.','#','#','.','.','.','.','.','.','#','#','#','#','.','.','.','.','.','.','#', },
-                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    /*{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    //{ '#','.','.','.','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','.','.','.','.','.','#', },
+                    //{ '#','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','#','#','.','.','#','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','.','.','.','#', },
+                    //{ '0','.','.','.','.','#','#','#','#','.','.','.','.','.','#','#','#','#','.','.','.','#','#','#','#','#','#','#','.','.','.','#','#','#','.','.','.','.','.','.','.','O', },
+                    //{ '#','.','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','.','.','.','#', },
+                    //{ '#','#','.','.','.','.','.','#','#','.','.','.','.','.','.','.','#','#','.','.','.','.','.','#','.','.','.','.','.','.','.','#','#','#','.','.','.','.','.','.','.','#', },
+                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.','#','#','#','.','.','#','#','.','.','.','#','.','.','.','.','#', },
+                    //{ '#','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#','.','.','#','#','.','.','#','#','.','.','.','.','#', },
+                    //{ '#','#','#','.','.','.','.','.','.','.','.','.','#','#','.','.','.','.','.','.','.','.','.','.','.','#','#','#','#','.','.','.','#','.','.','#','#','.','.','.','.','#', },
+                    //{ '#','#','#','#','.','.','.','.','.','.','#','.','#','#','#','.','.','.','.','.','.','.','.','.','.','#','#','#','#','#','.','.','.','.','#','#','#','.','.','.','.','#', },
+                    //{ '#','#','#','#','.','.','.','.','#','#','#','.','#','#','#','.','#','#','#','#','#','.','.','.','.','#','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#', },
+                    //{ '#','#','#','#','.','.','.','.','#','#','#','.','#','#','#','#','#','#','#','#','#','#','.','.','.','.','#','#','.','.','.','.','.','.','#','#','#','.','.','.','.','#', },
+                    //{ '#','#','#','#','.','.','#','#','#','#','#','.','#','#','#','#','#','#','#','#','#','#','.','.','.','.','.','#','.','.','.','.','.','.','.','#','#','.','.','.','.','#', },
+                    //{ '#','#','#','.','.','#','#','#','#','#','#','.','#','#','#','#','#','#','#','#','#','.','.','.','.','.','.','.','.','.','.','.','#','.','.','#','#','.','.','.','.','#', },
+                    //{ '#','#','#','#','.','#','#','#','#','#','#','.','.','.','#','#','#','#','#','#','.','.','.','#','#','.','.','.','.','.','.','#','#','#','#','.','.','.','.','.','.','#', },
+                    //{ '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                */
                 },
                 //  Интерактивные объекты
                 new Dictionary<(int, int), Action>
@@ -338,12 +340,12 @@ namespace FightCons.World.Locations
                 {
 
                     // Добавляем невидимые триггеры (например, ловушка)
-                    {(5, 5), () => maps[1].TriggerTrap() }
+                    //{(5, 5), () => maps[1].TriggerTrap() }
                 },
                 //  Точки выхода
                 new Dictionary<(int, int), Action<Hero>>
                 {
-                    {(3, 3), ReshinomiColony },
+                    {(3, 3), SenisusColony },
                     {(9, 8), (Hero hero) =>
                         {
                             hero.HeroCoordinates = transit.FoothillsToValley;
@@ -387,14 +389,51 @@ namespace FightCons.World.Locations
         //  Пещеры
         public static void CavesStart(Hero hero)
         {
-            if (GameFormulas.Vero(0.3))
+            if (GameFormulas.Vero(0.8))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
                 {
                     new BattleSession(10, Character.ChaRole.Enemy),
                     new BattleSession(5, Character.ChaRole.Enemy),
                 };
-                Battles.MakeCurrentBattle(hero, battleList);
+
+                List<BattleScenarioEvent> battleScenarioEvents = new List<BattleScenarioEvent>
+                {
+                    new BattleScenarioEvent
+                    (
+                        (hero, battleList, turn) =>
+                        {
+                            foreach(var ur in battleList)
+                            {
+                                if (ur.character.Condition.LeavedBattle)
+                                     return true;
+                            }
+
+                            return false;
+
+
+                        },
+                        (hero, battleList) =>
+                        {
+                            if (battleList.FirstOrDefault(c => c.character.Condition.LeavedBattle).character.Condition.LeavedBattle)
+                                Output.NameAndId(battleList.FirstOrDefault(c => c.character.Condition.LeavedBattle == false).character);
+                                Console.WriteLine(": - КУДА ТЫ ЧЕРТ ПОДЕРИ СБЕЖАЛ?!");
+                        }
+                    ),
+
+                    //new BattleScenarioEvent(
+                    //    (hero, EnemyList, turn) => turn == 0,
+                    //    (hero, EnemyList) =>
+                    //    {
+                    //        Console.WriteLine("СПАВН СОЮЗНИКА");
+
+                    //    }
+                    //    ),
+
+                };
+
+
+                Battles.MakeCurrentBattle(hero, battleList, battleScenarioEvents);
             }                
 
             while (true)
@@ -469,6 +508,53 @@ namespace FightCons.World.Locations
         //  Пещеры
         public static void Caves(Hero hero)
         {
+            if (GameFormulas.Vero(0.4))
+            {
+                List<BattleSession> battleList = new List<BattleSession>()
+                {
+                    new BattleSession(10, Character.ChaRole.Enemy),
+                    new BattleSession(5, Character.ChaRole.Enemy),
+                };
+
+                List<BattleScenarioEvent> battleScenarioEvents = new List<BattleScenarioEvent>
+                {
+                    new BattleScenarioEvent
+                    (
+                        (hero, battleList, turn) =>
+                        {
+                            foreach(var ur in battleList)
+                            {
+                                if (ur.character.Condition.LeavedBattle)
+                                     return true;
+                            }
+
+                            return false;
+
+
+                        },
+                        (hero, battleList) =>
+                        {
+                            if (battleList.FirstOrDefault(c => c.character.Condition.LeavedBattle).character.Condition.LeavedBattle)
+                                Output.NameAndId(battleList.FirstOrDefault(c => c.character.Condition.LeavedBattle == false).character);
+                                Console.WriteLine(": - КУДА ТЫ ЧЕРТ ПОДЕРИ СБЕЖАЛ?!");
+                        }
+                    ),
+
+                    //new BattleScenarioEvent(
+                    //    (hero, EnemyList, turn) => turn == 0,
+                    //    (hero, EnemyList) =>
+                    //    {
+                    //        Console.WriteLine("СПАВН СОЮЗНИКА");
+
+                    //    }
+                    //    ),
+
+                };
+
+
+                Battles.MakeCurrentBattle(hero, battleList, battleScenarioEvents);
+            }
+
             while (true)
             {
                 Output.WriteColorLine(ConsoleColor.Cyan, "\nЛокация: ", $"Пещеры\n");
@@ -528,14 +614,22 @@ namespace FightCons.World.Locations
             List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
             {
                 #region События на карте
+
+                #region Область зверолова
                 new LocationScenarioEvent
                 (
-                    0.2,
+                    0.1,
                     (hero, turn) =>
                     {
                         var conditions = new List<bool>
                         {
-                            GameFormulas.CurrentCoordinates((3, 5), (4, 5), (5, 5)),
+                            //GameFormulas.CurrentCoordinates((3, 5), (4, 5), (5, 5)),
+                            GameFormulas.CurrentCoordinates(
+                                (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1),
+                                (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2),
+                                (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3),
+                                (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4)
+                                ),
                         };
                         return conditions.Any(c => c);
                     },
@@ -549,30 +643,67 @@ namespace FightCons.World.Locations
                     },
                     true
                 ),
+                #endregion
+
+                #region Область разбойников
                 new LocationScenarioEvent
                 (
-                    (hero, turn) => true,
+                    0.2,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            //GameFormulas.CurrentCoordinates((3, 5), (4, 5), (5, 5)),
+                            GameFormulas.CurrentCoordinates(
+                                (12, 1), (13, 1), (14, 1), (15, 1), (16, 1), (17, 1), (18, 1),
+                                (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2), (18, 2),
+                                (12, 3), (13, 3), (14, 3), (15, 3), (16, 3), (17, 3), (18, 3),
+                                (12, 4), (13, 4), (14, 4), (15, 4), (16, 4), (17, 4), (18, 4)
+                                ),
+                        };
+                        return conditions.Any(c => c);
+                    },
                     (hero) =>
                     {
-                        if (GameFormulas.Vero(0.8))
-                            RestEvent(hero);
-                        else
-                        {
-                            RestEvent(hero);
-
-                            rendering = false;
-                            //mapStartLine = -1;
-                            //Console.CursorVisible = true;
-
                             List<BattleSession> battleList = new List<BattleSession>()
                             {
-                                new BattleSession(1, Character.ChaRole.Wild),
+                                new BattleSession(3, Character.ChaRole.Enemy),
                             };
-                            Battles.MakeRandomBattle(hero, battleList);
-                        }
+                            Battles.MakeCurrentBattle(hero, battleList);
                     },
                     true
                 )
+	            #endregion
+                
+                //  Не ясно нужен или нет 
+                /*new LocationScenarioEvent
+                //(
+                //    (hero, turn) => true,
+                //    (hero) =>
+                //    {
+                //        Console.WriteLine("ыфваывафыва");
+                //        Console.WriteLine("ыфваывафыва");
+                //        Console.WriteLine("ыфваывафыва");
+                //        Console.WriteLine("ыфваывафыва");
+                //        if (GameFormulas.Vero(0.8))
+                //            RestEvent(hero);
+                //        else
+                //        {
+                //            RestEvent(hero);
+
+                //            rendering = false;
+                //            //mapStartLine = -1;
+                //            Console.CursorVisible = true;
+
+                //            List<BattleSession> battleList = new List<BattleSession>()
+                //            {
+                //                new BattleSession(1, Character.ChaRole.Wild),
+                //            };
+                //            Battles.MakeRandomBattle(hero, battleList);
+                //        }
+                //    },
+                //    true
+                )*/
 
                 #endregion
             };
@@ -703,11 +834,15 @@ namespace FightCons.World.Locations
                         hero.HeroSpying.SpyingInTavern(hero);
                         break;
                     case 2:
-                        if (Output.Spent(hero.Money, Output.BeerCost, "", "Заплати, а потом пей!"))
+                        if (Output.Spent(hero, Output.BeerCost, "", "Заплати, а потом пей!"))
+                        {
                             Drinking(hero);
+                            hero.HP = hero.MaxHp;
+                        }
+                            
                         break;
                     case 3:
-                        if (Output.Spent(hero.Money, ArmGame.Cost, "", "Бесплатно не интересует\n"))
+                        if (Output.Spent(hero, ArmGame.Cost, "", "Бесплатно не интересует\n"))
                             ArmGameEvent(hero);
                         break;
                     case 4:
@@ -721,16 +856,83 @@ namespace FightCons.World.Locations
         //Предгорье
         public static void Foothills(Hero hero)
         {
+            List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
+            {
+                #region События на карте
+
+                #region Область бандитов
+                new LocationScenarioEvent
+                (
+                    0.1,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            GameFormulas.CurrentCoordinates
+                            (
+                                                  (16, 1), 
+                                (14, 2), (15, 2), (16, 2), (17, 2),
+                                (14, 3), (15, 3), (16, 3), (17, 3),
+                                (14, 4), (15, 4), (16, 4), (17, 4), (18, 4)
+                            ),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                            List<BattleSession> battleList = new List<BattleSession>()
+                            {
+                                new BattleSession(3, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
+                    },
+                    true
+                ),
+                #endregion
+
+                #region Область зверей
+                new LocationScenarioEvent
+                (
+                    0.05,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            //GameFormulas.CurrentCoordinates((3, 5), (4, 5), (5, 5)),
+                            GameFormulas.CurrentCoordinates
+                            (
+                                (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2),
+                                (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3),
+                                (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4),
+                                (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5),
+                                (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6)
+                            ),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                            List<BattleSession> battleList = new List<BattleSession>()
+                            {
+                                new BattleSession(1, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeCurrentBattle(hero, battleList);
+                    },
+                    true
+                )
+	            #endregion
+                #endregion
+            };
 
             string[] locInfo = new string[2];
 
             locInfo[0] = "Предгорье";
             locInfo[1] = Descriptions(((byte)LocationName.Foothills), Descript);
 
-            //maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
+            maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo, scenario);
 
-            //while (true)
-            //    maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
+            while (true)
+                maps[1].Transition(hero, (playerX, playerY), locInfo, scenario);
 
             while (true)
             {
@@ -831,7 +1033,7 @@ namespace FightCons.World.Locations
                     case 1:
                         if (!hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active)
                         {
-                            if (Output.Spent(hero.Money, Output.VisionSkillCost, "", "Вам нахватает средств"))
+                            if (Output.Spent(hero, Output.VisionSkillCost, "", "Вам нахватает средств"))
                             {
                                 Console.WriteLine("Теперь вы можете видеть врагов");
                                 hero.Statistic.SpecialSkills2.FirstOrDefault(x => x.ID == 10).Active = true;
@@ -840,7 +1042,7 @@ namespace FightCons.World.Locations
                         break;
 
                     case 2:
-                        if (Output.Spent(hero.Money, 50, healPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
+                        if (Output.Spent(hero, 50, healPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
                         {
                             //TODO оптимизировать процесс. Не надо создавать сто раз один и тот же объект. 
 
@@ -850,7 +1052,7 @@ namespace FightCons.World.Locations
                         break;
 
                     case 3:
-                        if (Output.Spent(hero.Money, 100, manaPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
+                        if (Output.Spent(hero, 100, manaPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
                         {
                             manaPotionItem.UseItem = manaPotionItem.ManaPotion;
                             Inventory.ItemAdd(hero, manaPotionItem);
@@ -960,7 +1162,7 @@ namespace FightCons.World.Locations
         {
             //  Квесты
             if (hero.HeroQuests.Que[11] == 2)
-                hero.HeroQuests.Q_leva_Market(hero);
+                hero.HeroQuests.LevaMarketQ(hero);
             if (GameFormulas.Vero(0.01))
                 FindingPouchEvent(hero, 10, 100);
 
@@ -1081,7 +1283,7 @@ namespace FightCons.World.Locations
                 {
                     SpellParty = SpellDes.ExcisionSpell,
                     Description = $"Исцеление (3 {Output.MPSymbol})",
-                    SpellСost = 0,
+                    SpellCost = 0,
                     SpellPower = 0,
                 };
             }
@@ -1124,7 +1326,7 @@ namespace FightCons.World.Locations
         //  Кошелек
         public static void FindingPouchEvent(Hero hero, int minGold, int maxGold)
         {
-            Output.TwriteLine("Вы находите кошелек!\n"
+            Output.TwriteLine("\nВы находите кошелек!\n"
                                          + "1) Взять его\n"
                                          + "2) Пройти мимо\n", 1);
 

@@ -78,12 +78,13 @@ namespace FightCons
             Output.NameAndId(riser);
             Console.WriteLine();
 
-            riser.HP = GameFormulas.GetCurrentPercent(riser.MaxHp, 10);
+            riser.HP = 0;
+            riser.HP = GameFormulas.GetCurrentPercent(riser.MaxHp, 50);
             riser.Condition.IsAlive = true;
-            riser.CantRunBattle = false;
+            //reviver.CantRunBattle = false;
 
-            reviver.Statistic.Spells++;
-            reviver.Turn += 4;
+            riser.Statistic.Spells++;
+            riser.Turn += 4;
         }
 
         public static void SpawnSpell(Character person, Hero hero, List<BattleSession> units)
@@ -142,7 +143,7 @@ namespace FightCons
         {
             attacker.Turn += 1;
 
-            short damage = GameFormulas.Damage(attacker, victim, false);
+            short damage = GameFormulas.Damage(attacker, victim);
             attacker.Statistic.Attacks++;
 
             BattleLog(attacker, victim, damage);
@@ -151,7 +152,7 @@ namespace FightCons
         //  Отравляющая атака
         public static void PoisingAtt(Character attacker, Character victim)
         {
-            short damage = (short)(GameFormulas.Damage(attacker, victim) / 2);
+            short damage = (short)(GameFormulas.Damage(attacker, victim));
 
             victim.Condition.PoisingRound = 3;
 
@@ -171,7 +172,7 @@ namespace FightCons
         //  Вампиризм
         public static void Vampirisms(Character attacker, Character victim)
         {
-            short damage = (short)(GameFormulas.Damage(attacker, victim) / 2);
+            short damage = (short)(GameFormulas.Damage(attacker, victim));
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.DarkRed, "использует ", $"вампиризм ");

@@ -398,6 +398,18 @@ namespace FightCons
             ListOfUnits.Clear();
         }
 
+        public static void ClearBattlePlace(Hero hero, List<BattleSession> units, List<BattleScenarioEvent> scenario = null)
+        {
+            //  Чистка параметров
+            hero.Condition.Clear();
+            if (scenario != null)
+                scenario.Clear();
+            hero.Turn = 0;
+
+            hero.Condition.LeavedBattle = false;
+            ListOfUnits.Clear();
+        }
+
         //  Различные проверки        
         private static bool StillStanding(List<BattleSession> list)
         {
@@ -482,8 +494,10 @@ namespace FightCons
 
         //  Проверка на побег
         //TODO Можно добавить к вероятности скорость героя
-        public static void RunFromBattle(Hero hero, Character unit, List<BattleSession> units = null)
+        public static void RunFromBattle(Hero hero, List<BattleSession> units = null)
         {
+            var unit = units[BattleSession.SelectedUnit].character;
+
             if (!unit.CantRunBattle)
             {
                 if (GameFormulas.Vero(0.5))
@@ -507,8 +521,10 @@ namespace FightCons
         }
 
         //  НАГРУЗОЧНЫЙ PARTY /////////////////////////////////////////////////////
-        public static void RunFromBattle(Character character, Character unit, List<BattleSession> units = null)
+        public static void RunFromBattle(Character character, List<BattleSession> units = null)
         {
+            var unit = units[BattleSession.SelectedUnit].character;
+
             if (!unit.CantRunBattle)
             {
                 if (GameFormulas.Vero(0.5))

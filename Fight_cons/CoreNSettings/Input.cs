@@ -98,8 +98,9 @@ namespace FightCons
             KeyWords["настройки"] = () =>
             {
                 Console.WriteLine();
-                Settings.OptionSound(hero);
-                Settings.OptionWaitSkip(hero);
+                //Settings.OptionSound(hero);
+                //Settings.OptionWaitSkip(hero);
+                DataFromWF.ConfigData();
             };
             //TODO Упростить способ телепортации
             //KeyWords["tp"] = () => { Teleport(hero); };
@@ -130,12 +131,12 @@ namespace FightCons
                     switch (ans)
                     {
                         case 1:
-                            MarketMethods.NamOfBonuses = ChoisInput(hero, 1, 8, "Установите нужное количество (1-8)\n" +
-                                $"Сейчас: {MarketMethods.NamOfBonuses}");
+                            Store.NamOfGoods = ChoisInput(hero, 1, 8, "Установите нужное количество (1-8)\n" +
+                                $"Сейчас: {Store.NamOfGoods}");
                             break;
                         case 2:
-                            MarketMethods.NamOfGoods = ChoisInput(hero, 1, 100, "Установите нужное количество (1-100)\n" +
-                                $"Сейчас: {MarketMethods.NamOfGoods}");
+                            Store.NamOfGoods = ChoisInput(hero, 1, 100, "Установите нужное количество (1-100)\n" +
+                                $"Сейчас: {Store.NamOfGoods}");
                             break;
                         case 3:
                             Conditions.BleedDmg = ChoisInput(hero, 1, 100, "Установите нужное количество\n" +

@@ -90,7 +90,9 @@ namespace FightCons.Enemies
             {
                 unit.Condition.Clear();
                 unit.Condition.IsAlive = false;
-            }                
+            }
+
+            BattleScenarioEvent.CheckBattleScenarios(hero, units, scenario);
         }
 
         //  Вычитание негативные эффекты

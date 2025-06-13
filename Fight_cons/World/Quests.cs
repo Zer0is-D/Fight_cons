@@ -16,13 +16,15 @@ namespace FightCons
         {
             [0] = 0,    //  Победа над Покровителем 
             [1] = 0,    //  Победа над Тоатотом 
-            [2] = 0,    //  Победа над ... 
-            [3] = 0,    //  Победа над ... 
-            [4] = 0,    //  Победа над ... 
-            [5] = 0,    //  Победа над ... 
-            [6] = 0,    //  Победа над ... 
+            [2] = 0,    //  Победа над Тоатотом 
+            [3] = 0,    //  Победа над Тоатотом 
+            [4] = 0,    //  Победа над Тоатотом 
+            [5] = 0,    //  Победа над Тоатотом 
+            [6] = 0,    //  Победа над Тоатотом 
             [7] = 0,    //  
             [8] = 0,    //  
+            [9] = 0,    //  
+            [10] = 0,    //  
             [11] = 0,    //  Квест "Секреты Бегемота"
             [12] = 0,    //  Квест "Твое имя камень!"
 
@@ -436,7 +438,7 @@ namespace FightCons
 
         #region Квесты
         //  Квест "Секреты Бегемота"
-        public void Q_Leva_1(Hero hero)
+        public void LevaSecretQ(Hero hero)
         {
             //  Введение
             switch (hero.HeroQuests.Que[11])
@@ -500,20 +502,16 @@ namespace FightCons
             }                     
         }
 
-        public void Q_leva_Market(Hero hero)
+        public void LevaMarketQ(Hero hero)
         {
             Console.WriteLine("\nВаши действия?");
             Output.WriteColorLine(ConsoleColor.Yellow, "1) Купить статуэтку (", $"30{Output.MoneySymbol}", ")\n");
-            Console.WriteLine("2) Купить оружие\n"
-                            + "3) Купить броню");
-            Output.WriteColorLine(ConsoleColor.Yellow, "4) Купить зелье здоровья (", $"50{Output.MoneySymbol}", ")\n");
-            Output.WriteColorLine(ConsoleColor.Yellow, "5) Купить зелье маны (", $"100{Output.MoneySymbol}", ")\n");
-            Console.WriteLine("6) Выйти");
+            Console.WriteLine("2) Выйти");
 
-            switch (Input.ChoisInput(hero, 1, 6))
+            switch (Input.ChoisInput(hero, 1, 2))
             {
                 case 1:
-                    if (Output.Spent(hero.Money, Output.QStatueCost))
+                    if (Output.Spent(hero, 30))
                     {
                         InventoryItem QStatueItem = new InventoryItem()
                         {
@@ -529,42 +527,6 @@ namespace FightCons
                     break;
 
                 case 2:
-                    MarketMethods.ShowWeaponGoods(hero);
-                    break;
-
-                case 3:
-                    MarketMethods.ShowArmorGoods(hero);
-                    break;
-
-                case 4:
-                    if (Output.Spent(hero.Money, 50, "Зелье здоровья", "\nВы нищеброд! Проваливайте!\n"))
-                    {
-                        InventoryItem potionHeal = new InventoryItem()
-                        {
-                            Name = "Зелье здоровья",
-                            Description = "(Восстанавливает здоровье)",
-                        };
-                        potionHeal.UseItem = potionHeal.HealPotion;
-
-                        Inventory.ItemAdd(hero, potionHeal);
-                    }
-                    break;
-
-                case 5:
-                    if (Output.Spent(hero.Money, 100, "Зелье маны", "\nВы нищеброд! Проваливайте!\n"))
-                    {
-                        InventoryItem potionMana = new InventoryItem()
-                        {
-                            Name = "Зелье маны",
-                            Description = "(Восстанавливает ману)",
-                        };
-                        potionMana.UseItem = potionMana.ManaPotion;
-
-                        Inventory.ItemAdd(hero, potionMana);
-                    }
-                    break;
-
-                case 6:
                     LocationISS.OrdoColony(hero);
                     break;
             }

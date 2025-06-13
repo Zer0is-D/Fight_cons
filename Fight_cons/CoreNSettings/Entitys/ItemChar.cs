@@ -79,7 +79,7 @@ namespace FightCons
             short MAXHp_min, short MAXHp_max, short MAXMp_min, short MAXMp_max,
             sbyte SPD_min, sbyte SPD_max, sbyte CRIT_min, sbyte CRIT_max,
             sbyte BLK_min, sbyte BLK_max, sbyte max_turn_min, sbyte max_turn_max,
-            sbyte lvl, List<Material> materials = null, Dictionary<string, List<string>> namesByMaterial = null)
+            sbyte lvl, List<Material> materials, Dictionary<string, List<string>> namesByMaterial)
         {
             Random rand = new Random();
 
@@ -357,7 +357,7 @@ namespace FightCons
                     return mat;
                 }
             }
-            Console.WriteLine("ОШИБКА СОЗДАНИЯ ОБЪЕКТА МАТЕРИАЛ");
+            //Console.WriteLine("ОШИБКА СОЗДАНИЯ ОБЪЕКТА МАТЕРИАЛ");
             return materials[0];    
 
             //  Старый сегмент удалить позже

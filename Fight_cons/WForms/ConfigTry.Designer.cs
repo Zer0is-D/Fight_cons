@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.StandartVers_checkBox = new System.Windows.Forms.CheckBox();
-            this.BildVers_checkBox = new System.Windows.Forms.CheckBox();
-            this.Sound_checkBox = new System.Windows.Forms.CheckBox();
+            this.StandartVersCheckBox = new System.Windows.Forms.CheckBox();
+            this.BildVersCheckBox = new System.Windows.Forms.CheckBox();
+            this.SoundCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.CurrentParamValue_checkBox = new System.Windows.Forms.CheckBox();
+            this.CurrentParamValueCheckBox = new System.Windows.Forms.CheckBox();
             this.BleedDmgUpDown = new System.Windows.Forms.NumericUpDown();
             this.NumOfGoodsUpDown = new System.Windows.Forms.NumericUpDown();
             this.NamOfBonusiesUpDown = new System.Windows.Forms.NumericUpDown();
@@ -41,8 +41,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.StartBtn = new System.Windows.Forms.Button();
-            this.DelayEffect_checkBox = new System.Windows.Forms.CheckBox();
+            this.DelayEffectCheckBox = new System.Windows.Forms.CheckBox();
             this.CancelBtn = new System.Windows.Forms.Button();
+            this.SkipStartCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BleedDmgUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumOfGoodsUpDown)).BeginInit();
@@ -59,43 +60,43 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Config";
             // 
-            // StandartVers_checkBox
+            // StandartVersCheckBox
             // 
-            this.StandartVers_checkBox.AutoSize = true;
-            this.StandartVers_checkBox.Checked = true;
-            this.StandartVers_checkBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.StandartVers_checkBox.Location = new System.Drawing.Point(12, 195);
-            this.StandartVers_checkBox.Name = "StandartVers_checkBox";
-            this.StandartVers_checkBox.Size = new System.Drawing.Size(130, 17);
-            this.StandartVers_checkBox.TabIndex = 1;
-            this.StandartVers_checkBox.Text = "Стандартный режим";
-            this.StandartVers_checkBox.UseVisualStyleBackColor = true;
-            this.StandartVers_checkBox.CheckedChanged += new System.EventHandler(this.BildVersActive_checkBox_CheckedChanged);
+            this.StandartVersCheckBox.AutoSize = true;
+            this.StandartVersCheckBox.Checked = true;
+            this.StandartVersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.StandartVersCheckBox.Location = new System.Drawing.Point(12, 234);
+            this.StandartVersCheckBox.Name = "StandartVersCheckBox";
+            this.StandartVersCheckBox.Size = new System.Drawing.Size(130, 17);
+            this.StandartVersCheckBox.TabIndex = 1;
+            this.StandartVersCheckBox.Text = "Стандартный режим";
+            this.StandartVersCheckBox.UseVisualStyleBackColor = true;
+            this.StandartVersCheckBox.CheckedChanged += new System.EventHandler(this.BildVersActive_checkBox_CheckedChanged);
             // 
-            // BildVers_checkBox
+            // BildVersCheckBox
             // 
-            this.BildVers_checkBox.AutoSize = true;
-            this.BildVers_checkBox.Location = new System.Drawing.Point(12, 218);
-            this.BildVers_checkBox.Name = "BildVers_checkBox";
-            this.BildVers_checkBox.Size = new System.Drawing.Size(88, 17);
-            this.BildVers_checkBox.TabIndex = 2;
-            this.BildVers_checkBox.Text = "Билд режим";
-            this.BildVers_checkBox.UseVisualStyleBackColor = true;
-            this.BildVers_checkBox.CheckedChanged += new System.EventHandler(this.BildVers_checkBox_CheckedChanged);
+            this.BildVersCheckBox.AutoSize = true;
+            this.BildVersCheckBox.Location = new System.Drawing.Point(12, 257);
+            this.BildVersCheckBox.Name = "BildVersCheckBox";
+            this.BildVersCheckBox.Size = new System.Drawing.Size(88, 17);
+            this.BildVersCheckBox.TabIndex = 2;
+            this.BildVersCheckBox.Text = "Билд режим";
+            this.BildVersCheckBox.UseVisualStyleBackColor = true;
+            this.BildVersCheckBox.CheckedChanged += new System.EventHandler(this.BildVers_checkBox_CheckedChanged);
             // 
-            // Sound_checkBox
+            // SoundCheckBox
             // 
-            this.Sound_checkBox.AutoSize = true;
-            this.Sound_checkBox.Location = new System.Drawing.Point(227, 195);
-            this.Sound_checkBox.Name = "Sound_checkBox";
-            this.Sound_checkBox.Size = new System.Drawing.Size(66, 17);
-            this.Sound_checkBox.TabIndex = 3;
-            this.Sound_checkBox.Text = "Музыка";
-            this.Sound_checkBox.UseVisualStyleBackColor = true;
+            this.SoundCheckBox.AutoSize = true;
+            this.SoundCheckBox.Location = new System.Drawing.Point(227, 234);
+            this.SoundCheckBox.Name = "SoundCheckBox";
+            this.SoundCheckBox.Size = new System.Drawing.Size(66, 17);
+            this.SoundCheckBox.TabIndex = 3;
+            this.SoundCheckBox.Text = "Музыка";
+            this.SoundCheckBox.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.CurrentParamValue_checkBox);
+            this.groupBox1.Controls.Add(this.CurrentParamValueCheckBox);
             this.groupBox1.Controls.Add(this.BleedDmgUpDown);
             this.groupBox1.Controls.Add(this.NumOfGoodsUpDown);
             this.groupBox1.Controls.Add(this.NamOfBonusiesUpDown);
@@ -110,16 +111,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Доп настройки";
             // 
-            // CurrentParamValue_checkBox
+            // CurrentParamValueCheckBox
             // 
-            this.CurrentParamValue_checkBox.AutoSize = true;
-            this.CurrentParamValue_checkBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CurrentParamValue_checkBox.Location = new System.Drawing.Point(215, 111);
-            this.CurrentParamValue_checkBox.Name = "CurrentParamValue_checkBox";
-            this.CurrentParamValue_checkBox.Size = new System.Drawing.Size(153, 34);
-            this.CurrentParamValue_checkBox.TabIndex = 7;
-            this.CurrentParamValue_checkBox.Text = "Подробные значения \r\nпараметров";
-            this.CurrentParamValue_checkBox.UseVisualStyleBackColor = true;
+            this.CurrentParamValueCheckBox.AutoSize = true;
+            this.CurrentParamValueCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CurrentParamValueCheckBox.Location = new System.Drawing.Point(215, 111);
+            this.CurrentParamValueCheckBox.Name = "CurrentParamValueCheckBox";
+            this.CurrentParamValueCheckBox.Size = new System.Drawing.Size(153, 34);
+            this.CurrentParamValueCheckBox.TabIndex = 7;
+            this.CurrentParamValueCheckBox.Text = "Подробные значения \r\nпараметров";
+            this.CurrentParamValueCheckBox.UseVisualStyleBackColor = true;
             // 
             // BleedDmgUpDown
             // 
@@ -219,7 +220,7 @@
             // 
             // StartBtn
             // 
-            this.StartBtn.Location = new System.Drawing.Point(333, 246);
+            this.StartBtn.Location = new System.Drawing.Point(333, 285);
             this.StartBtn.Name = "StartBtn";
             this.StartBtn.Size = new System.Drawing.Size(82, 23);
             this.StartBtn.TabIndex = 5;
@@ -227,21 +228,21 @@
             this.StartBtn.UseVisualStyleBackColor = true;
             this.StartBtn.Click += new System.EventHandler(this.StartBtn_Click);
             // 
-            // DelayEffect_checkBox
+            // DelayEffectCheckBox
             // 
-            this.DelayEffect_checkBox.AutoSize = true;
-            this.DelayEffect_checkBox.Location = new System.Drawing.Point(227, 218);
-            this.DelayEffect_checkBox.Name = "DelayEffect_checkBox";
-            this.DelayEffect_checkBox.Size = new System.Drawing.Size(114, 17);
-            this.DelayEffect_checkBox.TabIndex = 0;
-            this.DelayEffect_checkBox.Text = "Задержка текста";
-            this.DelayEffect_checkBox.UseVisualStyleBackColor = true;
+            this.DelayEffectCheckBox.AutoSize = true;
+            this.DelayEffectCheckBox.Location = new System.Drawing.Point(227, 257);
+            this.DelayEffectCheckBox.Name = "DelayEffectCheckBox";
+            this.DelayEffectCheckBox.Size = new System.Drawing.Size(114, 17);
+            this.DelayEffectCheckBox.TabIndex = 0;
+            this.DelayEffectCheckBox.Text = "Задержка текста";
+            this.DelayEffectCheckBox.UseVisualStyleBackColor = true;
             // 
             // CancelBtn
             // 
             this.CancelBtn.BackColor = System.Drawing.Color.IndianRed;
             this.CancelBtn.ForeColor = System.Drawing.Color.Black;
-            this.CancelBtn.Location = new System.Drawing.Point(12, 246);
+            this.CancelBtn.Location = new System.Drawing.Point(12, 285);
             this.CancelBtn.Margin = new System.Windows.Forms.Padding(0);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(59, 23);
@@ -250,18 +251,29 @@
             this.CancelBtn.UseVisualStyleBackColor = false;
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
+            // SkipStartCheckBox
+            // 
+            this.SkipStartCheckBox.AutoSize = true;
+            this.SkipStartCheckBox.Location = new System.Drawing.Point(12, 211);
+            this.SkipStartCheckBox.Name = "SkipStartCheckBox";
+            this.SkipStartCheckBox.Size = new System.Drawing.Size(130, 17);
+            this.SkipStartCheckBox.TabIndex = 7;
+            this.SkipStartCheckBox.Text = "Пропуск вступления";
+            this.SkipStartCheckBox.UseVisualStyleBackColor = true;
+            // 
             // ConfigTry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(427, 281);
+            this.ClientSize = new System.Drawing.Size(427, 317);
+            this.Controls.Add(this.SkipStartCheckBox);
             this.Controls.Add(this.CancelBtn);
-            this.Controls.Add(this.DelayEffect_checkBox);
+            this.Controls.Add(this.DelayEffectCheckBox);
             this.Controls.Add(this.StartBtn);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.Sound_checkBox);
-            this.Controls.Add(this.BildVers_checkBox);
-            this.Controls.Add(this.StandartVers_checkBox);
+            this.Controls.Add(this.SoundCheckBox);
+            this.Controls.Add(this.BildVersCheckBox);
+            this.Controls.Add(this.StandartVersCheckBox);
             this.Controls.Add(this.label1);
             this.Name = "ConfigTry";
             this.Text = "Конфигурация";
@@ -278,12 +290,12 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox StandartVers_checkBox;
-        private System.Windows.Forms.CheckBox BildVers_checkBox;
-        private System.Windows.Forms.CheckBox Sound_checkBox;
+        private System.Windows.Forms.CheckBox StandartVersCheckBox;
+        private System.Windows.Forms.CheckBox BildVersCheckBox;
+        private System.Windows.Forms.CheckBox SoundCheckBox;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button StartBtn;
-        private System.Windows.Forms.CheckBox DelayEffect_checkBox;
+        private System.Windows.Forms.CheckBox DelayEffectCheckBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -291,6 +303,7 @@
         private System.Windows.Forms.NumericUpDown BleedDmgUpDown;
         private System.Windows.Forms.NumericUpDown NamOfBonusiesUpDown;
         private System.Windows.Forms.NumericUpDown NumOfGoodsUpDown;
-        private System.Windows.Forms.CheckBox CurrentParamValue_checkBox;
+        private System.Windows.Forms.CheckBox CurrentParamValueCheckBox;
+        private System.Windows.Forms.CheckBox SkipStartCheckBox;
     }
 }

@@ -109,7 +109,7 @@ namespace FightCons
             }
         }
 
-        public void SuperHeal(Character character, List<BattleSession> enemy)
+        public void SuperHeal(Character character, List<BattleSession> units)
         {
             Random random = new Random();
             float n = (float)(random.Next(-10, 10));
@@ -122,7 +122,7 @@ namespace FightCons
             Sound.DRINK();
         }
 
-        public void HealPotion(Character character, List<BattleSession> enemy)
+        public void HealPotion(Character character, List<BattleSession> units)
         {
             float n = (float)(character.MaxHp / 100.0 * 50.0);
             character.HP += (short)n;
@@ -131,7 +131,7 @@ namespace FightCons
         }
 
         //  Выпить зелье маны
-        public void ManaPotion(Character character, List<BattleSession> enemy)
+        public void ManaPotion(Character character, List<BattleSession> units)
         {
             double n = (character.MaxMp / 100.0) * 50.0;
             character.MP += (int)n;
@@ -140,7 +140,7 @@ namespace FightCons
         }
 
         //  Выпить противоядие
-        public void AntiPotion(Character character, List<BattleSession> enemy)
+        public void AntiPotion(Character character, List<BattleSession> units)
         {
             Console.WriteLine("Вы выпили противоядие и избавились от всех негативных эффектов");
             character.Condition.PoisingRound = 0;
@@ -149,7 +149,7 @@ namespace FightCons
 
         //  Выпить зелье силы
         //Бесиво 
-        public void PowerPotion(Character character, List<BattleSession> enemy)
+        public void PowerPotion(Character character, List<BattleSession> units)
         {
             character.Condition.Attack = (short)(character.TotalAttack * 3);
             Console.WriteLine($"Ваша сила теперь {character.Attack}");
@@ -158,25 +158,27 @@ namespace FightCons
         }
 
         //  Кислота
-        public void AcidPotion(Character character, List<BattleSession> victim)
+        public void AcidPotion(Character character, List<BattleSession> units)
         {
-            victim[BattleSession.SelectedUnit].character.Defense = 0;
+            var victim = units[BattleSession.SelectedUnit].character;
+
+            victim.Defense = 0;
 
             Output.NameAndId(character, true);
             Output.WriteColorLine(ConsoleColor.DarkGreen, "Применяет ", $"{Name} ", "на ");
-            Output.NameAndId(victim[BattleSession.SelectedUnit].character);
-            Console.Write($"теперь {victim[BattleSession.SelectedUnit].character.Name} без брони!");
+            Output.NameAndId(victim);
+            Console.Write($"теперь {victim.Name} без брони!");
         }
 
         //  Бомба
-        public void Bomb(Character attacker, List<BattleSession> victim)
+        public void Bomb(Character attacker, List<BattleSession> units)
         {
             //short damage = GameFormulas.Damage(10, victim[BattleSession.SelectedUnit].character);
 
             Output.NameAndId(attacker, true);
             Output.WriteColorLine(ConsoleColor.Yellow, "", $"взрывает ", "бомбу");
 
-            foreach (BattleSession s in victim)
+            foreach (BattleSession s in units)
             {
                 if (s.character.Role == Character.ChaRole.Enemy || s.character.Role == Character.ChaRole.Wild)
                 {

@@ -15,8 +15,8 @@ namespace FightCons
         //  Подслушивание в таверне
         internal void SpyingInTavern(Hero hero)
         {
-            hero.HeroQuests.StartQ(hero, 1);
-            hero.HeroQuests.Q_Leva_1(hero);
+            hero.HeroQuests.StartQ(hero, hero.HeroQuests.Que[11]);
+            hero.HeroQuests.LevaSecretQ(hero);
 
             if (hero.Sneak < 3)
             {
@@ -37,7 +37,7 @@ namespace FightCons
                 switch (Input.ChoisInput(1, 2))
                 {
                     case 1:
-                        if (Output.Spent(hero.Money, Output.BeerCost, "", "- Пщел отсюда скряга!\n"))
+                        if (Output.Spent(hero, Output.BeerCost, "", "- Пщел отсюда скряга!\n"))
                             LocationISS.Drinking(hero);
                         else
                         {

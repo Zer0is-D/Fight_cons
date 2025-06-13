@@ -19,6 +19,27 @@ namespace FightCons
         // НД - наливки
         // ВБ
 
+        public static sbyte NamOfGoods = 4;
+        public static sbyte NamOfBonuses = 2; //  1-8
+
+        //  Список наименований материалов
+        protected static string WoodMat = "дерево";
+        protected static string MixedMat = "смешенное";
+        protected static string IronMat = "железо";
+        protected static string AlloyMat = "сплав";
+
+        #region Наименование предметов
+
+        protected static string[] LowWoodMatTierList =
+        {
+            "Деревянный меч", 
+            "Деревянная пика", 
+            "Деревянный топор",
+        };
+        
+
+        #endregion
+
 
 
         #region Данные и настроки локации

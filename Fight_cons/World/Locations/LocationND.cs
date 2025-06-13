@@ -1,10 +1,13 @@
 ﻿using FightCons.CoreNSettings;
+using FightCons.WForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
+using static FightCons.CoreNSettings.Map;
 
 namespace FightCons.World.Locations
 {
@@ -172,6 +175,669 @@ namespace FightCons.World.Locations
             },
         };
 
+        #region Настройки карт
+
+        //TODO ПОНЯТЬ КАК СПАВНИТЬ ИГРОКА В РАЗНЫЕ МЕСТА В ЗАВИСИМОСТИ ОТ ПОЗИЦИИ В СЛЕД ЛОКАЦИИ
+        static List<Map> maps = new List<Map>()
+        {
+            #region SectorDzeta 
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','O','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','⌂','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(1, 4), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.DzetaToEtta;
+                            SectorEtta(hero);
+                        }
+                    },
+                    {(10, 8), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.DzetaToPi;
+                            SectorPi(hero);
+                        }
+                    },
+                    {(16, 7), NewIaregaCity },
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<BattleSession> battleList = new List<BattleSession>()
+                    {
+                        new BattleSession(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                },
+                0.8)
+            ),
+            #endregion
+
+            #region SectorEtta 
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','O','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','O','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','⌂','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(1, 4), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.EttaToTeta;
+                            SectorTeta(hero);
+                        }
+                    },
+                    {(10, 8), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.EttaToOmicron;
+                            SectorOmicron(hero);
+                        }
+                    },
+                    {(18, 4), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.EttaToDzeta;
+                            SectorDzeta(hero);
+                        }
+                    },
+                    {(10, 5), NewEdinstvenyCity }
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<BattleSession> battleList = new List<BattleSession>()
+                    {
+                        new BattleSession(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                },
+                0.8)
+            ),
+            #endregion*/
+
+            #region SectorTeta 
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','O','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','⌂','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(18, 4), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.TetaToEtta;
+                            SectorEtta(hero);
+                        }
+                    },
+                    {(10, 8), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.TetaToCsi;
+                            SectorCsi(hero);
+                        }
+                    },
+                    {(10, 5), GeliotopolCity }
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<BattleSession> battleList = new List<BattleSession>()
+                    {
+                        new BattleSession(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                },
+                0.8)
+            ),
+            #endregion*/
+
+            #region SectorCsi 
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','⌂','.','.','.','.','.','.','.','O','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(10, 1), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.CsiToTeta;
+                            SectorTeta(hero);
+                        }
+                    },
+                    {(18, 5), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.CsiToOmicron;
+                            SectorOmicron(hero);
+                        }
+                    },
+                    {(10, 8), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.CsiToHi;
+                            SectorHi(hero);
+                        }
+                    },
+                    {(10, 5), HladnyPrimeCity }
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<BattleSession> battleList = new List<BattleSession>()
+                    {
+                        new BattleSession(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                },
+                0.8)
+            ),
+            #endregion
+
+            #region SectorOmicron 
+            new Map
+            (
+                //  Размеры
+                20, 20,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','#','#','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','#','#','#','.','.','.','#', },
+                    { '#','.','.','.','.','#','#','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','#','#','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','#','#','#','#','#','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','#','#','#','#','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','#','#','O','.','#','.','.','.','.','.','O','#', },
+                    { '#','O','.','.','.','.','#','#','#','#','#','.','#','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','#','#','#','.','#','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','#','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','#','.','.','#','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','#','#','#','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','O','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(10, 1), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.OmicronToEtta;
+                            SectorEtta(hero);
+                        }
+                    },
+                    {(18, 9), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.OmicronToPi;
+                            SectorPi(hero);
+                        }
+                    },
+                    {(1, 10), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.OmicronToCsi;
+                            SectorCsi(hero);
+                        }
+                    },
+                    {(10, 18), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.OmicronToPsi;
+                            SectorPsi(hero);
+                        }
+                    },
+                    {(6, 16), Cosmolit },
+                    {(10, 9), DarkGranulation }
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<BattleSession> battleList = new List<BattleSession>()
+                    {
+                        new BattleSession(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                },
+                0.8)
+            ),
+            #endregion*/
+
+            #region SectorPi 
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','O','.','.','.','.','.','.','.','.','⌂','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(10, 1), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.PiToDzeta;
+                            SectorDzeta(hero);
+                        }
+                    },
+                    {(1, 5), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.PiToOmicron;
+                            SectorOmicron(hero);
+                        }
+                    },
+                    {(10, 8), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.PiToOmega;
+                            SectorOmega(hero);
+                        }
+                    },
+                    {(10, 5), VladichiaOrbitaCity }
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<BattleSession> battleList = new List<BattleSession>()
+                    {
+                        new BattleSession(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                },
+                0.8)
+            ),
+            #endregion*/
+
+            #region SectorHi 
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','⌂','.','.','.','.','.','.','.','O','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','X','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(10, 1), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.HiToCsi;
+                            SectorCsi(hero);
+                        }
+                    },
+                    {(18, 5), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.HiToPsi;
+                            SectorPsi(hero);
+                        }
+                    },
+                    {(10, 5), OldIaregaCity }, 
+                    {(4, 7),  Glaciers}
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<BattleSession> battleList = new List<BattleSession>()
+                    {
+                        new BattleSession(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                },
+                0.8)
+            ),
+            #endregion*/
+
+            #region SectorPsi 
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','O','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','⌂','.','.','.','.','.','.','.','O','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(10, 1), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.PsiToOmicron;
+                            SectorOmicron(hero);
+                        }
+                    },
+                    {(1, 4), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.PsiToHi;
+                            SectorHi(hero);
+                        }
+                    },
+                    {(18, 5), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.PsiToOmega;
+                            SectorOmega(hero);
+                        }
+                    },
+                    {(10, 5), Cvantograd }
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<BattleSession> battleList = new List<BattleSession>()
+                    {
+                        new BattleSession(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                },
+                0.8)
+            ),
+            #endregion*/
+
+            #region SectorOmega 
+            new Map
+            (
+                //  Размеры
+                20, 10,
+
+                //  Карта
+                new char[,]
+                {
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','O','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','O','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','⌂','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#', },
+                    { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#', }
+                },
+                //  Интерактивные объекты
+                new Dictionary<(int, int), Action>
+                {
+
+                },
+                //  Тригер события
+                new Dictionary<List<(int, int)>, Action>
+                {
+                },
+                //  Точки выхода
+                new Dictionary<(int, int), Action<Hero>>
+                {
+                    {(10, 1), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.OmegaToPi;
+                            SectorPi(hero);
+                        }
+                    },
+                    {(1, 4), (Hero hero) =>
+                        {
+                            hero.HeroCoordinates = transit.OmegaToPsi;
+                            SectorPsi(hero);
+                        }
+                    },
+                    {(10, 5), GreenVectorVillage }
+                },
+                (RestEvent,
+                (Hero hero) =>
+                {
+                    RestEvent(hero);
+
+                    List<BattleSession> battleList = new List<BattleSession>()
+                    {
+                        new BattleSession(1, Character.ChaRole.Wild),
+                    };
+                    Battles.MakeRandomBattle(hero, battleList);
+                },
+                0.8)
+            ),
+            #endregion*/
+        };
+
+        static Dictionary<Enum, (int, int)> SpawnPoints = new Dictionary<Enum, (int, int)>
+        {
+            //  Dzeta
+            { transit.EttaToDzeta, (4, 4)},
+            { transit.NewIaregaCityToDzeta, (16, 6)},
+            { transit.PiToDzeta, (10, 7)},
+
+            //  Etta
+            { transit.DzetaToEtta, (17, 4)},
+            { transit.NewEdinstvenyCityToEtta, (10, 4)},
+            { transit.OmicronToEtta, (10, 7)},
+            { transit.TetaToEtta, (2, 4)},
+
+            //  Teta
+            { transit.EttaToTeta, (17, 4)},
+            { transit.GeliotopolCityToTeta, (9, 5)},
+            { transit.CsiToTeta, (10, 7)},
+
+            //  Csi
+            { transit.TetaToCsi, (10, 2)},
+            { transit.HladnyPrimeCityToCsi, (9, 5)},
+            { transit.OmicronToCsi, (17, 5)},
+            { transit.HiToCsi, (10, 7)},
+
+            //  Omicron
+            { transit.EttaToOmicron, (10, 2)},
+            { transit.CosmolitToOmicron, (6, 15)},
+            { transit.DarkGranulationToOmicron, (11, 9)},
+            { transit.CsiToOmicron, (2, 10)},
+            { transit.PsiToOmicron, (10, 17)},
+            { transit.PiToOmicron, (17, 9)},
+
+            //  Pi
+            { transit.DzetaToPi, (10, 2)},
+            { transit.VladichiaOrbitaCityToPi, (11, 5)},
+            { transit.OmicronToPi, (2, 5)},
+            { transit.OmegaToPi, (10, 7)},
+
+            //  Hi
+            { transit.CsiToHi, (10, 2)},
+            { transit.OldIaregaCityToHi, (10, 6)},
+            { transit.GlaciersToHi, (5, 7)},
+            { transit.PsiToHi, (17, 5)},
+
+            //  Psi
+            { transit.OmicronToPsi, (10, 2)},
+            { transit.CvantogradToPsi, (10, 6)},
+            { transit.HiToPsi, (2, 4)},
+            { transit.OmegaToPsi, (17, 5)},
+
+            //  Omega
+            { transit.PsiToOmega, (2, 4)},
+            { transit.GreenVectorVillageToOmega, (10, 6)},
+            { transit.PiToOmega, (10, 2)},
+        };
+
+        static bool CanPass = false;
+
+        #endregion
+
         #region Настройки магазина
         //  Наименование объектов
         private static InventoryItem healPotionItem = new InventoryItem()
@@ -193,24 +859,24 @@ namespace FightCons.World.Locations
         //TODO Придумать реест с общим
         static List<Material> Materials = new List<Material>
         {
-            new Material("дерево", 0.7, 3),
-            new Material("смешенное", 0.2, 6),
-            new Material("железо", 0.05, 9),
-            new Material("сплав", 0.05, 12),
+            new Material(WoodMat, 0.7, 3),
+            new Material(MixedMat, 0.2, 6),
+            new Material(IronMat, 0.05, 9),
+            new Material(AlloyMat, 0.05, 12),
         };
         static Dictionary<string, List<string>> WeaponsByMaterial = new Dictionary<string, List<string>>()
         {
-            { "дерево", new List<string> { "Деревянный меч", "Деревянная пика", "Деревянный топор", } },
-            { "смешенное", new List<string> { "Смешанный меч", "Смешанная пика", "Смешанный топор", "Большой топор", "Секира", "Топорище", "Арбалет", "Серп", "Молот", } },
-            { "железо", new List<string> { "Железный меч", "Железная пика", "Железный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", "Клинок", } },
-            { "сплав", new List<string> { "Сплавленный меч", "Сплавленная пика", "Сплавленный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", } },
+            { WoodMat, new List<string> { "Деревянный меч", "Деревянная пика", "Деревянный топор", } },
+            { MixedMat, new List<string> { "Смешанный меч", "Смешанная пика", "Смешанный топор", "Большой топор", "Секира", "Топорище", "Арбалет", "Серп", "Молот", } },
+            { IronMat, new List<string> { "Железный меч", "Железная пика", "Железный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", "Клинок", } },
+            { AlloyMat, new List<string> { "Сплавленный меч", "Сплавленная пика", "Сплавленный топор", "Большой топор", "Секира", "Тяжелый арбалет", "Топорище", "Рапира", "Катана", "Арбалет", } },
         };
         static Dictionary<string, List<string>> ArmorByMaterial = new Dictionary<string, List<string>>()
         {
-            { "дерево", new List<string> { "Деревянная броня", "Деревянная кираса", "Деревянный жилет", } },
-            { "смешенное", new List<string> { "Смешанная броня", "Смешанная кираса", "Смешанный жилет", "Кожаная броня" } },
-            { "железо", new List<string> { "Железная броня", "Железная кираса", "Железный жилет", } },
-            { "сплав", new List<string> { "Сплавленная броня", "Сплавленная кираса", "Сплавленный жилет", } },
+            { WoodMat, new List<string> { "Деревянная броня", "Деревянная кираса", "Деревянный жилет", } },
+            { MixedMat, new List<string> { "Смешанная броня", "Смешанная кираса", "Смешанный жилет", "Кожаная броня" } },
+            { IronMat, new List<string> { "Железная броня", "Железная кираса", "Железный жилет", } },
+            { AlloyMat, new List<string> { "Сплавленная броня", "Сплавленная кираса", "Сплавленный жилет", } },
         };
 
         /*  Общий список
@@ -258,6 +924,7 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
+                        hero.HeroCoordinates = transit.NewIaregaCityToDzeta;
                         SectorDzeta(hero);
                         break;
                     //case 3:
@@ -270,6 +937,69 @@ namespace FightCons.World.Locations
         //Сектор Дзета
         public static void SectorDzeta(Hero hero)
         {
+            List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
+            {
+                #region События на карте
+
+                #region Область зверолова
+                new LocationScenarioEvent
+                (
+                    0.2,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            //GameFormulas.CurrentCoordinates((3, 5), (4, 5), (5, 5)),
+                            GameFormulas.CurrentCoordinates
+                            (
+                                (1, 2), (2, 2),
+                                (1, 3), (2, 3),
+                                (1, 4), (2, 4),
+                                (1, 5), (2, 5),
+                                (1, 6), (2, 6)
+                            ),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                        List<BattleScenarioEvent> battleScenarioEvents = new List<BattleScenarioEvent>
+                        {
+                            new BattleScenarioEvent
+                            (
+                                (hero, EnemyList, turn) => hero.Turn == 0,
+                                (hero, EnemyList) =>
+                                {
+                                    Output.TwriteLine("\n- Предъявите документы!", 10, true);
+                                    Output.TwriteLine("\n*У вас нет документов*", 10, true);
+                                    Output.TwriteLine("\n- Шпион 'Вольников'!", 10, true);
+                                }
+                            ),
+                        };
+
+                        List<BattleSession> battleList = new List<BattleSession>()
+                        {
+                            new BattleSession(60, Character.ChaRole.Enemy),
+                            new BattleSession(61, Character.ChaRole.Enemy),
+                        };
+                        Battles.MakeRandomBattle(hero, battleList, battleScenarioEvents);
+                    },
+                    true
+                ),
+                #endregion
+                #endregion
+            };
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Сектор Дзета";
+            locInfo[1] = Descriptions(((byte)LocationName.SectorDzeta), Descript);
+
+            maps[0].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo, scenario);
+
+            while (true)
+                maps[0].Transition(hero, (playerX, playerY), locInfo, scenario);
+
             if (GameFormulas.Vero(0.4))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
@@ -353,6 +1083,7 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
+                        hero.HeroCoordinates = transit.NewIaregaCityToDzeta;
                         SectorDzeta(hero);
                         break;
                 }
@@ -362,6 +1093,69 @@ namespace FightCons.World.Locations
         //Сектор Этта
         public static void SectorEtta(Hero hero)
         {
+            List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
+            {
+                #region События на карте
+
+                #region Область Имперских войск
+                new LocationScenarioEvent
+                (
+                    0.05,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            GameFormulas.CurrentCoordinates
+                            (
+                                (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2),
+                                (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 3), (13, 3), (14, 3), (15, 3), (16, 3), (17, 3),
+                                (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4), (8, 4), (9, 4), (10, 4), (11, 4), (12, 4), (13, 4), (14, 4), (15, 4), (16, 4), (17, 4),
+                                (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5), (11, 5), (12, 5), (13, 5), (14, 5), (15, 5), (16, 5), (17, 5),
+                                (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6), (8, 6), (9, 6), (10, 6), (11, 6), (12, 6), (13, 6), (14, 6), (15, 6), (16, 6), (17, 6),
+                                (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (10, 7), (11, 7), (12, 7), (13, 7), (14, 7), (15, 7), (16, 7), (17, 7)
+                            ),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                        List<BattleScenarioEvent> battleScenarioEvents = new List<BattleScenarioEvent>
+                        {
+                            new BattleScenarioEvent
+                            (
+                                (hero, EnemyList, turn) => hero.Turn == 0,
+                                (hero, EnemyList) =>
+                                {
+                                    Output.TwriteLine("\n- Предъявите документы!", 10, true);
+                                    Output.TwriteLine("\n*У вас нет документов*", 10, true);
+                                    Output.TwriteLine("\n- Шпион 'Вольников'!", 10, true);
+                                }
+                            ),
+                        };
+
+                        List<BattleSession> battleList = new List<BattleSession>()
+                        {
+                            new BattleSession(60, Character.ChaRole.Enemy),
+                            new BattleSession(61, Character.ChaRole.Enemy),
+                        };
+                        Battles.MakeRandomBattle(hero, battleList, battleScenarioEvents);
+                    },
+                    true
+                ),
+                #endregion
+                #endregion
+            };
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Сектор Этта";
+            locInfo[1] = Descriptions(((byte)LocationName.SectorEtta), Descript);
+
+            maps[1].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo, scenario);
+
+            while (true)
+                maps[1].Transition(hero, (playerX, playerY), locInfo, scenario);
+
             if (GameFormulas.Vero(0.8))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
@@ -450,6 +1244,7 @@ namespace FightCons.World.Locations
                         Dealer(hero);  
                         break;
                     case 3:
+                        hero.HeroCoordinates = transit.NewEdinstvenyCityToEtta; 
                         SectorEtta(hero);
                         break;
                 }
@@ -489,7 +1284,7 @@ namespace FightCons.World.Locations
                         break;
 
                     case 4:
-                        if (Output.Spent(hero.Money, 50, healPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
+                        if (Output.Spent(hero, 50, healPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
                         {
                             healPotionItem.UseItem = healPotionItem.HealPotion;
                             Inventory.ItemAdd(hero, healPotionItem);
@@ -497,7 +1292,7 @@ namespace FightCons.World.Locations
                         break;
 
                     case 5:
-                        if (Output.Spent(hero.Money, 100, manaPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
+                        if (Output.Spent(hero, 100, manaPotionItem.Name, "\nВы нищеброд! Проваливайте!\n"))
                         {
                             manaPotionItem.UseItem = manaPotionItem.ManaPotion;
                             Inventory.ItemAdd(hero, manaPotionItem);
@@ -514,6 +1309,69 @@ namespace FightCons.World.Locations
         //Сектор Тета
         public static void SectorTeta(Hero hero)
         {
+            List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
+            {
+                #region События на карте
+
+                #region Область Вольных войск
+                new LocationScenarioEvent
+                (
+                    0.1,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            GameFormulas.CurrentCoordinates
+                            (
+                                (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2),
+                                (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 3), (13, 3), (14, 3), (15, 3), (16, 3), (17, 3),
+                                (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4), (8, 4), (9, 4), (10, 4), (11, 4), (12, 4), (13, 4), (14, 4), (15, 4), (16, 4), (17, 4),
+                                (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5), (11, 5), (12, 5), (13, 5), (14, 5), (15, 5), (16, 5), (17, 5),
+                                (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6), (8, 6), (9, 6), (10, 6), (11, 6), (12, 6), (13, 6), (14, 6), (15, 6), (16, 6), (17, 6),
+                                (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (10, 7), (11, 7), (12, 7), (13, 7), (14, 7), (15, 7), (16, 7), (17, 7)
+                            ),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                        List<BattleScenarioEvent> battleScenarioEvents = new List<BattleScenarioEvent>
+                        {
+                            new BattleScenarioEvent
+                            (
+                                (hero, EnemyList, turn) => hero.Turn == 0,
+                                (hero, EnemyList) =>
+                                {
+                                    Output.TwriteLine("\n- Предъявите документы!", 10, true);
+                                    Output.TwriteLine("\n*У вас нет документов*", 10, true);
+                                    Output.TwriteLine("\n- Шпион 'Империи'!", 10, true);
+                                }
+                            ),
+                        };
+
+                        List<BattleSession> battleList = new List<BattleSession>()
+                        {
+                            new BattleSession(63, Character.ChaRole.Enemy),
+                            new BattleSession(64, Character.ChaRole.Enemy),
+                        };
+                        Battles.MakeRandomBattle(hero, battleList, battleScenarioEvents);
+                    },
+                    true
+                ),
+                #endregion
+                #endregion
+            };
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Сектор Тета";
+            locInfo[1] = Descriptions(((byte)LocationName.SectorTeta), Descript);
+
+            maps[2].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo, scenario);
+
+            while (true)
+                maps[2].Transition(hero, (playerX, playerY), locInfo, scenario);
+
             if (GameFormulas.Vero(0.7))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
@@ -594,6 +1452,7 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
+                        hero.HeroCoordinates = transit.GeliotopolCityToTeta;
                         SectorTeta(hero);
                         break;
                 }
@@ -603,6 +1462,85 @@ namespace FightCons.World.Locations
         //Сектор Кси
         public static void SectorCsi(Hero hero)
         {
+            List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
+            {
+                #region События на карте
+
+                #region Область Вольных войск
+                new LocationScenarioEvent
+                (
+                    0.05,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            GameFormulas.CurrentCoordinates
+                            (
+                                (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2),
+                                (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 3), (13, 3), (14, 3), (15, 3), (16, 3), (17, 3),
+                                (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4), (8, 4), (9, 4), (10, 4), (11, 4), (12, 4), (13, 4), (14, 4), (15, 4), (16, 4), (17, 4),
+                                (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5), (11, 5), (12, 5), (13, 5), (14, 5), (15, 5), (16, 5), (17, 5),
+                                (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6), (8, 6), (9, 6), (10, 6), (11, 6), (12, 6), (13, 6), (14, 6), (15, 6), (16, 6), (17, 6),
+                                (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (10, 7), (11, 7), (12, 7), (13, 7), (14, 7), (15, 7), (16, 7), (17, 7)
+                            ),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                        List<BattleScenarioEvent> battleScenarioEvents = new List<BattleScenarioEvent>
+                        {
+                            new BattleScenarioEvent
+                            (
+                                (hero, EnemyList, turn) => turn == 0,
+                                (hero, EnemyList) =>
+                                {
+                                    Output.TwriteLine("\n- Что ты тут вынюхиваешь, а шнырь?", 10, true);
+                                    Output.TwriteLine("\n*Молчание*", 10, true);
+
+                                    Console.WriteLine("\nВаши действия?\n"
+                                                    + "1) Напасть\n"
+                                                    + "2) Уйти\n");
+
+                                    switch (Input.ChoisInput(hero, 1, 2))
+                                    {
+                                        case 1:
+                                            break;
+                                        case 2:
+                                            Output.TwriteLine("\n*Вы уходите из сектора*", 10, true);
+                                            Battles.ClearBattlePlace(hero, EnemyList);
+
+                                            hero.HeroCoordinates = transit.CsiToTeta;
+                                            SectorTeta(hero);
+                                            break;
+                                    }                                    
+                                }
+                            ),
+                        };
+
+                        List<BattleSession> battleList = new List<BattleSession>()
+                        {
+                            new BattleSession(66, Character.ChaRole.Enemy),
+                            new BattleSession(67, Character.ChaRole.Enemy),
+                        };
+                        Battles.MakeRandomBattle(hero, battleList, battleScenarioEvents);
+                    },
+                    true
+                ),
+                #endregion
+                #endregion
+            };
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Сектор Кси";
+            locInfo[1] = Descriptions(((byte)LocationName.SectorCsi), Descript);
+
+            maps[3].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo, scenario);
+
+            while (true)
+                maps[3].Transition(hero, (playerX, playerY), locInfo, scenario);
+
             if (GameFormulas.Vero(0.6))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
@@ -687,7 +1625,8 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        SectorEtta(hero);
+                        hero.HeroCoordinates = transit.HladnyPrimeCityToCsi;
+                        SectorCsi(hero);
                         break;
                 }
             }
@@ -696,6 +1635,65 @@ namespace FightCons.World.Locations
         //Сектор Омикрон
         public static void SectorOmicron(Hero hero)
         {
+            List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
+            {
+                #region События на карте
+
+                #region Область Битв
+                new LocationScenarioEvent
+                (
+                    0.05,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            GameFormulas.CurrentCoordinates
+                            (
+                                (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2),
+                                (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4), (8, 4), (9, 4), (10, 4), (11, 4), (12, 4), (13, 4), (14, 4), (15, 4), (16, 4), (17, 4),
+                                (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6), (8, 6), (9, 6), (10, 6), (11, 6), (12, 6), (13, 6), (14, 6), (15, 6), (16, 6), (17, 6),
+                                (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8), (8, 8), (9, 8), (10, 8), (11, 8), (12, 8), (13, 8), (14, 8), (15, 8), (16, 8), (17, 8),
+                                (1, 10), (2, 10), (3, 10), (4, 10), (5, 10), (6, 10), (7, 10), (8, 10), (9, 10), (10, 10), (11, 10), (12, 10), (13, 10), (14, 10), (15, 10), (16, 10), (17, 10),
+                                (1, 12), (2, 12), (3, 12), (4, 12), (5, 12), (6, 12), (7, 12), (8, 12), (9, 12), (10, 12), (11, 12), (12, 12), (13, 12), (14, 12), (15, 12), (16, 12), (17, 12),
+                                (1, 14), (2, 14), (3, 14), (4, 14), (5, 14), (6, 14), (7, 14), (8, 14), (9, 14), (10, 14), (11, 14), (12, 14), (13, 14), (14, 14), (15, 14), (16, 14), (17, 14),
+                                (1, 16), (2, 16), (3, 16), (4, 16), (5, 16), (6, 16), (7, 16), (8, 16), (9, 16), (10, 16), (11, 16), (12, 16), (13, 16), (14, 16), (15, 16), (16, 16), (17, 16),
+                                (1, 18), (2, 18), (3, 18), (4, 18), (5, 18), (6, 18), (7, 18), (8, 18), (9, 18), (10, 18), (11, 18), (12, 18), (13, 18), (14, 18), (15, 18), (16, 18), (17, 18)
+                            ),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                        List<BattleSession> battleList = new List<BattleSession>()
+                        {
+                            new BattleSession(60, Character.ChaRole.Enemy),
+                            new BattleSession(61, Character.ChaRole.Enemy),
+                            new BattleSession(62, Character.ChaRole.Enemy),
+                            new BattleSession(63, Character.ChaRole.Enemy),
+                            new BattleSession(64, Character.ChaRole.Enemy),
+                            new BattleSession(65, Character.ChaRole.Enemy),
+                            new BattleSession(66, Character.ChaRole.Enemy),
+                            new BattleSession(67, Character.ChaRole.Enemy),
+                            new BattleSession(68, Character.ChaRole.Enemy),
+                        };
+                        Battles.MakeRandomBattle(hero, battleList);
+                    },
+                    true
+                ),
+                #endregion
+                #endregion
+            };
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Сектор Омикрон";
+            locInfo[1] = Descriptions(((byte)LocationName.SectorOmicron), Descript);
+
+            maps[4].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo, scenario);
+
+            while (true)
+                maps[4].Transition(hero, (playerX, playerY), locInfo, scenario);
+
             if (GameFormulas.Vero(0.9))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
@@ -797,7 +1795,8 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        SectorEtta(hero);
+                        hero.HeroCoordinates = transit.CosmolitToOmicron;
+                        SectorOmicron(hero);
                         break;
                 }
             }
@@ -824,7 +1823,8 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        SectorEtta(hero);
+                        hero.HeroCoordinates = transit.DarkGranulationToOmicron;
+                        SectorOmicron(hero);
                         break;
                 }
             }
@@ -833,6 +1833,18 @@ namespace FightCons.World.Locations
         //Сектор Пи
         public static void SectorPi(Hero hero)
         {
+            //Нет событий (мирный город)
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Сектор Пи";
+            locInfo[1] = Descriptions(((byte)LocationName.SectorPi), Descript);
+
+            maps[5].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
+
+            while (true)
+                maps[5].Transition(hero, (playerX, playerY), locInfo);
+
             if (GameFormulas.Vero(0.4))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
@@ -914,7 +1926,8 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        SectorEtta(hero);
+                        hero.HeroCoordinates = transit.VladichiaOrbitaCityToPi;
+                        SectorPi(hero);
                         break;
                 }
             }
@@ -923,6 +1936,86 @@ namespace FightCons.World.Locations
         //Сектор Хи
         public static void SectorHi(Hero hero)
         {
+            List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
+            {
+                #region События на карте
+
+                #region Область Вольных войск
+                new LocationScenarioEvent
+                (
+                    0.05,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            GameFormulas.CurrentCoordinates
+                            (
+                                (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2),
+                                (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 3), (13, 3), (14, 3), (15, 3), (16, 3), (17, 3),
+                                (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4), (8, 4), (9, 4), (10, 4), (11, 4), (12, 4), (13, 4), (14, 4), (15, 4), (16, 4), (17, 4),
+                                (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5), (11, 5), (12, 5), (13, 5), (14, 5), (15, 5), (16, 5), (17, 5),
+                                (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6), (8, 6), (9, 6), (10, 6), (11, 6), (12, 6), (13, 6), (14, 6), (15, 6), (16, 6), (17, 6),
+                                (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (10, 7), (11, 7), (12, 7), (13, 7), (14, 7), (15, 7), (16, 7), (17, 7)
+                            ),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                        List<BattleScenarioEvent> battleScenarioEvents = new List<BattleScenarioEvent>
+                        {
+                            new BattleScenarioEvent
+                            (
+                                (hero, EnemyList, turn) => turn == 0,
+                                (hero, EnemyList) =>
+                                {
+                                    Output.TwriteLine("\n- Что ты тут вынюхиваешь, а шнырь?", 10, true);
+                                    Output.TwriteLine("\n*Молчание*", 10, true);
+
+                                    Console.WriteLine("\nВаши действия?\n"
+                                                    + "1) Напасть\n"
+                                                    + "2) Уйти\n");
+
+                                    switch (Input.ChoisInput(hero, 1, 2))
+                                    {
+                                        case 1:
+                                            break;
+                                        case 2:
+                                            Output.TwriteLine("\n*Вы уходите из сектора*", 10, true);
+                                            Battles.ClearBattlePlace(hero, EnemyList);
+
+                                            hero.HeroCoordinates = transit.CsiToTeta;
+                                            SectorTeta(hero);
+                                            break;
+                                    }
+                                }
+                            ),
+                        };
+
+                        List<BattleSession> battleList = new List<BattleSession>()
+                        {
+                            new BattleSession(66, Character.ChaRole.Enemy),
+                            new BattleSession(67, Character.ChaRole.Enemy),
+                            new BattleSession(68, Character.ChaRole.Enemy),
+                        };
+                        Battles.MakeRandomBattle(hero, battleList, battleScenarioEvents);
+                    },
+                    true
+                ),
+                #endregion
+                #endregion
+            };
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Сектор Хи";
+            locInfo[1] = Descriptions(((byte)LocationName.SectorHi), Descript);
+
+            maps[6].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo, scenario);
+
+            while (true)
+                maps[6].Transition(hero, (playerX, playerY), locInfo, scenario);
+
             if (GameFormulas.Vero(0.8))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
@@ -1007,6 +2100,7 @@ namespace FightCons.World.Locations
                         Glaciers(hero);
                         break;
                     case 3:
+                        hero.HeroCoordinates = transit.OldIaregaCityToHi;
                         SectorHi(hero);
                         break;
                 }
@@ -1084,6 +2178,96 @@ namespace FightCons.World.Locations
         //Сектор Пси
         public static void SectorPsi(Hero hero)
         {
+            List<LocationScenarioEvent> scenario = new List<LocationScenarioEvent>
+            {
+                #region События на карте
+
+                #region Область Вольных войск
+                new LocationScenarioEvent
+                (
+                    0.1,
+                    (hero, turn) =>
+                    {
+                        var conditions = new List<bool>
+                        {
+                            GameFormulas.CurrentCoordinates
+                            (
+                                (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2),
+                                (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3), (8, 3), (9, 3), (10, 3), (11, 3), (12, 3), (13, 3), (14, 3), (15, 3), (16, 3), (17, 3),
+                                (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4), (8, 4), (9, 4), (10, 4), (11, 4), (12, 4), (13, 4), (14, 4), (15, 4), (16, 4), (17, 4),
+                                (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5), (8, 5), (9, 5), (10, 5), (11, 5), (12, 5), (13, 5), (14, 5), (15, 5), (16, 5), (17, 5),
+                                (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6), (8, 6), (9, 6), (10, 6), (11, 6), (12, 6), (13, 6), (14, 6), (15, 6), (16, 6), (17, 6),
+                                (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7), (8, 7), (9, 7), (10, 7), (11, 7), (12, 7), (13, 7), (14, 7), (15, 7), (16, 7), (17, 7)
+                            ),
+                        };
+                        return conditions.Any(c => c);
+                    },
+                    (hero) =>
+                    {
+                        List<BattleScenarioEvent> battleScenarioEvents = new List<BattleScenarioEvent>
+                        {
+                            new BattleScenarioEvent
+                            (
+                                (hero, EnemyList, turn) => turn == 0,
+                                (hero, EnemyList) =>
+                                {
+                                    Output.TwriteLine("\n- Предъявите документы!", 10, true);
+                                    Output.TwriteLine("\n*У вас нет документов*", 10, true);
+
+                                    Console.WriteLine("\nВаши действия?\n"
+                                                    + "1) Напасть\n"
+                                                    + "2) Уйти\n");
+                                                    //+ "3) Показать документы\n");
+
+                                    switch (Input.ChoisInput(hero, 1, 2))
+                                    {
+                                        case 1:
+                                            Output.TwriteLine("\n- Шпион 'Империи'!", 10, true);
+                                            break;
+                                        case 2:
+                                            Output.TwriteLine("\n*Вы уходите из сектора*", 10, true);
+                                            Battles.ClearBattlePlace(hero, EnemyList);
+
+                                            hero.HeroCoordinates = transit.CsiToTeta;
+                                            SectorTeta(hero);
+                                            break;
+                                        case 3:
+                                            Output.TwriteLine("\n- Всего доброго", 10, true);
+
+                                            CanPass = true;
+                                            break;
+                                    }
+                                }
+                            ),
+                        };
+
+                        if (!CanPass)
+                        {
+                            List<BattleSession> battleList = new List<BattleSession>()
+                            {
+                                new BattleSession(66, Character.ChaRole.Enemy),
+                                new BattleSession(67, Character.ChaRole.Enemy),
+                            };
+                            Battles.MakeRandomBattle(hero, battleList, battleScenarioEvents);
+                        }
+                        CanPass = false;
+                    },
+                    true
+                ),
+                #endregion
+                #endregion
+            };
+
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Сектор Пси";
+            locInfo[1] = Descriptions(((byte)LocationName.SectorPsi), Descript);
+
+            maps[7].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo, scenario);
+
+            while (true)
+                maps[7].Transition(hero, (playerX, playerY), locInfo, scenario);
+
             if (GameFormulas.Vero(0.8))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
@@ -1167,7 +2351,8 @@ namespace FightCons.World.Locations
                         //TODO Событие прослушивание  
                         break;
                     case 2:
-                        SectorEtta(hero);
+                        hero.HeroCoordinates = transit.CvantogradToPsi;
+                        SectorPsi(hero);
                         break;
                 }
             }
@@ -1176,6 +2361,16 @@ namespace FightCons.World.Locations
         //Сектор Омега
         public static void SectorOmega(Hero hero)
         {
+            string[] locInfo = new string[2];
+
+            locInfo[0] = "Сектор Омега";
+            locInfo[1] = Descriptions(((byte)LocationName.SectorOmega), Descript);
+
+            maps[8].Transition(hero, SpawnPoints, hero.HeroCoordinates, locInfo);
+
+            while (true)
+                maps[8].Transition(hero, (playerX, playerY), locInfo);
+
             if (GameFormulas.Vero(0.6))
             {
                 List<BattleSession> battleList = new List<BattleSession>()
@@ -1272,7 +2467,8 @@ namespace FightCons.World.Locations
                         }
                         break;
                     case 3:
-                        SectorEtta(hero);
+                        hero.HeroCoordinates = transit.GreenVectorVillageToOmega;
+                        SectorOmega(hero);
                         break;
                 }
             }

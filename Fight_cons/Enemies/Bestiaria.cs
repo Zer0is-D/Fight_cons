@@ -93,7 +93,7 @@ namespace FightCons
                 { Id = 2 },
 
                 /*3*/
-                new Bestiaries("Ворюга", phase: 0, hpMin: 10, hpMax: 15, attMin: 3, attMax: 5, spdMin: 30, spdMax: 30, critMin: 20, critMax: 30, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 20, blkMax: 40, movMin: 4, movMax: 5, /*role: ChaRole.Enemy,*/ strategy: Strategies.Aggressive) 
+                new Bestiaries("Разбойник", phase: 0, hpMin: 10, hpMax: 15, attMin: 3, attMax: 5, spdMin: 30, spdMax: 30, critMin: 20, critMax: 30, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 20, blkMax: 40, movMin: 4, movMax: 5, /*role: ChaRole.Enemy,*/ strategy: Strategies.Aggressive) 
                 { Id = 3 },
                 
                 /*4*/
@@ -101,7 +101,7 @@ namespace FightCons
                 { Id = 4 },
 
                 /*5*/
-                new Bestiaries("Некромант", phase: 0, hp: 20, attack: 0, speed: 20, critChance: 0, defense: 0, magicDefense: 30, block: 0, moves: 5, noRun: true, /*ChaRole.Enemy,*/ strategy: Strategies.Necromancer)
+                new Bestiaries("Некромант", phase: 0, hp: 20, attack: 0, speed: 20, critChance: 15, defense: 0, magicDefense: 30, block: 0, moves: 5, noRun: true, /*ChaRole.Enemy,*/ strategy: Strategies.Necromancer)
                 { Id = 5 },
 
                 /*6*/
@@ -129,13 +129,13 @@ namespace FightCons
 
                 //  Пещеры
                 /*10*/
-                new Bestiaries("Нечто Неизведанное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 3, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any) 
+                new Bestiaries("Нечто Неизведанное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 3, spdMin: 20, spdMax: 30, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any) 
                 { Id = 10 },
                 /*11*/
-                new Bestiaries("Нечто Бронированное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 20, defMax: 70, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 1, movMax: 2, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any) 
+                new Bestiaries("Нечто Бронированное", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 10, spdMax: 30, critMin: 5, critMax: 10, defMin: 20, defMax: 70, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 1, movMax: 2, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any) 
                 { Id = 11 },
                 /*12*/
-                new Bestiaries("Нечто Магическое", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 30, spdMax: 90, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 30, mDefMax: 70, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any) 
+                new Bestiaries("Нечто Магическое", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 2, spdMin: 20, spdMax: 40, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 30, mDefMax: 70, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any) 
                 { Id = 12 },
 
                 //13-17 19
@@ -151,11 +151,11 @@ namespace FightCons
 
                 #region Противники ДЖ                
                 /*20*/
-                new Bestiaries("Древлянин", phase: 0, hpMin: 10, hpMax: 15, attMin: 3, attMax: 5, spdMin: 30, spdMax: 30, critMin: 20, critMax: 30, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 20, blkMax: 40, movMin: 4, movMax: 5, /*role: ChaRole.Enemy,*/ strategy: Strategies.Aggressive)
+                new Bestiaries("Древлянин", phase: 0, hpMin: 5, hpMax: 10, attMin: 1, attMax: 2, spdMin: 30, spdMax: 40, critMin: 10, critMax: 20, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 20, blkMax: 40, movMin: 4, movMax: 5, /*role: ChaRole.Enemy,*/ strategy: Strategies.Aggressive)
                 { Id = 20 },
 
                 //  21 Сильный древлянин - более мощная версия древ + побольше брони и маг брони
-                new Bestiaries("Старший древлянин", phase: 0, hpMin: 20, hpMax: 40, attMin: 5, attMax: 8, spdMin: 40, spdMax: 50, critMin: 30, critMax: 40, defMin: 10, defMax: 30, mDefMin: 30, mDefMax: 40, blkMin: 20, blkMax: 40, movMin: 5, movMax: 6, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any)
+                new Bestiaries("Старший древлянин", phase: 0, hpMin: 20, hpMax: 30, attMin: 4, attMax: 5, spdMin: 40, spdMax: 50, critMin: 30, critMax: 40, defMin: 10, defMax: 30, mDefMin: 30, mDefMax: 40, blkMin: 20, blkMax: 40, movMin: 5, movMax: 6, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any)
                 { Id = 21 },
                 //  22 Алабаст
                 //  23 Дерево - препятствие(доработать)
@@ -172,7 +172,7 @@ namespace FightCons
                 new Bestiaries("Культист", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 3, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any)
                 { Id = 31 },
                 //  32 Лестная нечисть - нечто
-                new Bestiaries("Лестная нечисть", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 3, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any)
+                new Bestiaries("Лесная нечисть", phase: 0, hpMin: 5, hpMax: 15, attMin: 1, attMax: 3, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 0, defMax: 0, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 2, movMax: 3, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any)
                 { Id = 32 },
                 //  33 Крупная нечисть - бронир, но просто жирный мин брони
                 new Bestiaries("Крупная нечисть", phase: 0, hpMin: 10, hpMax: 23, attMin: 1, attMax: 2, spdMin: 30, spdMax: 40, critMin: 5, critMax: 10, defMin: 30, defMax: 50, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 1, movMax: 2, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any)
@@ -215,7 +215,7 @@ namespace FightCons
                 //  52 Крупный бандит - бронир, но просто жирный мин брони
                 new Bestiaries("Крупный бандит", phase: 0, hpMin: 15, hpMax: 30, attMin: 1, attMax: 2, spdMin: 30, spdMax: 40, critMin: 5, critMax: 7, defMin: 20, defMax: 40, mDefMin: 0, mDefMax: 0, blkMin: 10, blkMax: 30, movMin: 1, movMax: 2, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any)
                 { Id = 52 },
-                //  52 Зеленый - бронир, но просто жирный мин брони
+                //  53 Зеленый - бронир, но просто жирный мин брони
                 new Bestiaries("Зеленый", phase: 0, hpMin: 20, hpMax: 50, attMin: 3, attMax: 5, spdMin: 30, spdMax: 40, critMin: 5, critMax: 7, defMin: 5, defMax: 20, mDefMin: 50, mDefMax: 80, blkMin: 10, blkMax: 30, movMin: 3, movMax: 4, /*role: ChaRole.Enemy,*/ strategy: Strategies.Any)
                 { Id = 53 },
 

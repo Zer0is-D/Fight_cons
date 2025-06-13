@@ -46,6 +46,7 @@ namespace FightCons.CoreNSettings
 
         public enum transit
         {
+            #region ISS
             //  Valley
             CavesToValley,
             OrdoToValley,
@@ -56,6 +57,139 @@ namespace FightCons.CoreNSettings
             //  Foothills
             ValleyToFoothills,
             SenisusColonyToFoothills,
+            #endregion
+
+            #region ND
+            //  Dzeta
+            EttaToDzeta,
+            NewIaregaCityToDzeta,
+            PiToDzeta,
+
+            //  Etta
+            DzetaToEtta,
+            NewEdinstvenyCityToEtta,
+            OmicronToEtta,
+            TetaToEtta,
+
+            //  Teta
+            EttaToTeta,
+            GeliotopolCityToTeta,
+            CsiToTeta,
+
+            //  Csi
+            TetaToCsi,
+            HladnyPrimeCityToCsi,
+            OmicronToCsi,
+            HiToCsi,
+
+            //  Omicron
+            EttaToOmicron,
+            CosmolitToOmicron,
+            DarkGranulationToOmicron,
+            CsiToOmicron,
+            PsiToOmicron,
+            PiToOmicron,
+
+            //  Pi
+            DzetaToPi,
+            VladichiaOrbitaCityToPi,
+            OmicronToPi,
+            OmegaToPi,
+
+            //  Hi
+            CsiToHi,
+            OldIaregaCityToHi,
+            GlaciersToHi,
+            PsiToHi,
+
+            //  Psi
+            OmicronToPsi,
+            CvantogradToPsi,
+            HiToPsi,
+            OmegaToPsi,
+
+            //  Omega
+            PsiToOmega,
+            GreenVectorVillageToOmega,
+            PiToOmega,
+            #endregion
+
+            #region BTL
+            //  Deepwoods
+            BTLStartPoint,
+            EastWoodsToDeepwoods,
+            NorthWoodsToDeepwoods,
+
+            //  EastWoods
+            DeepwoodsToEastWoods,
+            GigantopolisToEastWoods,
+
+            //  NorthWoods
+            DeepwoodsToNorthWoods,
+            GigantopolisToNorthWoods,
+
+            //  Gigantopolis
+            EastWoodsToGigantopolis,
+            NorthWoodsToGigantopolis,
+            #endregion
+
+            #region PP
+            //  Coast
+            PPStartPoint,
+            GreenGroundToCoast,
+            DesertToCoast,
+
+            //  GreenGround
+            CoastToGreenGround,
+            DesertToGreenGround,
+
+            //  Desert
+            CoastToDesert,
+            GreenGroundToDesert,
+            Nomads1ToDesert,
+            BanditTownToDesert,
+            RockValleyToDesert,
+
+            //  RockValley
+            DesertToRockValley,
+            FlameForestToRockValley,
+
+
+            #endregion
+
+            #region DJ
+            //  Woods1
+            DJStartPoint,
+            DealerToWoods1,
+            Woods2ToWoods1,
+
+            //  Woods2
+            Woods1ToWoods2,
+            Woods3ToWoods2,
+
+            //  Woods3
+            Woods2ToWoods3,
+            Woods4ToWoods3,
+
+            //  Woods4
+            Woods3ToWoods4,
+            MainWoodsToWoods4,
+
+            //  MainWoods
+            Woods4ToMainWoods,
+            EgionToMainWoods,
+            #endregion
+
+            #region OP
+            //  Coast
+            Island1ToBlueHorizons,
+            KitegeCityToBlueHorizons,
+            KronstandtToBlueHorizons,
+            NovoiavCityToBlueHorizons,
+            TroubledWatersToBlueHorizons,
+            NorthIslandToBlueHorizons,
+
+            #endregion
         }
 
         public Map(int mapWidth, int mapHeight, char[,] mapMas, Dictionary<(int, int), Action> interactiveObjects, Dictionary<(int, int), Action> triggers, Dictionary<(int, int), Action<Hero>> exitPoint, (Action<Hero>, Action<Hero>, double) restEvent)
@@ -105,11 +239,11 @@ namespace FightCons.CoreNSettings
         //    playerX = spawnPoints[transit].Item1;
         //    playerY = spawnPoints[transit].Item2;
 
-        //    //if (x != 0 && y != 0)
-        //    //{
-        //    //    playerX = x;
-        //    //    playerY = y;
-        //    //}
+        //    if (x != 0 && y != 0)
+        //    {
+        //        playerX = x;
+        //        playerY = y;
+        //    }
 
         //    mapStartLine = -1;
 
@@ -117,26 +251,26 @@ namespace FightCons.CoreNSettings
 
         //    Console.CursorVisible = false;
 
-        //    //Console.WriteLine("История событий: игра началась...");
+        //    Console.WriteLine("История событий: игра началась...");
         //    Console.WriteLine("\nИспользуйте стрелки для передвижения"
         //                    + "\nR - отдых"
         //                    + "\nQ - ввод команды.");
 
-        //    // Открываем сразу все сундуки (чтобы клетки с 'X' были видны)
-        //    //RevealTreasures();
+        //    //Открываем сразу все сундуки(чтобы клетки с 'X' были видны)
+        //    RevealTreasures();
 
-        //    //DrawMap();
+        //    DrawMap();
 
         //    while (rendering)
         //    {
 
         //        /*
-        //        // Обновляем противника только если прошло достаточно времени
-        //        //if ((DateTime.Now - lastEnemyUpdate).TotalMilliseconds >= enemyUpdateDelay)
-        //        //{
-        //        //    UpdateEnemy();
-        //        //    lastEnemyUpdate = DateTime.Now;
-        //        //}*/
+        //         Обновляем противника только если прошло достаточно времени
+        //        if ((DateTime.Now - lastEnemyUpdate).TotalMilliseconds >= enemyUpdateDelay)
+        //        {
+        //            UpdateEnemy();
+        //            lastEnemyUpdate = DateTime.Now;
+        //        }*/
 
         //        DrawMap();
         //        DrawPosition();
@@ -314,7 +448,7 @@ namespace FightCons.CoreNSettings
             if (newX >= 0 && newX < MapWidth && newY >= 0 && newY < MapHeight)
             {
                 // Разрешённые для прохода клетки: 'O', ' ' или '.'
-                if (MapMas[newY, newX] == '⌂' || MapMas[newY, newX] == 'O' || MapMas[newY, newX] == ' ' || MapMas[newY, newX] == '.')
+                if (MapMas[newY, newX] == '⌂' || MapMas[newY, newX] == 'O' || MapMas[newY, newX] == ' ' || MapMas[newY, newX] == '.' || MapMas[newY, newX] == '~' || MapMas[newY, newX] == '◙')
                 {
                     playerX = newX;
                     playerY = newY;
@@ -455,7 +589,7 @@ namespace FightCons.CoreNSettings
         {
             int hintY = mapStartLine + MapHeight;
             Console.SetCursorPosition(0, hintY);
-            Console.Write($"Позиция игрока: X:{playerX} Y:{playerY}");
+            Console.Write($"Позиция игрока: X:{playerX} Y:{playerY}\n");
         }
 
         void ClearInteractionHint()

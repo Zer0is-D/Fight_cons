@@ -12,6 +12,8 @@ namespace FightCons
         public static bool DelayEffects = false;
         public static bool SoundEffects = false;
         public static bool DetailedParamValue = false;
+        public static bool SkipStart = false;
+
 
         #region Фиксированное окно
         const int MF_BYCOMMAND = 0x00000000;
@@ -41,7 +43,7 @@ namespace FightCons
                 DeleteMenu(systemMenu, SC_MAXIMIZE, MF_BYCOMMAND);
             }
 
-            Console.SetWindowSize(80, 30);
+            Console.SetWindowSize(80, 40);
             Console.SetBufferSize(80, Console.BufferHeight);
             Console.OutputEncoding = Encoding.Unicode;
 

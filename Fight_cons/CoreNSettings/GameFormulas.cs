@@ -36,10 +36,10 @@ namespace FightCons.CoreNSettings
             float crit = CheckCrit(attacker);
             float attack;
 
-            if (!throwBranch)
-                attack = attacker.TotalAttack + crit;
+            if (throwBranch)
+                attack = attacker.TotalAttack / ArmorFine;            
             else
-                attack = attacker.TotalAttack / ArmorFine;
+                attack = attacker.TotalAttack + crit;
 
             if (victim.Condition.AttackParry)
                 if (CheckParry(attacker, victim))

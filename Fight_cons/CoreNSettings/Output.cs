@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 using System.Threading;
 using static FightCons.Character;
 
@@ -63,7 +64,7 @@ namespace FightCons
 
         //public static sbyte PotionHPCost = 20;
         //public static sbyte PotionMPCost = 30;
-        public static sbyte QStatueCost = 30;
+        //public static sbyte QStatueCost = 30;
 
         public static sbyte ShowNewItemsCost = 10;
 
@@ -256,12 +257,12 @@ namespace FightCons
             Thread.Sleep(1000);
         }
 
-        public static bool Spent(int money, int cost = 0, string itemName = "", string NoMoneyMes = "")
+        public static bool Spent(Hero hero, int cost = 0, string itemName = "", string NoMoneyMes = "")
         {
-            if (money >= cost)
+            if (hero.Money >= cost)
             {
                 WriteColorLine(ConsoleColor.Yellow, "\n[Вы потратили -", $"{cost}{MoneySymbol}", "!]\n");
-                money -= cost;
+                hero.Money -= cost;
 
                 if (itemName.Length >= 1)
                     WriteColorLine(ConsoleColor.Green, "[Вы получили ", $"{itemName}", "!]\n");
@@ -281,10 +282,7 @@ namespace FightCons
             }           
         }
 
-        public static void StartQuest(string name)
-        {
-            WriteColorLine(ConsoleColor.Green, "\t\t\t[Квест \"", $"{name}", "\"]\n");
-        }
+        public static void StartQuest(string name) => WriteColorLine(ConsoleColor.Green, "\t\t\t[Квест \"", $"{name}", "\"]\n");
 
         public static void PayMoneyLine(string message, int value, int money)
         {

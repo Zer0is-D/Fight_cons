@@ -18,17 +18,28 @@ namespace FightCons.WForms
         public ConfigTry()
         {
             InitializeComponent();
+
+            NumOfGoodsUpDown.Value = Locations.NamOfGoods;
+            NamOfBonusiesUpDown.Value = Locations.NamOfGoods;
+            BleedDmgUpDown.Value = Conditions.BleedDmg;
+
+            BildVersCheckBox.Checked = Settings.OwnBildVersion;
+            DelayEffectCheckBox.Checked = Settings.DelayEffects;
+            SoundCheckBox.Checked = Settings.SoundEffects;
+            CurrentParamValueCheckBox.Checked = Settings.DetailedParamValue;
+            SkipStartCheckBox.Checked = Settings.SkipStart;
         }
 
         private void StartBtn_Click(object sender, EventArgs e)
         {
-            Settings.OwnBildVersion = BildVers_checkBox.Checked;
-            Settings.DelayEffects = DelayEffect_checkBox.Checked;
-            Settings.SoundEffects = Sound_checkBox.Checked;
-            Settings.DetailedParamValue = CurrentParamValue_checkBox.Checked;
+            Settings.OwnBildVersion = BildVersCheckBox.Checked;
+            Settings.DelayEffects = DelayEffectCheckBox.Checked;
+            Settings.SoundEffects = SoundCheckBox.Checked;
+            Settings.DetailedParamValue = CurrentParamValueCheckBox.Checked;
+            Settings.SkipStart = SkipStartCheckBox.Checked;
 
-            MarketMethods.NamOfGoods = (sbyte) NumOfGoodsUpDown.Value;
-            MarketMethods.NamOfBonuses = (sbyte) NamOfBonusiesUpDown.Value;
+            Locations.NamOfGoods = (sbyte) NumOfGoodsUpDown.Value;
+            Locations.NamOfGoods = (sbyte) NamOfBonusiesUpDown.Value;
             Conditions.BleedDmg = (sbyte) BleedDmgUpDown.Value;
              
             DialogResult = DialogResult.No;
@@ -46,24 +57,24 @@ namespace FightCons.WForms
 
         private void BildCheck()
         {
-            if (StandartVers_checkBox.Checked)
+            if (StandartVersCheckBox.Checked)
             {
-                BildVers_checkBox.Checked = false;
-                StandartVers_checkBox.Checked = true;
+                BildVersCheckBox.Checked = false;
+                StandartVersCheckBox.Checked = true;
             }
             else
             {
-                BildVers_checkBox.Checked = true;
-                StandartVers_checkBox.Checked = false;
+                BildVersCheckBox.Checked = true;
+                StandartVersCheckBox.Checked = false;
             }
         }
 
         private void CancelBtn_Click(object sender, EventArgs e)
         {
-            StandartVers_checkBox.Checked = true;
-            BildVers_checkBox.Checked = false;
-            Sound_checkBox.Checked = false;
-            DelayEffect_checkBox.Checked = false;
+            StandartVersCheckBox.Checked = true;
+            BildVersCheckBox.Checked = false;
+            SoundCheckBox.Checked = false;
+            DelayEffectCheckBox.Checked = false;
 
             NamOfBonusiesUpDown.Value = 2;
             NamOfBonusiesUpDown.Value = 4;
