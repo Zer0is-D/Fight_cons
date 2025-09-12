@@ -1,0 +1,268 @@
+﻿using System;
+using System.Windows;
+
+namespace FightCons
+{
+    partial class Hero
+    {
+        //  Система lvl up
+        LvlTicket LTicket;       
+
+        public static int NextLvlMargin(int Lvl) => Lvl * 20 + 5;
+
+        public void LevelUp(Hero hero, int exp)
+        {
+            LTicket = new LvlTicket(hero);
+
+            Exp += exp;      
+
+            while (LvlTicket.Access(this))
+            {
+                Sound.LVL_MUSIC();
+
+                Console.WriteLine($"\n{hero.Name} достигает {Lvl}!\n", 1);
+                while (LTicket.LvlPoints > 0)
+                {
+                    //  Поднятие уровня с возможностью отмены выбора вар 2 (усложненая версия)                               
+                    Console.Write($"Повышение характеристик, у вас осталось {LTicket.LvlPoints} ячеек\n", 1);
+
+                    //  Макс здоровье
+                    ParamsLvlUp(0, LTicket.Points[0], Output.MaxHpStr, hero.MaxHp, LTicket.NextMaxHp, hero.CharacterClass.HP, false);
+
+                    //  Макс мана
+                    ParamsLvlUp(1, LTicket.Points[1], Output.MaxMpStr, hero.MaxMp, LTicket.NextMaxMp, hero.CharacterClass.MP, false);
+
+                    //  Защита
+                    ParamsLvlUp(2, LTicket.Points[2], Output.DefenseStr, hero.Defense, LTicket.NextDefense, hero.CharacterClass.Defense, true);
+
+                    //  Маг защита
+                    ParamsLvlUp(3, LTicket.Points[3], Output.MagicDefenseStr, hero.MagicDefense, LTicket.NextMagicDefense, hero.CharacterClass.MagicDefense, true);
+
+                    //  Блок
+                    ParamsLvlUp(4, LTicket.Points[4], Output.BlockStr, hero.Block, LTicket.NextBlock, hero.CharacterClass.Block, true);
+
+                    //  Скорость
+                    ParamsLvlUp(5, LTicket.Points[5], Output.SpeedStr, hero.Speed, LTicket.NextSpeed, hero.CharacterClass.Speed, true);
+
+                    //  Атака
+                    ParamsLvlUp(6, LTicket.Points[6], Output.AttackStr, hero.Attack, LTicket.NextAttack, hero.CharacterClass.Attack, false);
+
+                    //  Arcane
+                    ParamsLvlUp(7, LTicket.Points[7], Output.ArcaneStr, hero.Arcane, LTicket.NextArcane, hero.CharacterClass.Arcane, false);
+
+                    //  Крит
+                    ParamsLvlUp(8, LTicket.Points[8], Output.CritStr, hero.Crit, LTicket.NextCrit, hero.CharacterClass.Crit, true);
+
+                    switch (Input.ChoisInput(hero, 1, 9))
+                    {
+                        case 1:
+                            MaxHp = (short) SelectedParam(0, MaxHp, LTicket.NextMaxHp, hero.CharacterClass.MaxHp);
+                            break;
+                        case 2:
+                            MaxMp = (short) SelectedParam(1, hero.MaxMp, LTicket.NextMaxMp, hero.CharacterClass.MaxMp);
+                            break;
+                        case 3:
+                            Defense = (float) SelectedParam(2, hero.Defense, LTicket.NextDefense, hero.CharacterClass.Defense);
+                            break;
+                        case 4:
+                            MagicDefense = (float) SelectedParam(3, hero.MagicDefense, LTicket.NextMagicDefense, hero.CharacterClass.MagicDefense);
+                            break;
+                        case 5:
+                            Block = (float) SelectedParam(4, hero.Block, LTicket.NextBlock, hero.CharacterClass.Block);
+                            break;
+                        case 6:
+                            Speed = (float) SelectedParam(5, hero.Speed, LTicket.NextSpeed, hero.CharacterClass.Speed);
+                            break;
+                        case 7:
+                            Attack = (short) SelectedParam(6, hero.Attack, LTicket.NextAttack, hero.CharacterClass.Attack);
+                            break;
+                        case 8:
+                            Arcane = (short) SelectedParam(7, hero.Arcane, LTicket.NextArcane, hero.CharacterClass.Arcane);
+                            break;
+                        case 9:
+                            Crit = (float)SelectedParam(8, hero.Crit, LTicket.NextCrit, hero.CharacterClass.Crit);
+                            break;
+                    }
+                }
+                Achievements();
+                HP = MaxHp;
+                MP = MaxMp;                
+            }
+        }
+
+        public double SelectedParam(short pointIndex, float mainParam, float val, float classBonusVal)
+        {
+            if (!LTicket.Points[pointIndex])
+            {
+                mainParam += val;
+                mainParam += classBonusVal;
+                LTicket.LvlPoints--;
+                if (!Settings.OwnBildVersion)
+                    LTicket.Points[pointIndex] = true;
+            }
+            else
+            {
+                mainParam -= val;
+                mainParam -= classBonusVal;
+                LTicket.LvlPoints++;
+                LTicket.Points[pointIndex] = false;
+            }
+
+            return mainParam;
+        }
+
+        //  Отображение выбранных улучшений
+        public void ParamsLvlUp(byte i, bool point, string paramName, float mainParam, float paramVal, float classBonusParam, bool IsParcent)
+        {
+            if (IsParcent)
+            {
+                if (mainParam >= 1)
+                {
+                    Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{i + 1}) {paramName}: {mainParam} (MAX)\n");
+                    LTicket.Points[i] = true;
+                }
+                else
+                {
+                    if (!point)
+                    {
+                        Console.Write($"{i + 1}) {paramName}: {mainParam * 100}% => {(mainParam + paramVal) * 100}% ");
+                        if (classBonusParam > 0)
+                            Console.Write($"(+{classBonusParam * 100}% от класса)\n");
+                        else
+                            Console.WriteLine();
+                    }
+                    else
+                        Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{i + 1}) {paramName}: {mainParam * 100}%\n");
+                }               
+            }
+            else
+            {
+                if (paramName.Contains("MAX") && mainParam >= 1000)
+                {
+                    Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{i + 1}) {paramName}: {mainParam} (MAX)\n");
+                    LTicket.Points[i] = true;
+                }
+                else if (!paramName.Contains("MAX") && mainParam >= 100)
+                {
+                    Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{i + 1}) {paramName}: {mainParam} (MAX)\n");
+                    LTicket.Points[i] = true;
+                }
+                else 
+                {
+                    if (!point)
+                    {
+                        Console.Write($"{i + 1}) {paramName}: {mainParam} => {mainParam + paramVal} ");
+                        if (classBonusParam > 0)
+                            Console.Write($"(+{classBonusParam} от класса)\n");
+                        else
+                            Console.WriteLine();
+                    }
+                    else
+                        Output.WriteColorLine(ConsoleColor.DarkGray, "", $"{i + 1}) {paramName}: {mainParam}\n");
+                }
+            }
+        }
+
+        //  Система достижения
+        public void Achievements()
+        {
+            //  Здоровье
+            if (MaxHp >= 500)
+                AchiveName("_Жирнич_");
+
+            //  Мана
+            if (MaxMp >= 500)
+                AchiveName("_Знаток_");
+
+            //  Защита
+            if (Defense >= 0.98)
+                AchiveName("_Бронированный_");
+
+            //  Маг защита
+            if (MagicDefense >= 0.98)
+                AchiveName("_Бес_");
+
+            //  Блок
+            if (Block >= 0.98)
+                AchiveName("_Человек башня_");
+
+            //  Скорость
+            if (Speed >= 0.98)
+                AchiveName("_Чел на скоростях_");
+
+            //  Атака
+            if (Attack >= 100)
+                AchiveName("_Руки базуки_");
+
+            //  Крит
+            if (Crit >= 0.98)
+                AchiveName("_Удачливый чорт_");
+
+            //  Arcane
+            if (Arcane >= 100)
+                AchiveName("_Колдун_");
+        }
+
+        public void AchiveName(string name)
+        {
+            MessageBox.Show("Вы получили достижение!");
+            Output.WriteColorLine(ConsoleColor.DarkGreen, "\n Поздравляю вы получаете достижение: ", $"{name}");
+            Name += $" ({name})";            
+        }
+    }
+
+    //  Класс допуск
+    public class LvlTicket
+    {
+        public short NextMaxHp = 5,
+            NextMaxMp = 5,
+            NextAttack = 1,
+            NextArcane = 1;
+        public float NextSpeed = 0.02f,
+            NextCrit = 0.02f,
+            NextDefense = 0.02f,
+            NextMagicDefense = 0.02f,
+            NextBlock = 0.02f;
+
+        public static bool Access(Hero hero)
+        {
+            bool ans = (hero.Exp >= hero.NextLvlExp);
+
+            if (ans)
+            {
+                hero.Exp -= hero.NextLvlExp;
+                hero.Lvl++;
+                hero.NextLvlExp += Hero.NextLvlMargin(hero.Lvl);
+            }
+
+            return ans;
+        }
+
+        public LvlTicket(Hero hero)
+        {
+            NextMaxHp += hero.PermanentBonus.MaxHp;
+            NextMaxMp += hero.PermanentBonus.MaxMp;
+            NextAttack += hero.PermanentBonus.Attack;
+            NextArcane += hero.PermanentBonus.Arcane;
+            NextSpeed += hero.PermanentBonus.Speed;
+            NextCrit += hero.PermanentBonus.Crit;
+            NextDefense += hero.PermanentBonus.Defense;
+            NextMagicDefense += hero.PermanentBonus.MagicDefense;
+            NextBlock += hero.PermanentBonus.Block;
+        }
+
+        internal bool[] Points =
+        {
+            false,  //  0.MAX_HP_point
+            false,  //  1.MAX_MP_point
+            false,  //  2.DEF_point
+            false,  //  3.MAG_DEF_point
+            false,  //  4.BLK_point
+            false,  //  5.SPD_point
+            false,  //  6.ATC_point
+            false,  //  7.ARC_point
+            false   //  8.CRIT_point
+        };
+        internal byte LvlPoints = 3;
+    }
+}
